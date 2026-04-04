@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DepthClick — Cinematic Parallax Tool</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050508;--surface:#0a0a12;--accent:#00e5ff;--accent2:#7b2fff;--text:#c8ccd8;--muted:#5a5e72}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow-x:hidden}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;min-height:100vh}
+
+/* Film grain overlay */
+body::after{
+  content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998;
+  opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size:200px 200px
+}
+
+/* Hero */
+.hero{
+  position:relative;height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;
+  overflow:hidden;padding:2rem
+}
+.hero-bg{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  background:
+    radial-gradient(ellipse at 30% 40%,rgba(0,229,255,.08) 0%,transparent 50%),
+    radial-gradient(ellipse at 70% 70%,rgba(123,47,255,.1) 0%,transparent 55%),
+    radial-gradient(ellipse at 50% 10%,rgba(0,229,255,.05) 0%,transparent 40%);
+}
+.hero-grid{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  background-image:
+    linear-gradient(rgba(0,229,255,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,229,255,.04) 1px,transparent 1px);
+  background-size:60px 60px;
+  transform:perspective(800px) rotateX(20deg) scale(1.2);
+  transform-origin:50% 100%;
+  opacity:.6
+}
+.hero-eyebrow{
+  font-family:'Syncopate',sans-serif;font-size:.7rem;letter-spacing:.3em;
+  color:var(--accent);text-transform:uppercase;margin-bottom:1.2rem;
+  position:relative;z-index:1
+}
+.hero h1{
+  font-family:'Syncopate',sans-serif;font-size:clamp(2.5rem,7vw,5.5rem);
+  font-weight:700;line-height:1.05;position:relative;z-index:1;
+  background:linear-gradient(135deg,var(--accent),#fff 50%,var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text
+}
+.hero-sub{
+  font-size:1.1rem;color:var(--muted);max-width:500px;margin:1.2rem auto 2.5rem;
+  font-weight:300;line-height:1.7;position:relative;z-index:1
+}
+.hero-cta{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
+.btn-primary{
+  font-family:'Syncopate',sans-serif;font-size:.8rem;letter-spacing:.1em;
+  padding:.9rem 2.5rem;border-radius:4px;
+  background:var(--accent);color:#000;text-decoration:none;font-weight:700;
+  transition:box-shadow .2s,transform .2s
+}
+.btn-primary:hover{box-shadow:0 0 30px rgba(0,229,255,.5);transform:translateY(-2px)}
+.btn-ghost{
+  font-family:'Syncopate',sans-serif;font-size:.8rem;letter-spacing:.1em;
+  padding:.9rem 2.5rem;border-radius:4px;
+  border:1px solid rgba(0,229,255,.3);color:var(--accent);text-decoration:none;
+  transition:border-color .2s,background .2s
+}
+.btn-ghost:hover{border-color:var(--accent);background:rgba(0,229,255,.07)}
+
+/* Demo window */
+.demo-section{padding:5rem 1.5rem;max-width:1000px;margin:0 auto;text-align:center}
+.section-eyebrow{font-family:'Syncopate',sans-serif;font-size:.65rem;letter-spacing:.3em;color:var(--accent);text-transform:uppercase;margin-bottom:.8rem}
+.section-title{font-family:'Syncopate',sans-serif;font-size:clamp(1.4rem,3vw,2.2rem);color:#fff;margin-bottom:.8rem}
+.section-sub{color:var(--muted);font-weight:300;max-width:500px;margin:0 auto 3rem;line-height:1.7}
+
+.demo-window{
+  background:#0a0a12;border:1px solid #1a1a2e;border-radius:8px;
+  padding:3rem 2rem;position:relative;overflow:hidden;
+  box-shadow:0 40px 80px rgba(0,0,0,.6)
+}
+.demo-window::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent)
+}
+.layer-stack{position:relative;height:240px;margin:0 auto;max-width:400px}
+.layer{
+  position:absolute;left:50%;transform:translateX(-50%);
+  border-radius:8px;transition:transform .4s ease;cursor:pointer
+}
+.layer-bg{width:100%;height:200px;top:20px;background:linear-gradient(135deg,#0d1117,#1a1a2e);border:1px solid #2a2a4a}
+.layer-mid{width:82%;height:150px;top:45px;background:linear-gradient(135deg,#0a1628,#142040);border:1px solid rgba(0,229,255,.2)}
+.layer-fg{width:64%;height:100px;top:70px;background:linear-gradient(135deg,#0d2040,#1a3060);border:1px solid rgba(0,229,255,.4)}
+.layer-subj{width:46%;height:70px;top:95px;background:linear-gradient(135deg,var(--accent2),#4a0099);border:1px solid rgba(123,47,255,.6)}
+.layer-stack:hover .layer-bg{transform:translateX(-50%) translateY(8px)}
+.layer-stack:hover .layer-mid{transform:translateX(-50%) translateY(4px)}
+.layer-stack:hover .layer-subj{transform:translateX(-50%) translateY(-8px)}
+.layer-labels{display:flex;justify-content:space-between;margin-top:1.5rem;font-size:.8rem;color:var(--muted)}
+.layer-labels span{font-family:'Syncopate',sans-serif;font-size:.6rem;letter-spacing:.1em}
+
+/* Features */
+.features{padding:4rem 1.5rem;max-width:1000px;margin:0 auto}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5rem}
+.feat-card{
+  background:#0a0a12;border:1px solid #1a1a2e;border-radius:8px;
+  padding:1.75rem;transition:border-color .3s
+}
+.feat-card:hover{border-color:rgba(0,229,255,.3)}
+.feat-icon{font-size:2rem;margin-bottom:.8rem;display:block}
+.feat-title{font-family:'Syncopate',sans-serif;font-size:.8rem;letter-spacing:.1em;color:#fff;margin-bottom:.5rem}
+.feat-body{font-size:.9rem;color:var(--muted);line-height:1.6;font-weight:300}
+
+/* Pricing */
+.pricing{text-align:center;padding:5rem 1.5rem;max-width:600px;margin:0 auto}
+.price-card{
+  background:#0a0a12;border:1px solid rgba(0,229,255,.2);border-radius:12px;
+  padding:3rem 2rem;position:relative;overflow:hidden
+}
+.price-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--accent2),var(--accent))
+}
+.price-amount{font-family:'Syncopate',sans-serif;font-size:3.5rem;color:var(--accent);margin:.5rem 0}
+.price-period{font-size:.9rem;color:var(--muted)}
+.price-features{list-style:none;margin:1.5rem 0 2rem;text-align:left}
+.price-features li{padding:.5rem 0;border-bottom:1px solid #1a1a2e;font-size:.95rem;color:var(--text)}
+.price-features li::before{content:'▸ ';color:var(--accent)}
+
+/* Footer */
+footer{text-align:center;padding:3rem 1.5rem;border-top:1px solid #0d0d1a;color:var(--muted);font-size:.82rem}
+footer a{color:var(--accent)}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-eyebrow">Cinematic Parallax Tool</div>
+  <h1>DEPTH<br>CLICK</h1>
+  <p class="hero-sub">Transform flat photos into living, breathing cinematic depth maps. One click. Infinite dimension.</p>
+  <div class="hero-cta">
+    <a href="https://buy.stripe.com/depthclick" class="btn-primary">Get Access</a>
+    <a href="#demo" class="btn-ghost">See Demo</a>
+  </div>
+</section>
+
+<section class="demo-section" id="demo">
+  <div class="section-eyebrow">How It Works</div>
+  <h2 class="section-title">Layers of Reality</h2>
+  <p class="section-sub">DepthClick analyzes your image and separates it into depth layers — background, midground, foreground, subject — then animates them independently for cinematic parallax motion. Hover to preview.</p>
+
+  <div class="demo-window">
+    <div class="layer-stack">
+      <div class="layer layer-bg"></div>
+      <div class="layer layer-mid"></div>
+      <div class="layer layer-fg"></div>
+      <div class="layer layer-subj"></div>
+    </div>
+    <div class="layer-labels">
+      <span>BACKGROUND</span>
+      <span>MIDGROUND</span>
+      <span>FOREGROUND</span>
+      <span>SUBJECT</span>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="section-eyebrow">Features</div>
+  <h2 class="section-title" style="text-align:center;margin-bottom:.8rem">Built for Creators</h2>
+  <p class="section-sub" style="text-align:center">Everything you need to produce professional parallax content without a 3D team.</p>
+  <div class="features-grid">
+    <div class="feat-card">
+      <span class="feat-icon">🎬</span>
+      <div class="feat-title">AI Depth Detection</div>
+      <div class="feat-body">Neural depth estimation separates any photo into up to 8 independent layers automatically.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🖥</span>
+      <div class="feat-title">Export to MP4 / GIF</div>
+      <div class="feat-body">Export looping parallax animations at 4K resolution, optimized for Instagram Reels, YouTube Shorts, and TikTok.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🕹</span>
+      <div class="feat-title">Interactive Depth</div>
+      <div class="feat-body">Add gyroscope or mouse-tracking parallax for web embeds and digital art installations.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">⚡</span>
+      <div class="feat-title">One-Click Processing</div>
+      <div class="feat-body">Upload → process → download in under 90 seconds. No Photoshop required.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🎨</span>
+      <div class="feat-title">Cinematic Presets</div>
+      <div class="feat-body">Choose from Noir, Neon, Golden Hour, Sci-Fi, and 12 more cinematic color grade presets.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🔒</span>
+      <div class="feat-title">Your Files, Your Rights</div>
+      <div class="feat-body">All uploads auto-deleted after 30 days. You retain full commercial rights to your exports.</div>
+    </div>
+  </div>
+</section>
+
+<section class="pricing">
+  <div class="section-eyebrow">Pricing</div>
+  <h2 class="section-title">Simple, Transparent</h2>
+  <div class="price-card">
+    <div style="font-family:'Syncopate',sans-serif;font-size:.75rem;letter-spacing:.2em;color:var(--muted)">PRO PLAN</div>
+    <div class="price-amount">$19</div>
+    <div class="price-period">per month</div>
+    <ul class="price-features">
+      <li>100 depth-map processes per month</li>
+      <li>4K export resolution</li>
+      <li>All 17 cinematic presets</li>
+      <li>Interactive parallax web embeds</li>
+      <li>Priority GPU processing queue</li>
+      <li>Commercial use license</li>
+    </ul>
+    <a href="https://buy.stripe.com/depthclick" class="btn-primary" style="display:inline-block">Start Free Trial</a>
+    <p style="font-size:.8rem;color:var(--muted);margin-top:1rem">7-day free trial · Cancel anytime · No credit card to start</p>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 AnchorWithin LLC · DepthClick is a product of AnchorWithin LLC</p>
+  <p style="margin-top:.5rem">
+    <a href="https://acKccreate.github.io/anchorwithin-privacy/">Privacy Policy</a>
+    &nbsp;·&nbsp;
+    <a href="https://acKccreate.github.io/anchorwithin-tos/">Terms of Service</a>
+  </p>
+</footer>
+
+</body>
+</html>

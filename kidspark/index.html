@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KidSpark — 3D Toy Explorer for Kids</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f0c29;--pink:#ff6b9d;--teal:#4ecdc4;--yellow:#FFD93D;--purple:#a855f7;--white:#f0f0ff}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow-x:hidden}
+body{background:var(--bg);color:var(--white);font-family:'Quicksand',sans-serif;min-height:100vh}
+
+/* Stars background */
+body::before{
+  content:'';position:fixed;top:0;left:0;width:100%;height:100%;
+  background:radial-gradient(ellipse at 20% 50%,#1a0a3a 0%,transparent 60%),
+             radial-gradient(ellipse at 80% 20%,#0a1a3a 0%,transparent 50%);
+  pointer-events:none;z-index:0
+}
+
+/* Age gate */
+#ageGate{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(10,8,30,.97);z-index:1000;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:2rem
+}
+#ageGate h2{font-family:'Fredoka One',cursive;font-size:2.2rem;color:var(--yellow);margin-bottom:1rem}
+#ageGate p{color:#bbaabb;margin-bottom:2rem;font-size:1.05rem;max-width:420px}
+.age-buttons{display:flex;gap:1.5rem;flex-wrap:wrap;justify-content:center}
+.age-btn{
+  font-family:'Fredoka One',cursive;font-size:1.3rem;padding:.9rem 2.2rem;
+  border:none;border-radius:50px;cursor:pointer;transition:transform .2s,box-shadow .2s
+}
+.age-btn:hover{transform:scale(1.08);box-shadow:0 8px 30px rgba(0,0,0,.4)}
+.age-btn.yes{background:linear-gradient(135deg,var(--teal),#2eb8a0);color:#fff}
+.age-btn.no{background:#2a2040;color:#8888aa;border:2px solid #3a3060}
+
+/* Header */
+header{position:relative;z-index:1;text-align:center;padding:4rem 1.5rem 2rem}
+.logo{font-family:'Fredoka One',cursive;font-size:3.5rem;
+  background:linear-gradient(135deg,var(--pink),var(--yellow),var(--teal));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 20px rgba(255,107,157,.4))}
+header p{color:#bbaabb;font-size:1.1rem;margin-top:.5rem;font-weight:600}
+
+/* Toy grid */
+.section-title{
+  font-family:'Fredoka One',cursive;font-size:1.8rem;
+  text-align:center;margin:1rem 0 2rem;
+  color:var(--yellow)
+}
+.toy-grid{
+  position:relative;z-index:1;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  gap:1.5rem;max-width:1100px;margin:0 auto 3rem;padding:0 1.5rem
+}
+.toy-card{
+  background:linear-gradient(145deg,#1a1535,#120e28);
+  border:2px solid transparent;border-radius:20px;
+  padding:1.5rem 1rem;text-align:center;cursor:pointer;
+  transition:transform .3s,border-color .3s,box-shadow .3s;
+  position:relative;overflow:hidden
+}
+.toy-card::before{
+  content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+  background:radial-gradient(circle,rgba(255,255,255,.05) 0%,transparent 70%);
+  opacity:0;transition:opacity .3s
+}
+.toy-card:hover{transform:translateY(-8px) scale(1.03);box-shadow:0 20px 50px rgba(0,0,0,.5)}
+.toy-card:hover::before{opacity:1}
+.toy-card.pink{border-color:var(--pink)}
+.toy-card.teal{border-color:var(--teal)}
+.toy-card.yellow{border-color:var(--yellow)}
+.toy-card.purple{border-color:var(--purple)}
+.toy-card:hover.pink{box-shadow:0 20px 50px rgba(255,107,157,.3)}
+.toy-card:hover.teal{box-shadow:0 20px 50px rgba(78,205,196,.3)}
+.toy-card:hover.yellow{box-shadow:0 20px 50px rgba(255,217,61,.3)}
+.toy-card:hover.purple{box-shadow:0 20px 50px rgba(168,85,247,.3)}
+.toy-emoji{font-size:3.5rem;margin-bottom:.8rem;display:block;
+  animation:float 3s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.toy-card:nth-child(2) .toy-emoji{animation-delay:.4s}
+.toy-card:nth-child(3) .toy-emoji{animation-delay:.8s}
+.toy-card:nth-child(4) .toy-emoji{animation-delay:1.2s}
+.toy-card:nth-child(5) .toy-emoji{animation-delay:1.6s}
+.toy-card:nth-child(6) .toy-emoji{animation-delay:2s}
+.toy-name{font-family:'Fredoka One',cursive;font-size:1.2rem;color:var(--white)}
+.toy-desc{font-size:.85rem;color:#8888aa;margin-top:.3rem}
+
+/* CTA */
+.cta-section{
+  position:relative;z-index:1;text-align:center;
+  padding:3rem 1.5rem 5rem
+}
+.cta-section h2{font-family:'Fredoka One',cursive;font-size:2.2rem;color:var(--pink);margin-bottom:.75rem}
+.cta-section p{color:#aaa8cc;max-width:500px;margin:0 auto 2rem;font-size:1.05rem}
+.unlock-btn{
+  display:inline-block;
+  font-family:'Fredoka One',cursive;font-size:1.4rem;
+  padding:1rem 3rem;border-radius:50px;
+  background:linear-gradient(135deg,var(--pink),#e0409a);
+  color:#fff;text-decoration:none;
+  box-shadow:0 8px 30px rgba(255,107,157,.4);
+  transition:transform .2s,box-shadow .2s
+}
+.unlock-btn:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(255,107,157,.5)}
+.price-tag{
+  display:inline-block;background:#1a1535;border:2px solid var(--yellow);
+  color:var(--yellow);font-family:'Fredoka One',cursive;font-size:1.1rem;
+  padding:.4rem 1.2rem;border-radius:30px;margin-bottom:1.5rem
+}
+
+/* Sparkles */
+.sparkle{position:fixed;pointer-events:none;font-size:1.4rem;z-index:999;
+  animation:sparkle-fall 2s ease-in forwards}
+@keyframes sparkle-fall{
+  0%{opacity:1;transform:translateY(0) rotate(0deg)}
+  100%{opacity:0;transform:translateY(120px) rotate(360deg)}
+}
+
+/* Footer */
+footer{position:relative;z-index:1;text-align:center;padding:2rem 1.5rem;
+  border-top:1px solid #1a1535;color:#555577;font-size:.82rem}
+footer a{color:#4ecdc4}
+
+/* Stars canvas */
+#stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+</style>
+</head>
+<body>
+
+<!-- Age Gate -->
+<div id="ageGate">
+  <h2>🌟 Welcome to KidSpark!</h2>
+  <p>KidSpark is designed for children under parental supervision. Are you a parent or guardian confirming this is appropriate for your child?</p>
+  <div class="age-buttons">
+    <button class="age-btn yes" onclick="enterSpark()">Yes, enter! ✨</button>
+    <button class="age-btn no" onclick="document.getElementById('ageGate').innerHTML='<p style=color:#888;padding:2rem>This site is for families. Come back with a grown-up!</p>'">Not yet</button>
+  </div>
+</div>
+
+<canvas id="stars"></canvas>
+
+<header>
+  <div class="logo">✨ KidSpark</div>
+  <p>3D Toy Explorer — Where Imagination Comes Alive!</p>
+</header>
+
+<h2 class="section-title">Pick a Toy World to Explore 🎮</h2>
+
+<div class="toy-grid">
+  <div class="toy-card pink" onclick="sparkleClick(event,'🌸')">
+    <span class="toy-emoji">🦄</span>
+    <div class="toy-name">Rainbow Ranch</div>
+    <div class="toy-desc">Magical horses &amp; rainbow bridges</div>
+  </div>
+  <div class="toy-card teal" onclick="sparkleClick(event,'🌊')">
+    <span class="toy-emoji">🚀</span>
+    <div class="toy-name">Space Blasters</div>
+    <div class="toy-desc">Launch rockets to distant galaxies</div>
+  </div>
+  <div class="toy-card yellow" onclick="sparkleClick(event,'⭐')">
+    <span class="toy-emoji">🦖</span>
+    <div class="toy-name">Dino Dig</div>
+    <div class="toy-desc">Uncover giant fossils &amp; dino eggs</div>
+  </div>
+  <div class="toy-card purple" onclick="sparkleClick(event,'💜')">
+    <span class="toy-emoji">🧁</span>
+    <div class="toy-name">Bake Bonanza</div>
+    <div class="toy-desc">Magical treats &amp; icing adventures</div>
+  </div>
+  <div class="toy-card teal" onclick="sparkleClick(event,'🌿')">
+    <span class="toy-emoji">🤖</span>
+    <div class="toy-name">Robot Factory</div>
+    <div class="toy-desc">Build &amp; program your own bots</div>
+  </div>
+  <div class="toy-card pink" onclick="sparkleClick(event,'🎵')">
+    <span class="toy-emoji">🎨</span>
+    <div class="toy-name">Art Studio</div>
+    <div class="toy-desc">Paint, draw &amp; create masterpieces</div>
+  </div>
+</div>
+
+<div class="cta-section">
+  <div class="price-tag">Full Access — $4.99/month</div>
+  <h2>Unlock All 24 Toy Worlds!</h2>
+  <p>Hundreds of 3D adventures, creative challenges, and surprises — new content every week!</p>
+  <a href="https://buy.stripe.com/kidspark" class="unlock-btn">🎉 Start Free Trial</a>
+</div>
+
+<footer>
+  <p>© 2026 AnchorWithin LLC · For ages 3–10 under parental supervision</p>
+  <p style="margin-top:.5rem">
+    <a href="https://acKccreate.github.io/anchorwithin-privacy/">Privacy Policy</a>
+    &nbsp;·&nbsp;
+    <a href="https://acKccreate.github.io/anchorwithin-tos/">Terms of Service</a>
+  </p>
+</footer>
+
+<script>
+// Stars canvas
+(function(){
+  var c=document.getElementById('stars'),ctx=c.getContext('2d');
+  c.width=window.innerWidth;c.height=window.innerHeight;
+  var stars=[];
+  for(var i=0;i<150;i++){stars.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.5+.5,a:Math.random(),s:Math.random()*.02+.005})}
+  function draw(){
+    ctx.clearRect(0,0,c.width,c.height);
+    stars.forEach(function(s){
+      s.a+=s.s;if(s.a>1||s.a<0)s.s*=-1;
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,255,255,'+s.a+')';ctx.fill()
+    });
+    requestAnimationFrame(draw)
+  }
+  draw();
+  window.addEventListener('resize',function(){c.width=window.innerWidth;c.height=window.innerHeight})
+})();
+
+function enterSpark(){
+  document.getElementById('ageGate').style.display='none';
+}
+
+function sparkleClick(e,emoji){
+  for(var i=0;i<6;i++){
+    var sp=document.createElement('div');
+    sp.className='sparkle';sp.textContent=emoji;
+    sp.style.left=(e.clientX+Math.random()*60-30)+'px';
+    sp.style.top=(e.clientY+Math.random()*40-20)+'px';
+    document.body.appendChild(sp);
+    setTimeout(function(s){document.body.removeChild(s)},2000,sp)
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EchoWalk — Memory Walk Through Time</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a1a;--navy:#0d1025;--amber:#d4a373;--amber2:#e9c46a;
+  --text:#c8c0b0;--muted:#6a6070;--sepia:#3a2a1a;--white:#f0eae0
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow-x:hidden}
+body{background:var(--bg);color:var(--text);font-family:'Lora',serif;min-height:100vh}
+
+/* Film grain */
+body::after{
+  content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9997;opacity:.04;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:200px 200px
+}
+
+/* Dust particle canvas */
+#dustCanvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;opacity:.5}
+
+/* Hero */
+.hero{
+  position:relative;z-index:2;
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;
+  padding:4rem 2rem;overflow:hidden
+}
+.hero-atmosphere{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  background:
+    radial-gradient(ellipse at 50% 40%,rgba(212,163,115,.07) 0%,transparent 55%),
+    radial-gradient(ellipse at 20% 80%,rgba(13,16,37,.9) 0%,transparent 60%);
+}
+.hero-eyebrow{
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:1rem;color:var(--amber);letter-spacing:.08em;margin-bottom:1.5rem;
+  position:relative;z-index:1
+}
+.hero h1{
+  font-family:'Playfair Display',serif;font-size:clamp(3rem,8vw,6rem);
+  font-weight:700;line-height:1;
+  color:var(--white);
+  text-shadow:0 0 80px rgba(212,163,115,.2);
+  position:relative;z-index:1
+}
+.hero h1 span{color:var(--amber)}
+.hero-tagline{
+  font-style:italic;font-size:1.15rem;color:var(--muted);
+  max-width:520px;margin:1.2rem auto 3rem;line-height:1.8;
+  position:relative;z-index:1
+}
+.hero-actions{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
+
+/* Buttons */
+.btn-amber{
+  font-family:'Playfair Display',serif;font-size:.9rem;
+  padding:.85rem 2.5rem;border-radius:2px;
+  background:var(--amber);color:#0a0507;text-decoration:none;
+  font-weight:700;letter-spacing:.03em;
+  transition:background .2s,box-shadow .2s
+}
+.btn-amber:hover{background:var(--amber2);box-shadow:0 8px 30px rgba(212,163,115,.3)}
+.btn-outline{
+  font-family:'Playfair Display',serif;font-size:.9rem;
+  padding:.85rem 2.5rem;border-radius:2px;
+  border:1px solid rgba(212,163,115,.35);color:var(--amber);
+  text-decoration:none;
+  transition:border-color .2s,background .2s
+}
+.btn-outline:hover{border-color:var(--amber);background:rgba(212,163,115,.06)}
+
+/* Memory timeline demo */
+.timeline-section{
+  position:relative;z-index:2;max-width:900px;margin:0 auto;padding:5rem 2rem
+}
+.section-eyebrow{font-style:italic;color:var(--amber);font-size:.9rem;margin-bottom:.5rem}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.5rem);color:var(--white);margin-bottom:.8rem}
+.section-sub{color:var(--muted);max-width:520px;line-height:1.8;margin-bottom:3rem;font-style:italic}
+
+.timeline{position:relative;padding-left:2rem}
+.timeline::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:1px;
+  background:linear-gradient(to bottom,transparent,var(--amber),rgba(212,163,115,.2),transparent)
+}
+.tl-item{position:relative;padding:0 0 3rem 2rem}
+.tl-dot{
+  position:absolute;left:-5px;top:4px;width:10px;height:10px;
+  background:var(--amber);border-radius:50%;
+  box-shadow:0 0 15px rgba(212,163,115,.4)
+}
+.tl-year{font-family:'Playfair Display',serif;font-style:italic;font-size:.85rem;color:var(--amber);margin-bottom:.3rem}
+.tl-title{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--white);margin-bottom:.4rem}
+.tl-body{color:var(--muted);line-height:1.7;font-style:italic}
+
+/* Features */
+.features{position:relative;z-index:2;padding:3rem 2rem 5rem;max-width:960px;margin:0 auto}
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5rem}
+.feat-card{
+  background:#0d0d20;border:1px solid rgba(212,163,115,.1);border-radius:4px;
+  padding:1.75rem;transition:border-color .3s
+}
+.feat-card:hover{border-color:rgba(212,163,115,.3)}
+.feat-icon{font-size:2rem;margin-bottom:.75rem;display:block}
+.feat-title{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--white);margin-bottom:.4rem}
+.feat-body{font-size:.9rem;color:var(--muted);line-height:1.7;font-style:italic}
+
+/* Pricing tiers */
+.pricing{position:relative;z-index:2;text-align:center;padding:4rem 1.5rem 5rem}
+.pricing h2{font-family:'Playfair Display',serif;font-size:2rem;color:var(--white);margin-bottom:.5rem}
+.pricing .subtitle{font-style:italic;color:var(--muted);margin-bottom:3rem}
+.price-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5rem;max-width:860px;margin:0 auto}
+.price-card{
+  background:#0d0d20;border:1px solid rgba(212,163,115,.15);border-radius:4px;
+  padding:2.5rem 2rem;text-align:left;position:relative
+}
+.price-card.featured{border-color:rgba(212,163,115,.4)}
+.price-tag-badge{
+  position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+  background:var(--amber);color:#0a0507;font-family:'Playfair Display',serif;
+  font-size:.75rem;font-weight:700;padding:.2rem 1rem;border-radius:20px;white-space:nowrap
+}
+.price-name{font-family:'Playfair Display',serif;font-style:italic;color:var(--amber);font-size:.9rem;margin-bottom:.5rem}
+.price-amount{font-family:'Playfair Display',serif;font-size:2.8rem;color:var(--white)}
+.price-period{color:var(--muted);font-style:italic;font-size:.85rem;margin-bottom:1.5rem}
+.price-list{list-style:none;margin-bottom:2rem}
+.price-list li{padding:.4rem 0;border-bottom:1px solid rgba(212,163,115,.07);font-size:.88rem;color:var(--text)}
+.price-list li::before{content:'— ';color:var(--amber)}
+.price-link{
+  font-family:'Playfair Display',serif;font-size:.85rem;
+  display:inline-block;padding:.75rem 2rem;
+  border:1px solid rgba(212,163,115,.4);border-radius:2px;
+  color:var(--amber);text-decoration:none;
+  transition:background .2s,border-color .2s
+}
+.price-link:hover,.price-card.featured .price-link{background:rgba(212,163,115,.08);border-color:var(--amber)}
+
+/* Pull quote */
+.pull-quote{
+  position:relative;z-index:2;text-align:center;
+  padding:3rem 2rem 4rem;max-width:660px;margin:0 auto
+}
+.pull-quote blockquote{
+  font-family:'Playfair Display',serif;font-size:clamp(1.3rem,3vw,1.8rem);
+  font-style:italic;color:var(--amber2);line-height:1.5
+}
+.pull-quote cite{display:block;margin-top:1rem;font-size:.9rem;color:var(--muted)}
+
+/* Footer */
+footer{
+  position:relative;z-index:2;text-align:center;
+  padding:3rem 1.5rem 4rem;border-top:1px solid rgba(212,163,115,.1);
+  color:var(--muted);font-size:.82rem
+}
+footer a{color:var(--amber)}
+footer a:hover{color:var(--amber2)}
+.motto{font-family:'Playfair Display',serif;font-style:italic;font-size:.85rem;color:rgba(212,163,115,.2);margin-top:1.5rem;letter-spacing:.1em}
+</style>
+</head>
+<body>
+
+<canvas id="dustCanvas"></canvas>
+
+<section class="hero">
+  <div class="hero-atmosphere"></div>
+  <div class="hero-eyebrow">A Journey Through Memory</div>
+  <h1>Echo<span>Walk</span></h1>
+  <p class="hero-tagline">Every moment leaves a trace. Walk back through yours — guided by the echoes of what you remember, reconstructed with quiet reverence.</p>
+  <div class="hero-actions">
+    <a href="https://buy.stripe.com/echowalk-pro" class="btn-amber">Begin Your Walk</a>
+    <a href="#how-it-works" class="btn-outline">See How It Works</a>
+  </div>
+</section>
+
+<section class="timeline-section" id="how-it-works">
+  <div class="section-eyebrow">How EchoWalk Works</div>
+  <h2 class="section-title">Your Story, Remembered</h2>
+  <p class="section-sub">EchoWalk uses AI-assisted memory reconstruction to help you revisit, preserve, and share the moments that shaped you.</p>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">Step One</div>
+      <div class="tl-title">Gather Your Echoes</div>
+      <div class="tl-body">Upload photos, voice memos, dates, and fragments. Even partial memories. EchoWalk works with whatever you have — a street name, a year, a feeling.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">Step Two</div>
+      <div class="tl-title">AI Reconstructs the Walk</div>
+      <div class="tl-body">Our narrative AI weaves your fragments into a rich, sensory memory walk — filling gaps with period-accurate detail while preserving the emotional truth of your story.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">Step Three</div>
+      <div class="tl-title">Walk Through It</div>
+      <div class="tl-body">Experience your memory as a guided audio walk, an illustrated digital journal, or a cinematic timeline. Share it with family, or keep it private forever.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">Step Four</div>
+      <div class="tl-title">Preserve It</div>
+      <div class="tl-body">Export as a beautifully formatted PDF memoir, audio file, or private website. A gift for generations who haven't been born yet.</div>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="section-eyebrow" style="text-align:center">What's Included</div>
+  <h2 class="section-title" style="text-align:center;margin-bottom:.8rem">Built for Memory</h2>
+  <p class="section-sub" style="text-align:center">Not just archiving — experiencing.</p>
+  <div class="feat-grid">
+    <div class="feat-card">
+      <span class="feat-icon">📸</span>
+      <div class="feat-title">Photo Memory Enhancement</div>
+      <div class="feat-body">Old, blurry, or faded photos restored and given context — place, date, people — through gentle AI analysis.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🎙</span>
+      <div class="feat-title">Voice Memory Walks</div>
+      <div class="feat-body">Narrated audio journeys through your memories, in a voice that mirrors the warmth of a family storyteller.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">📖</span>
+      <div class="feat-title">AI Memoir Writing</div>
+      <div class="feat-body">Fragment prompts transformed into full narrative chapters — written in first person, in your voice.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🗓</span>
+      <div class="feat-title">Living Timeline</div>
+      <div class="feat-body">An interactive visual timeline you can walk through, expand, and add to over a lifetime.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🔐</span>
+      <div class="feat-title">Privacy-First Vault</div>
+      <div class="feat-body">Your memories are encrypted at rest. You control who sees what — from fully private to family-shared.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🎁</span>
+      <div class="feat-title">Legacy Gift Books</div>
+      <div class="feat-body">Print-quality PDF memoirs and hardcover book orders — a legacy gift that outlasts any device.</div>
+    </div>
+  </div>
+</section>
+
+<div class="pull-quote">
+  <blockquote>"The stories we leave behind become the light that guides those who follow after us."</blockquote>
+  <cite>— EchoWalk</cite>
+</div>
+
+<section class="pricing">
+  <h2>Choose Your Walk</h2>
+  <p class="subtitle">Every tier includes your first memory walk free.</p>
+  <div class="price-grid">
+    <div class="price-card">
+      <div class="price-name">The Wanderer</div>
+      <div class="price-amount">$9</div>
+      <div class="price-period">per month</div>
+      <ul class="price-list">
+        <li>3 memory walks per month</li>
+        <li>Photo enhancement (20/mo)</li>
+        <li>Basic timeline</li>
+        <li>PDF export</li>
+      </ul>
+      <a href="https://buy.stripe.com/echowalk-wanderer" class="price-link">Get Started</a>
+    </div>
+    <div class="price-card featured">
+      <div class="price-tag-badge">Most Beloved</div>
+      <div class="price-name">The Keeper</div>
+      <div class="price-amount">$19</div>
+      <div class="price-period">per month</div>
+      <ul class="price-list">
+        <li>Unlimited memory walks</li>
+        <li>Unlimited photo enhancement</li>
+        <li>Voice narration</li>
+        <li>AI memoir chapters</li>
+        <li>Family sharing (up to 5)</li>
+        <li>Legacy book ordering</li>
+      </ul>
+      <a href="https://buy.stripe.com/echowalk-keeper" class="price-link">Begin Walking</a>
+    </div>
+    <div class="price-card">
+      <div class="price-name">The Legacy</div>
+      <div class="price-amount">$149</div>
+      <div class="price-period">one time · lifetime</div>
+      <ul class="price-list">
+        <li>Everything in The Keeper</li>
+        <li>Private family website</li>
+        <li>Hardcover book (1/year)</li>
+        <li>White-glove onboarding</li>
+        <li>All future features</li>
+      </ul>
+      <a href="https://buy.stripe.com/echowalk-legacy" class="price-link">Claim Legacy</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 AnchorWithin LLC · EchoWalk</p>
+  <p style="margin-top:.5rem">
+    <a href="https://acKccreate.github.io/anchorwithin-privacy/">Privacy Policy</a>
+    &nbsp;·&nbsp;
+    <a href="https://acKccreate.github.io/anchorwithin-tos/">Terms of Service</a>
+  </p>
+  <p class="motto">The Anchor Holds</p>
+</footer>
+
+<script>
+// Dust particles
+(function(){
+  var c = document.getElementById('dustCanvas');
+  var ctx = c.getContext('2d');
+  function resize(){ c.width=window.innerWidth; c.height=window.innerHeight }
+  resize();
+  window.addEventListener('resize', resize);
+
+  var particles = [];
+  for(var i=0;i<80;i++){
+    particles.push({
+      x: Math.random()*c.width,
+      y: Math.random()*c.height,
+      r: Math.random()*1.2+0.2,
+      vx: (Math.random()-.5)*.15,
+      vy: (Math.random()-.5)*.1 - 0.05,
+      a: Math.random()*.4+.05
+    })
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,c.width,c.height);
+    particles.forEach(function(p){
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(212,163,115,'+p.a+')';
+      ctx.fill();
+      p.x += p.vx; p.y += p.vy;
+      if(p.y < -5) p.y = c.height+5;
+      if(p.x < -5) p.x = c.width+5;
+      if(p.x > c.width+5) p.x = -5;
+    });
+    requestAnimationFrame(draw)
+  }
+  draw()
+})();
+</script>
+</body>
+</html>
