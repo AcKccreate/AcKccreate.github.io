@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AnchorWithin — The Anchor Holds</title>
+<meta name="description" content="AI-powered tools for memory, grounding, and creation. EchoWalk, KidSpark, Sanctuary Bell, BreatheWorld, DreamWalk, ThenNow, Forever Paws — and more.">
+<meta property="og:title" content="AnchorWithin — The Anchor Holds">
+<meta property="og:description" content="AI-powered tools for memory, grounding, and creation.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ── RESET & TOKENS ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #0a0a1a;
+  --surface:  #0f0f25;
+  --lift:     #151530;
+  --border:   rgba(240,208,96,0.12);
+  --gold:     #f0d060;
+  --gold-dim: rgba(240,208,96,0.55);
+  --gold-glow:rgba(240,208,96,0.15);
+  --text:     #dcdcf0;
+  --muted:    #7878a0;
+  --teal:     #4ecdc4;
+  --serif:    'DM Serif Display', Georgia, serif;
+  --sans:     'Outfit', system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ── STARFIELD ── */
+.stars {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,.55) 0%, transparent 100%),
+    radial-gradient(1px 1px at 34% 72%, rgba(255,255,255,.4)  0%, transparent 100%),
+    radial-gradient(1px 1px at 58% 9%,  rgba(255,255,255,.5)  0%, transparent 100%),
+    radial-gradient(1px 1px at 76% 55%, rgba(255,255,255,.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 91% 28%, rgba(255,255,255,.45) 0%, transparent 100%),
+    radial-gradient(1px 1px at 22% 88%, rgba(255,255,255,.3)  0%, transparent 100%),
+    radial-gradient(1px 1px at 47% 40%, rgba(255,255,255,.5)  0%, transparent 100%),
+    radial-gradient(1px 1px at 65% 82%, rgba(255,255,255,.4)  0%, transparent 100%),
+    radial-gradient(1px 1px at 83% 67%, rgba(255,255,255,.35) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 5%  50%, rgba(240,208,96,.3) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 70% 15%, rgba(240,208,96,.25) 0%, transparent 100%);
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 2.5rem;
+  background: rgba(10,10,26,.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  color: var(--gold);
+  letter-spacing: .04em;
+}
+.nav-links {
+  display: flex; gap: 2rem; list-style: none;
+  font-size: .85rem; font-weight: 500; color: var(--muted);
+}
+.nav-links a { transition: color .2s; }
+.nav-links a:hover { color: var(--gold); }
+.nav-cta {
+  font-size: .8rem; font-weight: 600;
+  padding: .45rem 1.1rem;
+  border: 1px solid var(--gold-dim);
+  border-radius: 20px;
+  color: var(--gold);
+  transition: background .2s, color .2s;
+}
+.nav-cta:hover { background: var(--gold); color: var(--bg); }
+
+/* ── HERO ── */
+#hero {
+  position: relative; z-index: 1;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 8rem 2rem 6rem;
+  overflow: hidden;
+}
+.hero-glow {
+  position: absolute;
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(240,208,96,.07) 0%, transparent 70%);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -55%);
+  pointer-events: none;
+}
+.hero-anchor {
+  font-size: .75rem; font-weight: 600; letter-spacing: .25em;
+  color: var(--gold-dim); text-transform: uppercase;
+  margin-bottom: 1.4rem;
+  animation: fadeUp .9s ease both;
+}
+.hero-title {
+  font-family: var(--serif);
+  font-size: clamp(3.8rem, 9vw, 7.5rem);
+  line-height: 1;
+  background: linear-gradient(135deg, #fff8e0 0%, var(--gold) 45%, #c0a030 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+  animation: fadeUp .9s .1s ease both;
+}
+.hero-tagline {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.3rem, 3vw, 2rem);
+  color: rgba(220,220,240,.6);
+  margin-bottom: 1.6rem;
+  animation: fadeUp .9s .2s ease both;
+}
+.hero-desc {
+  font-size: 1.05rem; font-weight: 300;
+  color: var(--muted); max-width: 480px;
+  margin-bottom: 2.8rem;
+  animation: fadeUp .9s .3s ease both;
+}
+.hero-actions {
+  display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+  animation: fadeUp .9s .4s ease both;
+}
+.btn-primary {
+  padding: .75rem 2rem; border-radius: 30px;
+  background: var(--gold); color: var(--bg);
+  font-weight: 700; font-size: .95rem;
+  transition: transform .2s, box-shadow .2s;
+  box-shadow: 0 0 24px rgba(240,208,96,.3);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 36px rgba(240,208,96,.45); }
+.btn-ghost {
+  padding: .75rem 2rem; border-radius: 30px;
+  border: 1px solid var(--border);
+  color: var(--text); font-size: .95rem;
+  transition: border-color .2s, color .2s;
+}
+.btn-ghost:hover { border-color: var(--gold-dim); color: var(--gold); }
+.hero-scroll {
+  position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: .4rem;
+  color: var(--muted); font-size: .7rem; letter-spacing: .15em;
+  animation: fadeUp 1s .8s ease both;
+}
+.scroll-line {
+  width: 1px; height: 40px;
+  background: linear-gradient(to bottom, var(--gold-dim), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+/* ── SECTION SHELL ── */
+section {
+  position: relative; z-index: 1;
+  padding: 6rem 2rem;
+  max-width: 1200px; margin: 0 auto;
+}
+.section-label {
+  font-size: .72rem; font-weight: 600; letter-spacing: .2em;
+  color: var(--gold-dim); text-transform: uppercase; margin-bottom: .8rem;
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--text); margin-bottom: .6rem;
+}
+.section-subtitle {
+  font-size: 1rem; color: var(--muted); max-width: 520px; margin-bottom: 3rem;
+}
+.section-divider {
+  width: 60px; height: 2px;
+  background: linear-gradient(to right, var(--gold), transparent);
+  margin: 1rem 0 3rem;
+}
+
+/* ── PRODUCT GRID — PREMIUM ── */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+.product-card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem 1.75rem 1.75rem;
+  transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+  overflow: hidden;
+  display: flex; flex-direction: column; justify-content: space-between;
+  gap: 1.5rem;
+  cursor: pointer;
+}
+.product-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 0% 0%, var(--gold-glow), transparent 60%);
+  opacity: 0; transition: opacity .4s;
+  pointer-events: none;
+}
+.product-card:hover { transform: translateY(-5px); border-color: rgba(240,208,96,.35); box-shadow: 0 16px 48px rgba(0,0,0,.5); }
+.product-card:hover::before { opacity: 1; }
+
+.card-top { display: flex; align-items: flex-start; justify-content: space-between; }
+.card-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: var(--gold-glow);
+  border: 1px solid rgba(240,208,96,.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+}
+.card-badge {
+  font-size: .65rem; font-weight: 600; letter-spacing: .1em;
+  padding: .25rem .65rem; border-radius: 20px;
+  text-transform: uppercase;
+}
+.badge-live   { background: rgba(78,205,196,.12); color: var(--teal); border: 1px solid rgba(78,205,196,.25); }
+.badge-coming { background: rgba(240,208,96,.08); color: var(--gold-dim); border: 1px solid var(--border); }
+
+.card-name {
+  font-family: var(--serif);
+  font-size: 1.55rem;
+  color: var(--text);
+  line-height: 1.1;
+  margin-bottom: .4rem;
+}
+.card-subtitle {
+  font-size: .88rem; color: var(--muted);
+  font-weight: 300; font-style: italic;
+}
+.card-link {
+  display: inline-flex; align-items: center; gap: .4rem;
+  font-size: .8rem; font-weight: 600; color: var(--gold-dim);
+  letter-spacing: .05em;
+  transition: color .2s, gap .2s;
+}
+.product-card:hover .card-link { color: var(--gold); gap: .65rem; }
+.card-link-disabled { color: var(--muted); cursor: default; }
+.arrow { font-size: .9rem; }
+
+/* ── TOOLS GRID — SECONDARY ── */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+.tool-card {
+  background: var(--lift);
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  display: flex; align-items: center; gap: 1rem;
+  transition: border-color .2s, background .2s;
+  cursor: pointer;
+}
+.tool-card:hover { border-color: var(--border); background: var(--surface); }
+.tool-icon {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: rgba(255,255,255,.05);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0;
+}
+.tool-info { min-width: 0; }
+.tool-name { font-size: .9rem; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tool-desc { font-size: .75rem; color: var(--muted); margin-top: .15rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ── CONSTITUTION FOOTER ── */
+footer {
+  position: relative; z-index: 1;
+  border-top: 1px solid rgba(240,208,96,.08);
+  padding: 4rem 2rem 3rem;
+  text-align: center;
+}
+.footer-motto {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.4rem;
+  color: rgba(240,208,96,.25);
+  margin-bottom: 2rem;
+  letter-spacing: .06em;
+}
+.footer-links {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem;
+  font-size: .8rem; font-weight: 500; color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+.footer-links a:hover { color: var(--gold); }
+.footer-copy {
+  font-size: .72rem; color: rgba(120,120,160,.5);
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: .4; }
+  50%       { opacity: 1; }
+}
+
+.reveal {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.25rem; }
+  .nav-links { display: none; }
+  section { padding: 4rem 1.25rem; }
+  .product-grid { grid-template-columns: 1fr; }
+  .tools-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+  .tools-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">⚓ AnchorWithin</span>
+  <ul class="nav-links">
+    <li><a href="#products">Products</a></li>
+    <li><a href="#tools">Tools</a></li>
+    <li><a href="https://youtube.com/@AnchorWithin" target="_blank">YouTube</a></li>
+  </ul>
+  <a href="https://ackccreate.github.io/anchorwithin-store/" class="nav-cta">Store</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <p class="hero-anchor">⚓ AnchorWithin</p>
+  <h1 class="hero-title">AnchorWithin</h1>
+  <p class="hero-tagline">The Anchor Holds.</p>
+  <p class="hero-desc">AI-powered tools for memory, grounding, and creation.</p>
+  <div class="hero-actions">
+    <a href="#products" class="btn-primary">Explore Products</a>
+    <a href="https://ackccreate.github.io/anchorwithin-store/" class="btn-ghost">Visit Store</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>SCROLL</span>
+  </div>
+</section>
+
+<!-- PREMIUM PRODUCTS -->
+<section id="products">
+  <p class="section-label reveal">Signature Experiences</p>
+  <h2 class="section-title reveal">Built to Move You</h2>
+  <p class="section-subtitle reveal">Seven tools that hold what ordinary software ignores — memory, presence, and wonder.</p>
+  <div class="section-divider reveal"></div>
+
+  <div class="product-grid">
+
+    <a href="https://ackccreate.github.io/echowalk/" class="product-card reveal">
+      <div>
+        <div class="card-top">
+          <div class="card-icon">🌫️</div>
+          <span class="card-badge badge-live">Live</span>
+        </div>
+        <h3 class="card-name" style="margin-top:1.2rem">EchoWalk</h3>
+        <p class="card-subtitle">"Step Inside Your Lost Memories"</p>
+      </div>
+      <span class="card-link">Explore <span class="arrow">→</span></span>
+    </a>
+
+    <a href="https://ackccreate.github.io/kidspark/" class="product-card reveal">
+      <div>
+        <div class="card-top">
+          <div class="card-icon">🧸</div>
+          <span class="card-badge badge-live">Live</span>
+        </div>
+        <h3 class="card-name" style="margin-top:1.2rem">KidSpark</h3>
+        <p class="card-subtitle">"Turn Your Toys Into Worlds"</p>
+      </div>
+      <span class="card-link">Explore <span class="arrow">→</span></span>
+    </a>
+
+    <a href="https://ackccreate.github.io/forever-paws/" class="product-card reveal">
+      <div>
+        <div class="card-top">
+          <div class="card-icon">🐾</div>
+          <span class="card-badge badge-live">Live</span>
+        </div>
+        <h3 class="card-name" style="margin-top:1.2rem">Forever Paws</h3>
+        <p class="card-subtitle">"Keep Them by Your Side"</p>
+      </div>
+      <span class="card-link">Explore <span class="arrow">→</span></span>
+    </a>
+
+    <a href="https://ackccreate.github.io/sanctuary-bell/" class="product-card reveal">
+      <div>
+        <div class="card-top">
+          <div class="card-icon">🔔</div>
+          <span class="card-badge badge-live">Live</span>
+        </div>
+        <h3 class="card-name" style="margin-top:1.2rem">Sanctuary Bell</h3>
+        <p class="card-subtitle">"Hear the Soul of Objects"</p>
+      </div>
+      <span class="card-link">Explore <span class="arrow">→</span></span>
+    </a>
+
+    <a href="https://ackccreate.github.io/breatheworld/" class="product-card reveal">
+      <div>
+        <div class="card-top">
+          <div class="card-icon">🌊</div>
+          <span class="card-badge badge-live">Live</span>
+        </div>
+        <h3 class="card-name" style="margin-top:1.2rem">BreatheWorld</h3>
+        <p class="card-subtitle">"A World That Breathes With You"</p>
+      </div>
+      <span class="card-link">Explore <span class="arrow">→</span></span>
+    </a>
+
+    <a href="https://ackccreate.github.io/dreamwalk/" class="product-card reveal">
+      <div>
+        <div class="card-top">
+          <div class="card-icon">✨</div>
+          <span class="card-badge badge-live">Live</span>
+        </div>
+        <h3 class="card-name" style="margin-top:1.2rem">DreamWalk</h3>
+        <p class="card-subtitle">"Speak a Dream into Existence"</p>
+      </div>
+      <span class="card-link">Explore <span class="arrow">→</span></span>
+    </a>
+
+    <a href="https://ackccreate.github.io/thennow/" class="product-card reveal">
+      <div>
+        <div class="card-top">
+          <div class="card-icon">⏳</div>
+          <span class="card-badge badge-live">Live</span>
+        </div>
+        <h3 class="card-name" style="margin-top:1.2rem">ThenNow</h3>
+        <p class="card-subtitle">"Transformations from Then to Now"</p>
+      </div>
+      <span class="card-link">Explore <span class="arrow">→</span></span>
+    </a>
+
+    <a href="https://ackccreate.github.io/depthclick/" class="product-card reveal">
+      <div>
+        <div class="card-top">
+          <div class="card-icon">📸</div>
+          <span class="card-badge badge-live">Live</span>
+        </div>
+        <h3 class="card-name" style="margin-top:1.2rem">DepthClick</h3>
+        <p class="card-subtitle">"Cinematic Parallax from Any Photo"</p>
+      </div>
+      <span class="card-link">Explore <span class="arrow">→</span></span>
+    </a>
+
+  </div>
+</section>
+
+<!-- ALL TOOLS -->
+<section id="tools" style="padding-top:0">
+  <p class="section-label reveal">The Full Toolkit</p>
+  <h2 class="section-title reveal">Every Tool, All Free</h2>
+  <p class="section-subtitle reveal">Thirteen AI-powered utilities — no login, no paywall, all yours.</p>
+  <div class="section-divider reveal"></div>
+
+  <div class="tools-grid">
+
+    <a href="https://ackccreate.github.io/ai-companion/" class="tool-card reveal">
+      <div class="tool-icon">🤖</div>
+      <div class="tool-info">
+        <div class="tool-name">AI Companion</div>
+        <div class="tool-desc">3 personas, guided journaling</div>
+      </div>
+    </a>
+
+    <a href="https://ackccreate.github.io/anchor-remembers/" class="tool-card reveal">
+      <div class="tool-icon">📖</div>
+      <div class="tool-info">
+        <div class="tool-name">Anchor Remembers</div>
+        <div class="tool-desc">Digital memory companion</div>
+      </div>
+    </a>
+
+    <a href="https://ackccreate.github.io/resonance-generator/" class="tool-card reveal">
+      <div class="tool-icon">🎵</div>
+      <div class="tool-info">
+        <div class="tool-name">Resonance Generator</div>
+        <div class="tool-desc">432Hz relaxation frequencies</div>
+      </div>
+    </a>
+
+    <a href="https://ackccreate.github.io/resonance-runner/" class="tool-card reveal">
+      <div class="tool-icon">🏃</div>
+      <div class="tool-info">
+        <div class="tool-name">Resonance Runner</div>
+        <div class="tool-desc">432Hz endless runner game</div>
+      </div>
+    </a>
+
+    <a href="https://ackccreate.github.io/resume-optimizer/" class="tool-card reveal">
+      <div class="tool-icon">📄</div>
+      <div class="tool-info">
+        <div class="tool-name">Resume Optimizer</div>
+        <div class="tool-desc">ATS scoring, job-fit analysis</div>
+      </div>
+    </a>
+
+    <a href="https://ackccreate.github.io/side-hustle-planner/" class="tool-card reveal">
+      <div class="tool-icon">💡</div>
+      <div class="tool-info">
+        <div class="tool-name">Side Hustle Planner</div>
+        <div class="tool-desc">Score 15+ income streams</div>
+      </div>
+    </a>
+
+    <a href="https://ackccreate.github.io/tax-deduction-calculator/" class="tool-card reveal">
+      <div class="tool-icon">🧾</div>
+      <div class="tool-info">
+        <div class="tool-name">Tax Deduction Tracker</div>
+        <div class="tool-desc">19 categories, savings chart</div>
+      </div>
+    </a>
+
+    <a href="https://ackccreate.github.io/home-companion-sensors/" class="tool-card reveal">
+      <div class="tool-icon">🏠</div>
+      <div class="tool-info">
+        <div class="tool-name">Home Sensors</div>
+        <div class="tool-desc">Smart home companion</div>
+      </div>
+    </a>
+
+    <a href="https://ackccreate.github.io/ideaforge/" class="tool-card reveal">
+      <div class="tool-icon">⚗️</div>
+      <div class="tool-info">
+        <div class="tool-name">IdeaForge</div>
+        <div class="tool-desc">AI business idea generator</div>
+      </div>
+    </a>
+
+    <a href="https://ackccreate.github.io/verityswarm/" class="tool-card reveal">
+      <div class="tool-icon">🔍</div>
+      <div class="tool-info">
+        <div class="tool-name">VeritySwarm</div>
+        <div class="tool-desc">AI truth-verification swarm</div>
+      </div>
+    </a>
+
+    <a href="https://ackccreate.github.io/anchorwithin-bundle/" class="tool-card reveal">
+      <div class="tool-icon">📦</div>
+      <div class="tool-info">
+        <div class="tool-name">Complete Bundle</div>
+        <div class="tool-desc">All 6 tools in one place</div>
+      </div>
+    </a>
+
+    <a href="https://ackccreate.github.io/anchorwithin-blog/" class="tool-card reveal">
+      <div class="tool-icon">✍️</div>
+      <div class="tool-info">
+        <div class="tool-name">AnchorWithin Blog</div>
+        <div class="tool-desc">AI tools, career & finance</div>
+      </div>
+    </a>
+
+    <a href="https://ackccreate.github.io/anchorwithin-store/" class="tool-card reveal">
+      <div class="tool-icon">🛍️</div>
+      <div class="tool-info">
+        <div class="tool-name">Store</div>
+        <div class="tool-desc">Sound healing packs & guides</div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-motto">"The anchor holds."</p>
+  <div class="footer-links">
+    <a href="https://youtube.com/@AnchorWithin" target="_blank">YouTube</a>
+    <a href="https://ackccreate.github.io/anchorwithin-store/">Store</a>
+    <a href="https://ackccreate.github.io/anchorwithin-blog/">Blog</a>
+    <a href="https://ackccreate.github.io/anchorwithin-privacy/">Privacy Policy</a>
+    <a href="https://ackccreate.github.io/anchorwithin-tos/">Terms of Service</a>
+    <a href="mailto:anchorwithin.daily1@gmail.com">Contact</a>
+  </div>
+  <p class="footer-copy">&copy; 2026 AnchorWithin LLC &nbsp;·&nbsp; Salt Lake City, UT &nbsp;·&nbsp; All rights reserved.</p>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach((el, i) => {
+  el.style.transitionDelay = `${(i % 4) * 0.08}s`;
+  observer.observe(el);
+});
+
+// Smooth card clicks
+document.querySelectorAll('.product-card, .tool-card').forEach(card => {
+  card.addEventListener('click', function(e) {
+    const href = this.getAttribute('href');
+    if (href && href !== '#') window.location.href = href;
+  });
+});
+</script>
+</body>
+</html>
