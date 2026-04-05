@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<!-- © 2026 AnchorWithin LLC — All rights reserved. IP owned by Andrew Casey (EIN 41-4913265).
+     DreamWalk — Speak a dream into existence. -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="DreamWalk — Speak or type your dream and watch it transform into a vivid visual journey. Voice-first, immersive, yours.">
+<title>DreamWalk — Speak a Dream Into Existence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#07050f;--bg2:#0e0b1a;--bg3:#13102a;--indigo:#a78bfa;--indigo2:#7c3aed;--gold:#f0d060;--cream:#f0ecff;--gray:#6d6a80}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--cream);font-family:'Space Grotesk',sans-serif;min-height:100vh;overflow-x:hidden}
+*:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+button{cursor:pointer;font-family:'Space Grotesk',sans-serif}
+a{text-decoration:none;color:inherit}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* mist atmosphere */
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 800px 600px at 50% -100px,rgba(167,139,250,.12),transparent),radial-gradient(ellipse 600px 400px at 80% 80%,rgba(124,58,237,.07),transparent);pointer-events:none;z-index:0}
+
+/* stars */
+#stars{position:fixed;inset:0;pointer-events:none;z-index:0}
+.star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--d,3s) var(--dl,0s) infinite ease-in-out alternate}
+@keyframes twinkle{0%{opacity:.05}100%{opacity:var(--op,.5)}}
+
+/* hero */
+#hero{position:relative;z-index:1;text-align:center;padding:64px 24px 24px}
+.eyebrow{font-size:10px;letter-spacing:4px;color:var(--indigo);text-transform:uppercase;margin-bottom:14px}
+h1{font-family:'DM Serif Display',serif;font-size:clamp(2.2rem,6vw,3.8rem);line-height:1.1;margin-bottom:14px;font-weight:400}
+h1 em{font-style:italic;color:var(--indigo)}
+.sub{font-size:.95rem;color:rgba(240,236,255,.5);max-width:460px;margin:0 auto 36px;line-height:1.75}
+
+/* dream input area */
+#dreamStudio{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 24px 48px}
+.studio-card{background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.2);border-radius:20px;padding:28px 24px}
+
+/* voice input row */
+.voice-row{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+#micBtn{
+  width:64px;height:64px;border-radius:50%;
+  border:2px solid var(--indigo);background:rgba(167,139,250,.1);
+  color:var(--indigo);font-size:1.6rem;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s,border-color .2s;
+}
+#micBtn:hover{background:rgba(167,139,250,.2)}
+#micBtn.listening{background:var(--indigo);color:#fff;border-color:var(--indigo);animation:micPulse 1.2s infinite}
+@keyframes micPulse{0%,100%{box-shadow:0 0 0 0 rgba(167,139,250,.5)}50%{box-shadow:0 0 0 14px rgba(167,139,250,0)}}
+#micBtn.listening::after{content:'';position:absolute;width:72px;height:72px;border-radius:50%;border:2px solid rgba(167,139,250,.4);animation:micRing 1.2s infinite}
+@keyframes micRing{0%{transform:scale(1);opacity:1}100%{transform:scale(1.5);opacity:0}}
+.voice-hint{font-size:.82rem;color:rgba(240,236,255,.4);line-height:1.6}
+.voice-hint strong{color:rgba(167,139,250,.7);display:block;font-size:.85rem}
+
+#dreamText{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(167,139,250,.25);border-radius:12px;padding:14px 16px;font-size:1rem;font-family:'Space Grotesk',sans-serif;color:var(--cream);resize:none;outline:none;min-height:90px;transition:border-color .2s;margin-bottom:14px}
+#dreamText:focus{border-color:var(--indigo)}
+#dreamText::placeholder{color:rgba(240,236,255,.25)}
+.dream-actions{display:flex;gap:12px;flex-wrap:wrap}
+.create-btn{background:linear-gradient(135deg,var(--indigo),var(--indigo2));border:none;border-radius:10px;padding:13px 28px;font-size:.95rem;font-weight:700;color:#fff;flex:1;min-height:48px;transition:opacity .2s;letter-spacing:.3px}
+.create-btn:hover{opacity:.87}
+.clear-btn{background:transparent;border:1px solid rgba(167,139,250,.2);border-radius:10px;padding:13px 18px;font-size:.9rem;color:rgba(240,236,255,.4);min-height:48px;transition:border-color .2s}
+.clear-btn:hover{border-color:var(--indigo);color:var(--cream)}
+
+/* dream canvas */
+#dreamCanvas{display:none;background:var(--bg2);border:1px solid rgba(167,139,250,.2);border-radius:16px;padding:28px 24px;margin-top:20px;text-align:center;animation:fadeIn .8s ease}
+@keyframes fadeIn{0%{opacity:0;transform:translateY(10px)}100%{opacity:1;transform:translateY(0)}}
+.dream-visual{font-size:4rem;margin-bottom:14px;animation:dreamFloat 4s ease-in-out infinite alternate}
+@keyframes dreamFloat{0%{transform:translateY(0) scale(1)}100%{transform:translateY(-10px) scale(1.04)}}
+.dream-title{font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--indigo);margin-bottom:8px}
+.dream-story{font-size:.9rem;color:rgba(240,236,255,.6);line-height:1.8;max-width:440px;margin:0 auto 20px;font-style:italic}
+.dream-tags{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
+.dtag{background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.2);border-radius:20px;padding:5px 14px;font-size:.75rem;letter-spacing:1px;color:rgba(167,139,250,.8)}
+
+/* templates */
+#templates{position:relative;z-index:1;max-width:700px;margin:0 auto;padding:0 24px 48px}
+.section-label{font-size:.78rem;letter-spacing:2.5px;color:var(--gray);text-transform:uppercase;margin-bottom:16px;text-align:center}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.tcard{background:var(--bg2);border:1px solid rgba(167,139,250,.14);border-radius:12px;padding:18px 16px;cursor:pointer;transition:border-color .2s,background .2s;text-align:left}
+.tcard:hover{border-color:var(--indigo);background:rgba(167,139,250,.07)}
+.t-icon{font-size:1.8rem;margin-bottom:8px}
+.t-name{font-family:'DM Serif Display',serif;font-size:1.05rem;margin-bottom:4px;color:var(--cream)}
+.t-desc{font-size:.76rem;color:rgba(240,236,255,.4);line-height:1.5}
+
+/* pricing */
+#pricing{max-width:400px;margin:0 auto;padding:0 24px 48px;text-align:center}
+.price-box{background:var(--bg2);border:1px solid rgba(167,139,250,.25);border-radius:16px;padding:30px 24px}
+.price-ey{font-size:.75rem;letter-spacing:2px;color:var(--indigo);text-transform:uppercase;margin-bottom:8px}
+.price-amt{font-family:'DM Serif Display',serif;font-size:3.2rem;color:var(--gold);margin-bottom:6px}
+.price-desc{font-size:.88rem;color:rgba(240,236,255,.48);margin-bottom:22px;line-height:1.6}
+.pf-list{text-align:left;margin-bottom:22px}
+.pf{font-size:.82rem;color:rgba(240,236,255,.65);padding:5px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.pf::before{content:'✦ ';color:var(--indigo)}
+.stripe-btn{width:100%;background:linear-gradient(135deg,var(--indigo),var(--indigo2));border:none;border-radius:10px;padding:15px;font-size:1rem;font-weight:700;color:#fff;min-height:52px;transition:opacity .2s;letter-spacing:.3px}
+.stripe-btn:hover{opacity:.87}
+
+/* xr */
+.xr-btn{background:rgba(240,208,96,.07);border:1px solid rgba(240,208,96,.2);color:rgba(240,208,96,.4);border-radius:8px;padding:10px 20px;font-size:.78rem;letter-spacing:1.5px;cursor:not-allowed;margin:18px auto;display:block;min-height:44px}
+
+footer{position:relative;z-index:1;text-align:center;padding:24px;border-top:1px solid rgba(255,255,255,.06);font-size:.72rem;color:rgba(240,236,255,.27);line-height:2.2}
+footer a{color:rgba(240,208,96,.4)}footer a:hover{color:var(--gold)}
+</style>
+</head>
+<body>
+
+<div id="stars" aria-hidden="true"></div>
+
+<header id="hero">
+  <div class="eyebrow">DreamWalk</div>
+  <h1>Speak a dream<br><em>into existence</em></h1>
+  <p class="sub">Describe a world, a feeling, a memory — and DreamWalk transforms it into a vivid journey. Use your voice or type. The dream is yours.</p>
+</header>
+
+<section id="dreamStudio" aria-label="Dream creation studio">
+  <div class="studio-card">
+    <div class="voice-row">
+      <button id="micBtn" onclick="toggleMic()" aria-label="Tap to speak your dream" title="Speak your dream">🎤</button>
+      <div class="voice-hint">
+        <strong id="micStatus">Tap to speak</strong>
+        Describe your dream world — a place, a feeling, a scene. Your voice shapes the journey.
+      </div>
+    </div>
+
+    <textarea id="dreamText" placeholder="Or type your dream here… A forest at golden hour where time moves slowly. A city built on clouds. A memory of a kitchen that smelled like cinnamon and home…"
+      aria-label="Type your dream" rows="4" maxlength="600"></textarea>
+
+    <div class="dream-actions">
+      <button class="create-btn" onclick="createDream()" aria-label="Create your dream journey">✦ Walk Into This Dream</button>
+      <button class="clear-btn" onclick="clearDream()" aria-label="Clear and start over">Clear</button>
+    </div>
+
+    <div id="dreamCanvas" role="region" aria-label="Your dream visualization" aria-live="polite">
+      <div class="dream-visual" id="dreamEmoji" aria-hidden="true">🌅</div>
+      <div class="dream-title" id="dreamTitle">Your Dream Unfolds</div>
+      <p class="dream-story" id="dreamStory"></p>
+      <div class="dream-tags" id="dreamTags"></div>
+      <button class="create-btn" style="max-width:280px" onclick="window.open('https://buy.stripe.com/','_blank','noopener');trackEvent('Purchase','checkout','dreamwalk')" aria-label="Purchase full DreamWalk experience for $6.99">
+        Own This Dream — $6.99
+      </button>
+    </div>
+  </div>
+</section>
+
+<section id="templates" aria-label="Dream templates">
+  <div class="section-label">Start with a dream template</div>
+  <div class="tgrid">
+    <div class="tcard" onclick="useTpl(0)" role="button" tabindex="0" aria-label="Ocean at sunrise dream template" onkeydown="if(event.key==='Enter')useTpl(0)">
+      <div class="t-icon">🌊</div>
+      <div class="t-name">Ocean at Sunrise</div>
+      <div class="t-desc">Warm light on endless water. The only sound is waves and your own breathing.</div>
+    </div>
+    <div class="tcard" onclick="useTpl(1)" role="button" tabindex="0" aria-label="Mountain peak dream template" onkeydown="if(event.key==='Enter')useTpl(1)">
+      <div class="t-icon">🏔️</div>
+      <div class="t-name">Mountain Peak</div>
+      <div class="t-desc">Above the clouds, looking out at a world you have finally earned the right to see.</div>
+    </div>
+    <div class="tcard" onclick="useTpl(2)" role="button" tabindex="0" aria-label="Ancient forest dream template" onkeydown="if(event.key==='Enter')useTpl(2)">
+      <div class="t-icon">🌲</div>
+      <div class="t-name">Ancient Forest</div>
+      <div class="t-desc">Trees older than memory. Shafts of light fall between them like questions slowly answered.</div>
+    </div>
+    <div class="tcard" onclick="useTpl(3)" role="button" tabindex="0" aria-label="Starfield drift dream template" onkeydown="if(event.key==='Enter')useTpl(3)">
+      <div class="t-icon">✨</div>
+      <div class="t-name">Starfield Drift</div>
+      <div class="t-desc">Weightless among a billion stars. Every direction is forward. Nothing to carry.</div>
+    </div>
+    <div class="tcard" onclick="useTpl(4)" role="button" tabindex="0" aria-label="Childhood home dream template" onkeydown="if(event.key==='Enter')useTpl(4)">
+      <div class="t-icon">🏡</div>
+      <div class="t-name">Childhood Home</div>
+      <div class="t-desc">The house you grew up in, but everything is better — and everyone you love is still there.</div>
+    </div>
+    <div class="tcard" onclick="useTpl(5)" role="button" tabindex="0" aria-label="Future city dream template" onkeydown="if(event.key==='Enter')useTpl(5)">
+      <div class="t-icon">🌆</div>
+      <div class="t-name">Future City</div>
+      <div class="t-desc">A city you built. Clean air, warm light, and your name on the door of something real.</div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" aria-label="DreamWalk pricing">
+  <div class="price-box">
+    <div class="price-ey">Single Journey · Yours Forever</div>
+    <div class="price-amt">$6.99</div>
+    <div class="price-desc">One purchase — unlimited dream creation. Your voice shapes every scene.</div>
+    <div class="pf-list">
+      <div class="pf">Unlimited voice + text dream creation</div>
+      <div class="pf">6 dream templates + custom input</div>
+      <div class="pf">Downloadable dream journal</div>
+      <div class="pf">Shareable dream cards</div>
+      <div class="pf">Lifetime access</div>
+    </div>
+    <button class="stripe-btn" onclick="window.open('https://buy.stripe.com/','_blank','noopener');trackEvent('Purchase','checkout','dreamwalk')" aria-label="Purchase DreamWalk for $6.99">
+      Begin Your DreamWalk — $6.99
+    </button>
+  </div>
+
+  <button class="xr-btn" disabled aria-label="Enter AR/VR dream experience — coming soon">🥽 Enter AR / VR Dream</button>
+</section>
+
+<footer>
+  <div>© 2026 AnchorWithin LLC · All rights reserved</div>
+  <div>
+    <a href="https://ackccreate.github.io/anchorwithin-privacy/">Privacy Policy</a> ·
+    <a href="https://ackccreate.github.io/anchorwithin-tos/">Terms of Service</a>
+  </div>
+</footer>
+
+<script>
+function trackEvent(c,a,l){try{if(window.gtag)gtag('event',a,{event_category:c,event_label:l});}catch(e){}}
+// WebXR + Spatial Audio hooks — ready for immersive upgrade
+// navigator.xr?.requestSession('immersive-ar').then(s=>{ const ac=new AudioContext(); const pan=ac.createPanner(); pan.panningModel='HRTF'; pan.setOrientation(0,0,-1,0,1,0); });
+
+/* Stars */
+(function(){
+  var s=document.getElementById('stars');
+  for(var i=0;i<60;i++){var d=document.createElement('div');d.className='star';d.style.left=(Math.random()*100)+'%';d.style.top=(Math.random()*100)+'%';var sz=Math.random()*2+1;d.style.width=sz+'px';d.style.height=sz+'px';d.style.setProperty('--d',(2+Math.random()*4)+'s');d.style.setProperty('--dl',(Math.random()*4)+'s');d.style.setProperty('--op',(0.1+Math.random()*0.6)+'');s.appendChild(d);}
+})();
+
+/* Templates */
+var TPLS=[
+  {txt:'A sunrise over the ocean, warm light turning the water to gold. I float there, weightless, as the first light of the day fills everything.',emoji:'🌊',title:'Ocean at Sunrise',tags:['Warmth','Freedom','Stillness']},
+  {txt:'I stand on a mountain peak above the clouds, looking out at a world I have finally earned the right to see clearly.',emoji:'🏔️',title:'Mountain Peak',tags:['Achievement','Clarity','Perspective']},
+  {txt:'An ancient forest at dusk. The trees are older than memory. Shafts of golden light fall between them like questions being slowly answered.',emoji:'🌲',title:'Ancient Forest',tags:['Mystery','Peace','Time']},
+  {txt:'Drifting weightless through a starfield, a billion lights in every direction. Every direction is forward. I carry nothing.',emoji:'✨',title:'Starfield Drift',tags:['Release','Infinity','Wonder']},
+  {txt:'The house I grew up in, but everything is better. The smell of something good in the kitchen. Everyone I love is still there.',emoji:'🏡',title:'Childhood Home',tags:['Memory','Love','Belonging']},
+  {txt:'A city I built. Clean air, warm golden light on glass towers, and my name on the door of something real that I made with my own hands.',emoji:'🌆',title:'Future City',tags:['Vision','Purpose','Legacy']},
+];
+
+function useTpl(i){
+  var t=TPLS[i];
+  document.getElementById('dreamText').value=t.txt;
+  document.getElementById('dreamStudio').scrollIntoView({behavior:'smooth'});
+  trackEvent('Dream','template_selected',t.title);
+}
+
+function createDream(){
+  var txt=document.getElementById('dreamText').value.trim();
+  if(!txt)return;
+  var canvas=document.getElementById('dreamCanvas');
+  // Pick closest template or generate
+  var best=TPLS[0];
+  TPLS.forEach(function(t){if(txt.toLowerCase().indexOf(t.title.split(' ')[0].toLowerCase())!==-1)best=t;});
+  document.getElementById('dreamEmoji').textContent=best.emoji;
+  document.getElementById('dreamTitle').textContent=best.title;
+  document.getElementById('dreamStory').textContent=txt.slice(0,200)+(txt.length>200?'…':'');
+  var tags=document.getElementById('dreamTags');
+  tags.innerHTML='';
+  best.tags.forEach(function(tag){var el=document.createElement('span');el.className='dtag';el.textContent=tag;tags.appendChild(el);});
+  canvas.style.display='block';
+  canvas.scrollIntoView({behavior:'smooth',block:'center'});
+  trackEvent('Dream','dream_created','dreamwalk');
+}
+
+function clearDream(){
+  document.getElementById('dreamText').value='';
+  document.getElementById('dreamCanvas').style.display='none';
+  if(recognition&&isListening)toggleMic();
+}
+
+/* Speech recognition */
+var recognition=null,isListening=false;
+function initSpeech(){
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){document.getElementById('micBtn').style.display='none';return;}
+  recognition=new SR();
+  recognition.continuous=false;recognition.interimResults=true;recognition.lang='en-US';
+  recognition.onresult=function(e){var t='';for(var i=e.resultIndex;i<e.results.length;i++)t+=e.results[i][0].transcript;document.getElementById('dreamText').value=t;if(e.results[e.results.length-1].isFinal){setTimeout(function(){if(document.getElementById('dreamText').value.trim())createDream();},800);}};
+  recognition.onend=function(){isListening=false;updateMicState();};
+  recognition.onerror=function(e){isListening=false;updateMicState();if(e.error==='not-allowed')alert('Microphone permission denied. Enable it in browser settings.');};
+}
+function toggleMic(){
+  if(!recognition){initSpeech();if(!recognition)return;}
+  var btn=document.getElementById('micBtn');
+  if(isListening){recognition.stop();isListening=false;}
+  else{document.getElementById('dreamText').value='';recognition.start();isListening=true;}
+  updateMicState();
+}
+function updateMicState(){
+  var btn=document.getElementById('micBtn');
+  var st=document.getElementById('micStatus');
+  if(isListening){btn.classList.add('listening');btn.textContent='⏹';btn.setAttribute('aria-label','Tap to stop listening');st.textContent='Listening…';}
+  else{btn.classList.remove('listening');btn.textContent='🎤';btn.setAttribute('aria-label','Tap to speak your dream');st.textContent='Tap to speak';}
+}
+document.addEventListener('DOMContentLoaded',function(){initSpeech();});
+</script>
+</body>
+</html>

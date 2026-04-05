@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<!-- © 2026 AnchorWithin LLC — All rights reserved. IP owned by Andrew Casey (EIN 41-4913265). -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="ThenNow — Transform before & after moments with an interactive comparison slider. Renovations, fitness, restorations and more.">
+<title>ThenNow — Before &amp; After Transformer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#09090b;--bg2:#111115;--bg3:#18181f;--blue:#3b82f6;--gold:#f0d060;--cream:#f0f0f2;--gray:#52525b}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--cream);font-family:'Manrope',sans-serif;min-height:100vh;overflow-x:hidden}
+*:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+button{cursor:pointer;font-family:'Manrope',sans-serif}
+a{text-decoration:none;color:inherit}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* hero */
+#hero{text-align:center;padding:64px 24px 48px;position:relative}
+#hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 600px 300px at 50% 0,rgba(59,130,246,.1),transparent);pointer-events:none}
+.eyebrow{font-size:10px;letter-spacing:4px;color:var(--blue);text-transform:uppercase;margin-bottom:12px}
+h1{font-size:clamp(2rem,6vw,3.5rem);font-weight:800;line-height:1.1;margin-bottom:14px;letter-spacing:-.02em}
+h1 span{color:var(--blue)}
+.sub{font-size:1rem;color:rgba(240,240,242,.55);max-width:480px;margin:0 auto 36px;line-height:1.7}
+.cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:var(--blue);border:none;border-radius:8px;padding:13px 28px;font-size:.95rem;font-weight:700;color:#fff;min-height:48px;transition:background .18s;letter-spacing:.3px}
+.btn-primary:hover{background:#2563eb}
+.btn-ghost{background:transparent;border:1px solid rgba(240,240,242,.18);border-radius:8px;padding:13px 24px;font-size:.95rem;color:rgba(240,240,242,.65);min-height:48px;transition:border-color .18s}
+.btn-ghost:hover{border-color:var(--blue);color:var(--cream)}
+
+/* comparison demo */
+#demo{max-width:740px;margin:0 auto;padding:0 24px 56px}
+.demo-label{text-align:center;font-size:.78rem;letter-spacing:2px;color:var(--gray);text-transform:uppercase;margin-bottom:18px}
+
+/* upload area */
+.upload-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+.upload-zone{border:2px dashed rgba(59,130,246,.3);border-radius:12px;aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:border-color .2s,background .2s;position:relative;overflow:hidden;background:var(--bg2)}
+.upload-zone:hover{border-color:var(--blue);background:rgba(59,130,246,.05)}
+.upload-zone img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:10px;display:none}
+.upload-zone .uz-label{font-size:.7rem;letter-spacing:2px;color:rgba(240,240,242,.4);text-transform:uppercase;z-index:1}
+.upload-zone .uz-icon{font-size:1.8rem;z-index:1}
+.upload-zone input{display:none}
+
+/* comparison slider */
+#sliderWrap{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:16/9;background:var(--bg3);display:none;margin-bottom:16px;touch-action:none;cursor:col-resize}
+#sliderBefore{position:absolute;inset:0;background-size:cover;background-position:center}
+#sliderAfter{position:absolute;inset:0;background-size:cover;background-position:center;clip-path:inset(0 50% 0 0)}
+#sliderHandle{position:absolute;top:0;bottom:0;left:50%;width:3px;background:var(--gold);transform:translateX(-50%);z-index:10;cursor:col-resize}
+#sliderHandle::before{content:'◀ ▶';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--gold);color:var(--bg);font-size:10px;padding:6px 8px;border-radius:20px;white-space:nowrap;font-weight:700;font-family:'Manrope',sans-serif}
+.slider-tags{display:flex;justify-content:space-between;font-size:.72rem;letter-spacing:1.5px;color:var(--gray);text-transform:uppercase;margin-bottom:24px;padding:0 4px}
+
+/* use cases */
+#usecases{max-width:740px;margin:0 auto;padding:0 24px 56px}
+.section-title{font-size:1.3rem;font-weight:800;margin-bottom:20px;text-align:center;letter-spacing:-.02em}
+.uc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px}
+.uc{background:var(--bg2);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:20px 16px;text-align:center;transition:border-color .2s}
+.uc:hover{border-color:var(--blue)}
+.uc-icon{font-size:2rem;margin-bottom:10px}
+.uc-name{font-size:.88rem;font-weight:700;margin-bottom:4px}
+.uc-desc{font-size:.75rem;color:rgba(240,240,242,.45);line-height:1.5}
+
+/* pricing */
+#pricing{max-width:400px;margin:0 auto;padding:0 24px 48px;text-align:center}
+.price-box{background:var(--bg2);border:1px solid rgba(59,130,246,.3);border-radius:16px;padding:32px 24px}
+.price-eyebrow{font-size:.75rem;letter-spacing:2px;color:var(--blue);text-transform:uppercase;margin-bottom:8px}
+.price-amt{font-size:3rem;font-weight:800;color:var(--gold);margin-bottom:6px;letter-spacing:-.03em}
+.price-desc{font-size:.88rem;color:rgba(240,240,242,.5);margin-bottom:24px;line-height:1.6}
+.price-features{text-align:left;margin-bottom:24px}
+.pf{font-size:.83rem;color:rgba(240,240,242,.7);padding:5px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.pf::before{content:'✓ ';color:var(--blue)}
+.stripe-btn{width:100%;background:var(--blue);border:none;border-radius:10px;padding:15px;font-size:1rem;font-weight:700;color:#fff;min-height:52px;transition:background .18s;letter-spacing:.3px}
+.stripe-btn:hover{background:#2563eb}
+
+/* xr */
+.xr-btn{background:rgba(240,208,96,.07);border:1px solid rgba(240,208,96,.2);color:rgba(240,208,96,.4);border-radius:8px;padding:10px 20px;font-size:.78rem;letter-spacing:1.5px;cursor:not-allowed;margin:24px auto;display:block;min-height:44px}
+
+footer{text-align:center;padding:24px;border-top:1px solid rgba(255,255,255,.07);font-size:.72rem;color:rgba(240,240,242,.28);line-height:2.2}
+footer a{color:rgba(240,208,96,.45)}footer a:hover{color:var(--gold)}
+</style>
+</head>
+<body>
+
+<header id="hero">
+  <div class="eyebrow">ThenNow</div>
+  <h1>Before &amp; After,<br><span>Transformed</span></h1>
+  <p class="sub">Upload two images and drag the comparison slider to reveal every transformation. Renovations, fitness journeys, city history, photo restoration.</p>
+  <div class="cta-row">
+    <button class="btn-primary" onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'});trackEvent('Demo','cta_click','hero')" aria-label="Try the demo">Try It Free</button>
+    <button class="btn-ghost" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})" aria-label="View pricing">$4.99 — Get Full Access</button>
+  </div>
+</header>
+
+<section id="demo" aria-label="Before and after comparison demo">
+  <div class="demo-label">Upload Your Images</div>
+  <div class="upload-row">
+    <label class="upload-zone" aria-label="Upload THEN (before) image">
+      <div class="uz-icon">📷</div>
+      <div class="uz-label">Then — Before</div>
+      <img id="beforeImg" alt="Before image">
+      <input type="file" id="beforeUp" accept="image/*" onchange="loadImg('before',this)" aria-label="Upload before image">
+    </label>
+    <label class="upload-zone" aria-label="Upload NOW (after) image">
+      <div class="uz-icon">✨</div>
+      <div class="uz-label">Now — After</div>
+      <img id="afterImg" alt="After image">
+      <input type="file" id="afterUp" accept="image/*" onchange="loadImg('after',this)" aria-label="Upload after image">
+    </label>
+  </div>
+
+  <div id="sliderWrap" role="img" aria-label="Interactive before and after comparison slider"
+       tabindex="0" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+    <div id="sliderBefore"></div>
+    <div id="sliderAfter"></div>
+    <div id="sliderHandle" aria-hidden="true"></div>
+  </div>
+  <div class="slider-tags" aria-hidden="true"><span>← Then</span><span>Now →</span></div>
+</section>
+
+<section id="usecases" aria-label="Use cases for ThenNow">
+  <h2 class="section-title">What Will You Transform?</h2>
+  <div class="uc-grid">
+    <div class="uc"><div class="uc-icon">🏠</div><div class="uc-name">Renovations</div><div class="uc-desc">Show clients the dramatic before/after of any space</div></div>
+    <div class="uc"><div class="uc-icon">💪</div><div class="uc-name">Fitness Journey</div><div class="uc-desc">Track and share physical progress with precise sliders</div></div>
+    <div class="uc"><div class="uc-icon">🌆</div><div class="uc-name">City History</div><div class="uc-desc">Overlay historical and modern city photography</div></div>
+    <div class="uc"><div class="uc-icon">🖼️</div><div class="uc-name">Photo Restoration</div><div class="uc-desc">Reveal restored vs. original for professional showcasing</div></div>
+    <div class="uc"><div class="uc-icon">🌿</div><div class="uc-name">Landscaping</div><div class="uc-desc">Garden and yard transformations that impress instantly</div></div>
+    <div class="uc"><div class="uc-icon">✏️</div><div class="uc-name">Art Process</div><div class="uc-desc">Sketch vs. final artwork — show your creative process</div></div>
+  </div>
+</section>
+
+<section id="pricing" aria-label="ThenNow pricing">
+  <div class="price-box">
+    <div class="price-eyebrow">Single Purchase · No Subscription</div>
+    <div class="price-amt">$4.99</div>
+    <div class="price-desc">Full access to ThenNow — unlimited comparisons, download, share</div>
+    <div class="price-features">
+      <div class="pf">Unlimited before/after comparisons</div>
+      <div class="pf">Draggable precision slider</div>
+      <div class="pf">Download shareable image</div>
+      <div class="pf">Works on any device</div>
+      <div class="pf">Lifetime access</div>
+    </div>
+    <button class="stripe-btn" onclick="window.open('https://buy.stripe.com/','_blank','noopener');trackEvent('Purchase','checkout','thennow')" aria-label="Purchase ThenNow for $4.99">
+      Get ThenNow — $4.99
+    </button>
+  </div>
+
+  <button class="xr-btn" disabled aria-label="Enter AR/VR comparison mode — coming soon">🥽 Enter AR / VR Mode</button>
+</section>
+
+<footer>
+  <div>© 2026 AnchorWithin LLC · All rights reserved</div>
+  <div>
+    <a href="https://ackccreate.github.io/anchorwithin-privacy/">Privacy Policy</a> ·
+    <a href="https://ackccreate.github.io/anchorwithin-tos/">Terms of Service</a>
+  </div>
+</footer>
+
+<script>
+function trackEvent(c,a,l){try{if(window.gtag)gtag('event',a,{event_category:c,event_label:l});}catch(e){}}
+// WebXR + Spatial Audio hooks — ready for immersive upgrade
+// navigator.xr?.requestSession('immersive-ar').then(s=>{ const ac=new AudioContext(); const pan=ac.createPanner(); pan.panningModel='HRTF'; });
+
+var imgs={before:null,after:null};
+function loadImg(side,inp){
+  var f=inp.files[0];if(!f)return;
+  var r=new FileReader();
+  r.onload=function(e){
+    imgs[side]=e.target.result;
+    var el=document.getElementById(side+'Img');
+    el.src=e.target.result;el.style.display='block';
+    el.closest('.upload-zone').querySelector('.uz-icon').style.display='none';
+    el.closest('.upload-zone').querySelector('.uz-label').style.display='none';
+    if(imgs.before&&imgs.after)showSlider();
+    trackEvent('Demo','image_uploaded',side);
+  };
+  r.readAsDataURL(f);
+}
+
+function showSlider(){
+  var w=document.getElementById('sliderWrap');
+  document.getElementById('sliderBefore').style.backgroundImage='url('+imgs.before+')';
+  document.getElementById('sliderAfter').style.backgroundImage='url('+imgs.after+')';
+  w.style.display='block';
+  w.scrollIntoView({behavior:'smooth',block:'center'});
+  initSlider();
+}
+
+function initSlider(){
+  var w=document.getElementById('sliderWrap');
+  var after=document.getElementById('sliderAfter');
+  var handle=document.getElementById('sliderHandle');
+  var dragging=false;
+
+  function setPos(pct){
+    pct=Math.max(0,Math.min(100,pct));
+    handle.style.left=pct+'%';
+    after.style.clipPath='inset(0 '+(100-pct)+'% 0 0)';
+    w.setAttribute('aria-valuenow',Math.round(pct));
+  }
+  function fromEvent(e){
+    var rect=w.getBoundingClientRect();
+    var x=(e.touches?e.touches[0].clientX:e.clientX)-rect.left;
+    return x/rect.width*100;
+  }
+  w.addEventListener('mousedown',function(e){dragging=true;setPos(fromEvent(e));e.preventDefault();});
+  w.addEventListener('touchstart',function(e){dragging=true;setPos(fromEvent(e));},{passive:true});
+  window.addEventListener('mousemove',function(e){if(dragging)setPos(fromEvent(e));});
+  window.addEventListener('touchmove',function(e){if(dragging)setPos(fromEvent(e));},{passive:true});
+  window.addEventListener('mouseup',function(){dragging=false;});
+  window.addEventListener('touchend',function(){dragging=false;});
+  w.addEventListener('keydown',function(e){
+    var v=parseInt(w.getAttribute('aria-valuenow')||50);
+    if(e.key==='ArrowLeft'){setPos(v-5);e.preventDefault();}
+    if(e.key==='ArrowRight'){setPos(v+5);e.preventDefault();}
+  });
+}
+</script>
+</body>
+</html>

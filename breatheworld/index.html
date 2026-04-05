@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<!-- © 2026 AnchorWithin LLC — All rights reserved. IP owned by Andrew Casey (EIN 41-4913265).
+     BreatheWorld — For relaxation purposes only, not a medical device. -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="BreatheWorld — A guided breathing app for calm and clarity. Box breathing 4-4-4-4, fog-clearing world preview, and instant calm when you need it.">
+<title>BreatheWorld — Breathing Wellness</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0f0a;--bg2:#0f160f;--green:#4ade80;--green2:#22c55e;--gold:#f0d060;--cream:#e8f0e8;--gray:#4b5563;--red:#ef4444}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--cream);font-family:'Nunito',sans-serif;min-height:100vh;overflow-x:hidden}
+*:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+button{cursor:pointer;font-family:'Nunito',sans-serif}
+a{text-decoration:none;color:inherit}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* hero */
+#hero{text-align:center;padding:56px 24px 40px;position:relative}
+#hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 500px 300px at 50% 20%,rgba(74,222,128,.07),transparent);pointer-events:none}
+.eyebrow{font-size:10px;letter-spacing:4px;color:var(--green);text-transform:uppercase;margin-bottom:12px}
+h1{font-size:clamp(2rem,5vw,3rem);font-weight:700;line-height:1.2;margin-bottom:12px}
+h1 span{color:var(--green)}
+.sub{font-size:1rem;color:rgba(232,240,232,.55);max-width:480px;margin:0 auto 10px;line-height:1.7}
+
+/* disclaimer — prominent */
+.med-disc{background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.2);border-radius:10px;padding:10px 18px;font-size:.78rem;color:rgba(232,240,232,.5);max-width:500px;margin:12px auto 32px;text-align:center;line-height:1.6}
+
+/* breath circle */
+#breatheSection{max-width:500px;margin:0 auto;padding:0 24px 48px;text-align:center}
+.circle-wrap{position:relative;width:220px;height:220px;margin:0 auto 28px}
+.breath-ring{position:absolute;inset:0;border-radius:50%;border:2px solid rgba(74,222,128,.2)}
+.breath-ring-inner{position:absolute;inset:18px;border-radius:50%;border:1px solid rgba(74,222,128,.12)}
+#breathCircle{width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(74,222,128,.25),rgba(10,15,10,.6));border:2px solid var(--green);position:absolute;top:20px;left:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;transition:transform 4s ease-in-out,background 2s;animation:none}
+#breathCircle.inhale{transform:scale(1.2);background:radial-gradient(circle,rgba(74,222,128,.4),rgba(10,15,10,.5))}
+#breathCircle.hold{transform:scale(1.2)}
+#breathCircle.exhale{transform:scale(1);background:radial-gradient(circle,rgba(74,222,128,.12),rgba(10,15,10,.7))}
+.phase-label{font-size:.9rem;font-weight:700;color:var(--green);letter-spacing:2px;text-transform:uppercase}
+.countdown{font-size:2.2rem;font-weight:700;color:var(--cream)}
+
+.breath-ctrl{display:flex;gap:12px;justify-content:center;margin-bottom:24px;flex-wrap:wrap}
+.bstart{background:var(--green);border:none;border-radius:10px;padding:13px 30px;font-size:.95rem;font-weight:700;color:#0a0f0a;min-height:48px;transition:background .2s}
+.bstart:hover{background:var(--green2)}
+.bstop{background:transparent;border:1px solid rgba(74,222,128,.3);border-radius:10px;padding:13px 24px;font-size:.95rem;color:rgba(232,240,232,.6);min-height:48px;display:none;transition:border-color .2s}
+.bstop:hover{border-color:var(--green)}
+
+.phase-guide{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:32px}
+.pg{background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.14);border-radius:8px;padding:10px 6px;text-align:center}
+.pg-num{font-size:1.4rem;font-weight:700;color:var(--green)}
+.pg-lbl{font-size:.65rem;letter-spacing:1.5px;color:rgba(232,240,232,.45);text-transform:uppercase}
+
+/* world preview */
+#worldPreview{max-width:620px;margin:0 auto;padding:0 24px 48px;text-align:center}
+.wp-title{font-size:1.2rem;font-weight:700;margin-bottom:6px}
+.wp-sub{font-size:.85rem;color:rgba(232,240,232,.5);margin-bottom:18px}
+.world-canvas{background:radial-gradient(ellipse at 50% 80%,rgba(74,222,128,.18) 0%,var(--bg2) 60%,var(--bg) 100%);border:1px solid rgba(74,222,128,.18);border-radius:16px;height:200px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;margin-bottom:14px}
+.world-fog{position:absolute;inset:0;background:rgba(10,15,10,.82);transition:opacity 8s ease;border-radius:16px}
+.world-trees{font-size:2.5rem;letter-spacing:8px;z-index:1;filter:blur(0);transition:filter 6s}
+.world-label{position:absolute;bottom:12px;font-size:.7rem;letter-spacing:2px;color:rgba(74,222,128,.5);text-transform:uppercase;z-index:2}
+.cam-note{font-size:.73rem;color:rgba(232,240,232,.35);line-height:1.6}
+.cam-note span{color:rgba(74,222,128,.6)}
+
+/* pricing */
+#pricing{max-width:420px;margin:0 auto;padding:0 24px 48px;text-align:center}
+.price-box{background:var(--bg2);border:1px solid rgba(74,222,128,.25);border-radius:16px;padding:32px 24px}
+.price-ey{font-size:.75rem;letter-spacing:2px;color:var(--green);text-transform:uppercase;margin-bottom:8px}
+.price-amt{font-size:3rem;font-weight:700;color:var(--gold);margin-bottom:4px;letter-spacing:-.02em}
+.price-sub{font-size:.8rem;color:rgba(232,240,232,.38);margin-bottom:6px}
+.price-desc{font-size:.88rem;color:rgba(232,240,232,.5);margin-bottom:22px;line-height:1.6}
+.price-feats{text-align:left;margin-bottom:22px}
+.pf{font-size:.82rem;color:rgba(232,240,232,.68);padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.pf::before{content:'✓ ';color:var(--green)}
+.stripe-btn{width:100%;background:var(--green);border:none;border-radius:10px;padding:15px;font-size:1rem;font-weight:700;color:#0a0f0a;min-height:52px;transition:background .2s;letter-spacing:.3px}
+.stripe-btn:hover{background:var(--green2)}
+.disc-box{background:rgba(74,222,128,.04);border:1px solid rgba(74,222,128,.12);border-radius:10px;padding:12px 16px;font-size:.73rem;color:rgba(232,240,232,.38);line-height:1.6;margin-top:18px;text-align:center}
+
+/* xr */
+.xr-btn{background:rgba(240,208,96,.07);border:1px solid rgba(240,208,96,.2);color:rgba(240,208,96,.4);border-radius:8px;padding:10px 20px;font-size:.78rem;letter-spacing:1.5px;cursor:not-allowed;margin:18px auto;display:block;min-height:44px}
+
+/* PANIC BUTTON — fixed bottom-right, always visible */
+#panicBtn{
+  position:fixed;bottom:24px;right:24px;
+  width:68px;height:68px;border-radius:50%;
+  background:#ef4444;border:3px solid rgba(239,68,68,.6);
+  color:#fff;font-size:1.3rem;font-weight:700;
+  box-shadow:0 0 0 0 rgba(239,68,68,.5);
+  animation:panicPulse 2.5s infinite;
+  z-index:999;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
+  line-height:1;
+  font-family:'Nunito',sans-serif;
+}
+#panicBtn:hover{background:#dc2626;transform:scale(1.07)}
+#panicBtn .panic-txt{font-size:.5rem;letter-spacing:1px;text-transform:uppercase;opacity:.9}
+@keyframes panicPulse{0%{box-shadow:0 0 0 0 rgba(239,68,68,.5)}70%{box-shadow:0 0 0 14px rgba(239,68,68,0)}100%{box-shadow:0 0 0 0 rgba(239,68,68,0)}}
+
+/* calm sanctuary overlay */
+#sanctuary{display:none;position:fixed;inset:0;background:rgba(10,15,10,.97);z-index:1000;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px}
+#sanctuary.open{display:flex}
+.san-title{font-size:1.8rem;font-weight:700;color:var(--green);margin-bottom:12px}
+.san-sub{font-size:1rem;color:rgba(232,240,232,.6);margin-bottom:32px;line-height:1.7}
+.san-circle{width:160px;height:160px;border-radius:50%;border:2px solid var(--green);display:flex;align-items:center;justify-content:center;margin:0 auto 32px;font-size:2.5rem;animation:sanBreath 4s ease-in-out infinite alternate}
+@keyframes sanBreath{0%{transform:scale(1);box-shadow:0 0 0 0 rgba(74,222,128,.2)}100%{transform:scale(1.12);box-shadow:0 0 0 20px rgba(74,222,128,0)}}
+.san-msg{font-size:.88rem;color:rgba(232,240,232,.5);margin-bottom:24px;font-style:italic}
+.san-close{background:transparent;border:1px solid rgba(74,222,128,.3);border-radius:10px;padding:12px 28px;font-size:.9rem;color:var(--green);min-height:48px;transition:border-color .2s}
+.san-close:hover{border-color:var(--green)}
+
+footer{text-align:center;padding:24px;border-top:1px solid rgba(255,255,255,.06);font-size:.72rem;color:rgba(232,240,232,.27);line-height:2.2}
+footer a{color:rgba(240,208,96,.4)}footer a:hover{color:var(--gold)}
+</style>
+</head>
+<body>
+
+<!-- PANIC BUTTON — always visible -->
+<button id="panicBtn" onclick="openSanctuary()" aria-label="Panic button — instant calm sanctuary" title="Tap for instant calm">
+  <span>🌿</span>
+  <span class="panic-txt">Calm</span>
+</button>
+
+<!-- Calm Sanctuary Overlay -->
+<div id="sanctuary" role="dialog" aria-modal="true" aria-label="Calm sanctuary">
+  <div class="san-circle" aria-hidden="true">🌿</div>
+  <div class="san-title">You Are Safe</div>
+  <p class="san-sub">Breathe slowly. You don't have to do anything right now.<br>This moment is all there is.</p>
+  <p class="san-msg" id="sanMsg">Inhale slowly… hold… exhale… you are okay.</p>
+  <button class="san-close" onclick="closeSanctuary()" aria-label="Return to BreatheWorld">I'm okay — Return</button>
+</div>
+
+<header id="hero">
+  <div class="eyebrow">BreatheWorld</div>
+  <h1>Find your<br><span>calm anywhere</span></h1>
+  <p class="sub">Guided box breathing with a world that clears as you breathe. Simple, powerful, always with you.</p>
+  <div class="med-disc" role="note">
+    BreatheWorld is for relaxation purposes only, not a medical device.<br>
+    If you are experiencing a medical emergency, call 911.
+  </div>
+</header>
+
+<section id="breatheSection" aria-label="Breathing exercise">
+  <div class="phase-guide" aria-hidden="true">
+    <div class="pg"><div class="pg-num">4</div><div class="pg-lbl">Inhale</div></div>
+    <div class="pg"><div class="pg-num">4</div><div class="pg-lbl">Hold</div></div>
+    <div class="pg"><div class="pg-num">4</div><div class="pg-lbl">Exhale</div></div>
+    <div class="pg"><div class="pg-num">4</div><div class="pg-lbl">Hold</div></div>
+  </div>
+
+  <div class="circle-wrap" aria-live="polite" aria-label="Breathing guide circle">
+    <div class="breath-ring"></div>
+    <div class="breath-ring-inner"></div>
+    <div id="breathCircle" role="status">
+      <div class="phase-label" id="phaseLabel">Ready</div>
+      <div class="countdown" id="countdown" aria-live="polite">4</div>
+    </div>
+  </div>
+
+  <div class="breath-ctrl">
+    <button class="bstart" id="startBtn" onclick="startBreath()" aria-label="Start breathing exercise">Begin Breathing</button>
+    <button class="bstop" id="stopBtn" onclick="stopBreath()" aria-label="Stop breathing exercise">Stop</button>
+  </div>
+</section>
+
+<section id="worldPreview" aria-label="BreatheWorld 3D world preview">
+  <h2 class="wp-title">Watch Your World Clear</h2>
+  <p class="wp-sub">As you breathe, the fog lifts. Your world becomes clearer with every cycle.</p>
+  <div class="world-canvas" role="img" aria-label="3D world preview — clears as you breathe">
+    <div class="world-fog" id="worldFog"></div>
+    <div class="world-trees" id="worldTrees">🌲🌿🌳🌱🌲</div>
+    <div class="world-label">Breathe to reveal your world</div>
+  </div>
+  <p class="cam-note">
+    <span>📷 Camera mode coming soon</span> — MediaPipe-powered breath detection.<br>
+    Pro subscribers get early access.
+  </p>
+</section>
+
+<section id="pricing" aria-label="BreatheWorld Pro pricing">
+  <div class="price-box">
+    <div class="price-ey">BreatheWorld Pro</div>
+    <div class="price-amt">$9.99</div>
+    <div class="price-sub">/ month</div>
+    <div class="price-desc">Unlimited sessions, advanced breath patterns, full 3D world, camera mode</div>
+    <div class="price-feats">
+      <div class="pf">Box breathing + 8 guided patterns</div>
+      <div class="pf">Full 3D fog-clearing world</div>
+      <div class="pf">Session history &amp; streaks</div>
+      <div class="pf">Camera breath detection (early access)</div>
+      <div class="pf">PANIC button sanctuary</div>
+    </div>
+    <button class="stripe-btn" onclick="window.open('https://buy.stripe.com/','_blank','noopener');trackEvent('Purchase','checkout','breatheworld')" aria-label="Subscribe to BreatheWorld Pro for $9.99/month">
+      Start Pro — $9.99 / month
+    </button>
+    <div class="disc-box" role="note">
+      BreatheWorld is for relaxation purposes only, not a medical device.
+      Not a substitute for professional mental health care. If you are in crisis, contact the 988 Suicide &amp; Crisis Lifeline by calling or texting 988.
+    </div>
+  </div>
+
+  <button class="xr-btn" disabled aria-label="Enter AR/VR breathing experience — coming soon">🥽 Enter AR / VR World</button>
+</section>
+
+<footer>
+  <div>© 2026 AnchorWithin LLC · All rights reserved</div>
+  <div>
+    <a href="https://ackccreate.github.io/anchorwithin-privacy/">Privacy Policy</a> ·
+    <a href="https://ackccreate.github.io/anchorwithin-tos/">Terms of Service</a>
+  </div>
+</footer>
+
+<script>
+function trackEvent(c,a,l){try{if(window.gtag)gtag('event',a,{event_category:c,event_label:l});}catch(e){}}
+// WebXR + Spatial Audio hooks — ready for immersive upgrade
+// navigator.xr?.requestSession('immersive-ar').then(s=>{ const ac=new AudioContext(); const pan=ac.createPanner(); pan.panningModel='HRTF'; pan.setPosition(0,0,-1); });
+// MediaPipe ready: import {FaceMesh} from '@mediapipe/face_mesh'; // breath detection via nose tip tracking
+
+/* Breath engine — 4-4-4-4 box breathing */
+var PHASES=[{l:'Inhale',d:4,cls:'inhale'},{l:'Hold',d:4,cls:'hold'},{l:'Exhale',d:4,cls:'exhale'},{l:'Hold',d:4,cls:'hold'}];
+var _ph=0,_ct=0,_ival=null,_cycles=0;
+
+function startBreath(){
+  _ph=0;_ct=PHASES[0].d;_cycles=0;
+  document.getElementById('startBtn').style.display='none';
+  document.getElementById('stopBtn').style.display='flex';
+  trackEvent('Breathe','session_start','breatheworld');
+  _ival=setInterval(tick,1000);
+  applyPhase();
+}
+
+function tick(){
+  _ct--;
+  document.getElementById('countdown').textContent=_ct;
+  if(_ct<=0){
+    _ph=(_ph+1)%4;
+    if(_ph===0)_cycles++;
+    _ct=PHASES[_ph].d;
+    applyPhase();
+    clearFog();
+  }
+}
+
+function applyPhase(){
+  var p=PHASES[_ph];
+  var c=document.getElementById('breathCircle');
+  c.className='';
+  void c.offsetWidth;
+  c.className=p.cls;
+  document.getElementById('phaseLabel').textContent=p.l;
+  document.getElementById('countdown').textContent=_ct;
+}
+
+function stopBreath(){
+  clearInterval(_ival);_ival=null;
+  document.getElementById('startBtn').style.display='flex';
+  document.getElementById('stopBtn').style.display='none';
+  var c=document.getElementById('breathCircle');c.className='';
+  document.getElementById('phaseLabel').textContent='Ready';
+  document.getElementById('countdown').textContent='4';
+  trackEvent('Breathe','session_stop','breatheworld');
+}
+
+function clearFog(){
+  var fog=document.getElementById('worldFog');
+  var opacity=Math.max(0,0.82-(_cycles*0.08));
+  fog.style.opacity=opacity;
+}
+
+/* Sanctuary */
+var sanTexts=['Inhale slowly… hold… exhale… you are okay.','This feeling will pass. You are safe right now.','One breath at a time. You have made it through hard moments before.','Let your body breathe. Everything else can wait.'];
+var _sanIdx=0,_sanIval=null;
+function openSanctuary(){
+  document.getElementById('sanctuary').classList.add('open');
+  document.getElementById('sanctuary').querySelector('.san-close').focus();
+  _sanIval=setInterval(function(){_sanIdx=(_sanIdx+1)%sanTexts.length;document.getElementById('sanMsg').textContent=sanTexts[_sanIdx];},6000);
+  trackEvent('Panic','sanctuary_opened','breatheworld');
+}
+function closeSanctuary(){
+  document.getElementById('sanctuary').classList.remove('open');
+  clearInterval(_sanIval);
+  trackEvent('Panic','sanctuary_closed','breatheworld');
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSanctuary();});
+</script>
+</body>
+</html>
