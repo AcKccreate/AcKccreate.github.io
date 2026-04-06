@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>KidSpark — 3D Toy Explorer for Kids</title>
 <meta name="description" content="KidSpark brings 3D toy worlds to life for kids aged 3–10. Explore Rainbow Ranch, Space Blasters, Dino Dig, and 21 more magical adventures. $4.99/month.">
 <meta name="keywords" content="kids 3D toys, children educational app, interactive toy explorer, KidSpark">
@@ -142,6 +142,8 @@ footer a{color:#4ecdc4}
 
 /* Stars canvas */
 #stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+:focus-visible{outline:2px solid #f0d060;outline-offset:2px}
 </style>
 </head>
 <body>
@@ -205,13 +207,14 @@ footer a{color:#4ecdc4}
   <a href="https://buy.stripe.com/cNidRae9E36f4k7fj467S0H" class="unlock-btn">🎉 Start Free Trial</a>
 </div>
 
-<footer>
-  <p>© 2026 AnchorWithin LLC · For ages 3–10 under parental supervision</p>
-  <p style="margin-top:.5rem">
-    <a href="https://acKccreate.github.io/anchorwithin-privacy/">Privacy Policy</a>
-    &nbsp;·&nbsp;
-    <a href="https://acKccreate.github.io/anchorwithin-tos/">Terms of Service</a>
-  </p>
+<footer style="text-align:center;padding:48px 16px 32px;border-top:1px solid rgba(255,255,255,0.04);margin-top:64px">
+  <p style="font-size:13px;color:#555577;margin-bottom:6px">&copy; 2026 AnchorWithin LLC · For ages 3–10 under parental supervision</p>
+  <nav style="display:flex;gap:16px;justify-content:center;margin-bottom:8px">
+    <a href="https://ackccreate.github.io/anchorwithin-privacy/" style="color:#f0d060;text-decoration:none;font-size:12px">Privacy Policy</a>
+    <a href="https://ackccreate.github.io/anchorwithin-tos/" style="color:#f0d060;text-decoration:none;font-size:12px">Terms of Service</a>
+    <a href="https://ackccreate.github.io/anchorwithin-home/" style="color:#f0d060;text-decoration:none;font-size:12px">Home</a>
+  </nav>
+  <p style="font-size:10px;font-weight:700;letter-spacing:2px;color:#f0d060;opacity:0.15">THE ANCHOR HOLDS</p>
 </footer>
 
 <script>

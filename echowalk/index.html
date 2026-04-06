@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>EchoWalk — Walk Through Your Memories</title>
 <meta name="description" content="AI-assisted memory reconstruction. Upload photos, voice memos, and fragments — EchoWalk weaves them into a rich, narrated memory walk. Preserve your story forever.">
 <meta name="keywords" content="memory preservation, AI memoir, photo memories, legacy memoir, family history, EchoWalk">
@@ -175,6 +175,8 @@ footer{
 footer a{color:var(--amber)}
 footer a:hover{color:var(--amber2)}
 .motto{font-family:'Playfair Display',serif;font-style:italic;font-size:.85rem;color:rgba(212,163,115,.2);margin-top:1.5rem;letter-spacing:.1em}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+:focus-visible{outline:2px solid #f0d060;outline-offset:2px}
 </style>
 </head>
 <body>
@@ -314,14 +316,14 @@ footer a:hover{color:var(--amber2)}
   </div>
 </section>
 
-<footer>
-  <p>© 2026 AnchorWithin LLC · EchoWalk</p>
-  <p style="margin-top:.5rem">
-    <a href="https://acKccreate.github.io/anchorwithin-privacy/">Privacy Policy</a>
-    &nbsp;·&nbsp;
-    <a href="https://acKccreate.github.io/anchorwithin-tos/">Terms of Service</a>
-  </p>
-  <p class="motto">The Anchor Holds</p>
+<footer style="text-align:center;padding:48px 16px 32px;border-top:1px solid rgba(255,255,255,0.04);margin-top:64px">
+  <p style="font-size:13px;color:#6a6070;margin-bottom:6px">&copy; 2026 AnchorWithin LLC · EchoWalk</p>
+  <nav style="display:flex;gap:16px;justify-content:center;margin-bottom:8px">
+    <a href="https://ackccreate.github.io/anchorwithin-privacy/" style="color:#f0d060;text-decoration:none;font-size:12px">Privacy Policy</a>
+    <a href="https://ackccreate.github.io/anchorwithin-tos/" style="color:#f0d060;text-decoration:none;font-size:12px">Terms of Service</a>
+    <a href="https://ackccreate.github.io/anchorwithin-home/" style="color:#f0d060;text-decoration:none;font-size:12px">Home</a>
+  </nav>
+  <p style="font-size:10px;font-weight:700;letter-spacing:2px;color:#f0d060;opacity:0.15">THE ANCHOR HOLDS</p>
 </footer>
 
 <script>
