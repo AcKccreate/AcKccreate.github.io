@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Disallow legal pages from indexing (handled via meta robots noindex)
+Disallow: /anchorwithin-privacy/
+Disallow: /anchorwithin-tos/
+
+Sitemap: https://ackccreate.github.io/sitemap.xml
