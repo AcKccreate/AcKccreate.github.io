@@ -433,5 +433,31 @@ function ringBell(){
   _ripples.push({r:80,a:0.8}); _ripples.push({r:40,a:0.5});
 }
 </script>
+
+<script>
+/* Exit-intent popup — AnchorWithin v1 */
+(function(){
+  if(sessionStorage.getItem('aw_exit_shown'))return;
+  var overlay=document.createElement('div');
+  overlay.id='exitOverlay';
+  overlay.innerHTML='<div id="exitBox"><button id="exitClose" onclick="document.getElementById(\'exitOverlay\').remove();sessionStorage.setItem(\'aw_exit_shown\',\'1\')">&times;<\/button><div id="exitBadge">EXCLUSIVE OFFER<\/div><h2>Wait \u2014 25% off your first purchase<\/h2><p>Use code at checkout:<\/p><div id="exitCode">R2vTLvFP<\/div><a href="https://ackccreate.github.io/anchorwithin-home/" id="exitCta" onclick="sessionStorage.setItem(\'aw_exit_shown\',\'1\')">Browse Products<\/a><p id="exitNote">One-time use &middot; All products<\/p><\/div>';
+  var s=document.createElement('style');
+  s.textContent='#exitOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.78);z-index:99999;display:flex;align-items:center;justify-content:center;padding:1rem;animation:aw_fade .3s ease}@keyframes aw_fade{from{opacity:0}to{opacity:1}}#exitBox{background:#0f0f25;border:1px solid rgba(240,208,96,.3);border-radius:16px;padding:2.5rem 2rem;text-align:center;max-width:380px;width:100%;position:relative}#exitClose{position:absolute;top:.75rem;right:1rem;background:none;border:none;color:#7878a0;font-size:1.4rem;cursor:pointer;line-height:1}#exitBadge{display:inline-block;background:rgba(240,208,96,.12);border:1px solid rgba(240,208,96,.35);color:#f0d060;font-size:.7rem;letter-spacing:.15em;padding:.3rem .8rem;border-radius:20px;margin-bottom:1rem}#exitBox h2{font-family:Georgia,serif;color:#f0eae0;font-size:1.4rem;margin-bottom:.5rem}#exitBox p{color:#7878a0;font-size:.9rem;margin-bottom:.5rem}#exitCode{font-family:monospace;font-size:1.6rem;font-weight:700;color:#f0d060;background:#000;border:1px dashed rgba(240,208,96,.4);border-radius:8px;padding:.6rem 1.5rem;display:inline-block;margin:.5rem 0 1.25rem;letter-spacing:.1em}#exitCta{display:inline-block;background:#f0d060;color:#0a0a1a;padding:.75rem 2rem;border-radius:8px;font-weight:700;text-decoration:none;font-size:.95rem;margin-bottom:.75rem}#exitNote{font-size:.75rem;color:#4a4a6a;margin-bottom:0}';
+  document.head.appendChild(s);
+  var isMobile=/Mobi|Android/i.test(navigator.userAgent);
+  if(isMobile){
+    setTimeout(function(){
+      if(!sessionStorage.getItem('aw_exit_shown')){document.body.appendChild(overlay);sessionStorage.setItem('aw_exit_shown','1');}
+    },45000);
+  } else {
+    document.addEventListener('mouseleave',function h(e){
+      if(e.clientY<=10&&!sessionStorage.getItem('aw_exit_shown')){
+        document.body.appendChild(overlay);sessionStorage.setItem('aw_exit_shown','1');
+        document.removeEventListener('mouseleave',h);
+      }
+    });
+  }
+})();
+</script>
 </body>
 </html>
