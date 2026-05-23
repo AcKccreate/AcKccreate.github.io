@@ -1,318 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Free Trial Key — AnchorWithin API</title>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-      background: #0d0f14;
-      color: #e8e8f0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem 1rem;
-    }
-
-    .card {
-      background: #15181f;
-      border: 1px solid #2a2d38;
-      border-radius: 16px;
-      padding: 2.5rem 2rem;
-      max-width: 440px;
-      width: 100%;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.4);
-    }
-
-    .badge {
-      display: inline-block;
-      background: rgba(99,179,237,0.12);
-      color: #63b3ed;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 0.3rem 0.75rem;
-      border-radius: 20px;
-      border: 1px solid rgba(99,179,237,0.25);
-      margin-bottom: 1.25rem;
-    }
-
-    h1 {
-      font-size: 1.75rem;
-      font-weight: 700;
-      line-height: 1.2;
-      margin-bottom: 0.6rem;
-      background: linear-gradient(135deg, #e8e8f0 0%, #a0aec0 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .subtitle {
-      color: #718096;
-      font-size: 0.95rem;
-      line-height: 1.5;
-      margin-bottom: 2rem;
-    }
-
-    .perks {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      margin-bottom: 2rem;
-    }
-
-    .perk {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-size: 0.88rem;
-      color: #a0aec0;
-    }
-
-    .perk-dot {
-      width: 6px;
-      height: 6px;
-      background: #68d391;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    form { display: flex; flex-direction: column; gap: 0.85rem; }
-
-    label {
-      font-size: 0.82rem;
-      font-weight: 500;
-      color: #a0aec0;
-      margin-bottom: 0.25rem;
-      display: block;
-    }
-
-    input[type="email"] {
-      width: 100%;
-      background: #1e2230;
-      border: 1px solid #2d3248;
-      border-radius: 8px;
-      color: #e8e8f0;
-      font-size: 0.95rem;
-      padding: 0.75rem 1rem;
-      outline: none;
-      transition: border-color 0.15s, box-shadow 0.15s;
-    }
-
-    input[type="email"]:focus {
-      border-color: #63b3ed;
-      box-shadow: 0 0 0 3px rgba(99,179,237,0.15);
-    }
-
-    input[type="email"]::placeholder { color: #4a5568; }
-
-    button[type="submit"] {
-      background: linear-gradient(135deg, #4299e1 0%, #667eea 100%);
-      color: #fff;
-      font-size: 0.95rem;
-      font-weight: 600;
-      border: none;
-      border-radius: 8px;
-      padding: 0.85rem 1.5rem;
-      cursor: pointer;
-      transition: opacity 0.15s, transform 0.1s;
-      margin-top: 0.25rem;
-    }
-
-    button[type="submit"]:hover  { opacity: 0.9; }
-    button[type="submit"]:active { transform: scale(0.98); }
-    button[type="submit"]:disabled { opacity: 0.5; cursor: not-allowed; }
-
-    .result {
-      display: none;
-      margin-top: 1.5rem;
-      border-radius: 10px;
-      padding: 1.2rem 1.25rem;
-      font-size: 0.88rem;
-      line-height: 1.6;
-    }
-
-    .result.success {
-      background: rgba(72,187,120,0.1);
-      border: 1px solid rgba(72,187,120,0.3);
-      color: #9ae6b4;
-    }
-
-    .result.error {
-      background: rgba(252,129,74,0.08);
-      border: 1px solid rgba(252,129,74,0.25);
-      color: #fbb6a0;
-    }
-
-    .key-box {
-      background: #0d0f14;
-      border: 1px solid #2d3248;
-      border-radius: 6px;
-      padding: 0.6rem 0.9rem;
-      font-family: "SF Mono", "Fira Code", monospace;
-      font-size: 0.82rem;
-      color: #63b3ed;
-      word-break: break-all;
-      margin: 0.6rem 0;
-      cursor: pointer;
-      position: relative;
-    }
-
-    .key-box:hover::after {
-      content: "Click to copy";
-      position: absolute;
-      right: 8px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 0.7rem;
-      color: #718096;
-    }
-
-    .copy-hint {
-      font-size: 0.75rem;
-      color: #4a5568;
-      margin-top: 0.25rem;
-    }
-
-    .footer {
-      margin-top: 2rem;
-      font-size: 0.78rem;
-      color: #4a5568;
-      text-align: center;
-    }
-
-    .footer a { color: #63b3ed; text-decoration: none; }
-    .footer a:hover { text-decoration: underline; }
-
-    .spinner {
-      display: inline-block;
-      width: 14px;
-      height: 14px;
-      border: 2px solid rgba(255,255,255,0.3);
-      border-radius: 50%;
-      border-top-color: #fff;
-      animation: spin 0.7s linear infinite;
-      margin-right: 6px;
-      vertical-align: middle;
-    }
-
-    @keyframes spin { to { transform: rotate(360deg); } }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Free Trial — AnchorWithin API</title>
+<meta name="description" content="Get 100 free API calls. No credit card required. Access healing frequency audio for your app or AI agent.">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a1a;--surface:#12122a;--border:#1e1e3a;
+  --text:#e8e8f8;--muted:#8888aa;
+  --gold:#f0d060;--gold-dim:#c8a830;
+  --green:#22c55e;
+  --font-mono:'Courier New',monospace;
+  --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font-sans);
+  min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  padding:40px;max-width:480px;width:100%}
+.logo{font-family:var(--font-mono);font-size:12px;letter-spacing:3px;
+  color:var(--gold);text-transform:uppercase;margin-bottom:32px;opacity:.8}
+h1{font-size:26px;font-weight:700;line-height:1.2;margin-bottom:8px}
+h1 span{color:var(--gold)}
+.subtitle{font-size:14px;color:var(--muted);margin-bottom:32px;line-height:1.5}
+.perks{display:flex;flex-direction:column;gap:8px;margin-bottom:32px}
+.perk{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px}
+.perk::before{content:"checkmark";display:none}
+.perk-icon{color:var(--gold);font-weight:700;flex-shrink:0}
+label{display:block;font-size:12px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:6px}
+input[type="email"],input[type="text"]{
+  width:100%;background:var(--bg);border:1px solid var(--border);
+  border-radius:6px;padding:12px 14px;font-size:15px;
+  color:var(--text);outline:none;transition:border .15s;margin-bottom:16px}
+input:focus{border-color:var(--gold)}
+input::placeholder{color:#555580}
+button{width:100%;background:var(--gold);color:#0a0a1a;border:none;
+  border-radius:6px;padding:14px;font-size:15px;font-weight:700;
+  cursor:pointer;transition:background .15s;margin-top:8px}
+button:hover{background:var(--gold-dim)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.success{display:none;background:#0a1f0a;border:1px solid #22c55e33;
+  border-radius:8px;padding:20px;margin-top:20px}
+.success.show{display:block}
+.success-title{color:var(--green);font-weight:700;font-size:15px;margin-bottom:8px}
+.api-key-box{background:#0a0a1a;border:1px solid var(--border);
+  border-radius:6px;padding:10px 14px;font-family:var(--font-mono);
+  font-size:12px;color:var(--gold);word-break:break-all;margin:8px 0}
+.copy-btn{background:transparent;color:var(--muted);border:1px solid var(--border);
+  width:auto;padding:6px 14px;font-size:12px;margin-top:4px;border-radius:4px}
+.copy-btn:hover{background:var(--border)}
+.error-box{display:none;background:#1f0a0a;border:1px solid #ef444433;
+  border-radius:8px;padding:16px;margin-top:16px;
+  font-size:14px;color:#fca5a5}
+.error-box.show{display:block}
+.footer{text-align:center;margin-top:24px;font-size:12px;color:#555580}
+.footer a{color:var(--muted);text-decoration:none}
+.footer a:hover{color:var(--gold)}
+</style>
 </head>
 <body>
-
 <div class="card">
-  <div class="badge">Free Trial</div>
-  <h1>Start building in 10 seconds</h1>
-  <p class="subtitle">Get 100 free API calls. No credit card. No commitment.</p>
+  <div class="logo">AnchorWithin</div>
+  <h1>Get your free <span>API key</span></h1>
+  <p class="subtitle">100 calls, no credit card. Stream healing frequency audio into your app or AI agent in minutes.</p>
 
   <div class="perks">
-    <div class="perk"><span class="perk-dot"></span>100 audio serves — 10 frequencies, 30+ use-cases</div>
-    <div class="perk"><span class="perk-dot"></span>Full API access — catalog, serve, quota status</div>
-    <div class="perk"><span class="perk-dot"></span>Governed trace receipts — approval lineage included</div>
-    <div class="perk"><span class="perk-dot"></span>Instant key — no waitlist, no approval</div>
+    <div class="perk"><span class="perk-icon">+</span> 100 free API calls, no expiry</div>
+    <div class="perk"><span class="perk-icon">+</span> 15 healing frequency tracks (432Hz to 963Hz)</div>
+    <div class="perk"><span class="perk-icon">+</span> Stream by frequency, use-case, or track ID</div>
+    <div class="perk"><span class="perk-icon">+</span> Upgrade keeps the same key, no migration</div>
   </div>
 
-  <form id="trial-form">
+  <form id="trialForm">
     <div>
-      <label for="email">Email address <span style="color:#4a5568">(optional — for quota alerts)</span></label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        placeholder="you@yourapp.com"
-        autocomplete="email"
-      >
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="you@yourapp.com" required>
     </div>
-    <button type="submit" id="submit-btn">Get My Free API Key</button>
+    <div>
+      <label for="company">App or Project (optional)</label>
+      <input type="text" id="company" name="company" placeholder="My wellness app">
+    </div>
+    <button type="submit" id="submitBtn">Get free API key</button>
   </form>
 
-  <div class="result" id="result"></div>
-
-  <div class="footer">
-    Already have a key? <a href="https://ackccreate.github.io/api-docs/">Read the docs</a>
-    &nbsp;·&nbsp;
-    <a href="https://anchorwithin.com/pricing">Upgrade to paid</a>
+  <div class="success" id="successBox">
+    <div class="success-title">Your API key is ready</div>
+    <p style="font-size:13px;color:#8888aa;margin-bottom:8px">Save this key. It will not be shown again:</p>
+    <div class="api-key-box" id="apiKeyDisplay"></div>
+    <button class="copy-btn" onclick="copyKey()">Copy key</button>
+    <p style="font-size:13px;color:#8888aa;margin-top:12px">
+      Next: <a href="/api-docs/" style="color:#f0d060">Read the quickstart</a>
+    </p>
   </div>
+
+  <div class="error-box" id="errorBox"></div>
+
+  <p class="footer">
+    <a href="/api-docs/">Docs</a> &middot; <a href="https://anchorwithin.com/pricing">Pricing</a> &middot; No spam, ever
+  </p>
 </div>
 
 <script>
-  const API = "https://api.anchorwithin.com";
+var currentKey = "";
 
-  document.getElementById("trial-form").addEventListener("submit", async (e) => {
-    e.preventDefault();
+document.getElementById("trialForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  var btn = document.getElementById("submitBtn");
+  var email = document.getElementById("email").value.trim();
+  var company = document.getElementById("company").value.trim();
 
-    const email  = document.getElementById("email").value.trim();
-    const btn    = document.getElementById("submit-btn");
-    const result = document.getElementById("result");
+  btn.disabled = true;
+  btn.textContent = "Requesting...";
+  document.getElementById("errorBox").classList.remove("show");
 
-    btn.disabled = true;
-    btn.innerHTML = '<span class="spinner"></span>Generating key…';
-    result.style.display = "none";
+  var body = { email: email };
+  if (company) body.company = company;
 
-    try {
-      const resp = await fetch(`${API}/v1/trial/request`, {
-        method:  "POST",
-        headers: { "Content-Type": "application/json" },
-        body:    JSON.stringify({ email: email || null }),
-      });
-
-      const data = await resp.json();
-
-      if (!resp.ok) {
-        throw new Error(data.detail || `HTTP ${resp.status}`);
-      }
-
-      const key = data.api_key;
-
-      result.className = "result success";
-      result.innerHTML = `
-        <strong>Your API key:</strong>
-        <div class="key-box" id="key-display" title="Click to copy">${key}</div>
-        <div class="copy-hint">Click the key to copy it</div>
-        <br>
-        <strong>100 free calls.</strong> Start with:<br>
-        <code style="font-size:0.78rem;color:#a0aec0">
-          curl -X POST ${API}/v1/audio/serve \\<br>
-          &nbsp;&nbsp;-H "Authorization: Bearer ${key}" \\<br>
-          &nbsp;&nbsp;-d '{"frequency":"432","use_case":"sleep"}'
-        </code>
-        <br><br>
-        <a href="https://ackccreate.github.io/api-docs/" style="color:#63b3ed">Full API docs &rarr;</a>
-      `;
-      result.style.display = "block";
-
-      document.getElementById("key-display").addEventListener("click", () => {
-        navigator.clipboard.writeText(key).then(() => {
-          document.getElementById("key-display").textContent = "Copied!";
-          setTimeout(() => {
-            document.getElementById("key-display").textContent = key;
-          }, 1500);
-        });
-      });
-
-    } catch (err) {
-      result.className = "result error";
-      result.innerHTML = `
-        <strong>Error:</strong> ${err.message}<br>
-        <span style="color:#718096;font-size:0.82rem">
-          If the issue persists, email us at support@anchorwithin.com
-        </span>
-      `;
-      result.style.display = "block";
-    } finally {
-      btn.disabled = false;
-      btn.textContent = "Get My Free API Key";
-    }
+  fetch("https://api.anchorwithin.com/v1/trial/request", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body)
+  })
+  .then(function(resp) {
+    return resp.json().then(function(data) {
+      if (!resp.ok) throw new Error(data.detail || data.error || "Error " + resp.status);
+      return data;
+    });
+  })
+  .then(function(data) {
+    currentKey = data.api_key || data.key || "";
+    document.getElementById("apiKeyDisplay").textContent = currentKey;
+    document.getElementById("successBox").classList.add("show");
+    document.getElementById("trialForm").style.display = "none";
+  })
+  .catch(function(err) {
+    var box = document.getElementById("errorBox");
+    box.textContent = err.message.indexOf("fetch") !== -1
+      ? "Could not reach the API. Please try again in a moment."
+      : err.message;
+    box.classList.add("show");
+    btn.disabled = false;
+    btn.textContent = "Get free API key";
   });
-</script>
+});
 
+function copyKey() {
+  if (!navigator.clipboard) return;
+  navigator.clipboard.writeText(currentKey).then(function() {
+    var btn = document.querySelector(".copy-btn");
+    btn.textContent = "Copied!";
+    setTimeout(function() { btn.textContent = "Copy key"; }, 1500);
+  });
+}
+</script>
 </body>
 </html>
