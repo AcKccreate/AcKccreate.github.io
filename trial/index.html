@@ -2,157 +2,205 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Free Trial — AnchorWithin API</title>
-<meta name="description" content="Get 100 free API calls. No credit card required. Access healing frequency audio for your app or AI agent.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Trial Key — AnchorWithin API</title>
+<meta name="description" content="Get 100 free API calls. No credit card required. Audio API, Verity Trace, and Memory Vault.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0a0a1a;--surface:#12122a;--border:#1e1e3a;
-  --text:#e8e8f8;--muted:#8888aa;
-  --gold:#f0d060;--gold-dim:#c8a830;
-  --green:#22c55e;
-  --font-mono:'Courier New',monospace;
-  --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --gold:#f0d060;--gold-dim:#c8a840;--gold-glow:rgba(240,208,96,0.12);
+  --navy:#0a0a1a;--navy-card:#11112a;
+  --border:rgba(240,208,96,0.12);--border-hi:rgba(240,208,96,0.32);
+  --text:#e8e8f0;--muted:#8888aa;--dim:#55557a;
+  --green:#50d090;--red:#f07070;
+  --mono:'JetBrains Mono',monospace;--sans:'Inter',sans-serif;--r:8px;
 }
-body{background:var(--bg);color:var(--text);font-family:var(--font-sans);
-  min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;
-  padding:40px;max-width:480px;width:100%}
-.logo{font-family:var(--font-mono);font-size:12px;letter-spacing:3px;
-  color:var(--gold);text-transform:uppercase;margin-bottom:32px;opacity:.8}
-h1{font-size:26px;font-weight:700;line-height:1.2;margin-bottom:8px}
-h1 span{color:var(--gold)}
-.subtitle{font-size:14px;color:var(--muted);margin-bottom:32px;line-height:1.5}
-.perks{display:flex;flex-direction:column;gap:8px;margin-bottom:32px}
-.perk{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px}
-.perk::before{content:"checkmark";display:none}
-.perk-icon{color:var(--gold);font-weight:700;flex-shrink:0}
-label{display:block;font-size:12px;font-weight:600;
-  text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:6px}
-input[type="email"],input[type="text"]{
-  width:100%;background:var(--bg);border:1px solid var(--border);
-  border-radius:6px;padding:12px 14px;font-size:15px;
-  color:var(--text);outline:none;transition:border .15s;margin-bottom:16px}
-input:focus{border-color:var(--gold)}
-input::placeholder{color:#555580}
-button{width:100%;background:var(--gold);color:#0a0a1a;border:none;
-  border-radius:6px;padding:14px;font-size:15px;font-weight:700;
-  cursor:pointer;transition:background .15s;margin-top:8px}
-button:hover{background:var(--gold-dim)}
-button:disabled{opacity:.5;cursor:not-allowed}
-.success{display:none;background:#0a1f0a;border:1px solid #22c55e33;
-  border-radius:8px;padding:20px;margin-top:20px}
-.success.show{display:block}
-.success-title{color:var(--green);font-weight:700;font-size:15px;margin-bottom:8px}
-.api-key-box{background:#0a0a1a;border:1px solid var(--border);
-  border-radius:6px;padding:10px 14px;font-family:var(--font-mono);
-  font-size:12px;color:var(--gold);word-break:break-all;margin:8px 0}
-.copy-btn{background:transparent;color:var(--muted);border:1px solid var(--border);
-  width:auto;padding:6px 14px;font-size:12px;margin-top:4px;border-radius:4px}
-.copy-btn:hover{background:var(--border)}
-.error-box{display:none;background:#1f0a0a;border:1px solid #ef444433;
-  border-radius:8px;padding:16px;margin-top:16px;
-  font-size:14px;color:#fca5a5}
-.error-box.show{display:block}
-.footer{text-align:center;margin-top:24px;font-size:12px;color:#555580}
-.footer a{color:var(--muted);text-decoration:none}
-.footer a:hover{color:var(--gold)}
+html{scroll-behavior:smooth}
+body{background:var(--navy);color:var(--text);font-family:var(--sans);
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  min-height:100vh;display:flex;flex-direction:column;}
+nav{background:rgba(10,10,26,0.95);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);padding:16px 24px;
+  display:flex;align-items:center;justify-content:space-between;}
+.logo{font-family:var(--mono);font-size:14px;font-weight:500;color:var(--gold);text-decoration:none}
+.nav-back{font-family:var(--mono);font-size:11px;color:var(--muted);text-decoration:none;
+  letter-spacing:0.05em;transition:color .2s}
+.nav-back:hover{color:var(--text)}
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 20px}
+.card{background:var(--navy-card);border:1px solid var(--border);
+  border-radius:16px;padding:44px 40px;max-width:520px;width:100%}
+.eyebrow{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--gold);
+  letter-spacing:0.14em;text-transform:uppercase;margin-bottom:16px}
+h1{font-size:28px;font-weight:700;color:#fff;letter-spacing:-0.02em;
+  line-height:1.15;margin-bottom:12px}
+.subtitle{font-size:15px;color:var(--muted);margin-bottom:28px;line-height:1.6}
+.perks{display:flex;flex-direction:column;gap:8px;margin-bottom:28px}
+.perk{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)}
+.perk::before{content:'✓';color:var(--gold);font-weight:700;font-size:13px;flex-shrink:0}
+label{display:block;font-size:13px;font-weight:500;color:var(--muted);
+  letter-spacing:0.04em;margin-bottom:6px}
+input[type=email],input[type=text]{
+  display:block;width:100%;padding:12px 16px;border-radius:var(--r);
+  border:1px solid var(--border);background:#0a0a1e;color:var(--text);
+  font-family:var(--sans);font-size:15px;outline:none;
+  transition:border-color .2s;margin-bottom:14px}
+input:focus{border-color:rgba(240,208,96,0.4)}
+input::placeholder{color:var(--dim)}
+.submit-btn{display:block;width:100%;background:var(--gold);color:var(--navy);
+  padding:14px;border-radius:var(--r);border:none;font-family:var(--sans);
+  font-size:15px;font-weight:700;cursor:pointer;letter-spacing:0.01em;
+  transition:opacity .2s,transform .15s;margin-top:4px}
+.submit-btn:hover:not(:disabled){opacity:.9;transform:translateY(-1px)}
+.submit-btn:disabled{opacity:.5;cursor:not-allowed}
+/* success state */
+#successBox{display:none;margin-top:28px}
+.success-label{font-family:var(--mono);font-size:11px;color:var(--green);
+  letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px}
+.key-box{background:#070713;border:1px solid rgba(240,208,96,0.2);border-radius:var(--r);
+  padding:14px 16px;font-family:var(--mono);font-size:13px;
+  color:var(--gold);word-break:break-all;cursor:pointer;
+  position:relative;transition:border-color .2s}
+.key-box:hover{border-color:rgba(240,208,96,0.4)}
+.copy-hint{position:absolute;top:8px;right:10px;font-size:10px;color:var(--dim);
+  letter-spacing:0.08em;text-transform:uppercase;pointer-events:none}
+.copy-hint.ok{color:var(--green)}
+.next{margin-top:20px;background:rgba(80,208,144,0.05);
+  border:1px solid rgba(80,208,144,0.14);border-radius:var(--r);padding:16px}
+.next-title{font-family:var(--mono);font-size:11px;color:var(--green);
+  letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px}
+.curl{background:#070713;border-radius:6px;padding:11px 14px;
+  font-family:var(--mono);font-size:12px;color:#b0d8b0;
+  line-height:1.7;overflow-x:auto;white-space:pre;margin-bottom:10px}
+.next-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.next-link{font-family:var(--mono);font-size:11px;color:var(--gold);
+  background:var(--gold-glow);border:1px solid rgba(240,208,96,0.2);
+  padding:5px 13px;border-radius:100px;text-decoration:none;
+  letter-spacing:0.06em;transition:border-color .2s}
+.next-link:hover{border-color:rgba(240,208,96,0.4)}
+/* error */
+#errBox{display:none;color:var(--red);font-size:13px;margin-top:10px;font-family:var(--mono)}
+footer{padding:22px;text-align:center;font-size:12px;
+  color:var(--dim);border-top:1px solid var(--border)}
+footer a{color:var(--dim);text-decoration:none}
+footer a:hover{color:var(--muted)}
+@media(max-width:540px){.card{padding:32px 22px}h1{font-size:24px}}
 </style>
 </head>
 <body>
-<div class="card">
-  <div class="logo">AnchorWithin</div>
-  <h1>Get your free <span>API key</span></h1>
-  <p class="subtitle">100 calls, no credit card. Stream healing frequency audio into your app or AI agent in minutes.</p>
-
-  <div class="perks">
-    <div class="perk"><span class="perk-icon">+</span> 100 free API calls, no expiry</div>
-    <div class="perk"><span class="perk-icon">+</span> 15 healing frequency tracks (432Hz to 963Hz)</div>
-    <div class="perk"><span class="perk-icon">+</span> Stream by frequency, use-case, or track ID</div>
-    <div class="perk"><span class="perk-icon">+</span> Upgrade keeps the same key, no migration</div>
-  </div>
-
-  <form id="trialForm">
-    <div>
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" placeholder="you@yourapp.com" required>
+<nav>
+  <a href="https://ackccreate.github.io/anchorwithin/" class="logo">AnchorWithin</a>
+  <a href="https://ackccreate.github.io/api-docs/" class="nav-back">← API Docs</a>
+</nav>
+<main>
+  <div class="card">
+    <div class="eyebrow">Developer Access</div>
+    <h1>Get your free trial key</h1>
+    <p class="subtitle">Instant access to Audio API, Verity Trace, and Memory Vault. 100 calls. No credit card.</p>
+    <div class="perks">
+      <div class="perk">100 API calls — no expiry</div>
+      <div class="perk">Audio API — 15 frequency tracks (432Hz–963Hz)</div>
+      <div class="perk">Verity Trace signed receipts</div>
+      <div class="perk">Memory Vault read/write</div>
+      <div class="perk">Upgrade anytime from $9/mo</div>
     </div>
-    <div>
-      <label for="company">App or Project (optional)</label>
-      <input type="text" id="company" name="company" placeholder="My wellness app">
+    <form id="trialForm">
+      <label for="emailInput">Email address (optional)</label>
+      <input type="email" id="emailInput" name="email" placeholder="you@example.com" autocomplete="email">
+      <label for="projectInput">Project name (optional)</label>
+      <input type="text" id="projectInput" name="project" placeholder="My AI agent">
+      <div id="errBox"></div>
+      <button type="submit" id="submitBtn" class="submit-btn">Get Free Trial Key →</button>
+    </form>
+    <div id="successBox">
+      <div class="success-label">Your API Key</div>
+      <div class="key-box" id="keyBox" onclick="copyKey()">
+        <span id="keyText"></span>
+        <span class="copy-hint" id="copyHint">click to copy</span>
+      </div>
+      <div class="next" style="margin-top:16px">
+        <div class="next-title">Quick start</div>
+        <div class="curl" id="curlA">curl -X POST https://anchor.verityswarm.com/v1/audio/serve \
+  -H "Authorization: Bearer YOUR_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"frequency":"432","use_case":"sleep"}'</div>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:8px">Check quota:</div>
+        <div class="curl" id="curlB">curl https://anchor.verityswarm.com/v1/key/status \
+  -H "Authorization: Bearer YOUR_KEY"</div>
+        <div class="next-links">
+          <a href="https://ackccreate.github.io/api-docs/" class="next-link">API Docs</a>
+          <a href="https://anchor.verityswarm.com/v1/audio/catalog" target="_blank" class="next-link">Catalog</a>
+          <a href="https://ackccreate.github.io/anchorwithin/#pricing" class="next-link">Upgrade →</a>
+        </div>
+      </div>
     </div>
-    <button type="submit" id="submitBtn">Get free API key</button>
-  </form>
-
-  <div class="success" id="successBox">
-    <div class="success-title">Your API key is ready</div>
-    <p style="font-size:13px;color:#8888aa;margin-bottom:8px">Save this key. It will not be shown again:</p>
-    <div class="api-key-box" id="apiKeyDisplay"></div>
-    <button class="copy-btn" onclick="copyKey()">Copy key</button>
-    <p style="font-size:13px;color:#8888aa;margin-top:12px">
-      Next: <a href="/api-docs/" style="color:#f0d060">Read the quickstart</a>
-    </p>
   </div>
-
-  <div class="error-box" id="errorBox"></div>
-
-  <p class="footer">
-    <a href="/api-docs/">Docs</a> &middot; <a href="https://anchorwithin.com/pricing">Pricing</a> &middot; No spam, ever
-  </p>
-</div>
-
+</main>
+<footer>
+  <a href="https://ackccreate.github.io/anchorwithin/">AnchorWithin</a> &nbsp;·&nbsp;
+  <a href="https://ackccreate.github.io/api-docs/">Docs</a> &nbsp;·&nbsp;
+  AnchorWithin LLC © 2026
+</footer>
 <script>
-var currentKey = "";
+var API = 'https://anchor.verityswarm.com';
+var currentKey = '';
 
-document.getElementById("trialForm").addEventListener("submit", function(e) {
+document.getElementById('trialForm').addEventListener('submit', function(e) {
   e.preventDefault();
-  var btn = document.getElementById("submitBtn");
-  var email = document.getElementById("email").value.trim();
-  var company = document.getElementById("company").value.trim();
-
+  var btn = document.getElementById('submitBtn');
+  var err = document.getElementById('errBox');
   btn.disabled = true;
-  btn.textContent = "Requesting...";
-  document.getElementById("errorBox").classList.remove("show");
+  btn.textContent = 'Generating key…';
+  err.style.display = 'none';
 
-  var body = { email: email };
-  if (company) body.company = company;
-
-  fetch("https://anchor.verityswarm.com/v1/trial/request", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body)
+  fetch(API + '/v1/trial/request', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      email: document.getElementById('emailInput').value.trim(),
+      company: document.getElementById('projectInput').value.trim()
+    })
   })
-  .then(function(resp) {
-    return resp.json().then(function(data) {
-      if (!resp.ok) throw new Error(data.detail || data.error || "Error " + resp.status);
-      return data;
+  .then(function(r) {
+    return r.json().then(function(d) {
+      if (!r.ok) throw new Error(d.detail || d.error || 'Error ' + r.status);
+      return d;
     });
   })
-  .then(function(data) {
-    currentKey = data.api_key || data.key || "";
-    document.getElementById("apiKeyDisplay").textContent = currentKey;
-    document.getElementById("successBox").classList.add("show");
-    document.getElementById("trialForm").style.display = "none";
+  .then(function(d) {
+    currentKey = d.api_key || d.key || '';
+    document.getElementById('keyText').textContent = currentKey;
+    ['curlA','curlB'].forEach(function(id) {
+      var el = document.getElementById(id);
+      el.textContent = el.textContent.replace(/YOUR_KEY/g, currentKey);
+    });
+    document.getElementById('successBox').style.display = 'block';
+    document.getElementById('trialForm').style.display = 'none';
   })
-  .catch(function(err) {
-    var box = document.getElementById("errorBox");
-    box.textContent = err.message.indexOf("fetch") !== -1
-      ? "Could not reach the API. Please try again in a moment."
-      : err.message;
-    box.classList.add("show");
+  .catch(function(e) {
+    err.textContent = e.message.indexOf('fetch') !== -1
+      ? 'Could not reach API — try again in a moment.' : e.message;
+    err.style.display = 'block';
     btn.disabled = false;
-    btn.textContent = "Get free API key";
+    btn.textContent = 'Get Free Trial Key →';
   });
 });
 
 function copyKey() {
-  if (!navigator.clipboard) return;
-  navigator.clipboard.writeText(currentKey).then(function() {
-    var btn = document.querySelector(".copy-btn");
-    btn.textContent = "Copied!";
-    setTimeout(function() { btn.textContent = "Copy key"; }, 1500);
-  });
+  if (!currentKey) return;
+  var hint = document.getElementById('copyHint');
+  var done = function() {
+    hint.textContent = 'copied!'; hint.classList.add('ok');
+    setTimeout(function() { hint.textContent = 'click to copy'; hint.classList.remove('ok'); }, 2000);
+  };
+  if (navigator.clipboard) { navigator.clipboard.writeText(currentKey).then(done).catch(done); }
+  else {
+    var t = document.createElement('textarea');
+    t.value = currentKey; document.body.appendChild(t); t.select();
+    document.execCommand('copy'); document.body.removeChild(t); done();
+  }
 }
 </script>
 </body>
