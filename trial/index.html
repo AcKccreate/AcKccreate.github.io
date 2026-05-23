@@ -118,7 +118,7 @@ document.getElementById("trialForm").addEventListener("submit", function(e) {
   var body = { email: email };
   if (company) body.company = company;
 
-  fetch("https://api.anchorwithin.com/v1/trial/request", {
+  fetch("https://anchor.verityswarm.com/v1/trial/request", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body)

@@ -122,12 +122,12 @@ footer{border-top:1px solid var(--border);padding:24px;
   </div>
   <div id="tab-curl" class="tab-content active">
     <div class="code-block"># 1. Get a free trial key (100 calls, no card)
-curl -X POST https://api.anchorwithin.com/v1/trial/request \
+curl -X POST https://anchor.verityswarm.com/v1/trial/request \
   -H "Content-Type: application/json" \
   -d '{"email": "you@yourapp.com"}'
 
 # 2. Stream a healing frequency track
-curl -X POST https://api.anchorwithin.com/v1/audio/serve \
+curl -X POST https://anchor.verityswarm.com/v1/audio/serve \
   -H "Authorization: Bearer AW-your-key" \
   -H "Content-Type: application/json" \
   -d '{"frequency": "528", "use_case": "healing"}' \
@@ -137,13 +137,13 @@ curl -X POST https://api.anchorwithin.com/v1/audio/serve \
     <div class="code-block">import requests
 
 # Get trial key
-r = requests.post("https://api.anchorwithin.com/v1/trial/request",
+r = requests.post("https://anchor.verityswarm.com/v1/trial/request",
                   json={"email": "you@yourapp.com"})
 key = r.json()["api_key"]
 
 # Stream audio
 headers = {"Authorization": f"Bearer {key}"}
-r = requests.post("https://api.anchorwithin.com/v1/audio/serve",
+r = requests.post("https://anchor.verityswarm.com/v1/audio/serve",
                   json={"frequency": "528", "use_case": "healing"},
                   headers=headers, stream=True)
 with open("528hz_healing.mp3", "wb") as f:
@@ -152,7 +152,7 @@ with open("528hz_healing.mp3", "wb") as f:
   </div>
   <div id="tab-js" class="tab-content">
     <div class="code-block">// Get trial key
-const r = await fetch("https://api.anchorwithin.com/v1/trial/request", {
+const r = await fetch("https://anchor.verityswarm.com/v1/trial/request", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({ email: "you@yourapp.com" })
@@ -160,7 +160,7 @@ const r = await fetch("https://api.anchorwithin.com/v1/trial/request", {
 const { api_key } = await r.json();
 
 // Stream audio to file (Node.js)
-const resp = await fetch("https://api.anchorwithin.com/v1/audio/serve", {
+const resp = await fetch("https://anchor.verityswarm.com/v1/audio/serve", {
   method: "POST",
   headers: { "Authorization": `Bearer ${api_key}`,
              "Content-Type": "application/json" },

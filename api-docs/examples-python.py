@@ -4,7 +4,7 @@ Requires: requests (pip install requests)
 """
 import requests
 
-BASE_URL = "https://api.anchorwithin.com"
+BASE_URL = "https://anchor.verityswarm.com"
 API_KEY  = "AW-your-key-here"  # replace with your key
 
 headers = {"Authorization": f"Bearer {API_KEY}"}

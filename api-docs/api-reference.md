@@ -1,6 +1,6 @@
 # AnchorWithin API — Reference
 
-**Base URL:** `https://api.anchorwithin.com`  
+**Base URL:** `https://anchor.verityswarm.com`  
 **Auth:** `Authorization: Bearer AW-your-key`  
 **Format:** JSON request/response, binary audio response for `/v1/audio/serve`
 

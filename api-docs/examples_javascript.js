@@ -1,7 +1,7 @@
 // AnchorWithin API — JavaScript / Node.js Examples
 // Works in: Node.js 18+, browser (with CORS), Deno, Bun
 
-const BASE_URL = "https://api.anchorwithin.com";
+const BASE_URL = "https://anchor.verityswarm.com";
 const API_KEY  = "AW-your-key-here"; // replace with your key
 
 const headers = {
@@ -122,7 +122,7 @@ export function useHealingAudio(apiKey) {
     setLoading(true);
     setError(null);
     try {
-      const resp = await fetch("https://api.anchorwithin.com/v1/audio/serve", {
+      const resp = await fetch("https://anchor.verityswarm.com/v1/audio/serve", {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${apiKey}`,
