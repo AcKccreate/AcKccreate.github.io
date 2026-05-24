@@ -3,821 +3,1012 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AnchorWithin — The Anchor Holds</title>
-<meta name="description" content="AI-powered tools for memory, grounding, and creation. EchoWalk, KidSpark, Sanctuary Bell, BreatheWorld, DreamWalk, ThenNow, Forever Paws — and more.">
-<meta property="og:title" content="AnchorWithin — The Anchor Holds">
-<meta property="og:description" content="AI-powered tools for memory, grounding, and creation.">
+<title>AnchorWithin — Governed AI Infrastructure</title>
+<meta name="description" content="AnchorWithin delivers governed AI infrastructure for builders. AnchorScout: a healing frequency audio API with quota enforcement, trace-linked delivery, and AOS approval pipelines. Trial key in 60 seconds.">
+<meta property="og:title" content="AnchorWithin — Governed AI Infrastructure">
+<meta property="og:description" content="Audio API for AI agents and apps. Governed. Quota-enforced. Trace-linked. 15 solfeggio frequency tracks, 432Hz–963Hz.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 /* ── RESET & TOKENS ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:       #0a0a1a;
-  --surface:  #0f0f25;
-  --lift:     #151530;
-  --border:   rgba(240,208,96,0.12);
-  --gold:     #f0d060;
-  --gold-dim: rgba(240,208,96,0.55);
-  --gold-glow:rgba(240,208,96,0.15);
-  --text:     #dcdcf0;
-  --muted:    #7878a0;
-  --teal:     #4ecdc4;
-  --serif:    'DM Serif Display', Georgia, serif;
-  --sans:     'Outfit', system-ui, sans-serif;
+  --bg:        #06060f;
+  --surface:   #0c0c1e;
+  --lift:      #12122a;
+  --card:      #0f0f23;
+  --border:    rgba(205,160,50,0.14);
+  --border-hi: rgba(205,160,50,0.32);
+  --gold:      #c8a032;
+  --gold-lt:   #e8c060;
+  --gold-dim:  rgba(200,160,50,0.55);
+  --gold-glow: rgba(200,160,50,0.1);
+  --cream:     #f0ead8;
+  --text:      #d8d8ec;
+  --muted:     #6868a0;
+  --teal:      #3fcdc4;
+  --red-dim:   rgba(239,68,68,0.8);
+  --serif:     'DM Serif Display', Georgia, serif;
+  --sans:      'Outfit', system-ui, sans-serif;
+  --mono:      'JetBrains Mono', 'Courier New', monospace;
 }
 
 html { scroll-behavior: smooth; }
-
 body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--sans);
   font-weight: 400;
-  line-height: 1.6;
+  line-height: 1.65;
   overflow-x: hidden;
 }
-
 a { color: inherit; text-decoration: none; }
-
-/* ── STARFIELD ── */
-.stars {
-  position: fixed; inset: 0; z-index: 0; pointer-events: none;
-  background:
-    radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,.55) 0%, transparent 100%),
-    radial-gradient(1px 1px at 34% 72%, rgba(255,255,255,.4)  0%, transparent 100%),
-    radial-gradient(1px 1px at 58% 9%,  rgba(255,255,255,.5)  0%, transparent 100%),
-    radial-gradient(1px 1px at 76% 55%, rgba(255,255,255,.35) 0%, transparent 100%),
-    radial-gradient(1px 1px at 91% 28%, rgba(255,255,255,.45) 0%, transparent 100%),
-    radial-gradient(1px 1px at 22% 88%, rgba(255,255,255,.3)  0%, transparent 100%),
-    radial-gradient(1px 1px at 47% 40%, rgba(255,255,255,.5)  0%, transparent 100%),
-    radial-gradient(1px 1px at 65% 82%, rgba(255,255,255,.4)  0%, transparent 100%),
-    radial-gradient(1px 1px at 83% 67%, rgba(255,255,255,.35) 0%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 5%  50%, rgba(240,208,96,.3) 0%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 70% 15%, rgba(240,208,96,.25) 0%, transparent 100%);
-}
+img { max-width: 100%; }
 
 /* ── NAV ── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 1rem 2.5rem;
-  background: rgba(10,10,26,.85);
-  backdrop-filter: blur(12px);
+  padding: .9rem 2.5rem;
+  background: rgba(6,6,15,.92);
+  backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
 }
 .nav-logo {
+  display: flex; align-items: center; gap: .65rem;
   font-family: var(--serif);
-  font-size: 1.2rem;
-  color: var(--gold);
-  letter-spacing: .04em;
+  font-size: 1.1rem;
+  color: var(--gold-lt);
+  letter-spacing: .03em;
 }
+.nav-anchor { font-size: .95rem; opacity: .7; }
 .nav-links {
-  display: flex; gap: 2rem; list-style: none;
-  font-size: .85rem; font-weight: 500; color: var(--muted);
+  display: flex; gap: 1.75rem; list-style: none;
+  font-size: .82rem; font-weight: 500; color: var(--muted);
 }
 .nav-links a { transition: color .2s; }
-.nav-links a:hover { color: var(--gold); }
-.nav-cta {
-  font-size: .8rem; font-weight: 600;
-  padding: .45rem 1.1rem;
-  border: 1px solid var(--gold-dim);
-  border-radius: 20px;
-  color: var(--gold);
-  transition: background .2s, color .2s;
+.nav-links a:hover { color: var(--gold-lt); }
+.nav-status {
+  display: flex; align-items: center; gap: .4rem;
+  font-size: .72rem; font-weight: 600; color: var(--teal);
+  letter-spacing: .05em;
 }
-.nav-cta:hover { background: var(--gold); color: var(--bg); }
+.status-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--teal);
+  box-shadow: 0 0 6px var(--teal);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+.nav-cta {
+  font-size: .78rem; font-weight: 700;
+  padding: .42rem 1.1rem;
+  background: var(--gold);
+  border-radius: 6px;
+  color: var(--bg);
+  transition: background .2s, transform .15s;
+  letter-spacing: .01em;
+}
+.nav-cta:hover { background: var(--gold-lt); transform: translateY(-1px); }
 
 /* ── HERO ── */
 #hero {
-  position: relative; z-index: 1;
+  position: relative;
   min-height: 100vh;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   text-align: center;
-  padding: 8rem 2rem 6rem;
-  overflow: hidden;
+  padding: 8rem 2rem 5rem;
+}
+.hero-grid-bg {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(200,160,50,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200,160,50,.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 70% 80% at 50% 40%, black 30%, transparent 100%);
+  pointer-events: none;
 }
 .hero-glow {
   position: absolute;
-  width: 700px; height: 700px;
-  background: radial-gradient(circle, rgba(240,208,96,.07) 0%, transparent 70%);
-  top: 50%; left: 50%;
-  transform: translate(-50%, -55%);
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(200,160,50,.06) 0%, transparent 70%);
+  top: 40%; left: 50%; transform: translate(-50%, -55%);
   pointer-events: none;
 }
-.hero-anchor {
-  font-size: .75rem; font-weight: 600; letter-spacing: .25em;
+.hero-eyebrow {
+  font-size: .7rem; font-weight: 600; letter-spacing: .3em;
   color: var(--gold-dim); text-transform: uppercase;
-  margin-bottom: 1.4rem;
-  animation: fadeUp .9s ease both;
+  margin-bottom: 1.2rem;
+  animation: fadeUp .8s ease both;
 }
 .hero-title {
   font-family: var(--serif);
-  font-size: clamp(3.8rem, 9vw, 7.5rem);
-  line-height: 1;
-  background: linear-gradient(135deg, #fff8e0 0%, var(--gold) 45%, #c0a030 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-size: clamp(3rem, 7.5vw, 6.5rem);
+  line-height: 1.05;
+  color: var(--cream);
+  margin-bottom: .75rem;
+  animation: fadeUp .8s .1s ease both;
+}
+.hero-title em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--gold-lt) 0%, var(--gold) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 1rem;
-  animation: fadeUp .9s .1s ease both;
 }
-.hero-tagline {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: clamp(1.3rem, 3vw, 2rem);
-  color: rgba(220,220,240,.6);
-  margin-bottom: 1.6rem;
-  animation: fadeUp .9s .2s ease both;
+.hero-sub {
+  font-size: clamp(1rem, 2.2vw, 1.3rem);
+  color: var(--muted);
+  font-weight: 400;
+  max-width: 560px;
+  margin: 0 auto 2.2rem;
+  line-height: 1.6;
+  animation: fadeUp .8s .2s ease both;
 }
-.hero-desc {
-  font-size: 1.05rem; font-weight: 300;
-  color: var(--muted); max-width: 480px;
-  margin-bottom: 2.8rem;
-  animation: fadeUp .9s .3s ease both;
-}
+.hero-sub strong { color: var(--text); font-weight: 500; }
 .hero-actions {
-  display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
-  animation: fadeUp .9s .4s ease both;
+  display: flex; gap: .85rem; flex-wrap: wrap; justify-content: center;
+  margin-bottom: 3.5rem;
+  animation: fadeUp .8s .3s ease both;
 }
 .btn-primary {
-  padding: .75rem 2rem; border-radius: 30px;
-  background: var(--gold); color: var(--bg);
-  font-weight: 700; font-size: .95rem;
-  transition: transform .2s, box-shadow .2s;
-  box-shadow: 0 0 24px rgba(240,208,96,.3);
+  padding: .78rem 1.8rem;
+  background: var(--gold);
+  color: var(--bg);
+  font-weight: 700; font-size: .9rem; letter-spacing: .01em;
+  border-radius: 7px;
+  transition: background .2s, transform .15s, box-shadow .2s;
+  box-shadow: 0 0 20px rgba(200,160,50,.25);
 }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 36px rgba(240,208,96,.45); }
+.btn-primary:hover { background: var(--gold-lt); transform: translateY(-2px); box-shadow: 0 0 32px rgba(200,160,50,.35); }
 .btn-ghost {
-  padding: .75rem 2rem; border-radius: 30px;
+  padding: .78rem 1.8rem;
+  border: 1px solid var(--border-hi);
+  color: var(--gold-lt);
+  font-size: .9rem;
+  border-radius: 7px;
+  transition: background .2s, border-color .2s;
+}
+.btn-ghost:hover { background: var(--gold-glow); border-color: var(--gold-lt); }
+
+/* ── HERO CODE PREVIEW ── */
+.hero-code-wrap {
+  width: 100%; max-width: 640px;
+  animation: fadeUp .8s .45s ease both;
+}
+.hero-code-bar {
+  display: flex; align-items: center; gap: .5rem;
+  background: var(--lift);
   border: 1px solid var(--border);
-  color: var(--text); font-size: .95rem;
-  transition: border-color .2s, color .2s;
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  padding: .55rem 1rem;
 }
-.btn-ghost:hover { border-color: var(--gold-dim); color: var(--gold); }
-.hero-scroll {
-  position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
-  display: flex; flex-direction: column; align-items: center; gap: .4rem;
-  color: var(--muted); font-size: .7rem; letter-spacing: .15em;
-  animation: fadeUp 1s .8s ease both;
+.code-dot { width: 10px; height: 10px; border-radius: 50%; }
+.code-dot-r { background: #ff5f56; }
+.code-dot-y { background: #febc2e; }
+.code-dot-g { background: #27c93f; }
+.code-label {
+  margin-left: auto;
+  font-family: var(--mono); font-size: .7rem; color: var(--muted);
 }
-.scroll-line {
-  width: 1px; height: 40px;
-  background: linear-gradient(to bottom, var(--gold-dim), transparent);
-  animation: scrollPulse 2s ease-in-out infinite;
+.hero-code {
+  background: var(--lift);
+  border: 1px solid var(--border);
+  border-radius: 0 0 8px 8px;
+  padding: 1.25rem 1.5rem;
+  font-family: var(--mono);
+  font-size: .8rem;
+  line-height: 1.7;
+  text-align: left;
+  overflow-x: auto;
+  white-space: pre;
+  color: var(--text);
 }
+.c-comment { color: var(--muted); }
+.c-kw      { color: #c792ea; }
+.c-str     { color: #c3e88d; }
+.c-fn      { color: #82aaff; }
+.c-key     { color: var(--gold-lt); }
+
+/* ── CREDENTIAL BAR ── */
+.cred-bar {
+  position: relative; z-index: 1;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  padding: 1rem 2rem;
+  overflow: hidden;
+}
+.cred-inner {
+  display: flex; align-items: center; justify-content: center;
+  gap: 2.5rem; flex-wrap: wrap;
+  max-width: 900px; margin: 0 auto;
+  font-size: .78rem; font-weight: 500; color: var(--muted);
+}
+.cred-item { display: flex; align-items: center; gap: .5rem; }
+.cred-icon { font-size: 1rem; }
+.cred-value { color: var(--text); font-weight: 600; }
 
 /* ── SECTION SHELL ── */
-section {
+.section {
   position: relative; z-index: 1;
   padding: 6rem 2rem;
-  max-width: 1200px; margin: 0 auto;
+  max-width: 1100px; margin: 0 auto;
 }
 .section-label {
-  font-size: .72rem; font-weight: 600; letter-spacing: .2em;
-  color: var(--gold-dim); text-transform: uppercase; margin-bottom: .8rem;
+  font-size: .68rem; font-weight: 600; letter-spacing: .25em;
+  color: var(--gold-dim); text-transform: uppercase; margin-bottom: .7rem;
 }
 .section-title {
   font-family: var(--serif);
-  font-size: clamp(2rem, 4vw, 3rem);
-  color: var(--text); margin-bottom: .6rem;
+  font-size: clamp(1.8rem, 3.5vw, 2.7rem);
+  color: var(--cream); line-height: 1.2; margin-bottom: .5rem;
 }
-.section-subtitle {
-  font-size: 1rem; color: var(--muted); max-width: 520px; margin-bottom: 3rem;
+.section-sub {
+  font-size: .95rem; color: var(--muted);
+  max-width: 500px; margin-bottom: 2.5rem; line-height: 1.6;
 }
-.section-divider {
-  width: 60px; height: 2px;
+.divider {
+  width: 48px; height: 2px;
   background: linear-gradient(to right, var(--gold), transparent);
-  margin: 1rem 0 3rem;
+  margin: .75rem 0 2.5rem;
 }
 
-/* ── PRODUCT GRID — PREMIUM ── */
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
-}
-.product-card {
-  position: relative;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 2rem 1.75rem 1.75rem;
-  transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
-  overflow: hidden;
-  display: flex; flex-direction: column; justify-content: space-between;
-  gap: 1.5rem;
-  cursor: pointer;
-}
-.product-card::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: radial-gradient(circle at 0% 0%, var(--gold-glow), transparent 60%);
-  opacity: 0; transition: opacity .4s;
-  pointer-events: none;
-}
-.product-card:hover { transform: translateY(-5px); border-color: rgba(240,208,96,.35); box-shadow: 0 16px 48px rgba(0,0,0,.5); }
-.product-card:hover::before { opacity: 1; }
-
-.card-top { display: flex; align-items: flex-start; justify-content: space-between; }
-.card-icon {
-  width: 44px; height: 44px; border-radius: 12px;
-  background: var(--gold-glow);
-  border: 1px solid rgba(240,208,96,.2);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.3rem;
-}
-.card-badge {
-  font-size: .65rem; font-weight: 600; letter-spacing: .1em;
-  padding: .25rem .65rem; border-radius: 20px;
-  text-transform: uppercase;
-}
-.badge-live   { background: rgba(78,205,196,.12); color: var(--teal); border: 1px solid rgba(78,205,196,.25); }
-.badge-coming { background: rgba(240,208,96,.08); color: var(--gold-dim); border: 1px solid var(--border); }
-
-.card-name {
-  font-family: var(--serif);
-  font-size: 1.55rem;
-  color: var(--text);
-  line-height: 1.1;
-  margin-bottom: .4rem;
-}
-.card-subtitle {
-  font-size: .88rem; color: var(--muted);
-  font-weight: 300; font-style: italic;
-}
-.card-link {
-  display: inline-flex; align-items: center; gap: .4rem;
-  font-size: .8rem; font-weight: 600; color: var(--gold-dim);
-  letter-spacing: .05em;
-  transition: color .2s, gap .2s;
-}
-.product-card:hover .card-link { color: var(--gold); gap: .65rem; }
-.card-link-disabled { color: var(--muted); cursor: default; }
-.arrow { font-size: .9rem; }
-
-/* ── TOOLS GRID — SECONDARY ── */
-.tools-grid {
+/* ── FEATURE CARDS ── */
+.feature-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 1rem;
+  gap: 1.25rem;
 }
-.tool-card {
-  background: var(--lift);
-  border: 1px solid rgba(255,255,255,.06);
+.feat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 1.25rem 1.5rem;
+  padding: 1.75rem 1.5rem;
+  transition: border-color .3s, box-shadow .3s;
+}
+.feat-card:hover { border-color: var(--border-hi); box-shadow: 0 8px 32px rgba(0,0,0,.4); }
+.feat-icon {
+  width: 40px; height: 40px;
+  background: var(--gold-glow);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.15rem;
+  margin-bottom: 1rem;
+}
+.feat-name { font-weight: 700; font-size: .95rem; color: var(--text); margin-bottom: .4rem; }
+.feat-desc { font-size: .82rem; color: var(--muted); line-height: 1.55; }
+
+/* ── ANCHOR SCOUT SECTION ── */
+.scout-wrap {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 3rem; align-items: center;
+}
+.scout-badge {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: rgba(63,205,196,.08); border: 1px solid rgba(63,205,196,.2);
+  color: var(--teal); font-size: .7rem; font-weight: 700; letter-spacing: .15em;
+  padding: .3rem .8rem; border-radius: 20px;
+  text-transform: uppercase; margin-bottom: 1rem;
+}
+.scout-title {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 3vw, 2.3rem);
+  color: var(--cream); margin-bottom: .75rem;
+}
+.scout-desc { font-size: .9rem; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.65; }
+.track-list { display: flex; flex-direction: column; gap: .5rem; margin-bottom: 1.5rem; }
+.track-item {
+  display: flex; align-items: center; gap: .75rem;
+  font-size: .82rem; color: var(--text);
+}
+.track-hz {
+  font-family: var(--mono); font-size: .72rem; font-weight: 600;
+  color: var(--gold); background: var(--gold-glow);
+  border: 1px solid var(--border);
+  padding: .15rem .55rem; border-radius: 4px;
+  width: 52px; text-align: center; flex-shrink: 0;
+}
+.track-name { color: var(--muted); font-size: .8rem; }
+.scout-code-wrap {
+  background: var(--lift);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.scout-code-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .65rem 1rem;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--mono); font-size: .7rem; color: var(--muted);
+}
+.scout-code {
+  padding: 1.25rem 1.25rem;
+  font-family: var(--mono); font-size: .78rem;
+  line-height: 1.75; overflow-x: auto; white-space: pre;
+  color: var(--text);
+}
+
+/* ── PRICING ── */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+.price-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.75rem 1.5rem;
+  display: flex; flex-direction: column; gap: .75rem;
+  position: relative;
+}
+.price-card.featured {
+  border-color: var(--border-hi);
+  background: linear-gradient(135deg, var(--card) 0%, #0a0a1e 100%);
+}
+.price-badge {
+  position: absolute; top: -1px; right: 1.25rem;
+  background: var(--gold);
+  color: var(--bg); font-size: .65rem; font-weight: 700;
+  padding: .2rem .65rem; letter-spacing: .08em;
+  border-radius: 0 0 6px 6px; text-transform: uppercase;
+}
+.price-tier { font-size: .7rem; font-weight: 700; letter-spacing: .2em; color: var(--muted); text-transform: uppercase; }
+.price-amount {
+  font-family: var(--serif); font-size: 2.4rem;
+  color: var(--cream); line-height: 1;
+}
+.price-amount sup { font-size: 1rem; font-family: var(--sans); color: var(--muted); }
+.price-amount span { font-size: .85rem; font-family: var(--sans); font-weight: 400; color: var(--muted); }
+.price-calls { font-size: .82rem; color: var(--muted); }
+.price-calls strong { color: var(--gold-lt); }
+.price-divider { border: none; border-top: 1px solid var(--border); margin: .25rem 0; }
+.price-features { list-style: none; display: flex; flex-direction: column; gap: .45rem; }
+.price-features li { font-size: .8rem; color: var(--muted); display: flex; align-items: flex-start; gap: .5rem; }
+.price-features li::before { content: '✓'; color: var(--teal); font-size: .75rem; font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.price-cta {
+  display: block; text-align: center;
+  padding: .65rem; border-radius: 7px;
+  font-weight: 700; font-size: .85rem;
+  margin-top: auto;
+  transition: background .2s, transform .15s;
+}
+.price-cta-ghost { border: 1px solid var(--border-hi); color: var(--gold-lt); }
+.price-cta-ghost:hover { background: var(--gold-glow); }
+.price-cta-solid { background: var(--gold); color: var(--bg); }
+.price-cta-solid:hover { background: var(--gold-lt); transform: translateY(-1px); }
+
+/* ── TRUST / GOVERNANCE ── */
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+.trust-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+.trust-heading {
+  display: flex; align-items: center; gap: .65rem;
+  font-weight: 700; font-size: .9rem; color: var(--text);
+  margin-bottom: .65rem;
+}
+.trust-icon { font-size: 1.1rem; }
+.trust-desc { font-size: .8rem; color: var(--muted); line-height: 1.6; }
+.trust-tag {
+  display: inline-block; margin-top: .75rem;
+  font-size: .65rem; font-weight: 700; letter-spacing: .12em;
+  padding: .2rem .6rem; border-radius: 4px;
+  text-transform: uppercase;
+}
+.tag-aos   { background: rgba(63,205,196,.1); color: var(--teal); border: 1px solid rgba(63,205,196,.2); }
+.tag-fenrir { background: rgba(200,160,50,.1); color: var(--gold); border: 1px solid var(--border); }
+.tag-stripe { background: rgba(99,91,255,.1); color: #a0a0ff; border: 1px solid rgba(99,91,255,.2); }
+
+/* ── VERITY TEASER ── */
+.verity-band {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 3.5rem 2rem;
+}
+.verity-inner {
+  max-width: 760px; margin: 0 auto; text-align: center;
+}
+.verity-label {
+  font-size: .68rem; font-weight: 700; letter-spacing: .25em;
+  color: var(--muted); text-transform: uppercase; margin-bottom: .75rem;
+}
+.verity-title {
+  font-family: var(--serif); font-size: clamp(1.6rem, 3vw, 2.2rem);
+  color: var(--cream); margin-bottom: .75rem;
+}
+.verity-sub { font-size: .9rem; color: var(--muted); max-width: 520px; margin: 0 auto 1.5rem; }
+.verity-pill {
+  display: inline-flex; align-items: center; gap: .5rem;
+  border: 1px solid var(--border-hi); color: var(--gold-dim);
+  font-size: .75rem; font-weight: 600; padding: .45rem 1.1rem;
+  border-radius: 20px; letter-spacing: .05em;
+}
+
+/* ── APPS SECTION ── */
+.apps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.1rem;
+}
+.app-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.25rem 1.25rem;
   display: flex; align-items: center; gap: 1rem;
   transition: border-color .2s, background .2s;
-  cursor: pointer;
 }
-.tool-card:hover { border-color: var(--border); background: var(--surface); }
-.tool-icon {
-  width: 36px; height: 36px; border-radius: 8px;
-  background: rgba(255,255,255,.05);
+.app-card:hover { border-color: var(--border-hi); background: var(--lift); }
+.app-icon {
+  width: 36px; height: 36px;
+  background: var(--gold-glow); border: 1px solid var(--border);
+  border-radius: 9px;
   display: flex; align-items: center; justify-content: center;
   font-size: 1rem; flex-shrink: 0;
 }
-.tool-info { min-width: 0; }
-.tool-name { font-size: .9rem; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.tool-desc { font-size: .75rem; color: var(--muted); margin-top: .15rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.app-name { font-size: .88rem; font-weight: 600; color: var(--text); }
+.app-desc { font-size: .75rem; color: var(--muted); margin-top: .1rem; }
 
-/* ── EMAIL CAPTURE ── */
-.email-section {
-  position: relative; z-index: 1;
-  padding: 4rem 2rem;
-  text-align: center;
-  border-top: 1px solid rgba(240,208,96,.08);
-}
-.email-section h2 {
-  font-family: var(--serif); font-size: clamp(1.5rem,3vw,2rem);
-  color: var(--gold); margin-bottom: .5rem;
-}
-.email-section p { color: var(--muted); margin-bottom: 1.75rem; }
-.email-form {
-  display: flex; gap: .75rem; justify-content: center;
-  flex-wrap: wrap; max-width: 480px; margin: 0 auto;
-}
-.email-form input {
-  flex: 1; min-width: 220px;
-  background: var(--surface); border: 1px solid rgba(240,208,96,.25);
-  border-radius: 8px; padding: .75rem 1rem;
-  color: var(--text); font-size: 1rem; font-family: var(--sans);
-  outline: none;
-}
-.email-form input:focus { border-color: var(--gold); }
-.email-form input::placeholder { color: var(--muted); }
-.email-btn {
-  background: var(--gold); color: #0a0a1a;
-  border: none; border-radius: 8px;
-  padding: .75rem 1.75rem; font-size: .95rem; font-weight: 700;
-  cursor: pointer; font-family: var(--sans);
-  transition: background .2s, transform .15s;
-}
-.email-btn:hover { background: #f8e070; transform: translateY(-1px); }
-.email-msg { margin-top: .75rem; font-size: .9rem; min-height: 1.2rem; }
-.email-msg.ok  { color: var(--teal); }
-.email-msg.err { color: #ff6b6b; }
-
-/* ── CONSTITUTION FOOTER ── */
+/* ── FOOTER ── */
 footer {
-  position: relative; z-index: 1;
-  border-top: 1px solid rgba(240,208,96,.08);
-  padding: 4rem 2rem 3rem;
-  text-align: center;
+  border-top: 1px solid var(--border);
+  padding: 3rem 2rem 2.5rem;
+  background: var(--surface);
 }
-.footer-motto {
+.footer-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; flex-direction: column; align-items: center; gap: 1.5rem;
+}
+.footer-logo {
   font-family: var(--serif);
-  font-style: italic;
-  font-size: 1.4rem;
-  color: rgba(240,208,96,.25);
-  margin-bottom: 2rem;
-  letter-spacing: .06em;
+  color: var(--gold); font-size: 1rem;
+  letter-spacing: .04em;
 }
 .footer-links {
   display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem;
-  font-size: .8rem; font-weight: 500; color: var(--muted);
-  margin-bottom: 1.5rem;
+  font-size: .78rem; font-weight: 500; color: var(--muted);
 }
-.footer-links a:hover { color: var(--gold); }
-.footer-copy {
-  font-size: .72rem; color: rgba(120,120,160,.5);
-}
+.footer-links a:hover { color: var(--gold-lt); }
+.footer-copy { font-size: .7rem; color: rgba(100,100,150,.5); text-align: center; }
 
 /* ── ANIMATIONS ── */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
+  from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-@keyframes scrollPulse {
-  0%, 100% { opacity: .4; }
-  50%       { opacity: 1; }
-}
-
 .reveal {
-  opacity: 0; transform: translateY(30px);
-  transition: opacity .7s ease, transform .7s ease;
+  opacity: 0; transform: translateY(24px);
+  transition: opacity .65s ease, transform .65s ease;
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
 /* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .scout-wrap { grid-template-columns: 1fr; }
+}
 @media (max-width: 768px) {
-  nav { padding: 1rem 1.25rem; }
+  nav { padding: .9rem 1.25rem; }
   .nav-links { display: none; }
-  section { padding: 4rem 1.25rem; }
-  .product-grid { grid-template-columns: 1fr; }
-  .tools-grid { grid-template-columns: 1fr 1fr; }
+  .nav-status { display: none; }
+  .section { padding: 4rem 1.25rem; }
+  .hero-title { font-size: clamp(2.4rem, 9vw, 4rem); }
 }
 @media (max-width: 480px) {
-  .tools-grid { grid-template-columns: 1fr; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .feature-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 360px) {
+  .feature-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
 
-<div class="stars"></div>
-
-<!-- NAV -->
+<!-- ── NAV ── -->
 <nav>
-  <span class="nav-logo">⚓ AnchorWithin</span>
+  <a href="/" class="nav-logo">
+    <span class="nav-anchor">⚓</span>
+    AnchorWithin
+  </a>
   <ul class="nav-links">
-    <li><a href="#products">Products</a></li>
-    <li><a href="#tools">Tools</a></li>
-    <li><a href="https://youtube.com/@AnchorWithin" target="_blank">YouTube</a></li>
+    <li><a href="/api-docs/">Docs</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#anchor-scout">AnchorScout</a></li>
+    <li><a href="#governance">Governance</a></li>
+    <li><a href="#apps">Products</a></li>
   </ul>
-  <a href="https://ackccreate.github.io/anchorwithin-store/" class="nav-cta">Store</a>
+  <div style="display:flex;align-items:center;gap:1.25rem">
+    <div class="nav-status">
+      <div class="status-dot"></div>
+      API LIVE
+    </div>
+    <a href="/trial/" class="nav-cta">Free API Key</a>
+  </div>
 </nav>
 
-<!-- HERO -->
+<!-- ── HERO ── -->
 <section id="hero">
+  <div class="hero-grid-bg"></div>
   <div class="hero-glow"></div>
-  <p class="hero-anchor">⚓ AnchorWithin</p>
-  <h1 class="hero-title">AnchorWithin</h1>
-  <p class="hero-tagline">The Anchor Holds.</p>
-  <p class="hero-desc">AI-powered tools for memory, grounding, and creation.</p>
-  <div class="hero-actions">
-    <a href="#products" class="btn-primary">Explore Products</a>
-    <a href="https://ackccreate.github.io/anchorwithin-store/" class="btn-ghost">Visit Store</a>
-  </div>
-  <div class="hero-scroll">
-    <div class="scroll-line"></div>
-    <span>SCROLL</span>
-  </div>
-</section>
 
-<!-- DIGITAL STORE -->
-<section id="shop" style="padding-top:5rem">
-  <p class="section-label reveal">Instant Downloads</p>
-  <h2 class="section-title reveal">Digital Products</h2>
-  <p class="section-subtitle reveal">Practical guides built for solo founders and creators — pay once, keep forever.</p>
-  <div class="section-divider reveal"></div>
-
-  <div class="product-grid" style="max-width:860px;margin:0 auto;">
-
-    <div class="product-card reveal" style="cursor:default">
-      <div>
-        <div class="card-top">
-          <div class="card-icon">🤖</div>
-          <span class="card-badge badge-live">$2.99</span>
-        </div>
-        <h3 class="card-name" style="margin-top:1.2rem">50 AI Prompts</h3>
-        <p class="card-subtitle">That Save Hours Every Week</p>
-        <p style="font-size:.82rem;color:var(--muted);margin-top:.75rem;line-height:1.5">Ready-to-use prompts for writing, research, coding, and business — copy, paste, profit.</p>
-      </div>
-      <a href="https://buy.stripe.com/4gMdRae9EdKT5obfj467S0s" class="btn-primary" style="text-align:center;margin-top:1rem" target="_blank">Buy Now — $2.99</a>
-    </div>
-
-    <div class="product-card reveal" style="cursor:default">
-      <div>
-        <div class="card-top">
-          <div class="card-icon">🧾</div>
-          <span class="card-badge badge-live">$2.99</span>
-        </div>
-        <h3 class="card-name" style="margin-top:1.2rem">Tax Checklist 2026</h3>
-        <p class="card-subtitle">Freelancer Deduction Guide</p>
-        <p style="font-size:.82rem;color:var(--muted);margin-top:.75rem;line-height:1.5">Every deduction freelancers and solo founders miss — organized, printable, IRS-ready.</p>
-      </div>
-      <a href="https://buy.stripe.com/00w4gAd5A6ir9Erb2O67S0t" class="btn-primary" style="text-align:center;margin-top:1rem" target="_blank">Buy Now — $2.99</a>
-    </div>
-
-    <div class="product-card reveal" style="cursor:default">
-      <div>
-        <div class="card-top">
-          <div class="card-icon">💡</div>
-          <span class="card-badge badge-live">$2.99</span>
-        </div>
-        <h3 class="card-name" style="margin-top:1.2rem">Side Hustle Blueprint</h3>
-        <p class="card-subtitle">10 Hustles You Can Start This Weekend</p>
-        <p style="font-size:.82rem;color:var(--muted);margin-top:.75rem;line-height:1.5">Validated income streams with startup cost, time investment, and first-month revenue estimates.</p>
-      </div>
-      <a href="https://buy.stripe.com/00w3cw8PkgX54k72wi67S0u" class="btn-primary" style="text-align:center;margin-top:1rem" target="_blank">Buy Now — $2.99</a>
-    </div>
-
-    <div class="product-card reveal" style="cursor:default">
-      <div>
-        <div class="card-top">
-          <div class="card-icon">📄</div>
-          <span class="card-badge badge-live">$2.99</span>
-        </div>
-        <h3 class="card-name" style="margin-top:1.2rem">Resume Playbook</h3>
-        <p class="card-subtitle">Beat the ATS & Land Interviews</p>
-        <p style="font-size:.82rem;color:var(--muted);margin-top:.75rem;line-height:1.5">Step-by-step guide to optimize your resume for applicant tracking systems and human reviewers.</p>
-      </div>
-      <a href="https://buy.stripe.com/6oUbJ26Hc22bdUHgn867S0v" class="btn-primary" style="text-align:center;margin-top:1rem" target="_blank">Buy Now — $2.99</a>
-    </div>
-
-  </div>
-  <p style="text-align:center;margin-top:1.75rem;font-size:.85rem;color:var(--muted)">
-    Secure checkout via Stripe &nbsp;·&nbsp; Instant PDF delivery &nbsp;·&nbsp;
-    <a href="https://ackccreate.github.io/anchorwithin-store/" style="color:var(--gold-dim)">View full store →</a>
+  <p class="hero-eyebrow">Governed AI Infrastructure</p>
+  <h1 class="hero-title">
+    Audio API for<br><em>AI builders</em>
+  </h1>
+  <p class="hero-sub">
+    Stream <strong>healing frequency audio</strong> into your AI app or agent.
+    Quota-enforced. Trace-linked. Governed by AOS approval pipelines.
+    <strong>Trial key in 60 seconds — no credit card.</strong>
   </p>
-</section>
 
-<!-- PREMIUM PRODUCTS -->
-<section id="products">
-  <p class="section-label reveal">Signature Experiences</p>
-  <h2 class="section-title reveal">Built to Move You</h2>
-  <p class="section-subtitle reveal">Seven tools that hold what ordinary software ignores — memory, presence, and wonder.</p>
-  <div class="section-divider reveal"></div>
+  <div class="hero-actions">
+    <a href="/trial/" class="btn-primary">Get free API key</a>
+    <a href="/api-docs/" class="btn-ghost">View quickstart →</a>
+  </div>
 
-  <div class="product-grid">
+  <div class="hero-code-wrap">
+    <div class="hero-code-bar">
+      <div class="code-dot code-dot-r"></div>
+      <div class="code-dot code-dot-y"></div>
+      <div class="code-dot code-dot-g"></div>
+      <span class="code-label">60-second quickstart</span>
+    </div>
+    <div class="hero-code"><span class="c-comment"># 1. Request a free trial key (100 calls, no card)</span>
+<span class="c-kw">curl</span> -X POST https://api.anchorwithin.com/v1/trial/request \
+  -H <span class="c-str">"Content-Type: application/json"</span> \
+  -d <span class="c-str">'{"email": "you@yourapp.com"}'</span>
 
-    <a href="https://ackccreate.github.io/echowalk/" class="product-card reveal">
-      <div>
-        <div class="card-top">
-          <div class="card-icon">🌫️</div>
-          <span class="card-badge badge-live">Live</span>
-        </div>
-        <h3 class="card-name" style="margin-top:1.2rem">EchoWalk</h3>
-        <p class="card-subtitle">"Step Inside Your Lost Memories"</p>
-      </div>
-      <span class="card-link">Explore <span class="arrow">→</span></span>
-    </a>
-
-    <a href="https://ackccreate.github.io/kidspark/" class="product-card reveal">
-      <div>
-        <div class="card-top">
-          <div class="card-icon">🧸</div>
-          <span class="card-badge badge-live">Live</span>
-        </div>
-        <h3 class="card-name" style="margin-top:1.2rem">KidSpark</h3>
-        <p class="card-subtitle">"Turn Your Toys Into Worlds"</p>
-      </div>
-      <span class="card-link">Explore <span class="arrow">→</span></span>
-    </a>
-
-    <a href="https://ackccreate.github.io/forever-paws/" class="product-card reveal">
-      <div>
-        <div class="card-top">
-          <div class="card-icon">🐾</div>
-          <span class="card-badge badge-live">Live</span>
-        </div>
-        <h3 class="card-name" style="margin-top:1.2rem">Forever Paws</h3>
-        <p class="card-subtitle">"Keep Them by Your Side"</p>
-      </div>
-      <span class="card-link">Explore <span class="arrow">→</span></span>
-    </a>
-
-    <a href="https://ackccreate.github.io/sanctuary-bell/" class="product-card reveal">
-      <div>
-        <div class="card-top">
-          <div class="card-icon">🔔</div>
-          <span class="card-badge badge-live">Live</span>
-        </div>
-        <h3 class="card-name" style="margin-top:1.2rem">Sanctuary Bell</h3>
-        <p class="card-subtitle">"Hear the Soul of Objects"</p>
-      </div>
-      <span class="card-link">Explore <span class="arrow">→</span></span>
-    </a>
-
-    <a href="https://ackccreate.github.io/breatheworld/" class="product-card reveal">
-      <div>
-        <div class="card-top">
-          <div class="card-icon">🌊</div>
-          <span class="card-badge badge-live">Live</span>
-        </div>
-        <h3 class="card-name" style="margin-top:1.2rem">BreatheWorld</h3>
-        <p class="card-subtitle">"A World That Breathes With You"</p>
-      </div>
-      <span class="card-link">Explore <span class="arrow">→</span></span>
-    </a>
-
-    <a href="https://ackccreate.github.io/dreamwalk/" class="product-card reveal">
-      <div>
-        <div class="card-top">
-          <div class="card-icon">✨</div>
-          <span class="card-badge badge-live">Live</span>
-        </div>
-        <h3 class="card-name" style="margin-top:1.2rem">DreamWalk</h3>
-        <p class="card-subtitle">"Speak a Dream into Existence"</p>
-      </div>
-      <span class="card-link">Explore <span class="arrow">→</span></span>
-    </a>
-
-    <a href="https://ackccreate.github.io/thennow/" class="product-card reveal">
-      <div>
-        <div class="card-top">
-          <div class="card-icon">⏳</div>
-          <span class="card-badge badge-live">Live</span>
-        </div>
-        <h3 class="card-name" style="margin-top:1.2rem">ThenNow</h3>
-        <p class="card-subtitle">"Transformations from Then to Now"</p>
-      </div>
-      <span class="card-link">Explore <span class="arrow">→</span></span>
-    </a>
-
-    <a href="https://ackccreate.github.io/depthclick/" class="product-card reveal">
-      <div>
-        <div class="card-top">
-          <div class="card-icon">📸</div>
-          <span class="card-badge badge-live">Live</span>
-        </div>
-        <h3 class="card-name" style="margin-top:1.2rem">DepthClick</h3>
-        <p class="card-subtitle">"Cinematic Parallax from Any Photo"</p>
-      </div>
-      <span class="card-link">Explore <span class="arrow">→</span></span>
-    </a>
-
+<span class="c-comment"># 2. Stream a 528Hz healing track into your app</span>
+<span class="c-kw">curl</span> -X POST https://api.anchorwithin.com/v1/audio/serve \
+  -H <span class="c-str">"Authorization: Bearer AW-your-key"</span> \
+  -d <span class="c-str">'{"frequency": "528", "use_case": "healing"}'</span> \
+  --output <span class="c-str">528hz.mp3</span></div>
   </div>
 </section>
 
-<!-- ALL TOOLS -->
-<section id="tools" style="padding-top:0">
-  <p class="section-label reveal">The Full Toolkit</p>
-  <h2 class="section-title reveal">Every Tool, All Free</h2>
-  <p class="section-subtitle reveal">Thirteen AI-powered utilities — no login, no paywall, all yours.</p>
-  <div class="section-divider reveal"></div>
+<!-- ── CREDENTIAL BAR ── -->
+<div class="cred-bar">
+  <div class="cred-inner">
+    <div class="cred-item">
+      <span class="cred-icon">🎵</span>
+      <span><span class="cred-value">15 tracks</span> · 432Hz to 963Hz</span>
+    </div>
+    <div class="cred-item">
+      <span class="cred-icon">🔐</span>
+      <span><span class="cred-value">AOS governed</span> · human-approval pipeline</span>
+    </div>
+    <div class="cred-item">
+      <span class="cred-icon">⚡</span>
+      <span><span class="cred-value">Quota-enforced</span> · no surprise charges</span>
+    </div>
+    <div class="cred-item">
+      <span class="cred-icon">🔍</span>
+      <span><span class="cred-value">Trace-linked</span> · every call logged</span>
+    </div>
+    <div class="cred-item">
+      <span class="cred-icon">💳</span>
+      <span><span class="cred-value">Stripe-verified</span> · instant upgrade</span>
+    </div>
+  </div>
+</div>
 
-  <div class="tools-grid">
+<!-- ── FEATURES ── -->
+<div class="section reveal">
+  <p class="section-label">Why builders choose AnchorWithin</p>
+  <h2 class="section-title">Infrastructure you can trust</h2>
+  <p class="section-sub">Built for the agent economy — where every API call needs to be governed, traced, and budget-controlled.</p>
+  <div class="divider"></div>
 
-    <a href="https://ackccreate.github.io/ai-companion/" class="tool-card reveal">
-      <div class="tool-icon">🤖</div>
-      <div class="tool-info">
-        <div class="tool-name">AI Companion</div>
-        <div class="tool-desc">3 personas, guided journaling</div>
+  <div class="feature-grid">
+    <div class="feat-card reveal">
+      <div class="feat-icon">🔐</div>
+      <div class="feat-name">AOS Approval Pipeline</div>
+      <div class="feat-desc">Every external action routes through the Anchor Operating System — human-in-the-loop by design, not as an afterthought.</div>
+    </div>
+    <div class="feat-card reveal">
+      <div class="feat-icon">🛡️</div>
+      <div class="feat-name">FENRIR Quality Gate</div>
+      <div class="feat-desc">Content scored across 5 weighted categories before delivery. Voice, brand, market fit, design, and compliance — all enforced.</div>
+    </div>
+    <div class="feat-card reveal">
+      <div class="feat-icon">📊</div>
+      <div class="feat-name">Quota Enforcement</div>
+      <div class="feat-desc">Hard call limits per tier. 80% usage triggers an upsell alert. Overage returns 429 — no surprise charges, ever.</div>
+    </div>
+    <div class="feat-card reveal">
+      <div class="feat-icon">🔍</div>
+      <div class="feat-name">Verity Trace</div>
+      <div class="feat-desc">Every audio delivery is trace-linked. Know what was served, when, to which key, and under which quota state.</div>
+    </div>
+    <div class="feat-card reveal">
+      <div class="feat-icon">🎵</div>
+      <div class="feat-name">Solfeggio Catalog</div>
+      <div class="feat-desc">15 MP3 tracks across 5 solfeggio frequencies. Query by Hz, by use-case, or by track ID. Stream or download.</div>
+    </div>
+    <div class="feat-card reveal">
+      <div class="feat-icon">⚡</div>
+      <div class="feat-name">Agent-Native Design</div>
+      <div class="feat-desc">ai-agents.json manifest at /.well-known/. Auth-free discovery. Built for agents that need no human to find and call you.</div>
+    </div>
+    <div class="feat-card reveal">
+      <div class="feat-icon">💳</div>
+      <div class="feat-name">Stripe-Verified Keys</div>
+      <div class="feat-desc">Checkout → key issue in one webhook. Subscription cancel → instant revoke. Your key upgrades in place, no migration needed.</div>
+    </div>
+    <div class="feat-card reveal">
+      <div class="feat-icon">🏗️</div>
+      <div class="feat-name">SQLite Event Bus</div>
+      <div class="feat-desc">Durable WAL-mode event log. Dead-letter queue after 3 retries. Emergency stop flag. Designed for reliability without cloud complexity.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── ANCHOR SCOUT ── -->
+<div class="section" id="anchor-scout" style="padding-top:0">
+  <div class="scout-wrap reveal">
+    <div>
+      <div class="scout-badge">
+        <span>🎵</span> AnchorScout API
       </div>
-    </a>
+      <h2 class="scout-title">Healing audio<br>for your AI agent</h2>
+      <p class="scout-desc">
+        AnchorScout is AnchorWithin's agent-to-agent audio catalog.
+        One endpoint returns the right frequency for the right moment —
+        meditation, focus, recovery, sleep. Built for agents that need
+        sensory output, not just text.
+      </p>
 
-    <a href="https://ackccreate.github.io/anchor-remembers/" class="tool-card reveal">
-      <div class="tool-icon">📖</div>
-      <div class="tool-info">
-        <div class="tool-name">Anchor Remembers</div>
-        <div class="tool-desc">Digital memory companion</div>
+      <div class="track-list">
+        <div class="track-item">
+          <span class="track-hz">432 Hz</span>
+          <span class="track-name">Natural tuning · grounding · anxiety relief</span>
+        </div>
+        <div class="track-item">
+          <span class="track-hz">528 Hz</span>
+          <span class="track-name">DNA repair frequency · healing · transformation</span>
+        </div>
+        <div class="track-item">
+          <span class="track-hz">741 Hz</span>
+          <span class="track-name">Awakening intuition · detox · clarity</span>
+        </div>
+        <div class="track-item">
+          <span class="track-hz">852 Hz</span>
+          <span class="track-name">Returning to spiritual order · intuition</span>
+        </div>
+        <div class="track-item">
+          <span class="track-hz">963 Hz</span>
+          <span class="track-name">Crown frequency · pineal activation · unity</span>
+        </div>
       </div>
-    </a>
 
-    <a href="https://ackccreate.github.io/resonance-generator/" class="tool-card reveal">
-      <div class="tool-icon">🎵</div>
-      <div class="tool-info">
-        <div class="tool-name">Resonance Generator</div>
-        <div class="tool-desc">432Hz relaxation frequencies</div>
+      <div style="display:flex;gap:.75rem;flex-wrap:wrap;">
+        <a href="/trial/" class="btn-primary">Get free key</a>
+        <a href="/api-docs/" class="btn-ghost">API reference →</a>
       </div>
-    </a>
+    </div>
 
-    <a href="https://ackccreate.github.io/resonance-runner/" class="tool-card reveal">
-      <div class="tool-icon">🏃</div>
-      <div class="tool-info">
-        <div class="tool-name">Resonance Runner</div>
-        <div class="tool-desc">432Hz endless runner game</div>
+    <div class="scout-code-wrap">
+      <div class="scout-code-header">
+        <span>POST /v1/audio/catalog</span>
+        <span>Python 3.9+</span>
       </div>
-    </a>
+      <div class="scout-code"><span class="c-kw">import</span> requests
 
-    <a href="https://ackccreate.github.io/resume-optimizer/" class="tool-card reveal">
-      <div class="tool-icon">📄</div>
-      <div class="tool-info">
-        <div class="tool-name">Resume Optimizer</div>
-        <div class="tool-desc">ATS scoring, job-fit analysis</div>
-      </div>
-    </a>
+API_KEY = <span class="c-str">"AW-your-trial-key"</span>
+BASE    = <span class="c-str">"https://api.anchorwithin.com/v1"</span>
+HEADERS = {<span class="c-str">"Authorization"</span>: <span class="c-fn">f"Bearer {API_KEY}"</span>}
 
-    <a href="https://ackccreate.github.io/side-hustle-planner/" class="tool-card reveal">
-      <div class="tool-icon">💡</div>
-      <div class="tool-info">
-        <div class="tool-name">Side Hustle Planner</div>
-        <div class="tool-desc">Score 15+ income streams</div>
-      </div>
-    </a>
+<span class="c-comment"># Browse the full catalog</span>
+catalog = requests.<span class="c-fn">get</span>(
+    <span class="c-fn">f"{BASE}/audio/catalog"</span>,
+    headers=HEADERS
+).<span class="c-fn">json</span>()
 
-    <a href="https://ackccreate.github.io/tax-deduction-calculator/" class="tool-card reveal">
-      <div class="tool-icon">🧾</div>
-      <div class="tool-info">
-        <div class="tool-name">Tax Deduction Tracker</div>
-        <div class="tool-desc">19 categories, savings chart</div>
-      </div>
-    </a>
+<span class="c-comment"># Stream by use-case</span>
+r = requests.<span class="c-fn">post</span>(
+    <span class="c-fn">f"{BASE}/audio/serve"</span>,
+    headers=HEADERS,
+    json={
+        <span class="c-key">"frequency"</span>: <span class="c-str">"528"</span>,
+        <span class="c-key">"use_case"</span>:  <span class="c-str">"healing"</span>
+    }
+)
+<span class="c-kw">with</span> <span class="c-fn">open</span>(<span class="c-str">"528hz.mp3"</span>, <span class="c-str">"wb"</span>) <span class="c-kw">as</span> f:
+    f.<span class="c-fn">write</span>(r.content)
 
-    <a href="https://ackccreate.github.io/home-companion-sensors/" class="tool-card reveal">
-      <div class="tool-icon">🏠</div>
-      <div class="tool-info">
-        <div class="tool-name">Home Sensors</div>
-        <div class="tool-desc">Smart home companion</div>
-      </div>
-    </a>
+<span class="c-comment"># Check quota remaining</span>
+status = requests.<span class="c-fn">get</span>(
+    <span class="c-fn">f"{BASE}/keys/status"</span>,
+    headers=HEADERS
+).<span class="c-fn">json</span>()
+<span class="c-fn">print</span>(<span class="c-fn">f"Calls left: {status['quota_remaining']}"</span>)</div>
+    </div>
+  </div>
+</div>
 
-    <a href="https://ackccreate.github.io/ideaforge/" class="tool-card reveal">
-      <div class="tool-icon">⚗️</div>
-      <div class="tool-info">
-        <div class="tool-name">IdeaForge</div>
-        <div class="tool-desc">AI business idea generator</div>
-      </div>
-    </a>
+<!-- ── PRICING ── -->
+<div class="section" id="pricing">
+  <p class="section-label">Simple pricing</p>
+  <h2 class="section-title">Start free. Scale when ready.</h2>
+  <p class="section-sub">One key, four tiers. Upgrade keeps your key — no migration, no downtime.</p>
+  <div class="divider"></div>
 
-    <a href="https://ackccreate.github.io/verityswarm/" class="tool-card reveal">
-      <div class="tool-icon">🔍</div>
-      <div class="tool-info">
-        <div class="tool-name">VeritySwarm</div>
-        <div class="tool-desc">AI truth-verification swarm</div>
-      </div>
-    </a>
+  <div class="pricing-grid reveal">
 
-    <a href="https://ackccreate.github.io/anchorwithin-bundle/" class="tool-card reveal">
-      <div class="tool-icon">📦</div>
-      <div class="tool-info">
-        <div class="tool-name">Complete Bundle</div>
-        <div class="tool-desc">All 6 tools in one place</div>
-      </div>
-    </a>
+    <div class="price-card">
+      <div class="price-tier">Trial</div>
+      <div class="price-amount"><sup>$</sup>0</div>
+      <div class="price-calls"><strong>100 calls</strong> · one-time</div>
+      <hr class="price-divider">
+      <ul class="price-features">
+        <li>Full catalog access</li>
+        <li>All 5 frequency tiers</li>
+        <li>No card required</li>
+        <li>Key never expires</li>
+      </ul>
+      <a href="/trial/" class="price-cta price-cta-ghost">Get trial key →</a>
+    </div>
 
-    <a href="https://ackccreate.github.io/anchorwithin-blog/" class="tool-card reveal">
-      <div class="tool-icon">✍️</div>
-      <div class="tool-info">
-        <div class="tool-name">AnchorWithin Blog</div>
-        <div class="tool-desc">AI tools, career & finance</div>
-      </div>
-    </a>
+    <div class="price-card">
+      <div class="price-tier">Starter</div>
+      <div class="price-amount"><sup>$</sup>9<span>/mo</span></div>
+      <div class="price-calls"><strong>1,000 calls</strong> / month</div>
+      <hr class="price-divider">
+      <ul class="price-features">
+        <li>Quota resets monthly</li>
+        <li>Usage alerts at 80%</li>
+        <li>Same key as trial</li>
+        <li>Email support</li>
+      </ul>
+      <a href="/trial/" class="price-cta price-cta-ghost">Start Starter →</a>
+    </div>
 
-    <a href="https://ackccreate.github.io/anchorwithin-store/" class="tool-card reveal">
-      <div class="tool-icon">🛍️</div>
-      <div class="tool-info">
-        <div class="tool-name">Store</div>
-        <div class="tool-desc">Sound healing packs & guides</div>
-      </div>
-    </a>
+    <div class="price-card featured">
+      <div class="price-badge">POPULAR</div>
+      <div class="price-tier">Pro</div>
+      <div class="price-amount"><sup>$</sup>29<span>/mo</span></div>
+      <div class="price-calls"><strong>10,000 calls</strong> / month</div>
+      <hr class="price-divider">
+      <ul class="price-features">
+        <li>All Starter features</li>
+        <li>Priority response</li>
+        <li>Webhook notifications</li>
+        <li>Trace log export</li>
+      </ul>
+      <a href="/trial/" class="price-cta price-cta-solid">Start Pro →</a>
+    </div>
+
+    <div class="price-card">
+      <div class="price-tier">Unlimited</div>
+      <div class="price-amount"><sup>$</sup>79<span>/mo</span></div>
+      <div class="price-calls"><strong>No limit</strong> · rate-limited only</div>
+      <hr class="price-divider">
+      <ul class="price-features">
+        <li>All Pro features</li>
+        <li>Dedicated support</li>
+        <li>Custom use-case tags</li>
+        <li>SLA discussion available</li>
+      </ul>
+      <a href="/trial/" class="price-cta price-cta-ghost">Start Unlimited →</a>
+    </div>
 
   </div>
-</section>
 
-<!-- EMAIL CAPTURE -->
-<section class="email-section reveal">
-  <h2>Stay anchored. Get free tools and updates.</h2>
-  <p>New tools, sound packs, and exclusive offers — delivered to your inbox. No spam, ever.</p>
-  <div class="email-form">
-    <input type="email" id="emailInput" placeholder="your@email.com" autocomplete="email">
-    <button class="email-btn" onclick="subscribeEmail()">Join</button>
+  <p style="text-align:center;margin-top:1.5rem;font-size:.8rem;color:var(--muted)">
+    Overage returns <code style="color:var(--gold);background:var(--gold-glow);padding:.1rem .4rem;border-radius:3px">429</code>
+    — quota resets the 1st of each month — no automatic overage charges, ever.
+  </p>
+</div>
+
+<!-- ── GOVERNANCE ── -->
+<div class="section" id="governance" style="padding-top:0">
+  <p class="section-label">Trust architecture</p>
+  <h2 class="section-title">Governed by design, not policy</h2>
+  <p class="section-sub">AnchorWithin is built on AOS — the Anchor Operating System. Every external action is governed, logged, and human-approved.</p>
+  <div class="divider"></div>
+
+  <div class="trust-grid reveal">
+    <div class="trust-card">
+      <div class="trust-heading">
+        <span class="trust-icon">🔐</span>
+        AOS Approval Engine
+      </div>
+      <div class="trust-desc">
+        No autonomous publishing. No autonomous outreach. Every action that touches external systems
+        routes through the AOS approval pipeline — human tap required, Telegram-delivered.
+      </div>
+      <span class="trust-tag tag-aos">AOS v1.0</span>
+    </div>
+
+    <div class="trust-card">
+      <div class="trust-heading">
+        <span class="trust-icon">🛡️</span>
+        FENRIR Quality Gate
+      </div>
+      <div class="trust-desc">
+        All API-delivered content is scored across 5 weighted categories: voice, brand alignment,
+        visual quality, market fit, and compliance. Minimum 7/10 to pass. Hard-fail for voice or brand below 15/25.
+      </div>
+      <span class="trust-tag tag-fenrir">FENRIR Standard</span>
+    </div>
+
+    <div class="trust-card">
+      <div class="trust-heading">
+        <span class="trust-icon">💳</span>
+        Stripe Payment Governance
+      </div>
+      <div class="trust-desc">
+        Keys are issued and revoked through Stripe webhooks — no manual key management. Checkout
+        triggers issue. Subscription cancel triggers immediate revoke. No orphaned keys.
+      </div>
+      <span class="trust-tag tag-stripe">Stripe-verified</span>
+    </div>
+
+    <div class="trust-card">
+      <div class="trust-heading">
+        <span class="trust-icon">📋</span>
+        Dead-Letter Queue
+      </div>
+      <div class="trust-desc">
+        Failed actions retry up to 3 times with exponential backoff, then route to dead-letter.
+        No silent failures. Emergency stop flag halts all agents instantly across the system.
+      </div>
+      <span class="trust-tag tag-aos">AOS Event Bus</span>
+    </div>
+
+    <div class="trust-card">
+      <div class="trust-heading">
+        <span class="trust-icon">📊</span>
+        Budget Enforcement
+      </div>
+      <div class="trust-desc">
+        Per-agent daily spend limits and hourly task rate enforcement. Agents cannot exceed budget
+        without explicit human override. Protects capital from runaway loops.
+      </div>
+      <span class="trust-tag tag-aos">Budget Governor</span>
+    </div>
+
+    <div class="trust-card">
+      <div class="trust-heading">
+        <span class="trust-icon">🔍</span>
+        Verity Trace Layer
+      </div>
+      <div class="trust-desc">
+        Every API delivery is stamped with a trace ID. Audit any call: what was served, when,
+        under which quota state, and which agent requested it. Full accountability chain.
+      </div>
+      <span class="trust-tag tag-fenrir">Verity Standard</span>
+    </div>
   </div>
-  <div class="email-msg" id="emailMsg"></div>
-</section>
+</div>
 
-<!-- FOOTER -->
+<!-- ── VERITY TEASER ── -->
+<div class="verity-band">
+  <div class="verity-inner reveal">
+    <p class="verity-label">Coming next</p>
+    <h2 class="verity-title">Verity Trace — full audit API</h2>
+    <p class="verity-sub">
+      Every action your agent takes, traced, verified, and exportable.
+      Compliance-ready audit logs for regulated industries.
+      Timestamp-signed. Human-readable. Agent-queryable.
+    </p>
+    <div class="verity-pill">
+      🔒 Early access · <a href="mailto:anchorwithin.daily1@gmail.com" style="color:var(--gold-dim);margin-left:.25rem">Request invite</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── APP PRODUCTS ── -->
+<div class="section" id="apps">
+  <p class="section-label">Consumer products</p>
+  <h2 class="section-title">Built on the same infrastructure</h2>
+  <p class="section-sub">Eight AI-powered apps — built, governed, and quality-gated by the same AnchorWithin system.</p>
+  <div class="divider"></div>
+
+  <div class="apps-grid reveal">
+    <a href="https://ackccreate.github.io/echowalk/" class="app-card">
+      <div class="app-icon">🌫️</div>
+      <div>
+        <div class="app-name">EchoWalk</div>
+        <div class="app-desc">Step inside your lost memories</div>
+      </div>
+    </a>
+    <a href="https://ackccreate.github.io/kidspark/" class="app-card">
+      <div class="app-icon">🧸</div>
+      <div>
+        <div class="app-name">KidSpark</div>
+        <div class="app-desc">Turn your toys into worlds</div>
+      </div>
+    </a>
+    <a href="https://ackccreate.github.io/forever-paws/" class="app-card">
+      <div class="app-icon">🐾</div>
+      <div>
+        <div class="app-name">Forever Paws</div>
+        <div class="app-desc">Keep them by your side</div>
+      </div>
+    </a>
+    <a href="https://ackccreate.github.io/sanctuary-bell/" class="app-card">
+      <div class="app-icon">🔔</div>
+      <div>
+        <div class="app-name">Sanctuary Bell</div>
+        <div class="app-desc">Hear the soul of objects</div>
+      </div>
+    </a>
+    <a href="https://ackccreate.github.io/breatheworld/" class="app-card">
+      <div class="app-icon">🌊</div>
+      <div>
+        <div class="app-name">BreatheWorld</div>
+        <div class="app-desc">A world that breathes with you</div>
+      </div>
+    </a>
+    <a href="https://ackccreate.github.io/dreamwalk/" class="app-card">
+      <div class="app-icon">✨</div>
+      <div>
+        <div class="app-name">DreamWalk</div>
+        <div class="app-desc">Speak a dream into existence</div>
+      </div>
+    </a>
+    <a href="https://ackccreate.github.io/thennow/" class="app-card">
+      <div class="app-icon">⏳</div>
+      <div>
+        <div class="app-name">ThenNow</div>
+        <div class="app-desc">Transformations from then to now</div>
+      </div>
+    </a>
+    <a href="https://ackccreate.github.io/depthclick/" class="app-card">
+      <div class="app-icon">📸</div>
+      <div>
+        <div class="app-name">DepthClick</div>
+        <div class="app-desc">Cinematic parallax from any photo</div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
 <footer>
-  <p class="footer-motto">"The anchor holds."</p>
-  <div class="footer-links">
-    <a href="https://youtube.com/@AnchorWithin" target="_blank">YouTube</a>
-    <a href="https://ackccreate.github.io/anchorwithin-store/">Store</a>
-    <a href="https://ackccreate.github.io/anchorwithin-blog/">Blog</a>
-    <a href="https://ackccreate.github.io/anchorwithin-privacy/">Privacy Policy</a>
-    <a href="https://ackccreate.github.io/anchorwithin-tos/">Terms of Service</a>
-    <a href="mailto:anchorwithin.daily1@gmail.com">Contact</a>
+  <div class="footer-inner">
+    <div class="footer-logo">⚓ AnchorWithin</div>
+    <div class="footer-links">
+      <a href="/api-docs/">API Docs</a>
+      <a href="/trial/">Free Trial Key</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#governance">Governance</a>
+      <a href="https://youtube.com/@AnchorWithin" target="_blank" rel="noopener">YouTube</a>
+      <a href="/anchorwithin-privacy/">Privacy Policy</a>
+      <a href="/anchorwithin-tos/">Terms of Service</a>
+      <a href="mailto:anchorwithin.daily1@gmail.com">Contact</a>
+    </div>
+    <p class="footer-copy">&copy; 2026 AnchorWithin LLC &nbsp;·&nbsp; Salt Lake City, UT &nbsp;·&nbsp; All rights reserved.</p>
   </div>
-  <p class="footer-copy">&copy; 2026 AnchorWithin LLC &nbsp;·&nbsp; Salt Lake City, UT &nbsp;·&nbsp; All rights reserved.</p>
 </footer>
 
 <script>
 // Scroll reveal
-const observer = new IntersectionObserver((entries) => {
+const obs = new IntersectionObserver((entries) => {
   entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
   });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+}, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
 
 document.querySelectorAll('.reveal').forEach((el, i) => {
-  el.style.transitionDelay = `${(i % 4) * 0.08}s`;
-  observer.observe(el);
+  el.style.transitionDelay = `${(i % 5) * 0.06}s`;
+  obs.observe(el);
 });
-
-// Smooth card clicks
-document.querySelectorAll('.product-card, .tool-card').forEach(card => {
-  card.addEventListener('click', function(e) {
-    const href = this.getAttribute('href');
-    if (href && href !== '#') window.location.href = href;
-  });
-});
-</script>
-<script>
-// ── Email subscribe ──────────────────────────────────────────────────────────
-function subscribeEmail() {
-  var email = document.getElementById('emailInput').value.trim();
-  var msg   = document.getElementById('emailMsg');
-  if (!email || !email.includes('@')) {
-    msg.textContent = 'Please enter a valid email.';
-    msg.className   = 'email-msg err';
-    return;
-  }
-  msg.textContent = 'Joining...';
-  msg.className   = 'email-msg';
-  fetch('https://throne.verityswarm.com/api/subscribe', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email: email, source: 'home-page' }),
-  })
-  .then(function(r){ return r.json(); })
-  .then(function(d){
-    if (d.ok) {
-      msg.textContent = d.message || "You're in! Welcome.";
-      msg.className   = 'email-msg ok';
-      document.getElementById('emailInput').value = '';
-    } else {
-      msg.textContent = d.error || 'Something went wrong.';
-      msg.className   = 'email-msg err';
-    }
-  })
-  .catch(function(){ msg.textContent = 'Network error — try again.'; msg.className = 'email-msg err'; });
-}
-document.getElementById('emailInput').addEventListener('keydown', function(e){
-  if (e.key === 'Enter') subscribeEmail();
-});
-
-// ── Exit-intent popup ────────────────────────────────────────────────────────
-(function(){
-  if (sessionStorage.getItem('aw_exit_shown')) return;
-  var overlay = document.createElement('div');
-  overlay.id  = 'exitOverlay';
-  overlay.innerHTML = [
-    '<div id="exitBox">',
-    '<button id="exitClose" onclick="document.getElementById(\'exitOverlay\').remove();sessionStorage.setItem(\'aw_exit_shown\',\'1\')">&times;</button>',
-    '<div id="exitBadge">EXCLUSIVE OFFER</div>',
-    '<h2>Wait — 25% off your first purchase</h2>',
-    '<p>Use code at checkout:</p>',
-    '<div id="exitCode">R2vTLvFP</div>',
-    '<a href="https://ackccreate.github.io/anchorwithin-store/" id="exitCta" onclick="sessionStorage.setItem(\'aw_exit_shown\',\'1\')">Shop Digital Products →</a>',
-    '<p id="exitNote">One-time use &middot; All products</p>',
-    '</div>',
-  ].join('');
-  var style = document.createElement('style');
-  style.textContent = '#exitOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.75);z-index:99999;display:flex;align-items:center;justify-content:center;padding:1rem;animation:fadeIn .3s ease}@keyframes fadeIn{from{opacity:0}to{opacity:1}}#exitBox{background:#0f0f25;border:1px solid rgba(240,208,96,.3);border-radius:16px;padding:2.5rem 2rem;text-align:center;max-width:380px;width:100%;position:relative}#exitClose{position:absolute;top:.75rem;right:1rem;background:none;border:none;color:#7878a0;font-size:1.4rem;cursor:pointer;line-height:1}#exitBadge{display:inline-block;background:rgba(240,208,96,.15);border:1px solid rgba(240,208,96,.4);color:#f0d060;font-size:.7rem;letter-spacing:.15em;padding:.3rem .8rem;border-radius:20px;margin-bottom:1rem}#exitBox h2{font-family:Georgia,serif;color:#f0eae0;font-size:1.4rem;margin-bottom:.5rem}#exitBox p{color:#7878a0;font-size:.9rem;margin-bottom:.5rem}#exitCode{font-family:monospace;font-size:1.6rem;font-weight:700;color:#f0d060;background:#000;border:1px dashed rgba(240,208,96,.4);border-radius:8px;padding:.6rem 1.5rem;display:inline-block;margin:.5rem 0 1.25rem;letter-spacing:.1em}#exitCta{display:inline-block;background:#f0d060;color:#0a0a1a;padding:.75rem 2rem;border-radius:8px;font-weight:700;text-decoration:none;font-size:.95rem;margin-bottom:.75rem}#exitNote{font-size:.75rem;color:#4a4a6a;margin-bottom:0}';
-  document.head.appendChild(style);
-
-  var isMobile = /Mobi|Android/i.test(navigator.userAgent);
-  if (isMobile) {
-    setTimeout(function(){
-      if (!sessionStorage.getItem('aw_exit_shown')) {
-        document.body.appendChild(overlay);
-        sessionStorage.setItem('aw_exit_shown','1');
-      }
-    }, 45000);
-  } else {
-    document.addEventListener('mouseleave', function handler(e) {
-      if (e.clientY <= 10 && !sessionStorage.getItem('aw_exit_shown')) {
-        document.body.appendChild(overlay);
-        sessionStorage.setItem('aw_exit_shown','1');
-        document.removeEventListener('mouseleave', handler);
-      }
-    });
-  }
-})();
 </script>
 </body>
 </html>

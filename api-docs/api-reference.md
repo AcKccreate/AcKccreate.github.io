@@ -1,6 +1,6 @@
 # AnchorWithin API — Reference
 
-**Base URL:** `https://anchor.verityswarm.com`  
+**Base URL:** `https://api.anchorwithin.com`  
 **Auth:** `Authorization: Bearer AW-your-key`  
 **Format:** JSON request/response, binary audio response for `/v1/audio/serve`
 
@@ -182,7 +182,7 @@ All errors return JSON:
 | pro | 10,000 | 429 error |
 | unlimited | no limit | — |
 
-Quota resets on the 1st of each month. Upgrade at [anchorwithin.com/pricing](https://anchorwithin.com/pricing).
+Quota resets on the 1st of each month. Upgrade at [ackccreate.github.io/anchorwithin-home/#pricing](https://ackccreate.github.io/anchorwithin-home/#pricing).
 
 ---
 

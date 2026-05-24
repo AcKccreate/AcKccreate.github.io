@@ -7,7 +7,7 @@ Get your first audio file in under 5 minutes.
 ## Step 1 — Get a free trial key
 
 ```bash
-curl -X POST https://anchor.verityswarm.com/v1/trial/request \
+curl -X POST https://api.anchorwithin.com/v1/trial/request \
   -H "Content-Type: application/json" \
   -d '{"email": "you@yourapp.com"}'
 ```
@@ -30,7 +30,7 @@ Save your `api_key`. You get **100 free calls** — no credit card required.
 ## Step 2 — Browse the catalog
 
 ```bash
-curl https://anchor.verityswarm.com/v1/audio/catalog \
+curl https://api.anchorwithin.com/v1/audio/catalog \
   -H "Authorization: Bearer AW-your-key-here"
 ```
 
@@ -42,7 +42,7 @@ Returns all 15 tracks with frequency, format, use-case tags, and IDs.
 
 **By frequency (Hz):**
 ```bash
-curl -X POST https://anchor.verityswarm.com/v1/audio/serve \
+curl -X POST https://api.anchorwithin.com/v1/audio/serve \
   -H "Authorization: Bearer AW-your-key-here" \
   -H "Content-Type: application/json" \
   -d '{"frequency": "432", "use_case": "sleep"}' \
@@ -51,7 +51,7 @@ curl -X POST https://anchor.verityswarm.com/v1/audio/serve \
 
 **By use-case:**
 ```bash
-curl -X POST https://anchor.verityswarm.com/v1/audio/serve \
+curl -X POST https://api.anchorwithin.com/v1/audio/serve \
   -H "Authorization: Bearer AW-your-key-here" \
   -H "Content-Type: application/json" \
   -d '{"use_case": "focus"}' \
@@ -60,7 +60,7 @@ curl -X POST https://anchor.verityswarm.com/v1/audio/serve \
 
 **By specific track ID:**
 ```bash
-curl -X POST https://anchor.verityswarm.com/v1/audio/serve \
+curl -X POST https://api.anchorwithin.com/v1/audio/serve \
   -H "Authorization: Bearer AW-your-key-here" \
   -H "Content-Type: application/json" \
   -d '{"audio_id": "528hz_528hz_dna_repair"}' \
@@ -72,7 +72,7 @@ curl -X POST https://anchor.verityswarm.com/v1/audio/serve \
 ## Step 4 — Check your quota
 
 ```bash
-curl https://anchor.verityswarm.com/v1/key/status \
+curl https://api.anchorwithin.com/v1/key/status \
   -H "Authorization: Bearer AW-your-key-here"
 ```
 
@@ -104,7 +104,7 @@ curl https://anchor.verityswarm.com/v1/key/status \
 
 ## When you're ready to scale
 
-Subscribe at [anchorwithin.com/pricing](https://anchorwithin.com/pricing):
+Subscribe at [ackccreate.github.io/anchorwithin-home/#pricing](https://ackccreate.github.io/anchorwithin-home/#pricing):
 
 | Tier | Calls/month | Price |
 |------|-------------|-------|
