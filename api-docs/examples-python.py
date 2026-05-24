@@ -4,7 +4,7 @@ Requires: requests (pip install requests)
 """
 import requests
 
-BASE_URL = "https://anchor.verityswarm.com"
+BASE_URL = "https://api.anchorwithin.com"
 API_KEY  = "AW-your-key-here"  # replace with your key
 
 headers = {"Authorization": f"Bearer {API_KEY}"}
@@ -115,7 +115,7 @@ def sleep_audio_for_user(user_email: str, output_path: str = "sleep.mp3"):
         stream=True,
     )
     if resp.status_code == 429:
-        raise RuntimeError("API quota exceeded — upgrade at anchorwithin.com/pricing")
+        raise RuntimeError("API quota exceeded — upgrade at ackccreate.github.io/anchorwithin-home/#pricing")
     resp.raise_for_status()
 
     with open(output_path, "wb") as f:

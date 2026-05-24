@@ -1,7 +1,7 @@
 // AnchorWithin API — JavaScript / Node.js Examples
 // Works in: Node.js 18+, browser (with CORS), Deno, Bun
 
-const BASE_URL = "https://anchor.verityswarm.com";
+const BASE_URL = "https://api.anchorwithin.com";
 const API_KEY  = "AW-your-key-here"; // replace with your key
 
 const headers = {
