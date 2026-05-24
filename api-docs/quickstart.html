@@ -94,11 +94,16 @@ footer{border-top:1px solid var(--border);padding:24px;text-align:center;
 <body>
 
 <nav>
-  <a href="/api-docs/" class="nav-logo">⚓ ANCHORWITHIN API</a>
+  <a href="index.html" class="nav-logo">AnchorWithin API</a>
   <div class="nav-right">
-    <a href="/api-docs/">Docs home</a>
+    <div class="nav-badge" id="statusBadge" style="display:flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:11px;color:var(--muted);background:rgba(80,208,144,.06);border:1px solid rgba(80,208,144,.14);border-radius:100px;padding:3px 10px">
+      <span id="statusDot" style="width:6px;height:6px;border-radius:50%;background:#55557a;flex-shrink:0"></span>
+      <span id="statusText">API</span>
+    </div>
+    <a href="index.html">Docs home</a>
     <a href="api-reference.html">Reference</a>
-    <a href="/trial/" class="btn-trial">Get free key</a>
+    <a href="https://github.com/AcKccreate" target="_blank" rel="noopener" style="color:var(--muted)">GitHub</a>
+    <a href="https://ackccreate.github.io/trial/" class="btn-trial">Get free key</a>
   </div>
 </nav>
 
@@ -109,13 +114,14 @@ footer{border-top:1px solid var(--border);padding:24px;text-align:center;
     <a class="aside-link" href="#step2">2 · Browse catalog</a>
     <a class="aside-link" href="#step3">3 · Stream audio</a>
     <a class="aside-link" href="#step4">4 · Check quota</a>
+    <a class="aside-link" href="#step5">5 · Upgrade</a>
     <div class="aside-label">Reference</div>
     <a class="aside-link" href="api-reference.html">API Reference →</a>
-    <a class="aside-link" href="examples-python.py">Python examples</a>
-    <a class="aside-link" href="examples-javascript.js">JS examples</a>
+    <a class="aside-link" href="examples-python.py" target="_blank">Python examples</a>
+    <a class="aside-link" href="examples-javascript.js" target="_blank">JS examples</a>
     <div class="aside-label">Account</div>
-    <a class="aside-link" href="/trial/">Get trial key</a>
-    <a class="aside-link" href="/api-docs/#pricing">Pricing</a>
+    <a class="aside-link" href="https://ackccreate.github.io/trial/">Get trial key</a>
+    <a class="aside-link" href="index.html#pricing">Pricing</a>
   </aside>
 
   <article>
@@ -179,6 +185,18 @@ footer{border-top:1px solid var(--border);padding:24px;text-align:center;
   "email": "you@yourapp.com"
 }</pre>
 
+    <div class="step-head" id="step5"><span class="step-num">5</span>Upgrade when ready</div>
+    <p>When your trial hits 100 calls, subscribe to keep going. Your key upgrades in-place — no migration, no new credentials.</p>
+    <table>
+      <thead><tr><th>Tier</th><th>Calls / month</th><th>Price</th></tr></thead>
+      <tbody>
+        <tr><td>Starter</td><td>1,000</td><td><a href="https://buy.stripe.com/6oU4gA1mSayHdUHfj467T2s">$9 / mo →</a></td></tr>
+        <tr><td>Pro</td><td>10,000</td><td><a href="https://buy.stripe.com/fZu14o1mS4aj2bZfj467T2t">$29 / mo →</a></td></tr>
+        <tr><td>Unlimited</td><td>No limit</td><td><a href="https://buy.stripe.com/6oU6oI0iOayHeYL8UG67T2u">$79 / mo →</a></td></tr>
+      </tbody>
+    </table>
+    <div class="note"><strong>No surprise charges.</strong> Overage returns <code>429</code>. Quota resets on the 1st.</div>
+
     <h2>Available frequencies</h2>
     <table>
       <thead><tr><th>Hz</th><th>Use cases</th></tr></thead>
@@ -208,15 +226,31 @@ footer{border-top:1px solid var(--border);padding:24px;text-align:center;
 </div>
 
 <footer>
-  <a href="/anchorwithin-home/">AnchorWithin</a> &mdash;
-  <a href="/api-docs/">Docs</a> &mdash;
+  <a href="https://ackccreate.github.io/anchorwithin/">AnchorWithin</a> &mdash;
+  <a href="index.html">Docs</a> &mdash;
   <a href="api-reference.html">Reference</a> &mdash;
-  <a href="/trial/">Free key</a> &mdash;
-  <a href="/anchorwithin-privacy/">Privacy</a> &mdash;
-  <a href="/anchorwithin-tos/">Terms</a>
+  <a href="https://ackccreate.github.io/trial/">Free key</a> &mdash;
+  <a href="https://github.com/AcKccreate" target="_blank" rel="noopener">GitHub</a> &mdash;
+  <a href="https://ackccreate.github.io/anchorwithin-privacy/">Privacy</a> &mdash;
+  <a href="https://ackccreate.github.io/anchorwithin-tos/">Terms</a>
 </footer>
 
 <script>
+// Live status badge
+(function(){
+  fetch('https://anchor.verityswarm.com/health',{cache:'no-store'})
+    .then(function(r){return r.json();})
+    .then(function(d){
+      var dot  = document.getElementById('statusDot');
+      var text = document.getElementById('statusText');
+      if(d.status==='ok'){dot.style.background='#50d090';text.textContent='Operational';}
+      else{dot.style.background='#f07070';text.textContent='Degraded';}
+    }).catch(function(){
+      var text=document.getElementById('statusText');
+      if(text) text.textContent='Unreachable';
+    });
+})();
+
 // Highlight active sidebar link based on scroll position
 var sections = document.querySelectorAll('[id]');
 var links     = document.querySelectorAll('.aside-link[href^="#"]');

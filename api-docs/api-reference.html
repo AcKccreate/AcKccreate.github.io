@@ -98,11 +98,16 @@ footer{border-top:1px solid var(--border);padding:24px;text-align:center;
 <body>
 
 <nav>
-  <a href="/api-docs/" class="nav-logo">⚓ ANCHORWITHIN API</a>
+  <a href="index.html" class="nav-logo">AnchorWithin API</a>
   <div class="nav-right">
-    <a href="/api-docs/">Docs home</a>
+    <div id="statusBadge" style="display:flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:11px;color:var(--muted);background:rgba(80,208,144,.06);border:1px solid rgba(80,208,144,.14);border-radius:100px;padding:3px 10px">
+      <span id="statusDot" style="width:6px;height:6px;border-radius:50%;background:#55557a;flex-shrink:0"></span>
+      <span id="statusText">API</span>
+    </div>
+    <a href="index.html">Docs home</a>
     <a href="quickstart.html">Quickstart</a>
-    <a href="/trial/" class="btn-trial">Get free key</a>
+    <a href="https://github.com/AcKccreate" target="_blank" rel="noopener" style="color:var(--muted)">GitHub</a>
+    <a href="https://ackccreate.github.io/trial/" class="btn-trial">Get free key</a>
   </div>
 </nav>
 
@@ -120,7 +125,7 @@ footer{border-top:1px solid var(--border);padding:24px;text-align:center;
     <a class="aside-link" href="#quotas">Quotas</a>
     <a class="aside-link" href="#webhooks">Webhooks</a>
     <div class="aside-label">Account</div>
-    <a class="aside-link" href="/trial/">Get trial key</a>
+    <a class="aside-link" href="https://ackccreate.github.io/trial/">Get trial key</a>
     <a class="aside-link" href="#quotas">Pricing</a>
   </aside>
 
@@ -292,15 +297,28 @@ X-Quota-Status: 5/100</pre>
 </div>
 
 <footer>
-  <a href="/anchorwithin-home/">AnchorWithin</a> &mdash;
-  <a href="/api-docs/">Docs</a> &mdash;
+  <a href="https://ackccreate.github.io/anchorwithin/">AnchorWithin</a> &mdash;
+  <a href="index.html">Docs</a> &mdash;
   <a href="quickstart.html">Quickstart</a> &mdash;
-  <a href="/trial/">Free key</a> &mdash;
-  <a href="/anchorwithin-privacy/">Privacy</a> &mdash;
-  <a href="/anchorwithin-tos/">Terms</a>
+  <a href="https://ackccreate.github.io/trial/">Free key</a> &mdash;
+  <a href="https://github.com/AcKccreate" target="_blank" rel="noopener">GitHub</a> &mdash;
+  <a href="https://ackccreate.github.io/anchorwithin-privacy/">Privacy</a> &mdash;
+  <a href="https://ackccreate.github.io/anchorwithin-tos/">Terms</a>
 </footer>
 
 <script>
+// Live status badge
+(function(){
+  fetch('https://anchor.verityswarm.com/health',{cache:'no-store'})
+    .then(function(r){return r.json();})
+    .then(function(d){
+      var dot  = document.getElementById('statusDot');
+      var text = document.getElementById('statusText');
+      if(d.status==='ok'){dot.style.background='#50d090';text.textContent='Operational';}
+      else{dot.style.background='#f07070';text.textContent='Degraded';}
+    }).catch(function(){});
+})();
+
 var sections = document.querySelectorAll('[id]');
 var links     = document.querySelectorAll('.aside-link[href^="#"]');
 window.addEventListener('scroll', function() {

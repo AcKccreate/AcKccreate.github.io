@@ -3,202 +3,442 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AnchorWithin API Docs</title>
-<meta name="description" content="Developer documentation for the AnchorWithin healing frequency audio API.">
+<title>AnchorWithin API — Developer Docs</title>
+<meta name="description" content="Governed audio API for AI agents and apps. Quota-enforced, trace-linked, approval-gated. 100 free calls. No credit card.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0a0a1a;--surface:#12122a;--border:#1e1e3a;
-  --text:#e8e8f8;--muted:#8888aa;
-  --gold:#f0d060;--gold-dim:#c8a830;
-  --font-mono:'Courier New',monospace;
-  --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --navy:#0a0a1a;--navy2:#0d0d24;--card:#12122e;
+  --gold:#f0d060;--gold-dim:#c8a840;--gold-glow:rgba(240,208,96,0.1);
+  --border:rgba(240,208,96,0.1);--border-hi:rgba(240,208,96,0.28);
+  --text:#e8e8f0;--muted:#8888aa;--dim:#55557a;
+  --green:#50d090;--red:#f07070;--blue:#70a8e8;
+  --mono:'JetBrains Mono',monospace;--sans:'Inter',sans-serif;
+  --r:8px;--r2:12px;
 }
-body{background:var(--bg);color:var(--text);font-family:var(--font-sans);line-height:1.6}
+html{scroll-behavior:smooth}
+body{background:var(--navy);color:var(--text);font-family:var(--sans);
+  line-height:1.6;-webkit-font-smoothing:antialiased;font-size:15px}
 a{color:var(--gold);text-decoration:none}
 a:hover{text-decoration:underline}
-nav{border-bottom:1px solid var(--border);padding:16px 24px;display:flex;
-  align-items:center;justify-content:space-between;max-width:960px;margin:0 auto}
-.nav-logo{font-family:var(--font-mono);font-size:13px;color:var(--gold);letter-spacing:2px}
-.nav-right{font-size:13px;color:var(--muted);display:flex;gap:20px}
-.hero{max-width:680px;margin:60px auto 48px;padding:0 24px;text-align:center}
-.eyebrow{font-family:var(--font-mono);font-size:11px;color:var(--gold);
-  letter-spacing:3px;text-transform:uppercase;margin-bottom:16px}
-h1{font-size:clamp(28px,4vw,44px);font-weight:700;margin-bottom:16px}
+
+/* NAV */
+nav{background:rgba(10,10,26,.97);border-bottom:1px solid var(--border);
+  padding:0 24px;backdrop-filter:blur(12px);position:sticky;top:0;z-index:100}
+.nav-inner{max-width:1040px;margin:0 auto;display:flex;align-items:center;
+  justify-content:space-between;height:52px;gap:24px}
+.nav-logo{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--gold);
+  letter-spacing:.06em;text-decoration:none}
+.nav-links{display:flex;gap:20px;align-items:center}
+.nav-links a{font-size:13px;color:var(--muted);text-decoration:none;
+  letter-spacing:.02em;transition:color .15s}
+.nav-links a:hover{color:var(--text)}
+.nav-badge{display:flex;align-items:center;gap:6px;font-family:var(--mono);
+  font-size:11px;color:var(--muted);background:rgba(80,208,144,.06);
+  border:1px solid rgba(80,208,144,.18);border-radius:100px;padding:3px 10px;
+  cursor:default;transition:border-color .3s}
+.nav-badge.ok{color:var(--green);border-color:rgba(80,208,144,.3)}
+.nav-badge.err{color:var(--red);border-color:rgba(240,112,112,.3)}
+.status-dot{width:6px;height:6px;border-radius:50%;background:var(--dim);flex-shrink:0}
+.nav-badge.ok .status-dot{background:var(--green)}
+.nav-badge.err .status-dot{background:var(--red)}
+.btn-trial{background:var(--gold);color:var(--navy);padding:7px 16px;border-radius:var(--r);
+  font-size:12px;font-weight:700;letter-spacing:.02em;text-decoration:none;
+  transition:opacity .15s}
+.btn-trial:hover{opacity:.88;text-decoration:none}
+
+/* HERO */
+.hero{max-width:1040px;margin:0 auto;padding:72px 24px 56px;text-align:center}
+.eyebrow{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--gold);
+  letter-spacing:.16em;text-transform:uppercase;margin-bottom:18px}
+h1{font-size:clamp(32px,5vw,52px);font-weight:700;color:#fff;
+  letter-spacing:-.02em;line-height:1.12;margin-bottom:16px}
 h1 em{font-style:normal;color:var(--gold)}
-.sub{font-size:16px;color:var(--muted);max-width:500px;margin:0 auto 32px}
-.cta{display:inline-block;background:var(--gold);color:#0a0a1a;
-  padding:12px 28px;border-radius:6px;font-weight:700;font-size:15px}
-.cta:hover{background:var(--gold-dim);text-decoration:none}
+.hero-sub{font-size:17px;color:var(--muted);max-width:520px;margin:0 auto 36px;line-height:1.6}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:var(--gold);color:var(--navy);padding:13px 28px;border-radius:var(--r);
+  font-size:14px;font-weight:700;text-decoration:none;letter-spacing:.01em;transition:opacity .15s}
+.btn-primary:hover{opacity:.88;text-decoration:none}
+.btn-ghost{background:transparent;color:var(--text);padding:12px 24px;border-radius:var(--r);
+  font-size:14px;font-weight:500;border:1px solid var(--border-hi);text-decoration:none;
+  transition:border-color .15s}
+.btn-ghost:hover{border-color:var(--gold);text-decoration:none}
 
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:16px;max-width:960px;margin:0 auto 64px;padding:0 24px}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px}
-.card-icon{font-size:24px;margin-bottom:12px}
-.card h2{font-size:16px;font-weight:700;margin-bottom:8px}
+/* ONBOARDING FLOW */
+.flow-section{max-width:1040px;margin:0 auto;padding:0 24px 80px}
+.flow-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
+.flow-steps::before{content:'';position:absolute;top:28px;left:12.5%;right:12.5%;
+  height:1px;background:var(--border);z-index:0}
+.flow-step{text-align:center;padding:0 12px;position:relative;z-index:1}
+.step-num{display:inline-flex;align-items:center;justify-content:center;
+  width:56px;height:56px;border-radius:50%;
+  background:var(--card);border:1px solid var(--border-hi);
+  font-family:var(--mono);font-size:18px;font-weight:500;color:var(--gold);
+  margin-bottom:14px}
+.step-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px}
+.step-sub{font-size:12px;color:var(--muted);line-height:1.4}
+.step-link{font-family:var(--mono);font-size:11px;color:var(--gold);
+  margin-top:8px;display:block;text-decoration:none}
+.step-link:hover{text-decoration:underline}
+
+/* PRODUCT CARDS */
+.cards-section{max-width:1040px;margin:0 auto;padding:0 24px 80px}
+.section-label{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--gold);
+  letter-spacing:.14em;text-transform:uppercase;margin-bottom:24px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);
+  padding:28px;transition:border-color .2s}
+.card:hover{border-color:var(--border-hi)}
+.card-icon{font-size:22px;margin-bottom:12px}
+.card h2{font-size:15px;font-weight:700;color:#fff;margin-bottom:8px}
 .card p{font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.5}
-.card a.btn{display:inline-block;font-size:13px;font-weight:600;
-  color:var(--gold);border:1px solid var(--gold);
-  padding:6px 16px;border-radius:5px}
+.card-link{font-family:var(--mono);font-size:11px;color:var(--gold);
+  border:1px solid rgba(240,208,96,.2);border-radius:100px;padding:5px 14px;
+  text-decoration:none;letter-spacing:.05em;transition:border-color .2s}
+.card-link:hover{border-color:rgba(240,208,96,.4);text-decoration:none}
 
-.code-section{max-width:960px;margin:0 auto 64px;padding:0 24px}
-.code-section h2{font-size:20px;font-weight:700;margin-bottom:20px;
-  padding-bottom:12px;border-bottom:1px solid var(--border)}
-.code-block{background:var(--surface);border:1px solid var(--border);
-  border-radius:8px;padding:20px 24px;font-family:var(--font-mono);
-  font-size:13px;overflow-x:auto;margin-bottom:16px;white-space:pre}
-.tab-row{display:flex;gap:4px;margin-bottom:0}
+/* CODE QUICKSTART */
+.code-section{max-width:1040px;margin:0 auto;padding:0 24px 80px}
+.section-head{font-size:20px;font-weight:700;color:#fff;margin-bottom:8px;letter-spacing:-.01em}
+.section-sub{font-size:14px;color:var(--muted);margin-bottom:24px}
+.tab-row{display:flex;gap:4px;margin-bottom:-1px}
 .tab{background:transparent;border:1px solid var(--border);border-bottom:none;
-  padding:8px 16px;font-family:var(--font-mono);font-size:12px;
-  cursor:pointer;color:var(--muted);border-radius:6px 6px 0 0}
-.tab.active{background:var(--surface);color:var(--gold);border-color:var(--border)}
+  padding:8px 16px;font-family:var(--mono);font-size:12px;
+  cursor:pointer;color:var(--muted);border-radius:6px 6px 0 0;
+  transition:color .15s}
+.tab.active{background:var(--card);color:var(--gold)}
 .tab-content{display:none}
 .tab-content.active{display:block}
+.code-block{background:var(--card);border:1px solid var(--border);border-radius:0 var(--r) var(--r) var(--r);
+  padding:20px 24px;font-family:var(--mono);font-size:13px;
+  overflow-x:auto;white-space:pre;line-height:1.7;color:#c8d8e8;margin-bottom:4px}
+.code-comment{color:var(--dim)}
 
-.pricing{max-width:960px;margin:0 auto 64px;padding:0 24px}
-.pricing h2{font-size:20px;font-weight:700;margin-bottom:20px;
-  padding-bottom:12px;border-bottom:1px solid var(--border)}
-table{width:100%;border-collapse:collapse}
-th,td{padding:12px 16px;text-align:left;font-size:14px;
-  border-bottom:1px solid var(--border)}
-th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.6px}
-td:first-child{font-weight:600}
+/* TRUST */
+.trust-section{max-width:1040px;margin:0 auto;padding:0 24px 80px}
+.trust-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.trust-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:24px}
+.trust-icon{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--gold);
+  letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+.trust-card h3{font-size:14px;font-weight:600;color:#fff;margin-bottom:6px}
+.trust-card p{font-size:13px;color:var(--muted);line-height:1.5}
 
-footer{border-top:1px solid var(--border);padding:24px;
-  text-align:center;font-size:13px;color:var(--muted)}
+/* PRICING */
+.pricing-section{max-width:1040px;margin:0 auto;padding:0 24px 80px}
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.tier{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);
+  padding:24px;transition:border-color .2s}
+.tier.featured{border-color:rgba(240,208,96,.3)}
+.tier-name{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--gold);
+  letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+.tier-price{font-size:28px;font-weight:700;color:#fff;margin-bottom:4px}
+.tier-price span{font-size:14px;font-weight:400;color:var(--muted)}
+.tier-calls{font-size:13px;color:var(--muted);margin-bottom:16px;font-family:var(--mono)}
+.tier-btn{display:block;text-align:center;padding:10px;border-radius:var(--r);
+  font-size:13px;font-weight:600;text-decoration:none;transition:opacity .15s}
+.tier-btn.outline{border:1px solid var(--border-hi);color:var(--text)}
+.tier-btn.outline:hover{border-color:var(--gold);text-decoration:none}
+.tier-btn.fill{background:var(--gold);color:var(--navy)}
+.tier-btn.fill:hover{opacity:.88;text-decoration:none}
+.tier-note{font-size:12px;color:var(--dim);margin-top:10px;line-height:1.4}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:32px 24px;text-align:center}
+.footer-inner{max-width:1040px;margin:0 auto}
+.footer-logo{font-family:var(--mono);font-size:13px;color:var(--gold);
+  text-decoration:none;display:block;margin-bottom:16px}
+.footer-links{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;
+  margin-bottom:16px}
+.footer-links a{font-size:13px;color:var(--muted);text-decoration:none;
+  transition:color .15s}
+.footer-links a:hover{color:var(--text)}
+.footer-copy{font-size:12px;color:var(--dim)}
+
+@media(max-width:720px){
+  .flow-steps{grid-template-columns:repeat(2,1fr);gap:24px}
+  .flow-steps::before{display:none}
+}
+@media(max-width:480px){
+  .flow-steps{grid-template-columns:1fr}
+  h1{font-size:28px}
+}
 </style>
 </head>
 <body>
 
 <nav>
-  <a href="/anchorwithin-home/" class="nav-logo" style="text-decoration:none">⚓ ANCHORWITHIN</a>
-  <div class="nav-right">
-    <a href="/trial/" style="color:var(--gold)">Get free key</a>
-    <a href="/api-docs/api-reference.html">Reference</a>
-    <a href="/api-docs/quickstart.html">Quickstart</a>
+  <div class="nav-inner">
+    <a href="https://ackccreate.github.io/anchorwithin/" class="nav-logo">AnchorWithin API</a>
+    <div class="nav-links">
+      <div class="nav-badge" id="statusBadge">
+        <span class="status-dot"></span>
+        <span id="statusText">Checking…</span>
+      </div>
+      <a href="quickstart.html">Quickstart</a>
+      <a href="api-reference.html">Reference</a>
+      <a href="https://github.com/AcKccreate" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://ackccreate.github.io/trial/" class="btn-trial">Free API Key</a>
+    </div>
   </div>
 </nav>
 
 <div class="hero">
   <div class="eyebrow">Developer Docs</div>
-  <h1>Healing audio for <em>AI agents</em> and apps</h1>
-  <p class="sub">Governed. Quota-enforced. Trace-linked. Stream solfeggio frequencies by Hz, use-case, or track ID.</p>
-  <a href="/trial/" class="cta">Get free API key</a>
-</div>
-
-<div class="cards">
-  <div class="card">
-    <div class="card-icon">&#x26A1;</div>
-    <h2>Quickstart</h2>
-    <p>Get your trial key and stream your first audio file in under 5 minutes.</p>
-    <a href="quickstart.html" class="btn">Read quickstart</a>
-  </div>
-  <div class="card">
-    <div class="card-icon">&#x1F4D6;</div>
-    <h2>API Reference</h2>
-    <p>Every endpoint, parameter, response field, and error code documented.</p>
-    <a href="api-reference.html" class="btn">View reference</a>
-  </div>
-  <div class="card">
-    <div class="card-icon">&#x1F40D;</div>
-    <h2>Python examples</h2>
-    <p>Copy-paste functions for catalog, serve, quota check, and sleep-app patterns.</p>
-    <a href="examples-python.py" class="btn">Python examples</a>
-  </div>
-  <div class="card">
-    <div class="card-icon">&#x1F7E1;</div>
-    <h2>JavaScript examples</h2>
-    <p>fetch()-based examples for Node.js, browser, and React hook pattern.</p>
-    <a href="examples-javascript.js" class="btn">JS examples</a>
+  <h1>Audio APIs for <em>AI agents</em><br>and apps</h1>
+  <p class="hero-sub">Governed. Quota-enforced. Trace-linked. 15 solfeggio frequencies from 174Hz to 963Hz, served in milliseconds.</p>
+  <div class="hero-btns">
+    <a href="https://ackccreate.github.io/trial/" class="btn-primary">Get Free Trial Key →</a>
+    <a href="quickstart.html" class="btn-ghost">Read Quickstart</a>
   </div>
 </div>
 
+<!-- ONBOARDING FLOW -->
+<div class="flow-section">
+  <div class="section-label" style="text-align:center;margin-bottom:36px">How it works</div>
+  <div class="flow-steps">
+    <div class="flow-step">
+      <div class="step-num">1</div>
+      <div class="step-title">Get trial key</div>
+      <div class="step-sub">100 free calls. No card. No expiry.</div>
+      <a href="https://ackccreate.github.io/trial/" class="step-link">trial page →</a>
+    </div>
+    <div class="flow-step">
+      <div class="step-num">2</div>
+      <div class="step-title">Browse catalog</div>
+      <div class="step-sub">15 tracks by Hz, use-case, or ID.</div>
+      <a href="https://anchor.verityswarm.com/v1/audio/catalog" target="_blank" rel="noopener" class="step-link">live catalog →</a>
+    </div>
+    <div class="flow-step">
+      <div class="step-num">3</div>
+      <div class="step-title">Stream audio</div>
+      <div class="step-sub">One POST call. Returns binary MP3 + trace headers.</div>
+      <a href="quickstart.html#step3" class="step-link">see example →</a>
+    </div>
+    <div class="flow-step">
+      <div class="step-num">4</div>
+      <div class="step-title">Upgrade when ready</div>
+      <div class="step-sub">1K–unlimited calls. Same key, no migration.</div>
+      <a href="#pricing" class="step-link">pricing →</a>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT CARDS -->
+<div class="cards-section">
+  <div class="section-label">Documentation</div>
+  <div class="cards">
+    <div class="card">
+      <div class="card-icon">⚡</div>
+      <h2>Quickstart</h2>
+      <p>Trial key, catalog browse, first audio stream, quota check — in 5 minutes.</p>
+      <a href="quickstart.html" class="card-link">Read quickstart →</a>
+    </div>
+    <div class="card">
+      <div class="card-icon">📖</div>
+      <h2>API Reference</h2>
+      <p>Every endpoint, parameter, response field, header, and error code.</p>
+      <a href="api-reference.html" class="card-link">View reference →</a>
+    </div>
+    <div class="card">
+      <div class="card-icon">🐍</div>
+      <h2>Python examples</h2>
+      <p>Copy-paste functions for catalog, serve, quota check, and sleep-app patterns.</p>
+      <a href="examples-python.py" class="card-link" target="_blank">Python examples →</a>
+    </div>
+    <div class="card">
+      <div class="card-icon">🟡</div>
+      <h2>JavaScript examples</h2>
+      <p>fetch() patterns for Node.js, browser, and React hook implementations.</p>
+      <a href="examples-javascript.js" class="card-link" target="_blank">JS examples →</a>
+    </div>
+  </div>
+</div>
+
+<!-- CODE QUICKSTART -->
 <div class="code-section">
-  <h2>60-second quickstart</h2>
+  <div class="section-head">60-second quickstart</div>
+  <div class="section-sub">Get a key and stream your first track without leaving your terminal.</div>
   <div class="tab-row">
-    <button class="tab active" onclick="showTab('curl')">curl</button>
-    <button class="tab" onclick="showTab('python')">Python</button>
-    <button class="tab" onclick="showTab('js')">JavaScript</button>
+    <button class="tab active" onclick="showTab('curl',this)">curl</button>
+    <button class="tab" onclick="showTab('python',this)">Python</button>
+    <button class="tab" onclick="showTab('js',this)">JavaScript</button>
   </div>
   <div id="tab-curl" class="tab-content active">
-    <div class="code-block"># 1. Get a free trial key (100 calls, no card)
+    <div class="code-block"><span class="code-comment"># Step 1 — get a free trial key (100 calls, no card)</span>
 curl -X POST https://anchor.verityswarm.com/v1/trial/request \
   -H "Content-Type: application/json" \
   -d '{"email": "you@yourapp.com"}'
 
-# 2. Stream a healing frequency track
+<span class="code-comment"># Step 2 — stream a healing frequency</span>
 curl -X POST https://anchor.verityswarm.com/v1/audio/serve \
   -H "Authorization: Bearer AW-your-key" \
   -H "Content-Type: application/json" \
-  -d '{"frequency": "528", "use_case": "healing"}' \
-  --output 528hz_healing.mp3</div>
+  -d '{"frequency": "528", "use_case": "focus"}' \
+  --output 528hz_focus.mp3
+
+<span class="code-comment"># Step 3 — check quota</span>
+curl https://anchor.verityswarm.com/v1/key/status \
+  -H "Authorization: Bearer AW-your-key"</div>
   </div>
   <div id="tab-python" class="tab-content">
     <div class="code-block">import requests
 
-# Get trial key
-r = requests.post("https://anchor.verityswarm.com/v1/trial/request",
-                  json={"email": "you@yourapp.com"})
-key = r.json()["api_key"]
+BASE = "https://anchor.verityswarm.com"
 
-# Stream audio
+<span class="code-comment"># Step 1 — get trial key</span>
+r = requests.post(f"{BASE}/v1/trial/request", json={"email": "you@yourapp.com"})
+key = r.json()["api_key"]
+print(f"Key: {key}")
+
+<span class="code-comment"># Step 2 — stream audio</span>
 headers = {"Authorization": f"Bearer {key}"}
-r = requests.post("https://anchor.verityswarm.com/v1/audio/serve",
-                  json={"frequency": "528", "use_case": "healing"},
+r = requests.post(f"{BASE}/v1/audio/serve",
+                  json={"frequency": "528", "use_case": "focus"},
                   headers=headers, stream=True)
-with open("528hz_healing.mp3", "wb") as f:
+with open("528hz_focus.mp3", "wb") as f:
     for chunk in r.iter_content(8192):
-        f.write(chunk)</div>
+        f.write(chunk)
+
+<span class="code-comment"># Step 3 — check quota</span>
+status = requests.get(f"{BASE}/v1/key/status", headers=headers).json()
+print(f"Quota: {status['quota']}")</div>
   </div>
   <div id="tab-js" class="tab-content">
-    <div class="code-block">// Get trial key
-const r = await fetch("https://anchor.verityswarm.com/v1/trial/request", {
+    <div class="code-block">const BASE = "https://anchor.verityswarm.com";
+
+<span class="code-comment">// Step 1 — get trial key</span>
+const { api_key } = await fetch(`${BASE}/v1/trial/request`, {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({ email: "you@yourapp.com" })
-});
-const { api_key } = await r.json();
+}).then(r => r.json());
 
-// Stream audio to file (Node.js)
-const resp = await fetch("https://anchor.verityswarm.com/v1/audio/serve", {
+<span class="code-comment">// Step 2 — stream audio</span>
+const audio = await fetch(`${BASE}/v1/audio/serve`, {
   method: "POST",
   headers: { "Authorization": `Bearer ${api_key}`,
              "Content-Type": "application/json" },
-  body: JSON.stringify({ frequency: "528", use_case: "healing" })
+  body: JSON.stringify({ frequency: "528", use_case: "focus" })
 });
-const buffer = await resp.arrayBuffer();
-require("fs").writeFileSync("528hz.mp3", Buffer.from(buffer));</div>
+const buf = await audio.arrayBuffer();
+require("fs").writeFileSync("528hz_focus.mp3", Buffer.from(buf));
+
+<span class="code-comment">// Step 3 — check quota</span>
+const status = await fetch(`${BASE}/v1/key/status`, {
+  headers: { "Authorization": `Bearer ${api_key}` }
+}).then(r => r.json());
+console.log("Quota:", status.quota);</div>
   </div>
 </div>
 
-<div class="pricing">
-  <h2>Quota &amp; pricing</h2>
-  <table>
-    <thead><tr><th>Tier</th><th>Calls / month</th><th>Price</th></tr></thead>
-    <tbody>
-      <tr><td>Trial</td><td>100 (one-time)</td><td>Free</td></tr>
-      <tr><td>Starter</td><td>1,000</td><td>$9 / mo</td></tr>
-      <tr><td>Pro</td><td>10,000</td><td>$29 / mo</td></tr>
-      <tr><td>Unlimited</td><td>No limit</td><td>$79 / mo</td></tr>
-    </tbody>
-  </table>
-  <p style="margin-top:16px;font-size:13px;color:var(--muted)">
-    Quota resets on the 1st of each month. Your key upgrades automatically on subscription.
-    Overage returns <code style="color:var(--gold)">429</code> — no surprise charges.
-  </p>
+<!-- TRUST SECTION -->
+<div class="trust-section">
+  <div class="section-label" style="margin-bottom:24px">Built with governed approval infrastructure</div>
+  <div class="trust-grid">
+    <div class="trust-card">
+      <div class="trust-icon">Gate</div>
+      <h3>Approval-gated actions</h3>
+      <p>Every outreach, post, and external action requires explicit approval before execution. No autonomous writes to external systems.</p>
+    </div>
+    <div class="trust-card">
+      <div class="trust-icon">Trace</div>
+      <h3>Replayable trace receipts</h3>
+      <p>Each API call issues a signed receipt. Replay any response — verify what was served, when, and to which key.</p>
+    </div>
+    <div class="trust-card">
+      <div class="trust-icon">Quota</div>
+      <h3>Hard quota enforcement</h3>
+      <p>Quota exceeded returns <code style="color:var(--gold);font-family:var(--mono);font-size:12px">429</code>. No surprise charges. No soft limits that silently bill. Your cap is your cap.</p>
+    </div>
+    <div class="trust-card">
+      <div class="trust-icon">Log</div>
+      <h3>Full audit logs</h3>
+      <p>Every request is logged with key ID, timestamp, frequency, use-case, and response status. Your usage is always auditable.</p>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<div class="pricing-section" id="pricing">
+  <div class="section-label" style="margin-bottom:8px">Pricing</div>
+  <p style="font-size:14px;color:var(--muted);margin-bottom:24px">Same key, higher quota on upgrade. Overage returns <code style="color:var(--gold);font-family:var(--mono);font-size:12px">429</code> — no surprise charges. Resets the 1st of each month.</p>
+  <div class="pricing-grid">
+    <div class="tier">
+      <div class="tier-name">Trial</div>
+      <div class="tier-price">Free</div>
+      <div class="tier-calls">100 calls · no expiry</div>
+      <a href="https://ackccreate.github.io/trial/" class="tier-btn outline">Get trial key →</a>
+      <div class="tier-note">No credit card. Instant key.</div>
+    </div>
+    <div class="tier">
+      <div class="tier-name">Starter</div>
+      <div class="tier-price">$9<span>/mo</span></div>
+      <div class="tier-calls">1,000 calls / month</div>
+      <a href="https://buy.stripe.com/6oU4gA1mSayHdUHfj467T2s" class="tier-btn outline">Start Starter →</a>
+    </div>
+    <div class="tier featured">
+      <div class="tier-name">Pro</div>
+      <div class="tier-price">$29<span>/mo</span></div>
+      <div class="tier-calls">10,000 calls / month</div>
+      <a href="https://buy.stripe.com/fZu14o1mS4aj2bZfj467T2t" class="tier-btn fill">Start Pro →</a>
+    </div>
+    <div class="tier">
+      <div class="tier-name">Unlimited</div>
+      <div class="tier-price">$79<span>/mo</span></div>
+      <div class="tier-calls">No call limit</div>
+      <a href="https://buy.stripe.com/6oU6oI0iOayHeYL8UG67T2u" class="tier-btn outline">Start Unlimited →</a>
+    </div>
+  </div>
 </div>
 
 <footer>
-  <a href="/anchorwithin-home/" style="color:var(--muted)">AnchorWithin</a> &mdash; <a href="/trial/">Get free key</a> &mdash; <a href="/anchorwithin-privacy/" style="color:var(--muted)">Privacy</a> &mdash; <a href="/anchorwithin-tos/" style="color:var(--muted)">Terms</a>
+  <div class="footer-inner">
+    <a href="https://ackccreate.github.io/anchorwithin/" class="footer-logo">AnchorWithin</a>
+    <div class="footer-links">
+      <a href="quickstart.html">Quickstart</a>
+      <a href="api-reference.html">API Reference</a>
+      <a href="https://ackccreate.github.io/trial/">Free Trial Key</a>
+      <a href="https://anchor.verityswarm.com/health" target="_blank" rel="noopener">API Status</a>
+      <a href="https://github.com/AcKccreate" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://ackccreate.github.io/anchorwithin-privacy/">Privacy</a>
+      <a href="https://ackccreate.github.io/anchorwithin-tos/">Terms</a>
+    </div>
+    <div class="footer-copy">AnchorWithin LLC © 2026 &nbsp;·&nbsp; acaseymail@gmail.com</div>
+  </div>
 </footer>
 
 <script>
-function showTab(name) {
-  document.querySelectorAll(".tab").forEach(function(t) { t.classList.remove("active"); });
-  document.querySelectorAll(".tab-content").forEach(function(t) { t.classList.remove("active"); });
-  event.target.classList.add("active");
-  document.getElementById("tab-" + name).classList.add("active");
+/* ── Tab switching ── */
+function showTab(name, btn) {
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active');});
+  btn.classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
 }
+
+/* ── Live status badge ── */
+(function checkStatus(){
+  var badge = document.getElementById('statusBadge');
+  var text  = document.getElementById('statusText');
+  fetch('https://anchor.verityswarm.com/health', {cache:'no-store'})
+    .then(function(r){return r.json();})
+    .then(function(d){
+      if(d.status==='ok'){
+        badge.classList.add('ok');
+        text.textContent = 'API Operational';
+      } else {
+        badge.classList.add('err');
+        text.textContent = 'Degraded';
+      }
+    })
+    .catch(function(){
+      badge.classList.add('err');
+      text.textContent = 'Unreachable';
+    });
+})();
 </script>
 </body>
 </html>
