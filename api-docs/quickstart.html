@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quickstart — AnchorWithin API</title>
+<meta name="description" content="Get your first healing frequency audio file in under 5 minutes using the AnchorWithin API.">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a1a;--surface:#12122a;--border:#1e1e3a;
+  --text:#e8e8f8;--muted:#8888aa;
+  --gold:#f0d060;--gold-dim:#c8a830;
+  --teal:#3fcdc4;
+  --font-mono:'Courier New',monospace;
+  --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font-sans);line-height:1.65;font-size:15px}
+a{color:var(--gold);text-decoration:none}
+a:hover{text-decoration:underline}
+
+nav{border-bottom:1px solid var(--border);padding:14px 24px;display:flex;
+  align-items:center;justify-content:space-between;position:sticky;top:0;
+  background:rgba(10,10,26,.97);backdrop-filter:blur(8px);z-index:10}
+.nav-logo{font-family:var(--font-mono);font-size:13px;color:var(--gold);letter-spacing:2px;text-decoration:none}
+.nav-right{font-size:13px;color:var(--muted);display:flex;gap:20px;align-items:center}
+.nav-right a{color:var(--muted)}
+.nav-right a:hover{color:var(--gold);text-decoration:none}
+.btn-trial{background:var(--gold);color:#0a0a1a;padding:6px 14px;
+  border-radius:5px;font-weight:700;font-size:12px;letter-spacing:.02em}
+.btn-trial:hover{background:var(--gold-dim);text-decoration:none}
+
+.layout{display:flex;max-width:1060px;margin:0 auto;gap:0}
+
+aside{width:200px;flex-shrink:0;padding:32px 0 32px 24px;position:sticky;
+  top:49px;height:calc(100vh - 49px);overflow-y:auto;border-right:1px solid var(--border)}
+.aside-label{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:10px;margin-top:20px}
+.aside-label:first-child{margin-top:0}
+.aside-link{display:block;font-size:13px;color:var(--muted);padding:4px 0;
+  border-left:2px solid transparent;padding-left:10px;margin-left:-10px;
+  transition:color .15s,border-color .15s}
+.aside-link:hover,.aside-link.active{color:var(--gold);border-color:var(--gold);text-decoration:none}
+
+article{flex:1;min-width:0;padding:40px 40px 80px}
+
+h1{font-size:28px;font-weight:700;color:#fff;margin-bottom:8px;letter-spacing:-.02em}
+.subtitle{color:var(--muted);font-size:15px;margin-bottom:36px}
+h2{font-size:18px;font-weight:700;color:#fff;margin:40px 0 14px;padding-top:8px;
+  border-top:1px solid var(--border)}
+h2:first-of-type{margin-top:0;border-top:none}
+h3{font-size:15px;font-weight:700;color:var(--text);margin:20px 0 8px}
+p{margin-bottom:14px;color:var(--text)}
+strong{color:#fff;font-weight:600}
+
+pre{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:18px 20px;font-family:var(--font-mono);font-size:13px;
+  overflow-x:auto;margin:14px 0;white-space:pre;line-height:1.6}
+code{font-family:var(--font-mono);font-size:13px;color:var(--gold);
+  background:rgba(240,208,96,.08);padding:1px 5px;border-radius:3px}
+pre code{background:none;padding:0;color:var(--text)}
+
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px}
+th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.6px;
+  padding:8px 12px;text-align:left;border-bottom:1px solid var(--border)}
+td{padding:9px 12px;border-bottom:1px solid var(--border);color:var(--text)}
+td:first-child{font-weight:600;font-family:var(--font-mono);font-size:12px}
+tr:last-child td{border-bottom:none}
+
+.step-num{display:inline-flex;align-items:center;justify-content:center;
+  width:24px;height:24px;border-radius:50%;background:rgba(240,208,96,.15);
+  border:1px solid rgba(240,208,96,.3);color:var(--gold);
+  font-size:11px;font-weight:700;margin-right:8px;flex-shrink:0}
+.step-head{display:flex;align-items:center;font-size:18px;font-weight:700;
+  color:#fff;margin:40px 0 14px;padding-top:8px;border-top:1px solid var(--border)}
+.step-head:first-of-type{margin-top:0;border-top:none}
+
+.note{background:rgba(63,205,196,.06);border:1px solid rgba(63,205,196,.2);
+  border-radius:6px;padding:12px 16px;font-size:13px;color:var(--muted);margin:14px 0}
+.note strong{color:var(--teal)}
+
+.resp-label{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted);margin-top:14px;margin-bottom:4px}
+
+footer{border-top:1px solid var(--border);padding:24px;text-align:center;
+  font-size:13px;color:var(--muted)}
+
+@media(max-width:700px){
+  aside{display:none}
+  article{padding:24px 20px 60px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/api-docs/" class="nav-logo">⚓ ANCHORWITHIN API</a>
+  <div class="nav-right">
+    <a href="/api-docs/">Docs home</a>
+    <a href="api-reference.html">Reference</a>
+    <a href="/trial/" class="btn-trial">Get free key</a>
+  </div>
+</nav>
+
+<div class="layout">
+  <aside>
+    <div class="aside-label">Quickstart</div>
+    <a class="aside-link" href="#step1">1 · Get trial key</a>
+    <a class="aside-link" href="#step2">2 · Browse catalog</a>
+    <a class="aside-link" href="#step3">3 · Stream audio</a>
+    <a class="aside-link" href="#step4">4 · Check quota</a>
+    <div class="aside-label">Reference</div>
+    <a class="aside-link" href="api-reference.html">API Reference →</a>
+    <a class="aside-link" href="examples-python.py">Python examples</a>
+    <a class="aside-link" href="examples-javascript.js">JS examples</a>
+    <div class="aside-label">Account</div>
+    <a class="aside-link" href="/trial/">Get trial key</a>
+    <a class="aside-link" href="/api-docs/#pricing">Pricing</a>
+  </aside>
+
+  <article>
+    <h1>Quickstart</h1>
+    <p class="subtitle">Get your first audio file in under 5 minutes.</p>
+
+    <div class="step-head" id="step1"><span class="step-num">1</span>Get a free trial key</div>
+    <p>Request a trial key — 100 free calls, no credit card required.</p>
+    <pre>curl -X POST https://anchor.verityswarm.com/v1/trial/request \
+  -H "Content-Type: application/json" \
+  -d '{"email": "you@yourapp.com"}'</pre>
+    <div class="resp-label">Response</div>
+    <pre>{
+  "api_key": "AW-xxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "tier": "trial",
+  "calls": 100,
+  "endpoint": "POST /v1/audio/serve",
+  "auth": "Authorization: Bearer &lt;your_key&gt;"
+}</pre>
+    <div class="note"><strong>Save your key.</strong> You get 100 free calls. The key never expires and upgrades in-place when you subscribe — no migration needed.</div>
+
+    <div class="step-head" id="step2"><span class="step-num">2</span>Browse the catalog</div>
+    <p>List all 15 available tracks with frequency, format, use-case tags, and IDs.</p>
+    <pre>curl https://anchor.verityswarm.com/v1/audio/catalog \
+  -H "Authorization: Bearer AW-your-key-here"</pre>
+
+    <div class="step-head" id="step3"><span class="step-num">3</span>Stream your first audio file</div>
+    <h3>By frequency (Hz)</h3>
+    <pre>curl -X POST https://anchor.verityswarm.com/v1/audio/serve \
+  -H "Authorization: Bearer AW-your-key-here" \
+  -H "Content-Type: application/json" \
+  -d '{"frequency": "432", "use_case": "sleep"}' \
+  --output healing_432hz.mp3</pre>
+
+    <h3>By use-case only</h3>
+    <pre>curl -X POST https://anchor.verityswarm.com/v1/audio/serve \
+  -H "Authorization: Bearer AW-your-key-here" \
+  -H "Content-Type: application/json" \
+  -d '{"use_case": "focus"}' \
+  --output focus_session.mp3</pre>
+
+    <h3>By specific track ID</h3>
+    <pre>curl -X POST https://anchor.verityswarm.com/v1/audio/serve \
+  -H "Authorization: Bearer AW-your-key-here" \
+  -H "Content-Type: application/json" \
+  -d '{"audio_id": "528hz_528hz_dna_repair"}' \
+  --output 528hz.mp3</pre>
+
+    <p>Selection priority: <code>audio_id</code> &gt; <code>frequency + use_case</code> &gt; <code>frequency</code> &gt; <code>use_case</code></p>
+
+    <div class="step-head" id="step4"><span class="step-num">4</span>Check your quota</div>
+    <pre>curl https://anchor.verityswarm.com/v1/key/status \
+  -H "Authorization: Bearer AW-your-key-here"</pre>
+    <div class="resp-label">Response</div>
+    <pre>{
+  "tier": "trial",
+  "calls_month": 3,
+  "calls_total": 3,
+  "quota": "3/100",
+  "active": true,
+  "email": "you@yourapp.com"
+}</pre>
+
+    <h2>Available frequencies</h2>
+    <table>
+      <thead><tr><th>Hz</th><th>Use cases</th></tr></thead>
+      <tbody>
+        <tr><td>432</td><td>healing, sleep, calm, focus, grounding</td></tr>
+        <tr><td>528</td><td>DNA repair, stress relief, love</td></tr>
+        <tr><td>639</td><td>relationships, communication, connection</td></tr>
+        <tr><td>741</td><td>clarity, toxin release, expression</td></tr>
+        <tr><td>852</td><td>intuition, vagal tone, calm, spiritual</td></tr>
+        <tr><td>963</td><td>pineal, transcendence, clarity, crown</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="pricing">Pricing — when you're ready to scale</h2>
+    <table>
+      <thead><tr><th>Tier</th><th>Calls / month</th><th>Price</th></tr></thead>
+      <tbody>
+        <tr><td>Trial</td><td>100 (one-time)</td><td>Free</td></tr>
+        <tr><td>Starter</td><td>1,000</td><td>$9 / mo</td></tr>
+        <tr><td>Pro</td><td>10,000</td><td>$29 / mo</td></tr>
+        <tr><td>Unlimited</td><td>No limit</td><td>$79 / mo</td></tr>
+      </tbody>
+    </table>
+    <p>Your key upgrades automatically on subscription — same key, higher quota. Overage returns <code>429</code>, no surprise charges.</p>
+    <p><a href="/trial/">Get your free trial key →</a></p>
+  </article>
+</div>
+
+<footer>
+  <a href="/anchorwithin-home/">AnchorWithin</a> &mdash;
+  <a href="/api-docs/">Docs</a> &mdash;
+  <a href="api-reference.html">Reference</a> &mdash;
+  <a href="/trial/">Free key</a> &mdash;
+  <a href="/anchorwithin-privacy/">Privacy</a> &mdash;
+  <a href="/anchorwithin-tos/">Terms</a>
+</footer>
+
+<script>
+// Highlight active sidebar link based on scroll position
+var sections = document.querySelectorAll('[id]');
+var links     = document.querySelectorAll('.aside-link[href^="#"]');
+window.addEventListener('scroll', function() {
+  var scrollY = window.scrollY + 80;
+  var current = '';
+  sections.forEach(function(s) { if (s.offsetTop <= scrollY) current = s.id; });
+  links.forEach(function(l) {
+    l.classList.toggle('active', l.getAttribute('href') === '#' + current);
+  });
+}, { passive: true });
+</script>
+</body>
+</html>

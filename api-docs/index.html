@@ -74,8 +74,8 @@ footer{border-top:1px solid var(--border);padding:24px;
   <a href="/anchorwithin-home/" class="nav-logo" style="text-decoration:none">⚓ ANCHORWITHIN</a>
   <div class="nav-right">
     <a href="/trial/" style="color:var(--gold)">Get free key</a>
-    <a href="/api-docs/api-reference.md">Reference</a>
-    <a href="/api-docs/quickstart.md">Quickstart</a>
+    <a href="/api-docs/api-reference.html">Reference</a>
+    <a href="/api-docs/quickstart.html">Quickstart</a>
   </div>
 </nav>
 
@@ -91,13 +91,13 @@ footer{border-top:1px solid var(--border);padding:24px;
     <div class="card-icon">&#x26A1;</div>
     <h2>Quickstart</h2>
     <p>Get your trial key and stream your first audio file in under 5 minutes.</p>
-    <a href="quickstart.md" class="btn">Read quickstart</a>
+    <a href="quickstart.html" class="btn">Read quickstart</a>
   </div>
   <div class="card">
     <div class="card-icon">&#x1F4D6;</div>
     <h2>API Reference</h2>
     <p>Every endpoint, parameter, response field, and error code documented.</p>
-    <a href="api-reference.md" class="btn">View reference</a>
+    <a href="api-reference.html" class="btn">View reference</a>
   </div>
   <div class="card">
     <div class="card-icon">&#x1F40D;</div>
@@ -122,12 +122,12 @@ footer{border-top:1px solid var(--border);padding:24px;
   </div>
   <div id="tab-curl" class="tab-content active">
     <div class="code-block"># 1. Get a free trial key (100 calls, no card)
-curl -X POST https://api.anchorwithin.com/v1/trial/request \
+curl -X POST https://anchor.verityswarm.com/v1/trial/request \
   -H "Content-Type: application/json" \
   -d '{"email": "you@yourapp.com"}'
 
 # 2. Stream a healing frequency track
-curl -X POST https://api.anchorwithin.com/v1/audio/serve \
+curl -X POST https://anchor.verityswarm.com/v1/audio/serve \
   -H "Authorization: Bearer AW-your-key" \
   -H "Content-Type: application/json" \
   -d '{"frequency": "528", "use_case": "healing"}' \
@@ -137,13 +137,13 @@ curl -X POST https://api.anchorwithin.com/v1/audio/serve \
     <div class="code-block">import requests
 
 # Get trial key
-r = requests.post("https://api.anchorwithin.com/v1/trial/request",
+r = requests.post("https://anchor.verityswarm.com/v1/trial/request",
                   json={"email": "you@yourapp.com"})
 key = r.json()["api_key"]
 
 # Stream audio
 headers = {"Authorization": f"Bearer {key}"}
-r = requests.post("https://api.anchorwithin.com/v1/audio/serve",
+r = requests.post("https://anchor.verityswarm.com/v1/audio/serve",
                   json={"frequency": "528", "use_case": "healing"},
                   headers=headers, stream=True)
 with open("528hz_healing.mp3", "wb") as f:
@@ -152,7 +152,7 @@ with open("528hz_healing.mp3", "wb") as f:
   </div>
   <div id="tab-js" class="tab-content">
     <div class="code-block">// Get trial key
-const r = await fetch("https://api.anchorwithin.com/v1/trial/request", {
+const r = await fetch("https://anchor.verityswarm.com/v1/trial/request", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({ email: "you@yourapp.com" })
@@ -160,7 +160,7 @@ const r = await fetch("https://api.anchorwithin.com/v1/trial/request", {
 const { api_key } = await r.json();
 
 // Stream audio to file (Node.js)
-const resp = await fetch("https://api.anchorwithin.com/v1/audio/serve", {
+const resp = await fetch("https://anchor.verityswarm.com/v1/audio/serve", {
   method: "POST",
   headers: { "Authorization": `Bearer ${api_key}`,
              "Content-Type": "application/json" },

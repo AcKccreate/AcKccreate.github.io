@@ -1,7 +1,7 @@
 // AnchorWithin API — JavaScript / Node.js Examples
 // Works in: Node.js 18+, browser (with CORS), Deno, Bun
 
-const BASE_URL = "https://api.anchorwithin.com";
+const BASE_URL = "https://anchor.verityswarm.com";
 const API_KEY  = "AW-your-key-here"; // replace with your key
 
 const headers = {
@@ -78,7 +78,7 @@ async function streamAudioToBrowser(payload, audioElementId) {
   });
 
   if (resp.status === 429) {
-    throw new Error("Quota exceeded. Upgrade at anchorwithin.com/pricing");
+    throw new Error("Quota exceeded. Upgrade at /api-docs/#pricing");
   }
   if (!resp.ok) {
     const err = await resp.json();

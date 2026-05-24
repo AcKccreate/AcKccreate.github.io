@@ -122,17 +122,17 @@ footer a:hover{color:var(--muted)}
       </div>
       <div class="next" style="margin-top:16px">
         <div class="next-title">Quick start</div>
-        <div class="curl" id="curlA">curl -X POST https://api.anchorwithin.com/v1/audio/serve \
+        <div class="curl" id="curlA">curl -X POST https://anchor.verityswarm.com/v1/audio/serve \
   -H "Authorization: Bearer YOUR_KEY" \
   -H "Content-Type: application/json" \
   -d '{"frequency":"432","use_case":"sleep"}'</div>
         <div style="font-size:13px;color:var(--muted);margin-bottom:8px">Check quota:</div>
-        <div class="curl" id="curlB">curl https://api.anchorwithin.com/v1/key/status \
+        <div class="curl" id="curlB">curl https://anchor.verityswarm.com/v1/key/status \
   -H "Authorization: Bearer YOUR_KEY"</div>
         <div class="next-links">
           <a href="https://ackccreate.github.io/api-docs/" class="next-link">API Docs</a>
-          <a href="https://api.anchorwithin.com/v1/audio/catalog" target="_blank" class="next-link">Catalog</a>
-          <a href="https://ackccreate.github.io/anchorwithin-home/#pricing" class="next-link">Pricing →</a>
+          <a href="https://anchor.verityswarm.com/v1/audio/catalog" target="_blank" class="next-link">Catalog</a>
+          <a href="/api-docs/#pricing" class="next-link">Pricing →</a>
         </div>
       </div>
     </div>
@@ -144,7 +144,7 @@ footer a:hover{color:var(--muted)}
   AnchorWithin LLC © 2026
 </footer>
 <script>
-var API = 'https://api.anchorwithin.com';
+var API = 'https://anchor.verityswarm.com';
 var currentKey = '';
 
 document.getElementById('trialForm').addEventListener('submit', function(e) {
