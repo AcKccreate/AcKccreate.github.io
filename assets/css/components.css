@@ -84,6 +84,38 @@
   box-shadow: var(--shadow-card);
 }
 
+/* Single-tier pricing card — slate-gradient surface with cinematic
+   hairline at the top edge. Promoted from sanctuary-bell, breatheworld,
+   dreamwalk, and thennow in the Phase 4.2 wedge.
+   Default accent: gold (glow + hairline).
+   Add .is-purple to switch glow + hairline to purple (used by dreamwalk).
+   Pages may override padding via a more-specific selector if a denser
+   pricing layout requires it. */
+.aw-price-card {
+  position: relative;
+  padding: var(--space-8);
+  background: linear-gradient(180deg, var(--aw-lift) 0%, var(--aw-card) 100%);
+  border: 1px solid var(--aw-border-hi);
+  border-radius: var(--r-lg);
+  box-shadow: var(--aw-glow-gold);
+  overflow: hidden;
+}
+.aw-price-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--aw-gold-lt), transparent);
+}
+.aw-price-card.is-purple {
+  box-shadow: var(--aw-glow-purple);
+}
+.aw-price-card.is-purple::before {
+  background: linear-gradient(90deg, transparent, var(--aw-purple-lt), transparent);
+}
+
 /* Nav — full-width sticky glass shell that hosts a constrained
    .aw-nav-inner. Together they form the standard Soul nav pattern,
    promoted from sanctuary-bell + breatheworld in the Phase 4.1 wedge.

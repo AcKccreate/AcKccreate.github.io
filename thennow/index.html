@@ -333,22 +333,8 @@ body > *:not(.aw-nav) { position: relative; z-index: 1; }
   padding: 0 var(--space-6) var(--space-12);
   text-align: center;
 }
-.price-box {
-  position: relative;
-  padding: var(--space-8) var(--space-8);
-  background: linear-gradient(180deg, var(--aw-lift) 0%, var(--aw-card) 100%);
-  border: 1px solid var(--aw-border-hi);
-  border-radius: var(--r-lg);
-  box-shadow: var(--aw-glow-gold);
-  overflow: hidden;
-}
-.price-box::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 20%; right: 20%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--aw-gold-lt), transparent);
-}
+/* Outer slate-gradient surface + gold hairline come from components.css
+   (.aw-price-card). No page-local rules needed — default padding matches. */
 .price-eyebrow {
   font-family: var(--aw-sans);
   font-size: var(--text-xs);
@@ -612,7 +598,7 @@ footer.aw-footer {
 
 <!-- ────────── PRICING ────────── -->
 <section id="pricing" aria-label="ThenNow pricing">
-  <div class="price-box">
+  <div class="price-box aw-price-card">
     <div class="price-eyebrow">Single purchase · no subscription</div>
     <div class="price-amt"><sup>$</sup>4.99</div>
     <p class="price-desc">Full access — unlimited comparisons, download, share.</p>
