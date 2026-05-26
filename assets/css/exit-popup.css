@@ -23,7 +23,7 @@
   align-items: center;
   justify-content: center;
   padding: var(--space-4);
-  background: rgba(0, 0, 0, 0.78);
+  background: var(--aw-scrim);
   animation: aw-exit-fade var(--dur-2) var(--ease);
 }
 @keyframes aw-exit-fade {
