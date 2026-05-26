@@ -1,0 +1,102 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   AnchorWithin / VeritySwarm — Shared Design Tokens
+   ──────────────────────────────────────────────────────────────────────────
+   Phase 1 deliverable. Single source of truth for brand colors, typography,
+   spacing, radii, and motion. Not yet wired into any page — Phase 2 will
+   migrate the Golden Sample pages (anchorwithin-home, verity) to consume
+   these tokens, then propagate.
+
+   Two layers:
+     [aw-*]  Soul   — AnchorWithin (Ghibli-Noir: deep navy / bronze gold / cream)
+     [vs-*]  Brain  — VeritySwarm  (Console: dark slate / cyan / audit-grade)
+
+   Soul tokens are extracted verbatim from anchorwithin-home/index.html.
+   Brain tokens codify the brand-constitution target (cyan / dark-slate).
+   The current verity/index.html palette is gold-on-navy and will be
+   refactored to consume Brain tokens in a later phase.
+   ────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* ─── SOUL · AnchorWithin (Ghibli-Noir) ─── */
+  --aw-bg:           #06060f;
+  --aw-surface:      #0c0c1e;
+  --aw-lift:         #12122a;
+  --aw-card:         #0f0f23;
+
+  --aw-border:       rgba(205, 160, 50, 0.14);
+  --aw-border-hi:    rgba(205, 160, 50, 0.32);
+
+  --aw-gold:         #c8a032;
+  --aw-gold-lt:      #e8c060;
+  --aw-gold-dim:     rgba(200, 160, 50, 0.55);
+  --aw-gold-glow:    rgba(200, 160, 50, 0.10);
+
+  --aw-cream:        #f0ead8;
+  --aw-text:         #d8d8ec;
+  --aw-muted:        #6868a0;
+  --aw-teal:         #3fcdc4;
+  --aw-red-dim:      rgba(239, 68, 68, 0.8);
+
+  --aw-serif:        'DM Serif Display', Georgia, serif;
+  --aw-sans:         'Outfit', system-ui, -apple-system, sans-serif;
+  --aw-mono:         'JetBrains Mono', 'Courier New', monospace;
+
+  /* ─── BRAIN · VeritySwarm (Console) ─── */
+  --vs-bg:           #07090d;
+  --vs-surface:      #0b1018;
+  --vs-lift:         #0f1622;
+  --vs-card:         #0d1219;
+  --vs-slate:        #1a2230;
+  --vs-slate-hi:     #2a3548;
+
+  --vs-border:       rgba(64, 200, 220, 0.10);
+  --vs-border-hi:    rgba(64, 200, 220, 0.28);
+
+  --vs-cyan:         #40c8dc;
+  --vs-cyan-lt:      #7fe0f0;
+  --vs-cyan-dim:     rgba(64, 200, 220, 0.55);
+  --vs-cyan-glow:    rgba(64, 200, 220, 0.08);
+
+  --vs-text:         #cfd8e6;
+  --vs-muted:        #6a7d96;
+  --vs-dim:          #44546a;
+  --vs-green:        #50d090;
+  --vs-amber:        #e0b060;
+  --vs-red:          #e36868;
+
+  --vs-mono:         'JetBrains Mono', 'IBM Plex Mono', monospace;
+  --vs-sans:         'Inter', system-ui, -apple-system, sans-serif;
+
+  /* ─── SHARED · radii, spacing, motion ─── */
+  --r-sm:    4px;
+  --r:       8px;
+  --r-lg:    12px;
+  --r-xl:    16px;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  --shadow-card:  0 8px 32px rgba(0, 0, 0, 0.40);
+  --shadow-lift:  0 16px 48px rgba(0, 0, 0, 0.55);
+
+  --ease:    cubic-bezier(.2, .8, .2, 1);
+  --dur-1:   .15s;
+  --dur-2:   .3s;
+  --dur-3:   .6s;
+}
+
+/* Motion-reduced users get zero animation durations.
+   Pages that consume these tokens get the behavior automatically. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-1: 0s;
+    --dur-2: 0s;
+    --dur-3: 0s;
+  }
+}
