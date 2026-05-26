@@ -1,47 +1,88 @@
 /* ──────────────────────────────────────────────────────────────────────────
-   AnchorWithin / VeritySwarm — Shared Design Tokens
+   AnchorWithin / VeritySwarm — Design Tokens
    ──────────────────────────────────────────────────────────────────────────
-   Phase 1 deliverable. Single source of truth for brand colors, typography,
-   spacing, radii, and motion. Not yet wired into any page — Phase 2 will
-   migrate the Golden Sample pages (anchorwithin-home, verity) to consume
-   these tokens, then propagate.
+   Single source of truth. Two namespaced palettes plus shared primitives.
 
-   Two layers:
-     [aw-*]  Soul   — AnchorWithin (Ghibli-Noir: deep navy / bronze gold / cream)
-     [vs-*]  Brain  — VeritySwarm  (Console: dark slate / cyan / audit-grade)
+     [--aw-*]  Soul   — AnchorWithin (Ghibli-Noir: navy / bronze gold / cream
+                        / purple accent / cinematic)
+     [--vs-*]  Brain  — VeritySwarm  (Console: dark slate / cyan / audit-grade)
 
-   Soul tokens are extracted verbatim from anchorwithin-home/index.html.
-   Brain tokens codify the brand-constitution target (cyan / dark-slate).
-   The current verity/index.html palette is gold-on-navy and will be
-   refactored to consume Brain tokens in a later phase.
+   The Soul tokens are extracted verbatim from anchorwithin-home/index.html.
+   The Brain tokens codify the brand-constitution target. Pages adopt these
+   by aliasing short local names (e.g. --gold: var(--aw-gold)) inside their
+   own :root, so existing rules keep working with zero visual diff.
+
+   Theming: the ecosystem is dark-only by constitution. To add a light mode
+   later, scope overrides under [data-theme="light"] without renaming any
+   token — the semantic names (--*-bg, --*-text, --*-border) already permit
+   it. Light-theme stub stays out of this file until the design exists.
+
+   Breakpoint reference (CSS custom properties cannot be used inside @media
+   queries — these are documentation values for clamp() and JS):
+     --bp-sm:  480px   phone landscape
+     --bp-md:  768px   tablet portrait
+     --bp-lg:  1024px  laptop
+     --bp-xl:  1280px  desktop
    ────────────────────────────────────────────────────────────────────────── */
 
 :root {
-  /* ─── SOUL · AnchorWithin (Ghibli-Noir) ─── */
+
+  /* ═══════════════════════════════════════════════════════════════════════
+     SOUL · AnchorWithin (Ghibli-Noir)
+     ═══════════════════════════════════════════════════════════════════════ */
+
+  /* Surfaces */
   --aw-bg:           #06060f;
   --aw-surface:      #0c0c1e;
   --aw-lift:         #12122a;
   --aw-card:         #0f0f23;
 
+  /* Borders */
   --aw-border:       rgba(205, 160, 50, 0.14);
   --aw-border-hi:    rgba(205, 160, 50, 0.32);
 
+  /* Gold — primary brand accent */
   --aw-gold:         #c8a032;
   --aw-gold-lt:      #e8c060;
   --aw-gold-dim:     rgba(200, 160, 50, 0.55);
   --aw-gold-glow:    rgba(200, 160, 50, 0.10);
 
+  /* Purple — emotional / cinematic accent (Phase 2 addition) */
+  --aw-purple:       #7c5cc8;
+  --aw-purple-lt:    #9d7fe0;
+  --aw-purple-dim:   rgba(124, 92, 200, 0.55);
+  --aw-purple-glow:  rgba(124, 92, 200, 0.10);
+
+  /* Text */
   --aw-cream:        #f0ead8;
   --aw-text:         #d8d8ec;
   --aw-muted:        #6868a0;
+
+  /* Status / utility */
   --aw-teal:         #3fcdc4;
   --aw-red-dim:      rgba(239, 68, 68, 0.8);
 
+  /* Typography */
   --aw-serif:        'DM Serif Display', Georgia, serif;
   --aw-sans:         'Outfit', system-ui, -apple-system, sans-serif;
   --aw-mono:         'JetBrains Mono', 'Courier New', monospace;
 
-  /* ─── BRAIN · VeritySwarm (Console) ─── */
+  /* Glow shadows (cinematic) */
+  --aw-glow-gold:       0 0 24px rgba(200, 160, 50, 0.25);
+  --aw-glow-gold-hi:    0 0 36px rgba(200, 160, 50, 0.40);
+  --aw-glow-purple:     0 0 32px rgba(124, 92, 200, 0.28);
+  --aw-glow-purple-hi:  0 0 48px rgba(124, 92, 200, 0.45);
+
+  /* Glassmorphism */
+  --aw-glass-bg:        rgba(12, 12, 30, 0.65);
+  --aw-glass-bg-hi:     rgba(12, 12, 30, 0.85);
+  --aw-glass-border:    1px solid rgba(255, 255, 255, 0.06);
+
+  /* ═══════════════════════════════════════════════════════════════════════
+     BRAIN · VeritySwarm (Console / Audit-Grade)
+     ═══════════════════════════════════════════════════════════════════════ */
+
+  /* Surfaces */
   --vs-bg:           #07090d;
   --vs-surface:      #0b1018;
   --vs-lift:         #0f1622;
@@ -49,54 +90,98 @@
   --vs-slate:        #1a2230;
   --vs-slate-hi:     #2a3548;
 
+  /* Borders */
   --vs-border:       rgba(64, 200, 220, 0.10);
   --vs-border-hi:    rgba(64, 200, 220, 0.28);
 
+  /* Cyan — primary brand accent */
   --vs-cyan:         #40c8dc;
   --vs-cyan-lt:      #7fe0f0;
   --vs-cyan-dim:     rgba(64, 200, 220, 0.55);
   --vs-cyan-glow:    rgba(64, 200, 220, 0.08);
 
+  /* Text */
   --vs-text:         #cfd8e6;
   --vs-muted:        #6a7d96;
   --vs-dim:          #44546a;
+
+  /* Status / utility */
   --vs-green:        #50d090;
   --vs-amber:        #e0b060;
   --vs-red:          #e36868;
 
+  /* Typography */
   --vs-mono:         'JetBrains Mono', 'IBM Plex Mono', monospace;
   --vs-sans:         'Inter', system-ui, -apple-system, sans-serif;
 
-  /* ─── SHARED · radii, spacing, motion ─── */
+  /* Glow shadows */
+  --vs-glow-cyan:       0 0 24px rgba(64, 200, 220, 0.22);
+  --vs-glow-cyan-hi:    0 0 36px rgba(64, 200, 220, 0.40);
+
+  /* Glassmorphism */
+  --vs-glass-bg:        rgba(11, 16, 24, 0.70);
+  --vs-glass-bg-hi:     rgba(11, 16, 24, 0.88);
+  --vs-glass-border:    1px solid rgba(64, 200, 220, 0.08);
+
+  /* ═══════════════════════════════════════════════════════════════════════
+     SHARED PRIMITIVES
+     ═══════════════════════════════════════════════════════════════════════ */
+
+  /* Radii */
   --r-sm:    4px;
   --r:       8px;
   --r-lg:    12px;
   --r-xl:    16px;
+  --r-pill:  9999px;
 
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-6: 1.5rem;
-  --space-8: 2rem;
-  --space-12: 3rem;
-  --space-16: 4rem;
+  /* Spacing scale */
+  --space-1:   0.25rem;
+  --space-2:   0.5rem;
+  --space-3:   0.75rem;
+  --space-4:   1rem;
+  --space-6:   1.5rem;
+  --space-8:   2rem;
+  --space-12:  3rem;
+  --space-16:  4rem;
+  --space-24:  6rem;
 
+  /* Fluid typography (clamp-based — scales smoothly between mobile and desktop) */
+  --text-xs:        clamp(0.7rem,  0.66rem + 0.2vw, 0.78rem);
+  --text-sm:        clamp(0.8rem,  0.76rem + 0.2vw, 0.88rem);
+  --text-base:      clamp(0.92rem, 0.88rem + 0.2vw, 1rem);
+  --text-lg:        clamp(1.05rem, 1.0rem  + 0.3vw, 1.18rem);
+  --text-xl:        clamp(1.2rem,  1.1rem  + 0.5vw, 1.4rem);
+  --text-2xl:       clamp(1.5rem,  1.3rem  + 0.9vw, 1.9rem);
+  --text-3xl:       clamp(1.8rem,  1.5rem  + 1.5vw, 2.7rem);
+  --text-display:   clamp(2.4rem,  1.8rem  + 3.5vw, 4.2rem);
+  --text-hero:      clamp(3rem,    2rem    + 5vw,   6.5rem);
+
+  /* Shadows (non-glow) */
   --shadow-card:  0 8px 32px rgba(0, 0, 0, 0.40);
   --shadow-lift:  0 16px 48px rgba(0, 0, 0, 0.55);
 
+  /* Motion */
   --ease:    cubic-bezier(.2, .8, .2, 1);
   --dur-1:   .15s;
   --dur-2:   .3s;
   --dur-3:   .6s;
+  --dur-4:   .9s;
+
+  /* Accessibility — minimum touch target (WCAG 2.5.5 / Apple HIG) */
+  --tap-min: 44px;
+
+  /* Glass blur radius (shared between layers) */
+  --glass-blur: blur(16px);
+  --glass-blur-hi: blur(24px);
 }
 
-/* Motion-reduced users get zero animation durations.
-   Pages that consume these tokens get the behavior automatically. */
+/* Reduced motion — collapses transition durations site-wide for users
+   who request it. Pages that consume these tokens get this for free. */
 @media (prefers-reduced-motion: reduce) {
   :root {
     --dur-1: 0s;
     --dur-2: 0s;
     --dur-3: 0s;
+    --dur-4: 0s;
   }
 }

@@ -1,0 +1,210 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   AnchorWithin / VeritySwarm — Reusable Components
+   ──────────────────────────────────────────────────────────────────────────
+   Layer 3 of 3. Opt-in component primitives, all token-driven.
+
+   Naming convention:
+     .aw-*   AnchorWithin (Soul) variants
+     .vs-*   VeritySwarm  (Brain) variants
+
+   Components are NAMESPACED on purpose: loading this file does not touch
+   any existing class on any existing page. To adopt, a page adds the new
+   class to its markup; old classes can be deprecated incrementally.
+
+   What's here (Phase 2 baseline — extend in later phases):
+     • Buttons        .aw-btn-primary .aw-btn-ghost  /  .vs-btn-primary .vs-btn-ghost
+     • Cards          .aw-card  /  .vs-card
+     • Nav shell      .aw-nav   /  .vs-nav     (with glassmorphism)
+     • Surfaces       .aw-glass /  .vs-glass   (utility)
+     • Glow helpers   .aw-glow-gold .aw-glow-purple  /  .vs-glow-cyan
+   ────────────────────────────────────────────────────────────────────────── */
+
+/* ═════════════════════════════════════════════════════════════════════════
+   SOUL · AnchorWithin
+   ═════════════════════════════════════════════════════════════════════════ */
+
+/* Buttons */
+.aw-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--tap-min);
+  padding: 0.78rem 1.8rem;
+  background: var(--aw-gold);
+  color: var(--aw-bg);
+  font-family: var(--aw-sans);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.01em;
+  border-radius: var(--r);
+  box-shadow: var(--aw-glow-gold);
+  transition: background var(--dur-1) var(--ease),
+              transform   var(--dur-1) var(--ease),
+              box-shadow  var(--dur-2) var(--ease);
+}
+.aw-btn-primary:hover {
+  background: var(--aw-gold-lt);
+  transform: translateY(-2px);
+  box-shadow: var(--aw-glow-gold-hi);
+}
+.aw-btn-primary:active { transform: translateY(0); }
+
+.aw-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--tap-min);
+  padding: 0.78rem 1.8rem;
+  background: transparent;
+  color: var(--aw-gold-lt);
+  font-family: var(--aw-sans);
+  font-weight: 500;
+  font-size: 0.9rem;
+  border: 1px solid var(--aw-border-hi);
+  border-radius: var(--r);
+  transition: background var(--dur-1) var(--ease),
+              border-color var(--dur-1) var(--ease);
+}
+.aw-btn-ghost:hover {
+  background: var(--aw-gold-glow);
+  border-color: var(--aw-gold-lt);
+}
+
+/* Card */
+.aw-card {
+  background: var(--aw-card);
+  border: 1px solid var(--aw-border);
+  border-radius: var(--r-lg);
+  padding: var(--space-6) var(--space-6);
+  transition: border-color var(--dur-2) var(--ease),
+              box-shadow  var(--dur-2) var(--ease);
+}
+.aw-card:hover {
+  border-color: var(--aw-border-hi);
+  box-shadow: var(--shadow-card);
+}
+
+/* Nav shell — glassmorphism */
+.aw-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 2.5rem;
+  background: var(--aw-glass-bg-hi);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--aw-border);
+}
+
+/* Utility glass / glow */
+.aw-glass {
+  background: var(--aw-glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: var(--aw-glass-border);
+  border-radius: var(--r-lg);
+}
+.aw-glow-gold   { box-shadow: var(--aw-glow-gold); }
+.aw-glow-purple { box-shadow: var(--aw-glow-purple); }
+
+
+/* ═════════════════════════════════════════════════════════════════════════
+   BRAIN · VeritySwarm
+   ═════════════════════════════════════════════════════════════════════════ */
+
+/* Buttons */
+.vs-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--tap-min);
+  padding: 0.78rem 1.6rem;
+  background: var(--vs-cyan);
+  color: var(--vs-bg);
+  font-family: var(--vs-mono);
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: var(--r);
+  box-shadow: var(--vs-glow-cyan);
+  transition: background var(--dur-1) var(--ease),
+              transform   var(--dur-1) var(--ease),
+              box-shadow  var(--dur-2) var(--ease);
+}
+.vs-btn-primary:hover {
+  background: var(--vs-cyan-lt);
+  transform: translateY(-1px);
+  box-shadow: var(--vs-glow-cyan-hi);
+}
+.vs-btn-primary:active { transform: translateY(0); }
+
+.vs-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--tap-min);
+  padding: 0.78rem 1.6rem;
+  background: transparent;
+  color: var(--vs-cyan-lt);
+  font-family: var(--vs-mono);
+  font-weight: 500;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  border: 1px solid var(--vs-border-hi);
+  border-radius: var(--r);
+  transition: background var(--dur-1) var(--ease),
+              border-color var(--dur-1) var(--ease);
+}
+.vs-btn-ghost:hover {
+  background: var(--vs-cyan-glow);
+  border-color: var(--vs-cyan);
+}
+
+/* Card */
+.vs-card {
+  background: var(--vs-card);
+  border: 1px solid var(--vs-border);
+  border-radius: var(--r);
+  padding: var(--space-6) var(--space-6);
+  font-family: var(--vs-sans);
+  transition: border-color var(--dur-2) var(--ease),
+              box-shadow  var(--dur-2) var(--ease);
+}
+.vs-card:hover {
+  border-color: var(--vs-border-hi);
+  box-shadow: var(--shadow-card);
+}
+
+/* Nav shell — console-style, less ornate than Soul */
+.vs-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+  padding: 0 var(--space-6);
+  background: var(--vs-glass-bg-hi);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--vs-border);
+  font-family: var(--vs-mono);
+  font-size: var(--text-sm);
+}
+
+/* Utility glass / glow */
+.vs-glass {
+  background: var(--vs-glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: var(--vs-glass-border);
+  border-radius: var(--r);
+}
+.vs-glow-cyan { box-shadow: var(--vs-glow-cyan); }
