@@ -1,0 +1,113 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   AnchorWithin / VeritySwarm — Base Layer
+   ──────────────────────────────────────────────────────────────────────────
+   Reset + accessibility defaults. Layer 2 of 3:
+     1. tokens.css      — design tokens (values)
+     2. base.css        — reset + defaults (this file)
+     3. components.css  — reusable patterns
+
+   Imports nothing. Defines no colors directly — only structural defaults.
+   Safe to load on any page without affecting visual identity.
+
+   This file does NOT set a background color or text color on <body>. Each
+   page (Soul or Brain) declares those itself via its local :root aliases,
+   so loading base.css alone never flashes the wrong palette.
+   ────────────────────────────────────────────────────────────────────────── */
+
+/* Universal reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Document */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+/* Body — fonts + line-height only; color/bg deliberately left to the page */
+body {
+  font-weight: 400;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+}
+
+/* Anchors */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Media */
+img,
+svg,
+video,
+canvas,
+audio {
+  display: block;
+  max-width: 100%;
+}
+
+img,
+video {
+  height: auto;
+}
+
+/* Form elements inherit fonts (browsers don't by default) */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+/* Lists used as nav / grids: opt out of default list styling */
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+}
+
+/* Focus — keyboard-only ring. Pointer interactions never see it. */
+:focus { outline: none; }
+
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* Selection — neutral so it works on Soul or Brain pages */
+::selection {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* Hidden but accessible to screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

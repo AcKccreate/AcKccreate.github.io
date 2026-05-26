@@ -10,29 +10,33 @@
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/tokens.css">
 <style>
-/* ── RESET & TOKENS ── */
+/* ── RESET & LOCAL ALIASES ── */
+/* Tokens flow from /assets/css/tokens.css. The block below maps the
+   page's short names (--gold, --cream, …) to canonical Soul tokens so
+   every existing rule on this page keeps rendering identically. */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:        #06060f;
-  --surface:   #0c0c1e;
-  --lift:      #12122a;
-  --card:      #0f0f23;
-  --border:    rgba(205,160,50,0.14);
-  --border-hi: rgba(205,160,50,0.32);
-  --gold:      #c8a032;
-  --gold-lt:   #e8c060;
-  --gold-dim:  rgba(200,160,50,0.55);
-  --gold-glow: rgba(200,160,50,0.1);
-  --cream:     #f0ead8;
-  --text:      #d8d8ec;
-  --muted:     #6868a0;
-  --teal:      #3fcdc4;
-  --red-dim:   rgba(239,68,68,0.8);
-  --serif:     'DM Serif Display', Georgia, serif;
-  --sans:      'Outfit', system-ui, sans-serif;
-  --mono:      'JetBrains Mono', 'Courier New', monospace;
+  --bg:        var(--aw-bg);
+  --surface:   var(--aw-surface);
+  --lift:      var(--aw-lift);
+  --card:      var(--aw-card);
+  --border:    var(--aw-border);
+  --border-hi: var(--aw-border-hi);
+  --gold:      var(--aw-gold);
+  --gold-lt:   var(--aw-gold-lt);
+  --gold-dim:  var(--aw-gold-dim);
+  --gold-glow: var(--aw-gold-glow);
+  --cream:     var(--aw-cream);
+  --text:      var(--aw-text);
+  --muted:     var(--aw-muted);
+  --teal:      var(--aw-teal);
+  --red-dim:   var(--aw-red-dim);
+  --serif:     var(--aw-serif);
+  --sans:      var(--aw-sans);
+  --mono:      var(--aw-mono);
 }
 
 html { scroll-behavior: smooth; }
