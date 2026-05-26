@@ -664,6 +664,7 @@ footer.aw-footer {
   .aw-tier-grid { grid-template-columns: 1fr; }
 }
 </style>
+<script src="/assets/js/analytics.js" defer></script>
 </head>
 <body>
 
@@ -839,7 +840,7 @@ footer.aw-footer {
 
 <!-- ────────── PAGE ENGINE (preserved verbatim — JS contract) ────────── -->
 <script>
-function trackEvent(c, a, l){ try { if (window.gtag) gtag('event', a, { event_category: c, event_label: l }); } catch(e) {} }
+function trackEvent(c, a, l){ try { if (window.aw_track) aw_track(c, a, l); } catch(e) {} }
 
 // WebXR + Spatial Audio hooks — ready for immersive upgrade
 // navigator.xr?.requestSession('immersive-ar').then(s => { const ac = new AudioContext(); const pan = ac.createPanner(); pan.panningModel = 'HRTF'; });
