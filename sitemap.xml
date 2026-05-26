@@ -44,6 +44,13 @@
   </url>
 
   <url>
+    <loc>https://ackccreate.github.io/veritswarm/</loc>
+    <lastmod>2026-05-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
     <loc>https://ackccreate.github.io/trial/</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>
