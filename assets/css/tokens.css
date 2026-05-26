@@ -78,6 +78,12 @@
   --aw-glass-bg-hi:     rgba(12, 12, 30, 0.85);
   --aw-glass-border:    1px solid rgba(255, 255, 255, 0.06);
 
+  /* Scrims — full-overlay modal backdrops.
+       --aw-scrim       transactional / generic modal (exit-popup, etc.)
+       --aw-scrim-soft  calming overlay tinted toward --aw-bg (sanctuary, etc.) */
+  --aw-scrim:           rgba(0, 0, 0, 0.78);
+  --aw-scrim-soft:      rgba(6, 6, 15, 0.96);
+
   /* ═══════════════════════════════════════════════════════════════════════
      BRAIN · VeritySwarm (Console / Audit-Grade)
      ═══════════════════════════════════════════════════════════════════════ */
