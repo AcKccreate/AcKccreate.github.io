@@ -226,7 +226,7 @@ footer{border-top:1px solid var(--border);padding:24px;text-align:center;
 </div>
 
 <footer>
-  <a href="https://ackccreate.github.io/anchorwithin/">AnchorWithin</a> &mdash;
+  <a href="https://ackccreate.github.io/anchorwithin-home/">AnchorWithin</a> &mdash;
   <a href="index.html">Docs</a> &mdash;
   <a href="api-reference.html">Reference</a> &mdash;
   <a href="https://ackccreate.github.io/trial/">Free key</a> &mdash;
@@ -236,20 +236,6 @@ footer{border-top:1px solid var(--border);padding:24px;text-align:center;
 </footer>
 
 <script>
-// Live status badge
-(function(){
-  fetch('https://anchor.verityswarm.com/health',{cache:'no-store'})
-    .then(function(r){return r.json();})
-    .then(function(d){
-      var dot  = document.getElementById('statusDot');
-      var text = document.getElementById('statusText');
-      if(d.status==='ok'){dot.style.background='#50d090';text.textContent='Operational';}
-      else{dot.style.background='#f07070';text.textContent='Degraded';}
-    }).catch(function(){
-      var text=document.getElementById('statusText');
-      if(text) text.textContent='Unreachable';
-    });
-})();
 
 // Highlight active sidebar link based on scroll position
 var sections = document.querySelectorAll('[id]');

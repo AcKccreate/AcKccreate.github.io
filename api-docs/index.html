@@ -171,11 +171,11 @@ footer{border-top:1px solid var(--border);padding:32px 24px;text-align:center}
 
 <nav>
   <div class="nav-inner">
-    <a href="https://ackccreate.github.io/anchorwithin/" class="nav-logo">AnchorWithin API</a>
+    <a href="https://ackccreate.github.io/anchorwithin-home/" class="nav-logo">AnchorWithin API</a>
     <div class="nav-links">
-      <div class="nav-badge" id="statusBadge">
-        <span class="status-dot"></span>
-        <span id="statusText">Checking…</span>
+      <div class="nav-badge" style="color:var(--gold);border-color:rgba(240,208,96,.28)">
+        <span class="status-dot" style="background:var(--gold)"></span>
+        <span>Private Beta</span>
       </div>
       <a href="quickstart.html">Quickstart</a>
       <a href="api-reference.html">Reference</a>
@@ -209,7 +209,7 @@ footer{border-top:1px solid var(--border);padding:32px 24px;text-align:center}
       <div class="step-num">2</div>
       <div class="step-title">Browse catalog</div>
       <div class="step-sub">15 tracks by Hz, use-case, or ID.</div>
-      <a href="https://anchor.verityswarm.com/v1/audio/catalog" target="_blank" rel="noopener" class="step-link">live catalog →</a>
+      <a href="api-reference.html#catalog" class="step-link">view catalog →</a>
     </div>
     <div class="flow-step">
       <div class="step-num">3</div>
@@ -253,6 +253,12 @@ footer{border-top:1px solid var(--border);padding:32px 24px;text-align:center}
       <h2>JavaScript examples</h2>
       <p>fetch() patterns for Node.js, browser, and React hook implementations.</p>
       <a href="examples-javascript.js" class="card-link" target="_blank">JS examples →</a>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔒</div>
+      <h2>Verity Trace</h2>
+      <p>Hash-chained tamper-evident receipts for every API call. Verify what was served, when, and to which key.</p>
+      <a href="https://ackccreate.github.io/verity/" class="card-link">Verity docs →</a>
     </div>
   </div>
 </div>
@@ -396,12 +402,12 @@ console.log("Quota:", status.quota);</div>
 
 <footer>
   <div class="footer-inner">
-    <a href="https://ackccreate.github.io/anchorwithin/" class="footer-logo">AnchorWithin</a>
+    <a href="https://ackccreate.github.io/anchorwithin-home/" class="footer-logo">AnchorWithin</a>
     <div class="footer-links">
       <a href="quickstart.html">Quickstart</a>
       <a href="api-reference.html">API Reference</a>
       <a href="https://ackccreate.github.io/trial/">Free Trial Key</a>
-      <a href="https://anchor.verityswarm.com/health" target="_blank" rel="noopener">API Status</a>
+      <a href="https://ackccreate.github.io/verity/">Verity Trace</a>
       <a href="https://github.com/AcKccreate" target="_blank" rel="noopener">GitHub</a>
       <a href="https://ackccreate.github.io/anchorwithin-privacy/">Privacy</a>
       <a href="https://ackccreate.github.io/anchorwithin-tos/">Terms</a>
@@ -419,26 +425,6 @@ function showTab(name, btn) {
   document.getElementById('tab-'+name).classList.add('active');
 }
 
-/* ── Live status badge ── */
-(function checkStatus(){
-  var badge = document.getElementById('statusBadge');
-  var text  = document.getElementById('statusText');
-  fetch('https://anchor.verityswarm.com/health', {cache:'no-store'})
-    .then(function(r){return r.json();})
-    .then(function(d){
-      if(d.status==='ok'){
-        badge.classList.add('ok');
-        text.textContent = 'API Operational';
-      } else {
-        badge.classList.add('err');
-        text.textContent = 'Degraded';
-      }
-    })
-    .catch(function(){
-      badge.classList.add('err');
-      text.textContent = 'Unreachable';
-    });
-})();
 </script>
 </body>
 </html>

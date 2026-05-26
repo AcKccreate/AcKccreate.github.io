@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Verity Trace — Tamper-Evident AI Audit Trail | AnchorWithin</title>
+<meta name="description" content="Hash-chained, append-only trace receipts for every API call. Prove what was served, when, and to which key. SOC 2 ready.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0a0a1a;--navy2:#0d0d24;--card:#12122e;--card2:#0f0f28;
+  --gold:#f0d060;--gold-dim:#c8a840;--gold-glow:rgba(240,208,96,0.08);
+  --border:rgba(240,208,96,0.1);--border-hi:rgba(240,208,96,0.28);
+  --text:#e8e8f0;--muted:#8888aa;--dim:#44445e;
+  --green:#50d090;--green-glow:rgba(80,208,144,0.08);--green-border:rgba(80,208,144,0.18);
+  --blue:#70a8e8;--teal:#3fcdc4;
+  --mono:'JetBrains Mono',monospace;--sans:'Inter',sans-serif;
+  --r:8px;--r2:12px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--navy);color:var(--text);font-family:var(--sans);
+  line-height:1.6;-webkit-font-smoothing:antialiased;font-size:15px}
+a{color:var(--gold);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ── NAV ── */
+nav{background:rgba(10,10,26,.97);border-bottom:1px solid var(--border);
+  padding:0 24px;backdrop-filter:blur(12px);position:sticky;top:0;z-index:100}
+.nav-inner{max-width:1040px;margin:0 auto;display:flex;align-items:center;
+  justify-content:space-between;height:52px;gap:20px}
+.nav-logo{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--gold);
+  letter-spacing:.06em;text-decoration:none}
+.nav-links{display:flex;gap:20px;align-items:center}
+.nav-links a{font-size:13px;color:var(--muted);text-decoration:none;transition:color .15s}
+.nav-links a:hover{color:var(--text)}
+.btn-trial{background:var(--gold);color:var(--navy);padding:7px 16px;border-radius:var(--r);
+  font-size:12px;font-weight:700;letter-spacing:.02em;text-decoration:none;transition:opacity .15s}
+.btn-trial:hover{opacity:.88;text-decoration:none}
+
+/* ── HERO ── */
+.hero{max-width:1040px;margin:0 auto;padding:80px 24px 64px;text-align:center}
+.eyebrow{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--green);
+  letter-spacing:.18em;text-transform:uppercase;margin-bottom:18px;display:flex;
+  align-items:center;justify-content:center;gap:8px}
+.eyebrow::before,.eyebrow::after{content:'';display:inline-block;width:28px;height:1px;
+  background:rgba(80,208,144,.3)}
+h1{font-size:clamp(32px,5vw,54px);font-weight:700;color:#fff;
+  letter-spacing:-.025em;line-height:1.1;margin-bottom:18px}
+h1 span{color:var(--gold)}
+.hero-sub{font-size:17px;color:var(--muted);max-width:540px;margin:0 auto 40px;line-height:1.65}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:56px}
+.btn-primary{background:var(--gold);color:var(--navy);padding:13px 28px;border-radius:var(--r);
+  font-size:14px;font-weight:700;text-decoration:none;transition:opacity .15s}
+.btn-primary:hover{opacity:.88;text-decoration:none}
+.btn-ghost{background:transparent;color:var(--text);padding:12px 24px;border-radius:var(--r);
+  font-size:14px;font-weight:500;border:1px solid var(--border-hi);text-decoration:none;
+  transition:border-color .15s}
+.btn-ghost:hover{border-color:var(--gold);text-decoration:none}
+
+/* ── CHAIN DIAGRAM ── */
+.chain-demo{display:flex;align-items:center;justify-content:center;
+  gap:0;flex-wrap:nowrap;overflow-x:auto;padding:0 8px}
+.chain-block{background:var(--card);border:1px solid var(--border-hi);border-radius:var(--r2);
+  padding:18px 20px;min-width:160px;text-align:center;flex-shrink:0}
+.chain-block.genesis{border-color:rgba(80,208,144,.3)}
+.chain-block.latest{border-color:rgba(240,208,96,.4);background:rgba(240,208,96,.04)}
+.cb-label{font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:8px}
+.cb-index{font-family:var(--mono);font-size:20px;font-weight:500;color:var(--gold);
+  margin-bottom:6px}
+.cb-hash{font-family:var(--mono);font-size:10px;color:var(--muted);
+  word-break:break-all;line-height:1.4}
+.cb-hash em{color:var(--green);font-style:normal}
+.chain-arrow{color:var(--dim);font-size:18px;padding:0 10px;flex-shrink:0;
+  align-self:center;font-family:var(--mono)}
+.chain-dots{color:var(--dim);font-size:18px;padding:0 6px;align-self:center}
+
+/* ── SECTION SHARED ── */
+.section{max-width:1040px;margin:0 auto;padding:0 24px 88px}
+.section-eyebrow{font-family:var(--mono);font-size:10px;font-weight:500;color:var(--gold);
+  letter-spacing:.16em;text-transform:uppercase;margin-bottom:12px}
+.section-title{font-size:26px;font-weight:700;color:#fff;letter-spacing:-.015em;
+  margin-bottom:10px;line-height:1.2}
+.section-sub{font-size:14px;color:var(--muted);margin-bottom:36px;max-width:560px;line-height:1.6}
+
+/* ── HOW IT WORKS ── */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.step{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:28px}
+.step-num{font-family:var(--mono);font-size:11px;color:var(--green);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:14px}
+.step h3{font-size:15px;font-weight:600;color:#fff;margin-bottom:8px}
+.step p{font-size:13px;color:var(--muted);line-height:1.55}
+.step code{font-family:var(--mono);font-size:11px;color:var(--gold);
+  background:rgba(240,208,96,.07);padding:1px 5px;border-radius:3px}
+
+/* ── HASH FORMULA ── */
+.formula-card{background:var(--card2);border:1px solid var(--border-hi);border-radius:var(--r2);
+  padding:32px;margin-bottom:16px}
+.formula{font-family:var(--mono);font-size:14px;color:#c8d8e8;line-height:2;text-align:center}
+.formula .fn{color:var(--teal)}
+.formula .arg{color:var(--gold)}
+.formula .op{color:var(--muted)}
+.formula .comment{color:var(--dim);font-size:12px}
+
+/* ── ENTERPRISE FEATURES ── */
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.feat{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:28px;
+  transition:border-color .2s}
+.feat:hover{border-color:var(--border-hi)}
+.feat-icon{font-family:var(--mono);font-size:10px;font-weight:500;color:var(--green);
+  letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px;
+  display:flex;align-items:center;gap:8px}
+.feat-icon::before{content:'';display:inline-block;width:20px;height:1px;background:var(--green-border)}
+.feat h3{font-size:14px;font-weight:600;color:#fff;margin-bottom:8px}
+.feat p{font-size:13px;color:var(--muted);line-height:1.55}
+
+/* ── CODE SECTION ── */
+.code-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);
+  overflow:hidden}
+.code-header{background:rgba(255,255,255,.03);border-bottom:1px solid var(--border);
+  padding:12px 20px;display:flex;align-items:center;justify-content:space-between}
+.code-title{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.05em}
+.code-lang{font-family:var(--mono);font-size:10px;color:var(--dim);
+  background:rgba(255,255,255,.05);padding:2px 8px;border-radius:100px}
+pre{padding:24px;font-family:var(--mono);font-size:13px;overflow-x:auto;
+  white-space:pre;line-height:1.75;color:#c8d8e8}
+.c{color:var(--dim)}
+.k{color:var(--teal)}
+.s{color:#90c878}
+.n{color:var(--gold)}
+.p{color:var(--muted)}
+
+/* ── VERIFY RESPONSE ── */
+.verify-box{background:rgba(80,208,144,.05);border:1px solid var(--green-border);
+  border-radius:var(--r2);padding:24px;margin-top:16px}
+.verify-label{font-family:var(--mono);font-size:10px;color:var(--green);
+  letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px}
+.verify-json{font-family:var(--mono);font-size:13px;color:#c8d8e8;line-height:1.8}
+.vj-key{color:var(--blue)}
+.vj-str{color:#90c878}
+.vj-bool{color:var(--green)}
+.vj-num{color:var(--gold)}
+
+/* ── PRICING STRIP ── */
+.pricing-strip{background:rgba(240,208,96,.04);border:1px solid var(--border-hi);
+  border-radius:var(--r2);padding:32px;display:flex;align-items:center;
+  justify-content:space-between;gap:24px;flex-wrap:wrap}
+.ps-left h3{font-size:18px;font-weight:700;color:#fff;margin-bottom:4px}
+.ps-left p{font-size:14px;color:var(--muted)}
+.ps-tiers{display:flex;gap:12px;flex-wrap:wrap}
+.ps-tier{text-align:center;padding:12px 20px;background:var(--card);
+  border:1px solid var(--border);border-radius:var(--r)}
+.ps-tier-name{font-family:var(--mono);font-size:10px;color:var(--muted);
+  letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.ps-tier-price{font-size:18px;font-weight:700;color:#fff}
+.ps-tier-price span{font-size:12px;font-weight:400;color:var(--muted)}
+.ps-tier.included .ps-tier-name{color:var(--green)}
+.ps-tier.included{border-color:var(--green-border)}
+
+/* ── CTA BAND ── */
+.cta-band{background:linear-gradient(135deg,rgba(240,208,96,.06) 0%,rgba(80,208,144,.04) 100%);
+  border:1px solid var(--border-hi);border-radius:var(--r2);
+  padding:56px 40px;text-align:center;margin-bottom:88px}
+.cta-band h2{font-size:28px;font-weight:700;color:#fff;letter-spacing:-.015em;margin-bottom:12px}
+.cta-band p{font-size:15px;color:var(--muted);margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--border);padding:32px 24px;text-align:center}
+.footer-inner{max-width:1040px;margin:0 auto}
+.footer-logo{font-family:var(--mono);font-size:13px;color:var(--gold);
+  text-decoration:none;display:block;margin-bottom:16px}
+.footer-links{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;margin-bottom:16px}
+.footer-links a{font-size:13px;color:var(--muted);text-decoration:none;transition:color .15s}
+.footer-links a:hover{color:var(--text)}
+.footer-copy{font-size:12px;color:var(--dim)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:720px){
+  .chain-demo{justify-content:flex-start}
+  .pricing-strip{flex-direction:column;align-items:flex-start}
+  .cta-band{padding:40px 24px}
+}
+@media(max-width:480px){
+  h1{font-size:28px}
+  .cta-band h2{font-size:22px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="https://ackccreate.github.io/anchorwithin-home/" class="nav-logo">AnchorWithin</a>
+    <div class="nav-links">
+      <a href="https://ackccreate.github.io/api-docs/">Docs</a>
+      <a href="https://ackccreate.github.io/api-docs/api-reference.html">Reference</a>
+      <a href="https://github.com/AcKccreate" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://ackccreate.github.io/trial/" class="btn-trial">Free API Key</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="eyebrow">Audit Infrastructure</div>
+  <h1>Verity Trace<br><span>Every call. Proven.</span></h1>
+  <p class="hero-sub">Hash-chained, append-only receipts for every API call. Verify what was served, to which key, and when — with cryptographic proof that the record has never been altered.</p>
+  <div class="hero-btns">
+    <a href="https://ackccreate.github.io/trial/" class="btn-primary">Start Free Trial →</a>
+    <a href="#how-it-works" class="btn-ghost">How it works</a>
+  </div>
+
+  <!-- Chain diagram -->
+  <div class="chain-demo">
+    <div class="chain-block genesis">
+      <div class="cb-label">Receipt #1</div>
+      <div class="cb-index">01</div>
+      <div class="cb-hash"><em>a3f9…c12d</em><br>prev: <em>genesis</em></div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-block">
+      <div class="cb-label">Receipt #2</div>
+      <div class="cb-index">02</div>
+      <div class="cb-hash"><em>7b4e…09fa</em><br>prev: <em>a3f9…c12d</em></div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-dots">· · ·</div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-block latest">
+      <div class="cb-label">Receipt #N</div>
+      <div class="cb-index">N</div>
+      <div class="cb-hash"><em>f1c8…88b3</em><br>prev: chained ✓</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── HOW IT WORKS ── -->
+<div class="section" id="how-it-works">
+  <div class="section-eyebrow">How it works</div>
+  <div class="section-title">One verified chain per API key</div>
+  <p class="section-sub">Each receipt is sealed to the previous one. Any gap, deletion, or modification breaks the chain — and verification catches it immediately.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">Step 01</div>
+      <h3>Make an API call</h3>
+      <p>Any authenticated request to the Audio API automatically generates a trace receipt. No additional parameters needed.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">Step 02</div>
+      <h3>Receipt is issued</h3>
+      <p>The system computes <code>trace_hash</code>, chains it to the previous receipt, and writes it to an append-only store. The row cannot be updated or deleted.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">Step 03</div>
+      <h3>Verify at any time</h3>
+      <p>Call <code>GET /v1/trace/verify</code> with your key. The full chain is traversed and verified in a single response. Valid or broken — no ambiguity.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">Step 04</div>
+      <h3>Export for compliance</h3>
+      <p>Chain data is available via the API for export to your SIEM, audit log aggregator, or compliance toolchain.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── HASH FORMULA ── -->
+<div class="section" id="cryptography">
+  <div class="section-eyebrow">Cryptography</div>
+  <div class="section-title">The chain formula</div>
+  <p class="section-sub">Every receipt hash commits to the request, the response, and the hash of the receipt before it. Altering any input breaks every downstream hash.</p>
+  <div class="formula-card">
+    <div class="formula">
+      <span class="n">trace_hash</span>
+      <span class="op"> = </span>
+      <span class="fn">SHA-256</span><span class="p">(</span><br>
+      &nbsp;&nbsp;<span class="arg">request_hash</span>
+      <span class="op"> ‖ </span>
+      <span class="arg">response_hash</span>
+      <span class="op"> ‖ </span>
+      <span class="arg">prev_trace_hash</span><br>
+      <span class="p">)</span><br><br>
+      <span class="comment">‖ = concatenation &nbsp;·&nbsp; prev_trace_hash = "genesis" for chain index 1</span>
+    </div>
+  </div>
+  <p style="font-size:13px;color:var(--muted);line-height:1.6">
+    <strong style="color:var(--text)">Append-only enforcement</strong> is applied at the database layer via a PostgreSQL RULE — not application logic. Even a direct database connection cannot update or delete receipts. The constraint survives application restarts, deployments, and credential rotation.
+  </p>
+</div>
+
+<!-- ── ENTERPRISE FEATURES ── -->
+<div class="section" id="enterprise">
+  <div class="section-eyebrow">Enterprise</div>
+  <div class="section-title">Built for audit-ready teams</div>
+  <p class="section-sub">Verity Trace was designed from the ground up for regulated environments where "we think it wasn't changed" is not an acceptable answer.</p>
+  <div class="feat-grid">
+    <div class="feat">
+      <div class="feat-icon">Immutable</div>
+      <h3>Database-level immutability</h3>
+      <p>PostgreSQL RULE blocks UPDATE and DELETE on the receipts table. Application-level enforcement alone is not sufficient — Verity enforces at the storage layer.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">Chain</div>
+      <h3>Tamper detection</h3>
+      <p>Any modification to a historical receipt — including by a privileged operator — breaks the hash chain. Verification reports the exact index where integrity fails.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">Isolation</div>
+      <h3>Per-key chain isolation</h3>
+      <p>Each API key maintains its own independent chain. Multi-tenant environments get clean separation: one key's receipts never touch another's.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">Race-safe</div>
+      <h3>Concurrent-write safe</h3>
+      <p>Row-level <code style="font-family:var(--mono);font-size:12px;color:var(--gold)">FOR UPDATE</code> locking serializes receipt writes per key. Chain index gaps from race conditions are structurally impossible.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">Verify</div>
+      <h3>One-call full verification</h3>
+      <p>A single authenticated <code style="font-family:var(--mono);font-size:12px;color:var(--gold)">GET /v1/trace/verify</code> traverses the entire chain and returns a deterministic valid/broken result with chain length.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">SOC 2</div>
+      <h3>Audit log export</h3>
+      <p>All receipts include timestamp, key ID, request hash, response hash, and chain position. Structured for direct ingestion by SOC 2 and ISO 27001 audit pipelines.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── CODE EXAMPLE ── -->
+<div class="section" id="code">
+  <div class="section-eyebrow">Integration</div>
+  <div class="section-title">Verify in one call</div>
+  <p class="section-sub">Chain verification requires no additional setup. If your key has made API calls, the chain is already being built.</p>
+
+  <div class="code-wrap" style="margin-bottom:16px">
+    <div class="code-header">
+      <span class="code-title">Verify the full trace chain</span>
+      <span class="code-lang">curl</span>
+    </div>
+    <pre><span class="c"># Verify chain integrity for your API key</span>
+curl https://anchor.verityswarm.com/v1/trace/verify \
+  -H <span class="s">"Authorization: Bearer AW-your-key"</span>
+</pre>
+  </div>
+
+  <div class="verify-box">
+    <div class="verify-label">Response — chain intact</div>
+    <div class="verify-json">{<br>
+&nbsp;&nbsp;<span class="vj-key">"valid"</span>: <span class="vj-bool">true</span>,<br>
+&nbsp;&nbsp;<span class="vj-key">"chain_length"</span>: <span class="vj-num">147</span>,<br>
+&nbsp;&nbsp;<span class="vj-key">"message"</span>: <span class="vj-str">"Chain intact"</span>,<br>
+&nbsp;&nbsp;<span class="vj-key">"verified_at"</span>: <span class="vj-str">"2026-05-24T18:00:00Z"</span><br>
+}</div>
+  </div>
+
+  <div class="code-wrap" style="margin-top:24px">
+    <div class="code-header">
+      <span class="code-title">Python — verify and assert</span>
+      <span class="code-lang">Python</span>
+    </div>
+    <pre><span class="k">import</span> requests
+
+BASE = <span class="s">"https://anchor.verityswarm.com"</span>
+KEY  = <span class="s">"AW-your-key"</span>
+headers = {<span class="s">"Authorization"</span>: <span class="s">f"Bearer </span><span class="n">{KEY}</span><span class="s">"</span>}
+
+r = requests.get(<span class="s">f"</span><span class="n">{BASE}</span><span class="s">/v1/trace/verify"</span>, headers=headers)
+result = r.json()
+
+<span class="k">assert</span> result[<span class="s">"valid"</span>], <span class="s">f"Chain broken: </span><span class="n">{result['message']}</span><span class="s">"</span>
+<span class="k">print</span>(<span class="s">f"✓ Chain intact — </span><span class="n">{result['chain_length']}</span><span class="s"> receipts verified"</span>)</pre>
+  </div>
+</div>
+
+<!-- ── PRICING ── -->
+<div class="section" id="pricing">
+  <div class="section-eyebrow">Pricing</div>
+  <div class="section-title">Included in every tier</div>
+  <p class="section-sub">Verity Trace is not an add-on. Every key — including the free trial — issues and chains receipts automatically.</p>
+  <div class="pricing-strip">
+    <div class="ps-left">
+      <h3>No extra cost. No configuration.</h3>
+      <p>Activate your key. Trace starts immediately.</p>
+    </div>
+    <div class="ps-tiers">
+      <div class="ps-tier included">
+        <div class="ps-tier-name">Trial</div>
+        <div class="ps-tier-price">Free</div>
+      </div>
+      <div class="ps-tier included">
+        <div class="ps-tier-name">Starter</div>
+        <div class="ps-tier-price">$9<span>/mo</span></div>
+      </div>
+      <div class="ps-tier included">
+        <div class="ps-tier-name">Pro</div>
+        <div class="ps-tier-price">$29<span>/mo</span></div>
+      </div>
+      <div class="ps-tier included">
+        <div class="ps-tier-name">Unlimited</div>
+        <div class="ps-tier-price">$79<span>/mo</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── CTA ── -->
+<div class="section">
+  <div class="cta-band">
+    <h2>Start your audit trail today</h2>
+    <p>100 free calls. Trace receipts included. No credit card, no expiry. Your chain starts with your first request.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a href="https://ackccreate.github.io/trial/" class="btn-primary">Get Free Trial Key →</a>
+      <a href="https://ackccreate.github.io/api-docs/" class="btn-ghost">View all docs</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <a href="https://ackccreate.github.io/anchorwithin-home/" class="footer-logo">AnchorWithin</a>
+    <div class="footer-links">
+      <a href="https://ackccreate.github.io/api-docs/">API Docs</a>
+      <a href="https://ackccreate.github.io/api-docs/api-reference.html">Reference</a>
+      <a href="https://ackccreate.github.io/api-docs/quickstart.html">Quickstart</a>
+      <a href="https://ackccreate.github.io/trial/">Free Trial Key</a>
+      <a href="https://github.com/AcKccreate" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://ackccreate.github.io/anchorwithin-privacy/">Privacy</a>
+      <a href="https://ackccreate.github.io/anchorwithin-tos/">Terms</a>
+    </div>
+    <div class="footer-copy">AnchorWithin LLC © 2026</div>
+  </div>
+</footer>
+
+</body>
+</html>

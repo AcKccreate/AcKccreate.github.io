@@ -131,15 +131,15 @@ footer a:hover{color:var(--muted)}
   -H "Authorization: Bearer YOUR_KEY"</div>
         <div class="next-links">
           <a href="https://ackccreate.github.io/api-docs/" class="next-link">API Docs</a>
-          <a href="https://anchor.verityswarm.com/v1/audio/catalog" target="_blank" class="next-link">Catalog</a>
-          <a href="/api-docs/#pricing" class="next-link">Pricing →</a>
+          <a href="https://ackccreate.github.io/api-docs/api-reference.html#catalog" class="next-link">Catalog</a>
+          <a href="https://ackccreate.github.io/api-docs/#pricing" class="next-link">Pricing →</a>
         </div>
       </div>
     </div>
   </div>
 </main>
 <footer>
-  <a href="https://ackccreate.github.io/anchorwithin/">AnchorWithin</a> &nbsp;·&nbsp;
+  <a href="https://ackccreate.github.io/anchorwithin-home/">AnchorWithin</a> &nbsp;·&nbsp;
   <a href="https://ackccreate.github.io/api-docs/">Docs</a> &nbsp;·&nbsp;
   <a href="https://github.com/AcKccreate" target="_blank" rel="noopener">GitHub</a> &nbsp;·&nbsp;
   <a href="https://ackccreate.github.io/anchorwithin-privacy/">Privacy</a> &nbsp;·&nbsp;
@@ -147,48 +147,29 @@ footer a:hover{color:var(--muted)}
   AnchorWithin LLC © 2026
 </footer>
 <script>
-var API = 'https://anchor.verityswarm.com';
 var currentKey = '';
 
 document.getElementById('trialForm').addEventListener('submit', function(e) {
   e.preventDefault();
   var btn = document.getElementById('submitBtn');
-  var err = document.getElementById('errBox');
-  btn.disabled = true;
-  btn.textContent = 'Generating key…';
-  err.style.display = 'none';
+  var email = document.getElementById('emailInput').value.trim();
+  var project = document.getElementById('projectInput').value.trim();
 
-  fetch(API + '/v1/trial/request', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      email: document.getElementById('emailInput').value.trim(),
-      company: document.getElementById('projectInput').value.trim()
-    })
-  })
-  .then(function(r) {
-    return r.json().then(function(d) {
-      if (!r.ok) throw new Error(d.detail || d.error || 'Error ' + r.status);
-      return d;
-    });
-  })
-  .then(function(d) {
-    currentKey = d.api_key || d.key || '';
-    document.getElementById('keyText').textContent = currentKey;
-    ['curlA','curlB'].forEach(function(id) {
-      var el = document.getElementById(id);
-      el.textContent = el.textContent.replace(/YOUR_KEY/g, currentKey);
-    });
-    document.getElementById('successBox').style.display = 'block';
-    document.getElementById('trialForm').style.display = 'none';
-  })
-  .catch(function(e) {
-    err.textContent = e.message.indexOf('fetch') !== -1
-      ? 'Could not reach API — try again in a moment.' : e.message;
-    err.style.display = 'block';
-    btn.disabled = false;
-    btn.textContent = 'Get Free Trial Key →';
-  });
+  var subject = encodeURIComponent('AnchorWithin API — Trial Key Request');
+  var body = encodeURIComponent(
+    'Hi,\n\nI\'d like a free trial key for the AnchorWithin Audio API.\n\n' +
+    'Email: ' + (email || 'not provided') + '\n' +
+    'Project: ' + (project || 'not provided') + '\n\n' +
+    'Requesting 100-call free trial access.\n\nThanks'
+  );
+
+  btn.disabled = true;
+  btn.textContent = 'Opening email…';
+  window.location.href = 'mailto:acaseymail@gmail.com?subject=' + subject + '&body=' + body;
+
+  setTimeout(function() {
+    btn.textContent = 'Request sent — key delivered within 24h';
+  }, 1200);
 });
 
 function copyKey() {

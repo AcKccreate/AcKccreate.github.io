@@ -297,7 +297,7 @@ X-Quota-Status: 5/100</pre>
 </div>
 
 <footer>
-  <a href="https://ackccreate.github.io/anchorwithin/">AnchorWithin</a> &mdash;
+  <a href="https://ackccreate.github.io/anchorwithin-home/">AnchorWithin</a> &mdash;
   <a href="index.html">Docs</a> &mdash;
   <a href="quickstart.html">Quickstart</a> &mdash;
   <a href="https://ackccreate.github.io/trial/">Free key</a> &mdash;
@@ -307,17 +307,6 @@ X-Quota-Status: 5/100</pre>
 </footer>
 
 <script>
-// Live status badge
-(function(){
-  fetch('https://anchor.verityswarm.com/health',{cache:'no-store'})
-    .then(function(r){return r.json();})
-    .then(function(d){
-      var dot  = document.getElementById('statusDot');
-      var text = document.getElementById('statusText');
-      if(d.status==='ok'){dot.style.background='#50d090';text.textContent='Operational';}
-      else{dot.style.background='#f07070';text.textContent='Degraded';}
-    }).catch(function(){});
-})();
 
 var sections = document.querySelectorAll('[id]');
 var links     = document.querySelectorAll('.aside-link[href^="#"]');
