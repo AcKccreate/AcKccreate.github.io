@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Resonance Pack — AnchorWithin</title>
+<meta name="description" content="A private rotation of frequency audio for your nervous system. Five tracks tuned for ground, restore, release, focus, and dream.">
+<meta property="og:title" content="The Resonance Pack — AnchorWithin">
+<meta property="og:description" content="A private rotation of frequency audio for your nervous system.">
+<meta property="og:url" content="https://ackccreate.github.io/resonance-pack/">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://ackccreate.github.io/resonance-pack/">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/assets/css/tokens.css">
+<link rel="stylesheet" href="/assets/css/aw-email-capture.css">
+<script src="/assets/js/analytics.js" defer></script>
+<script src="/assets/js/aw-email-capture.js" defer></script>
+
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html, body { background: var(--aw-bg); }
+  body{
+    color: var(--aw-text);
+    font: 400 var(--text-base)/1.65 var(--aw-sans);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Cinematic background — soft gold/purple gradient wash, no images */
+  body::before{
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 10%, var(--aw-gold-glow), transparent 60%),
+      radial-gradient(ellipse at 80% 90%, var(--aw-purple-glow), transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  main{
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    max-width: 720px;
+    width: 100%;
+    margin: 0 auto;
+    padding: var(--space-16) var(--space-6) var(--space-12);
+  }
+
+  .eyebrow{
+    font: 500 var(--text-sm)/1 var(--aw-sans);
+    color: var(--aw-gold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-6);
+  }
+
+  h1{
+    font: 400 var(--text-display)/1.05 var(--aw-serif);
+    color: var(--aw-cream);
+    margin-bottom: var(--space-6);
+    letter-spacing: -0.01em;
+  }
+
+  .lede{
+    font: 400 var(--text-xl)/1.5 var(--aw-sans);
+    color: var(--aw-text);
+    margin-bottom: var(--space-12);
+    max-width: 560px;
+  }
+
+  h2{
+    font: 400 var(--text-2xl)/1.2 var(--aw-serif);
+    color: var(--aw-cream);
+    margin: var(--space-12) 0 var(--space-4);
+  }
+
+  p{ margin-bottom: var(--space-4); color: var(--aw-text); }
+  p.dim{ color: var(--aw-muted); }
+
+  .resonance-list{
+    display: grid;
+    gap: var(--space-3);
+    margin: var(--space-6) 0 var(--space-12);
+    list-style: none;
+    padding: 0;
+  }
+
+  .resonance-list li{
+    background: var(--aw-glass-bg);
+    border: var(--aw-glass-border);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-radius: var(--r);
+    padding: var(--space-4) var(--space-6);
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-6);
+    transition: border-color var(--dur-2) var(--ease), transform var(--dur-2) var(--ease);
+  }
+
+  .resonance-list li:hover{
+    border: 1px solid var(--aw-border-hi);
+    transform: translateX(2px);
+  }
+
+  .resonance-list .freq{
+    font: 500 var(--text-lg)/1 var(--aw-mono);
+    color: var(--aw-gold);
+    min-width: 5em;
+    flex-shrink: 0;
+    letter-spacing: -0.02em;
+  }
+
+  .resonance-list .label{
+    font: 400 var(--text-base)/1.5 var(--aw-sans);
+    color: var(--aw-cream);
+  }
+
+  .resonance-list .label .dim-inline{
+    color: var(--aw-muted);
+    display: block;
+    margin-top: var(--space-1);
+    font-size: var(--text-sm);
+  }
+
+  /* Capture block — the conversion target */
+  .capture-block{
+    margin: var(--space-12) 0 var(--space-8);
+    padding: var(--space-8) var(--space-6);
+    border: 1px solid var(--aw-border);
+    border-radius: var(--r-lg);
+    background: var(--aw-surface);
+    box-shadow: var(--shadow-card);
+  }
+
+  .capture-block h2{
+    margin-top: 0;
+    text-align: center;
+  }
+
+  .capture-block .capture-lede{
+    color: var(--aw-muted);
+    max-width: 420px;
+    margin: 0 auto var(--space-6);
+    text-align: center;
+    font-size: var(--text-base);
+  }
+
+  .footer-note{
+    color: var(--aw-muted);
+    font-size: var(--text-xs);
+    text-align: center;
+    margin-top: var(--space-6);
+    max-width: 380px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.5;
+  }
+
+  footer{
+    position: relative;
+    z-index: 1;
+    padding: var(--space-8) var(--space-6);
+    text-align: center;
+    border-top: 1px solid var(--aw-border);
+    color: var(--aw-muted);
+    font-size: var(--text-sm);
+  }
+  footer a{ color: var(--aw-gold); text-decoration: none; transition: color var(--dur-2) var(--ease); }
+  footer a:hover{ color: var(--aw-gold-lt); }
+</style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">Identity Asset · Reserved</p>
+  <h1>The Resonance Pack</h1>
+  <p class="lede">A private rotation of frequency audio for your nervous system. Five tracks. Each one tuned for a specific state.</p>
+
+  <h2>What's inside</h2>
+  <ul class="resonance-list">
+    <li>
+      <span class="freq">432 Hz</span>
+      <span class="label">Ground<span class="dim-inline">The floor frequency. For when the day arrives too fast.</span></span>
+    </li>
+    <li>
+      <span class="freq">528 Hz</span>
+      <span class="label">Restore<span class="dim-inline">Cellular repair tone. Quiet recovery from a long stretch.</span></span>
+    </li>
+    <li>
+      <span class="freq">639 Hz</span>
+      <span class="label">Release<span class="dim-inline">Emotional weight, slowly lifting. Grief, anger, the residue.</span></span>
+    </li>
+    <li>
+      <span class="freq">741 Hz</span>
+      <span class="label">Focus<span class="dim-inline">The working frequency. Clean attention, no urgency.</span></span>
+    </li>
+    <li>
+      <span class="freq">963 Hz</span>
+      <span class="label">Dream<span class="dim-inline">The threshold tone. For the hour before sleep.</span></span>
+    </li>
+  </ul>
+
+  <p>Built for daily rotation. Designed to live in your routine — not your downloads folder.</p>
+
+  <p class="dim">The current generation is being mastered. Reserve your place on the list and you'll be among the first to receive it when the masters cut.</p>
+
+  <div class="capture-block">
+    <h2>Reserve your pack</h2>
+    <p class="capture-lede">Pack delivery, plus the occasional note when new resonances enter the rotation. No marketing. One-click unsubscribe.</p>
+
+    <form class="aw-email-capture" data-aw-magnet="resonance-pack">
+      <input type="email" name="email" required placeholder="you@domain.com" autocomplete="email" aria-label="Email address">
+      <input type="text" name="aw_hp" tabindex="-1" autocomplete="off" class="aw-honeypot" aria-hidden="true">
+      <button type="submit" class="aw-email-capture__submit">Reserve your place</button>
+      <p class="aw-email-capture__msg" role="status" aria-live="polite"></p>
+    </form>
+
+    <p class="footer-note">Your email is held by Buttondown — independently hosted, no third-party tracking, no list rental.</p>
+  </div>
+</main>
+
+<footer>
+  <a href="/anchorwithin-home/">Return to AnchorWithin</a>
+</footer>
+</body>
+</html>
