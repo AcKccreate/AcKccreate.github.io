@@ -45,6 +45,8 @@
 (function () {
   'use strict';
 
+  var AW_ANALYTICS_VERSION = '5.1.0';
+
   /* ═══════════════════════════════════════════════════════════════════
      CONFIG — TODO: confirm this matches the domain registered in your
      Plausible account before the wedge starts collecting data.
@@ -55,6 +57,32 @@
   var PLAUSIBLE_DOMAIN = 'ackccreate.github.io'; // ← confirm or edit
 
   var STORAGE_KEY = 'aw_attribution';
+
+  /* ═══════════════════════════════════════════════════════════════════
+     DEV-HOST GUARD
+     Local development (localhost / 127.0.0.1 / file://) MUST NOT pollute
+     the production Plausible dashboard. Stub aw_track so calls during
+     dev still don't throw, expose the version stamp for debugging, then
+     bail before doing anything else.
+     ═══════════════════════════════════════════════════════════════════ */
+  var BLOCKED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', ''];
+  if (BLOCKED_HOSTS.indexOf(window.location.hostname) !== -1) {
+    window.__awAnalytics = {
+      version: AW_ANALYTICS_VERSION,
+      domain:  PLAUSIBLE_DOMAIN,
+      mode:    'disabled-dev-host',
+      host:    window.location.hostname || '(file://)'
+    };
+    window.aw_track = window.aw_track || function () { /* dev no-op */ };
+    return;
+  }
+
+  // Production surface — exposed for cache debugging and version checks
+  window.__awAnalytics = {
+    version: AW_ANALYTICS_VERSION,
+    domain:  PLAUSIBLE_DOMAIN,
+    mode:    'active'
+  };
 
   /* ═══════════════════════════════════════════════════════════════════
      PLAUSIBLE LOADER
@@ -162,11 +190,21 @@
 
   /* ═══════════════════════════════════════════════════════════════════
      CANONICAL EVENT API
+
+     Event name format: `<category>:<action>`
+       e.g. commerce:stripe_click
+            lead:email_submit
+            engagement:cta_click
+            brain:session_start
+     Namespace prefix lets Plausible exports group/filter by area later.
+     Category is also kept as a prop for custom-property filtering.
      ═══════════════════════════════════════════════════════════════════ */
   window.aw_track = function (category, action, label, props) {
     try {
-      var eventName = String(action || 'event');
-      var payload = { category: String(category || 'unknown') };
+      var cat = String(category || 'unknown');
+      var act = String(action || 'event');
+      var eventName = cat + ':' + act;
+      var payload = { category: cat };
 
       if (label !== undefined && label !== null) {
         payload.label = String(label);
