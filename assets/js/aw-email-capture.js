@@ -153,10 +153,16 @@
       }).catch(function () { /* silent */ });
     } catch (err) { /* silent — fetch might not exist in ancient browsers */ }
 
-    // Plausible event — captures intent regardless of network outcome
+    // Plausible event — captures intent regardless of network outcome.
+    // placement + page props let us measure which surface / page converts.
     try {
       if (window.aw_track) {
-        window.aw_track('lead', 'email_submit', magnet, { provider: PROVIDER });
+        var placement = form.getAttribute('data-aw-placement') || 'inline';
+        window.aw_track('lead', 'email_submit', magnet, {
+          provider:  PROVIDER,
+          placement: placement,
+          page:      (window.location && window.location.pathname) || ''
+        });
       }
     } catch (err) { /* silent */ }
 
@@ -222,4 +228,9 @@
   } else {
     init();
   }
+
+  // Public API for aw-distribution.js — lets the distribution orchestrator
+  // bind forms that it injects AFTER the initial DOMContentLoaded scan.
+  window.AW = window.AW || {};
+  window.AW.bindEmailForm = attach;
 })();
