@@ -520,8 +520,12 @@ footer {
 }
 </style>
 <script src="/assets/js/analytics.js" defer></script>
+<link rel="stylesheet" href="/assets/css/aw-email-capture.css">
+<link rel="stylesheet" href="/assets/css/aw-distribution.css">
+<script src="/assets/js/aw-email-capture.js" defer></script>
+<script src="/assets/js/aw-distribution.js" defer></script>
 </head>
-<body>
+<body data-aw-distribution="footer,exit" data-aw-magnet="resonance-pack">
 
 <!-- ── NAV ── -->
 <nav>
@@ -985,6 +989,19 @@ status = requests.<span class="c-fn">get</span>(
       </div>
     </a>
   </div>
+</div>
+
+<!-- ── INLINE LEAD MAGNET (Resonance Pack) ── -->
+<div class="aw-inline-block">
+  <p class="aw-inline-block__eyebrow">Coming next · Identity Asset</p>
+  <h2 class="aw-inline-block__title">The Resonance Pack</h2>
+  <p class="aw-inline-block__lede">A private rotation of frequency audio for your nervous system. Five tracks. Quiet delivery, no marketing. Reserve your place.</p>
+  <form class="aw-email-capture" data-aw-magnet="resonance-pack" data-aw-placement="inline-home">
+    <input type="email" name="email" required placeholder="you@domain.com" autocomplete="email" aria-label="Email address">
+    <input type="text" name="aw_hp" tabindex="-1" autocomplete="off" class="aw-honeypot" aria-hidden="true">
+    <button type="submit" class="aw-email-capture__submit">Reserve your place</button>
+    <p class="aw-email-capture__msg" role="status" aria-live="polite"></p>
+  </form>
 </div>
 
 <!-- ── FOOTER ── -->

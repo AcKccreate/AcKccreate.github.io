@@ -1,0 +1,220 @@
+/* ──────────────────────────────────────────────────────────────────
+   AnchorWithin — Distribution surfaces
+   ──────────────────────────────────────────────────────────────────
+   Token-only. Zero raw hex / hardcoded type. Expects tokens.css and
+   aw-email-capture.css already loaded on the page.
+
+   Surfaces:
+     .aw-footer-band   passive embed prepended to page footer
+     .aw-inline-block  soft inline CTA card (manual placement)
+     .aw-exit-modal    desktop exit-intent dialog
+   ────────────────────────────────────────────────────────────────── */
+
+/* ═══════════════════════════════════════════════════════════════════
+   FOOTER BAND
+   ═══════════════════════════════════════════════════════════════════ */
+.aw-footer-band {
+  position: relative;
+  padding: var(--space-12) var(--space-6);
+  border-top: 1px solid var(--aw-border);
+  background:
+    linear-gradient(180deg,
+      transparent 0%,
+      var(--aw-gold-glow) 100%),
+    var(--aw-surface);
+}
+
+.aw-footer-band__inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: grid;
+  gap: var(--space-6);
+  grid-template-columns: 1fr;
+  align-items: center;
+}
+
+@media (min-width: 760px) {
+  .aw-footer-band__inner {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-8);
+  }
+}
+
+.aw-footer-band__copy {
+  text-align: center;
+}
+@media (min-width: 760px) {
+  .aw-footer-band__copy {
+    text-align: left;
+  }
+}
+
+.aw-footer-band__eyebrow {
+  font: 500 var(--text-sm)/1 var(--aw-sans);
+  color: var(--aw-gold);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin: 0 0 var(--space-3);
+}
+
+.aw-footer-band__lede {
+  font: 400 var(--text-lg)/1.45 var(--aw-sans);
+  color: var(--aw-cream);
+  margin: 0;
+  max-width: 38ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media (min-width: 760px) {
+  .aw-footer-band__lede {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+/* Compact form variant — used in footer band. Tighter spacing. */
+.aw-email-capture--compact {
+  gap: var(--space-2);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   INLINE BLOCK — manual placement (e.g. home page mid-content)
+   ═══════════════════════════════════════════════════════════════════ */
+.aw-inline-block {
+  margin: var(--space-12) auto;
+  padding: var(--space-8) var(--space-6);
+  max-width: 580px;
+  border: 1px solid var(--aw-border);
+  border-radius: var(--r-lg);
+  background:
+    radial-gradient(ellipse at top, var(--aw-purple-glow), transparent 70%),
+    var(--aw-surface);
+  text-align: center;
+  box-shadow: var(--shadow-card);
+}
+
+.aw-inline-block__eyebrow {
+  font: 500 var(--text-sm)/1 var(--aw-sans);
+  color: var(--aw-gold);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin: 0 0 var(--space-3);
+}
+
+.aw-inline-block__title {
+  font: 400 var(--text-2xl)/1.2 var(--aw-serif);
+  color: var(--aw-cream);
+  margin: 0 0 var(--space-3);
+}
+
+.aw-inline-block__lede {
+  font: 400 var(--text-base)/1.55 var(--aw-sans);
+  color: var(--aw-muted);
+  margin: 0 auto var(--space-6);
+  max-width: 42ch;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   EXIT INTENT MODAL — desktop only
+   ═══════════════════════════════════════════════════════════════════ */
+.aw-exit-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+}
+
+.aw-exit-modal.is-shown {
+  display: flex;
+  animation: aw-exit-fade-in var(--dur-3) var(--ease) both;
+}
+
+@keyframes aw-exit-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.aw-exit-modal__overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--aw-scrim);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  cursor: pointer;
+}
+
+.aw-exit-modal__card {
+  position: relative;
+  z-index: 1;
+  background: var(--aw-card);
+  border: 1px solid var(--aw-border-hi);
+  border-radius: var(--r-lg);
+  padding: var(--space-12) var(--space-8) var(--space-8);
+  max-width: 520px;
+  width: 100%;
+  box-shadow: var(--shadow-lift), var(--aw-glow-gold);
+  animation: aw-exit-rise var(--dur-3) var(--ease) both;
+}
+
+@keyframes aw-exit-rise {
+  from { transform: translateY(12px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.aw-exit-modal__close {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  width: var(--tap-min);
+  height: var(--tap-min);
+  background: transparent;
+  border: 1px solid var(--aw-border);
+  border-radius: var(--r-pill);
+  color: var(--aw-muted);
+  font: 400 var(--text-xl)/1 var(--aw-sans);
+  cursor: pointer;
+  transition: color var(--dur-2) var(--ease), border-color var(--dur-2) var(--ease);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aw-exit-modal__close:hover {
+  color: var(--aw-cream);
+  border-color: var(--aw-border-hi);
+}
+
+.aw-exit-modal__eyebrow {
+  font: 500 var(--text-sm)/1 var(--aw-sans);
+  color: var(--aw-gold);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin: 0 0 var(--space-3);
+  text-align: center;
+}
+
+.aw-exit-modal__title {
+  font: 400 var(--text-2xl)/1.2 var(--aw-serif);
+  color: var(--aw-cream);
+  margin: 0 0 var(--space-4);
+  text-align: center;
+}
+
+.aw-exit-modal__lede {
+  font: 400 var(--text-base)/1.55 var(--aw-sans);
+  color: var(--aw-muted);
+  margin: 0 auto var(--space-6);
+  max-width: 44ch;
+  text-align: center;
+}
+
+/* Reduced motion — collapse the rise/fade so no movement at all. */
+@media (prefers-reduced-motion: reduce) {
+  .aw-exit-modal.is-shown,
+  .aw-exit-modal__card {
+    animation: none;
+  }
+}
