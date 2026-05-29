@@ -177,6 +177,175 @@
   }
   footer a{ color: var(--aw-gold); text-decoration: none; transition: color var(--dur-2) var(--ease); }
   footer a:hover{ color: var(--aw-gold-lt); }
+
+  /* ── FOUNDING MEMBER OFFER ── */
+  .capture-block--founding{
+    margin-top: var(--space-12);
+    padding: var(--space-12) var(--space-8);
+    border: 1px solid var(--aw-gold);
+    border-radius: var(--r-lg);
+    background:
+      radial-gradient(ellipse at top, var(--aw-gold-glow), transparent 70%),
+      var(--aw-card);
+    box-shadow: var(--shadow-lift), var(--aw-glow-gold);
+    text-align: center;
+  }
+  .eyebrow--founding{
+    color: var(--aw-gold-lt);
+    font-weight: 600;
+  }
+  .capture-block--founding h2{
+    font-size: var(--text-3xl);
+    margin: var(--space-3) 0 var(--space-4);
+    text-align: center;
+  }
+  .capture-block--founding .lede-sm{
+    color: var(--aw-text);
+    max-width: 480px;
+    margin: 0 auto var(--space-8);
+    font-size: var(--text-lg);
+    text-align: center;
+  }
+  .founding-benefits{
+    list-style: none;
+    padding: 0;
+    margin: 0 auto var(--space-8);
+    max-width: 460px;
+    text-align: left;
+    display: grid;
+    gap: var(--space-3);
+  }
+  .founding-benefits li{
+    position: relative;
+    padding-left: var(--space-8);
+    color: var(--aw-cream);
+    font: 400 var(--text-base)/1.5 var(--aw-sans);
+  }
+  .founding-benefits li::before{
+    content: '◆';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--aw-gold);
+    font-size: var(--text-sm);
+    line-height: 1.7;
+  }
+  .founding-price-row{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+    margin: var(--space-8) 0 var(--space-6);
+  }
+  @media (min-width: 520px){
+    .founding-price-row{
+      flex-direction: row;
+      justify-content: center;
+      gap: var(--space-8);
+    }
+  }
+  .founding-price{
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+  }
+  .founding-price__amount{
+    font: 400 var(--text-display)/1 var(--aw-serif);
+    color: var(--aw-cream);
+    letter-spacing: -0.02em;
+  }
+  .founding-price__period{
+    font: 400 var(--text-lg)/1 var(--aw-sans);
+    color: var(--aw-muted);
+  }
+  .founding-cta{
+    display: inline-block;
+    min-height: var(--tap-min);
+    padding: var(--space-4) var(--space-12);
+    background: linear-gradient(180deg, var(--aw-gold-lt), var(--aw-gold));
+    color: var(--aw-bg);
+    border: none;
+    border-radius: var(--r);
+    font: 600 var(--text-lg)/1 var(--aw-sans);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: var(--aw-glow-gold);
+    transition: transform var(--dur-2) var(--ease), box-shadow var(--dur-2) var(--ease);
+    white-space: nowrap;
+  }
+  .founding-cta:hover{
+    transform: translateY(-2px);
+    box-shadow: var(--aw-glow-gold-hi);
+  }
+  .founding-cta:active{ transform: translateY(0); }
+  .founding-fineprint{
+    color: var(--aw-muted);
+    font-size: var(--text-xs);
+    line-height: 1.55;
+    max-width: 460px;
+    margin: var(--space-8) auto 0;
+    text-align: center;
+  }
+  .founding-faq{
+    margin: var(--space-8) auto 0;
+    max-width: 480px;
+    text-align: left;
+  }
+  .founding-faq details{
+    border-top: 1px solid var(--aw-border);
+    padding: var(--space-3) 0;
+  }
+  .founding-faq details:last-child{
+    border-bottom: 1px solid var(--aw-border);
+  }
+  .founding-faq summary{
+    color: var(--aw-cream);
+    font: 500 var(--text-base)/1.4 var(--aw-sans);
+    cursor: pointer;
+    list-style: none;
+    padding-right: var(--space-4);
+    position: relative;
+  }
+  .founding-faq summary::after{
+    content: '+';
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: var(--aw-gold);
+    font: 400 var(--text-lg)/1 var(--aw-sans);
+    transition: transform var(--dur-2) var(--ease);
+  }
+  .founding-faq details[open] summary::after{ content: '−'; }
+  .founding-faq p{
+    color: var(--aw-muted);
+    font-size: var(--text-sm);
+    margin: var(--space-3) 0 0;
+    line-height: 1.6;
+  }
+
+  /* ── WAITLIST (DE-EMPHASIZED ALTERNATIVE) ── */
+  .capture-block--waitlist{
+    margin-top: var(--space-8);
+    padding: var(--space-6) var(--space-6);
+    border: 1px solid var(--aw-border);
+    border-radius: var(--r);
+    background: transparent;
+    box-shadow: none;
+  }
+  .capture-block--waitlist h3{
+    font: 400 var(--text-xl)/1.2 var(--aw-serif);
+    color: var(--aw-cream);
+    margin: 0 0 var(--space-3);
+    text-align: center;
+  }
+  .capture-block--waitlist .capture-lede{
+    color: var(--aw-muted);
+    text-align: center;
+    font-size: var(--text-sm);
+    max-width: 380px;
+    margin: 0 auto var(--space-4);
+  }
 </style>
 </head>
 <body>
@@ -211,20 +380,74 @@
 
   <p>Built for daily rotation. Designed to live in your routine — not your downloads folder.</p>
 
-  <p class="dim">The current generation is being mastered. Reserve your place on the list and you'll be among the first to receive it when the masters cut.</p>
+  <p class="dim">The founding rotation begins now. Become one of the first to receive the Resonance Pack as it's mastered.</p>
 
-  <div class="capture-block">
-    <h2>Reserve your pack</h2>
-    <p class="capture-lede">Pack delivery, plus the occasional note when new resonances enter the rotation. No marketing. One-click unsubscribe.</p>
+  <!-- ── FOUNDING MEMBER OFFER (primary CTA) ── -->
+  <div class="capture-block capture-block--founding">
+    <p class="eyebrow eyebrow--founding">Founding Member · Limited</p>
+    <h2>Become one of the first.</h2>
+    <p class="lede-sm">Join the first generation of the Resonance Pack and receive every track as it enters the rotation.</p>
 
-    <form class="aw-email-capture" data-aw-magnet="resonance-pack">
+    <ul class="founding-benefits">
+      <li>The first two tracks within 2–3 weeks (432 Hz Ground, 528 Hz Restore)</li>
+      <li>One new resonance every month after</li>
+      <li>Your rate locks at $19/month — even when the public rate rises</li>
+      <li>Direct reply line to shape the rotation as it grows</li>
+      <li>Cancel anytime from your Stripe portal</li>
+    </ul>
+
+    <div class="founding-price-row">
+      <div class="founding-price">
+        <span class="founding-price__amount">$19</span>
+        <span class="founding-price__period">/ month</span>
+      </div>
+      <!-- TODO: Andy — replace STRIPE_LINK_TODO with the live Stripe Payment Link URL.
+           Create the link in Stripe Dashboard with after-payment redirect to:
+           https://ackccreate.github.io/resonance-pack/welcome/
+           Stripe collects customer email at checkout. -->
+      <a href="STRIPE_LINK_TODO"
+         class="founding-cta"
+         data-aw-placement="resonance-pack-founding"
+         data-aw-offer="founding-member-19">
+        Become a Founding Member
+      </a>
+    </div>
+
+    <div class="founding-faq">
+      <details>
+        <summary>When do the first tracks arrive?</summary>
+        <p>The first two tracks (432 Hz Ground, 528 Hz Restore) are being mastered now. Founding Members receive them by private link within 2–3 weeks of joining. After that, one new resonance enters the rotation each month.</p>
+      </details>
+      <details>
+        <summary>How is the audio delivered?</summary>
+        <p>By email. Each drop arrives as a private download link. No app to install, no streaming portal. The files are yours to keep, listen to offline, and integrate into your own routine.</p>
+      </details>
+      <details>
+        <summary>Can I cancel?</summary>
+        <p>Yes. Cancel anytime from your Stripe customer portal — the link is included with your welcome note and on every receipt. If you cancel within your first 30 days and the rotation hasn't yet been delivered, reply to your welcome note and you'll be refunded in full.</p>
+      </details>
+      <details>
+        <summary>Why "Founding Member"?</summary>
+        <p>The first generation is small and intentionally so. Founding Members lock the $19/month rate permanently, even as the public rate rises. You also have a direct reply line — your notes shape what enters the rotation next.</p>
+      </details>
+    </div>
+
+    <p class="founding-fineprint">
+      The Resonance Pack is a curated audio rotation for personal listening. It is not a medical, therapeutic, or clinical product, and is not intended to diagnose, treat, cure, or prevent any condition. Always consult a qualified professional for medical concerns.
+    </p>
+  </div>
+
+  <!-- ── WAITLIST (secondary — for those not ready to commit) ── -->
+  <div class="capture-block capture-block--waitlist">
+    <h3>Not ready yet?</h3>
+    <p class="capture-lede">Stay on the waitlist. We'll send a quiet note when the rotation opens to the public.</p>
+
+    <form class="aw-email-capture" data-aw-magnet="resonance-pack" data-aw-placement="resonance-pack-waitlist">
       <input type="email" name="email" required placeholder="you@domain.com" autocomplete="email" aria-label="Email address">
       <input type="text" name="aw_hp" tabindex="-1" autocomplete="off" class="aw-honeypot" aria-hidden="true">
-      <button type="submit" class="aw-email-capture__submit">Reserve your place</button>
+      <button type="submit" class="aw-email-capture__submit">Join the waitlist</button>
       <p class="aw-email-capture__msg" role="status" aria-live="polite"></p>
     </form>
-
-    <p class="footer-note">Your email is held by Buttondown — independently hosted, no third-party tracking, no list rental.</p>
   </div>
 </main>
 

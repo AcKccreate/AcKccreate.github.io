@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Welcome, Founding Member — The Resonance Pack</title>
+<meta name="description" content="Your seat is reserved. The Resonance Pack rotation begins shortly.">
+<link rel="canonical" href="https://ackccreate.github.io/resonance-pack/welcome/">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/assets/css/tokens.css">
+<script src="/assets/js/analytics.js" defer></script>
+
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html, body { background: var(--aw-bg); }
+  body{
+    color: var(--aw-text);
+    font: 400 var(--text-base)/1.65 var(--aw-sans);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body::before{
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 10%, var(--aw-gold-glow), transparent 60%),
+      radial-gradient(ellipse at 70% 90%, var(--aw-purple-glow), transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  main{
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    max-width: 640px;
+    width: 100%;
+    margin: 0 auto;
+    padding: var(--space-24) var(--space-6) var(--space-12);
+    text-align: center;
+  }
+
+  .eyebrow{
+    font: 500 var(--text-sm)/1 var(--aw-sans);
+    color: var(--aw-gold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-6);
+  }
+
+  h1{
+    font: 400 var(--text-display)/1.05 var(--aw-serif);
+    color: var(--aw-cream);
+    margin-bottom: var(--space-6);
+    letter-spacing: -0.01em;
+  }
+
+  .lede{
+    font: 400 var(--text-xl)/1.5 var(--aw-sans);
+    color: var(--aw-text);
+    margin-bottom: var(--space-12);
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .next-block{
+    margin: var(--space-12) auto;
+    padding: var(--space-8) var(--space-6);
+    max-width: 520px;
+    border: 1px solid var(--aw-border);
+    border-radius: var(--r-lg);
+    background:
+      radial-gradient(ellipse at top, var(--aw-gold-glow), transparent 80%),
+      var(--aw-surface);
+    text-align: left;
+  }
+
+  .next-block h2{
+    font: 400 var(--text-2xl)/1.2 var(--aw-serif);
+    color: var(--aw-cream);
+    margin: 0 0 var(--space-6);
+    text-align: center;
+  }
+
+  .next-list{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-4);
+    counter-reset: next;
+  }
+
+  .next-list li{
+    position: relative;
+    padding-left: var(--space-12);
+    color: var(--aw-cream);
+    font: 400 var(--text-base)/1.5 var(--aw-sans);
+    counter-increment: next;
+  }
+
+  .next-list li::before{
+    content: counter(next);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: var(--space-8);
+    height: var(--space-8);
+    border-radius: var(--r-pill);
+    background: var(--aw-gold);
+    color: var(--aw-bg);
+    font: 600 var(--text-sm)/var(--space-8) var(--aw-mono);
+    text-align: center;
+  }
+
+  .next-list .meta{
+    display: block;
+    color: var(--aw-muted);
+    font-size: var(--text-sm);
+    margin-top: var(--space-1);
+  }
+
+  .reply-note{
+    margin: var(--space-12) auto var(--space-8);
+    max-width: 480px;
+    padding: var(--space-6);
+    border-left: 2px solid var(--aw-gold);
+    background: var(--aw-glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    text-align: left;
+    color: var(--aw-text);
+    font: 400 var(--text-base)/1.55 var(--aw-sans);
+    border-radius: 0 var(--r) var(--r) 0;
+  }
+
+  .reply-note strong{
+    color: var(--aw-gold-lt);
+    font-weight: 500;
+  }
+
+  .return-link{
+    display: inline-block;
+    margin-top: var(--space-8);
+    color: var(--aw-gold);
+    text-decoration: none;
+    font: 500 var(--text-sm)/1 var(--aw-sans);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: var(--space-3) var(--space-6);
+    border: 1px solid var(--aw-border);
+    border-radius: var(--r-pill);
+    transition: color var(--dur-2) var(--ease), border-color var(--dur-2) var(--ease);
+  }
+
+  .return-link:hover{
+    color: var(--aw-gold-lt);
+    border-color: var(--aw-border-hi);
+  }
+
+  footer{
+    position: relative;
+    z-index: 1;
+    padding: var(--space-8) var(--space-6);
+    text-align: center;
+    color: var(--aw-muted);
+    font-size: var(--text-xs);
+    line-height: 1.55;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+</style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">Founding Member · Confirmed</p>
+  <h1>Your seat is reserved.</h1>
+  <p class="lede">You're now among the first generation of the Resonance Pack. The rotation begins shortly.</p>
+
+  <div class="next-block">
+    <h2>What happens next</h2>
+    <ol class="next-list">
+      <li>
+        A welcome note is on its way to your inbox right now.
+        <span class="meta">From AnchorWithin · Check your spam folder if it doesn't arrive within an hour.</span>
+      </li>
+      <li>
+        The first two tracks (432 Hz Ground, 528 Hz Restore) are being mastered now.
+        <span class="meta">Delivered as a private link within 2–3 weeks.</span>
+      </li>
+      <li>
+        One new resonance enters the rotation every month after that.
+        <span class="meta">Release, Focus, Dream — then deeper into the rotation as it grows.</span>
+      </li>
+    </ol>
+  </div>
+
+  <div class="reply-note">
+    <strong>One small thing.</strong> If you have particular frequencies, states, or rituals you'd like to see in the rotation — hit reply to your welcome note. Every Founding Member's reply is read.
+  </div>
+
+  <a href="/anchorwithin-home/" class="return-link">Return to AnchorWithin</a>
+</main>
+
+<footer>
+  Receipts and subscription management are available through your Stripe customer portal — the link is included in your welcome note. Cancel anytime; refund within 30 days if the rotation hasn't yet been delivered.
+</footer>
+
+<script>
+  // Fire conversion event when this page loads — Stripe just redirected the buyer here.
+  // Wrapped in try/catch + window-defined guard so analytics failures never break the page.
+  try {
+    if (window.aw_track) {
+      window.aw_track('commerce', 'subscription_confirmed', 'resonance-pack-founding', {
+        placement: 'stripe-return',
+        page: window.location.pathname,
+        price: '19',
+        currency: 'usd'
+      });
+    }
+  } catch (e) { /* silent */ }
+</script>
+</body>
+</html>
