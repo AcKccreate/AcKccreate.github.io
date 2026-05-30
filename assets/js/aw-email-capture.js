@@ -68,7 +68,7 @@
   // AW_EMAIL_CONFIG above without editing this file.
   var PROVIDER = cfg.provider || 'buttondown';
   var ENDPOINT = cfg.endpoint ||
-    'https://buttondown.email/api/emails/embed-subscribe/REPLACE_WITH_YOUR_BUTTONDOWN_USERNAME';
+    'https://buttondown.email/api/emails/embed-subscribe/AnchorWithin';
 
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
