@@ -2061,6 +2061,76 @@ function updateAudioUI() {
   }
 })();
 
+/* ─────────────────────────────────────────────────────────────────
+   VOICE GUIDE — browser-synthesized phase narration
+   - Speaks "Inhale", "Hold", "Exhale", "Hold" at the start of each phase
+   - Prefers calming female voices on each device (Samantha / Karen /
+     Fiona / Google US English Female / Microsoft Aria, in that order)
+   - Shares mute + volume with the chime engine — single audio control
+   - Falls back gracefully if Web Speech API is unavailable
+   ───────────────────────────────────────────────────────────────── */
+var _selectedVoice = null;
+var FEMALE_VOICE_HINTS = [
+  /Samantha/i,           // iOS / macOS — warm female (best default)
+  /Karen/i,              // macOS Australian female
+  /Fiona/i,              // macOS Scottish female
+  /Moira/i,              // macOS Irish female
+  /Tessa/i,              // macOS South African female
+  /Allison/i,            // macOS American female
+  /Google US English/i,  // Chrome — Google female
+  /Microsoft Aria/i,     // Edge — Aria neural voice
+  /Microsoft Zira/i,     // Edge — Zira (legacy)
+  /female/i              // generic last-resort
+];
+
+function pickVoice() {
+  try {
+    if (!window.speechSynthesis) return;
+    var voices = window.speechSynthesis.getVoices();
+    if (!voices || !voices.length) return;
+    for (var i = 0; i < FEMALE_VOICE_HINTS.length; i++) {
+      var pattern = FEMALE_VOICE_HINTS[i];
+      var match = null;
+      for (var j = 0; j < voices.length; j++) {
+        if (/^en/i.test(voices[j].lang) && pattern.test(voices[j].name)) {
+          match = voices[j];
+          break;
+        }
+      }
+      if (match) { _selectedVoice = match; return; }
+    }
+    // Fallback: first English voice, then first voice of any language
+    for (var k = 0; k < voices.length; k++) {
+      if (/^en/i.test(voices[k].lang)) { _selectedVoice = voices[k]; return; }
+    }
+    _selectedVoice = voices[0];
+  } catch(e) {}
+}
+
+// Voices load asynchronously on some browsers (Chrome especially)
+if (typeof window !== 'undefined' && window.speechSynthesis) {
+  pickVoice();
+  try {
+    window.speechSynthesis.onvoiceschanged = pickVoice;
+  } catch(e) {}
+}
+
+function speakPhase(text) {
+  if (_audioMuted || _audioVolume <= 0) return;
+  if (!window.speechSynthesis) return;
+  if (!_selectedVoice) pickVoice();
+  try {
+    // Cancel any in-flight utterance so phases don't pile up
+    window.speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(text);
+    if (_selectedVoice) u.voice = _selectedVoice;
+    u.rate = 0.82;        // slightly slower than normal — calming pace
+    u.pitch = 0.95;       // slightly below normal — warmer feel
+    u.volume = _audioVolume;
+    window.speechSynthesis.speak(u);
+  } catch(e) { /* silent fail */ }
+}
+
 /* Breath engine — 4-4-4-4 box breathing (timing logic preserved verbatim) */
 var PHASES = [
   { l: 'Inhale', d: 4, cls: 'inhale' },
@@ -2119,8 +2189,10 @@ function applyPhase(){
     var el = document.getElementById('ivl' + i);
     if (el) (i === _ph) ? el.classList.add('active') : el.classList.remove('active');
   }
-  // Audio chime — inhale and exhale only (holds are silent by design)
+  // Audio chime — inhale and exhale only (holds are bell-silent by design)
   if (p.cls === 'inhale' || p.cls === 'exhale') playChime(p.cls);
+  // Voice guide — speaks every phase label (Inhale / Hold / Exhale / Hold)
+  speakPhase(p.l);
 }
 
 function stopBreath(){
@@ -2131,6 +2203,8 @@ function stopBreath(){
   document.getElementById('phaseLabel').textContent = 'Ready';
   document.getElementById('countdown').textContent = '4';
   resetWorldVisuals();
+  // Cancel any pending voice utterance so user gets immediate silence
+  try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch(e) {}
   trackEvent('Breathe', 'session_stop', 'breatheworld');
 }
 
