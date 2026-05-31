@@ -1,419 +1,1032 @@
 <!DOCTYPE html>
+<!-- © 2026 AnchorWithin LLC — All rights reserved.
+     The Resonance Pack — Founding Member offer.
+     For relaxation use only, not a medical device. -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>The Resonance Pack — AnchorWithin</title>
-<meta name="description" content="A private rotation of frequency audio for your nervous system. Five tracks tuned for ground, restore, release, focus, and dream.">
-<meta property="og:title" content="The Resonance Pack — AnchorWithin">
-<meta property="og:description" content="A private rotation of frequency audio for your nervous system.">
-<meta property="og:url" content="https://ackccreate.github.io/resonance-pack/">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The Resonance Pack — Founding Rotation by AnchorWithin</title>
+<meta name="description" content="A private rotation of frequency audio for your nervous system. Five tracks. Become a Founding Member at $19/month — rate locks permanently. Monthly delivery, designed to layer with your breath work.">
+<meta property="og:title" content="The Resonance Pack — Founding Rotation by AnchorWithin">
+<meta property="og:description" content="A private rotation of frequency audio for your nervous system. Five tracks. Reserve your Founding Member spot.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://ackccreate.github.io/resonance-pack/">
+<meta property="og:site_name" content="The Resonance Pack by AnchorWithin">
 <link rel="canonical" href="https://ackccreate.github.io/resonance-pack/">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="/assets/css/tokens.css">
-<link rel="stylesheet" href="/assets/css/aw-email-capture.css">
+<!-- Analytics + email capture (silent infrastructure — no visual dashboards) -->
 <script src="/assets/js/analytics.js" defer></script>
 <script src="/assets/js/aw-email-capture.js" defer></script>
 
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  html, body { background: var(--aw-bg); }
-  body{
-    color: var(--aw-text);
-    font: 400 var(--text-base)/1.65 var(--aw-sans);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+/* ═══════════════════════════════════════════════════════════════════
+   RESONANCE PACK — SERENE CANVAS landing page
+   Mirrors the BreatheWorld design system. Single-purpose sales page.
+   ═══════════════════════════════════════════════════════════════════ */
 
-  /* Cinematic background — soft gold/purple gradient wash, no images */
-  body::before{
-    content: '';
-    position: fixed;
-    inset: 0;
-    background:
-      radial-gradient(ellipse at 20% 10%, var(--aw-gold-glow), transparent 60%),
-      radial-gradient(ellipse at 80% 90%, var(--aw-purple-glow), transparent 60%);
-    pointer-events: none;
-    z-index: 0;
-  }
+:root {
+  /* Palette — locked to AnchorWithin Serene Canvas brand */
+  --bg-canvas:        #FAFAF7;
+  --bg-alabaster:     #F2EFE9;
+  --bg-paper-deep:    #ECE8DF;
+  --text-primary:     #1B3022;
+  --text-muted:       rgba(27, 48, 34, 0.70);
+  --text-subtle:      rgba(27, 48, 34, 0.45);
+  --accent-gold:      #C5A059;
+  --accent-gold-dim:  rgba(197, 160, 89, 0.55);
+  --accent-gold-soft: rgba(197, 160, 89, 0.30);
+  --accent-gold-faint:rgba(197, 160, 89, 0.15);
+  --accent-gold-tint: rgba(197, 160, 89, 0.06);
+  --gold-gradient:    linear-gradient(135deg, #E2C287 0%, #C5A059 100%);
+  --gold-metallic:    linear-gradient(145deg, #E6B85C 0%, #A3813D 100%);
 
-  main{
-    position: relative;
-    z-index: 1;
-    flex: 1;
-    max-width: 720px;
-    width: 100%;
-    margin: 0 auto;
-    padding: var(--space-16) var(--space-6) var(--space-12);
-  }
+  /* Skeuomorphic depth tokens — Casey's neumorphism spec */
+  --soft-inset:       inset 2px 2px 6px #D6CEB2, inset -2px -2px 6px #FFFFFF;
+  --soft-inset-deep:  inset 4px 4px 10px #C8C0A4, inset -4px -4px 10px #FFFFFF;
+  --soft-bevel:       3px 3px 7px #CFC8B0, -3px -3px 7px #FFFFFF;
+  --soft-bevel-lift:  8px 8px 22px #C2BAA0, -8px -8px 22px #FFFFFF;
+  --btn-shadow:       0 4px 15px rgba(197, 160, 89, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.45);
+  --btn-shadow-hi:    0 6px 22px rgba(197, 160, 89, 0.40), inset 0 1px 1px rgba(255, 255, 255, 0.55);
+  --transition-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 
-  .eyebrow{
-    font: 500 var(--text-sm)/1 var(--aw-sans);
-    color: var(--aw-gold);
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    margin-bottom: var(--space-6);
-  }
+  /* Typography scale */
+  --text-xs:   clamp(0.72rem, 0.68rem + 0.2vw, 0.80rem);
+  --text-sm:   clamp(0.85rem, 0.80rem + 0.2vw, 0.95rem);
+  --text-base: clamp(1.00rem, 0.95rem + 0.2vw, 1.10rem);
+  --text-lg:   clamp(1.15rem, 1.05rem + 0.3vw, 1.32rem);
+  --text-xl:   clamp(1.35rem, 1.20rem + 0.5vw, 1.65rem);
+  --text-2xl:  clamp(1.75rem, 1.45rem + 0.9vw, 2.30rem);
+  --text-3xl:  clamp(2.30rem, 1.80rem + 1.4vw, 3.30rem);
+  --text-display: clamp(2.80rem, 2.00rem + 2.5vw, 4.60rem);
 
-  h1{
-    font: 400 var(--text-display)/1.05 var(--aw-serif);
-    color: var(--aw-cream);
-    margin-bottom: var(--space-6);
-    letter-spacing: -0.01em;
-  }
+  /* Spacing */
+  --space-1:  0.25rem;  --space-2: 0.5rem;   --space-3: 0.75rem;
+  --space-4:  1rem;     --space-5: 1.25rem;  --space-6: 1.5rem;
+  --space-8:  2rem;     --space-12: 3rem;    --space-16: 4rem;
+  --space-24: 6rem;
 
-  .lede{
-    font: 400 var(--text-xl)/1.5 var(--aw-sans);
-    color: var(--aw-text);
-    margin-bottom: var(--space-12);
-    max-width: 560px;
-  }
+  /* Radii */
+  --r-sm:   6px;
+  --r:      10px;
+  --r-lg:   16px;
+  --r-pill: 9999px;
 
-  h2{
-    font: 400 var(--text-2xl)/1.2 var(--aw-serif);
-    color: var(--aw-cream);
-    margin: var(--space-12) 0 var(--space-4);
-  }
+  --tap-min: 44px;
+}
 
-  p{ margin-bottom: var(--space-4); color: var(--aw-text); }
-  p.dim{ color: var(--aw-muted); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg-canvas); }
+body {
+  color: var(--text-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 50% 40% at 20% 25%, var(--accent-gold-tint) 0%, transparent 70%),
+    radial-gradient(ellipse 55% 50% at 80% 80%, rgba(27, 48, 34, 0.03) 0%, transparent 70%);
+}
+body > * { position: relative; z-index: 1; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
 
-  .resonance-list{
-    display: grid;
-    gap: var(--space-3);
-    margin: var(--space-6) 0 var(--space-12);
-    list-style: none;
-    padding: 0;
-  }
+h1, h2, h3 {
+  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  color: var(--text-primary);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1.15;
+}
 
-  .resonance-list li{
-    background: var(--aw-glass-bg);
-    border: var(--aw-glass-border);
-    backdrop-filter: var(--glass-blur);
-    -webkit-backdrop-filter: var(--glass-blur);
-    border-radius: var(--r);
-    padding: var(--space-4) var(--space-6);
-    display: flex;
-    align-items: baseline;
-    gap: var(--space-6);
-    transition: border-color var(--dur-2) var(--ease), transform var(--dur-2) var(--ease);
-  }
+/* ──────────────────────────────────────────────────────────────────
+   AMBIENT BOTANICALS — same as BreatheWorld
+   ────────────────────────────────────────────────────────────────── */
+.bw-flora {
+  position: fixed;
+  bottom: 0;
+  width: 180px;
+  height: 500px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.55;
+}
+.bw-flora--left  { left: 0; }
+.bw-flora--right { right: 0; }
+@media (max-width: 900px) { .bw-flora { width: 130px; height: 380px; opacity: 0.48; } }
+@media (max-width: 600px) { .bw-flora { width: 80px;  height: 260px; opacity: 0.42; } }
+@media (max-width: 380px) { .bw-flora { width: 60px;  height: 200px; opacity: 0.35; } }
+@media (prefers-reduced-motion: reduce) { .bw-flora { opacity: 0.30; } }
 
-  .resonance-list li:hover{
-    border: 1px solid var(--aw-border-hi);
-    transform: translateX(2px);
-  }
+/* ──────────────────────────────────────────────────────────────────
+   SECTION DIVIDER
+   ────────────────────────────────────────────────────────────────── */
+.bw-section-divider {
+  display: block;
+  width: 280px;
+  max-width: 70vw;
+  height: 28px;
+  margin: 0 auto;
+  color: var(--accent-gold);
+  opacity: 0.85;
+}
+@media (max-width: 480px) { .bw-section-divider { width: 220px; height: 24px; } }
 
-  .resonance-list .freq{
-    font: 500 var(--text-lg)/1 var(--aw-mono);
-    color: var(--aw-gold);
-    min-width: 5em;
-    flex-shrink: 0;
-    letter-spacing: -0.02em;
-  }
+/* ──────────────────────────────────────────────────────────────────
+   FLOATING PILL NAV — minimal (no Pro CTA — this page IS the offer)
+   ────────────────────────────────────────────────────────────────── */
+.bw-nav {
+  position: sticky;
+  top: var(--space-4);
+  z-index: 100;
+  margin: var(--space-4) auto 0;
+  max-width: 1080px;
+  padding: 0 var(--space-4);
+}
+.bw-nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-6);
+  background: rgba(250, 250, 247, 0.72);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 0.5px solid var(--accent-gold-soft);
+  border-radius: var(--r-pill);
+  box-shadow:
+    0 6px 28px rgba(27, 48, 34, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -1px 0 rgba(197, 160, 89, 0.18);
+  position: relative;
+}
+.bw-nav-inner::before {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border-radius: var(--r-pill);
+  border: 0.5px solid rgba(197, 160, 89, 0.22);
+  pointer-events: none;
+}
+.bw-nav-inner::after {
+  content: '';
+  position: absolute;
+  left: var(--space-4);
+  right: var(--space-4);
+  top: 50%;
+  height: 1px;
+  background:
+    radial-gradient(circle 3px at 0% 50%, #C5A059 0%, #C5A059 30%, transparent 60%),
+    radial-gradient(circle 3px at 100% 50%, #C5A059 0%, #C5A059 30%, transparent 60%);
+  transform: translateY(-50%);
+  pointer-events: none;
+  opacity: 0.6;
+}
+.bw-nav-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: var(--text-lg);
+  color: var(--text-primary);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.bw-nav-anchor { width: 22px; height: 22px; color: var(--accent-gold); flex-shrink: 0; }
+.bw-nav-back {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: var(--transition-smooth);
+}
+.bw-nav-back:hover { color: var(--accent-gold); }
 
-  .resonance-list .label{
-    font: 400 var(--text-base)/1.5 var(--aw-sans);
-    color: var(--aw-cream);
-  }
+/* ──────────────────────────────────────────────────────────────────
+   HERO
+   ────────────────────────────────────────────────────────────────── */
+.rp-hero {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--space-16) var(--space-6) var(--space-12);
+  text-align: center;
+}
+.bw-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  font-family: 'Inter', sans-serif;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--accent-gold);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-6);
+}
+.bw-eyebrow-flourish {
+  width: 110px;
+  height: 14px;
+  color: var(--accent-gold);
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+.bw-eyebrow-flourish--right { transform: scaleX(-1); }
+@media (max-width: 480px) { .bw-eyebrow-flourish { width: 60px; height: 9px; } }
 
-  .resonance-list .label .dim-inline{
-    color: var(--aw-muted);
-    display: block;
-    margin-top: var(--space-1);
-    font-size: var(--text-sm);
-  }
+.bw-hero-mark {
+  display: block;
+  width: 56px;
+  height: 24px;
+  margin: 0 auto var(--space-6);
+  color: var(--accent-gold);
+  opacity: 0.85;
+}
 
-  /* Capture block — the conversion target */
-  .capture-block{
-    margin: var(--space-12) 0 var(--space-8);
-    padding: var(--space-8) var(--space-6);
-    border: 1px solid var(--aw-border);
-    border-radius: var(--r-lg);
-    background: var(--aw-surface);
-    box-shadow: var(--shadow-card);
-  }
+.rp-hero h1 {
+  font-family: 'Cormorant Garamond', 'Playfair Display', serif;
+  font-size: var(--text-display);
+  margin-bottom: var(--space-6);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.005em;
+}
+.rp-hero h1 .accent {
+  font-style: italic;
+  color: var(--accent-gold);
+  font-weight: 500;
+}
+.rp-hero .lede {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: var(--text-xl);
+  color: var(--text-muted);
+  max-width: 560px;
+  margin: 0 auto;
+  line-height: 1.55;
+}
 
-  .capture-block h2{
-    margin-top: 0;
-    text-align: center;
-  }
+/* ──────────────────────────────────────────────────────────────────
+   WHAT'S INSIDE — frequency list as paper plates
+   ────────────────────────────────────────────────────────────────── */
+.rp-inside {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 var(--space-6) var(--space-16);
+  text-align: center;
+}
+.rp-inside h2 {
+  font-size: var(--text-2xl);
+  margin-bottom: var(--space-3);
+}
+.rp-inside .lede-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: var(--text-lg);
+  color: var(--text-muted);
+  margin: 0 auto var(--space-12);
+  max-width: 480px;
+}
+.rp-freq-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-8);
+  display: grid;
+  gap: var(--space-3);
+}
+.rp-freq {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-6);
+  align-items: center;
+  padding: var(--space-5) var(--space-6);
+  background: var(--bg-alabaster);
+  border: 0.5px solid var(--accent-gold-faint);
+  border-radius: var(--r);
+  box-shadow: var(--soft-inset);
+  text-align: left;
+  transition: var(--transition-smooth);
+}
+.rp-freq:hover {
+  border-color: var(--accent-gold-soft);
+  box-shadow: var(--soft-inset), 0 0 0 1px rgba(197, 160, 89, 0.10);
+}
+.rp-freq-hz {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: var(--text-2xl);
+  color: var(--accent-gold);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  min-width: 5.5em;
+}
+.rp-freq-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+.rp-freq-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: var(--text-lg);
+  font-weight: 500;
+  color: var(--text-primary);
+}
+.rp-freq-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+.rp-inside-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: var(--text-lg);
+  color: var(--text-primary);
+  max-width: 480px;
+  margin: 0 auto;
+}
 
-  .capture-block .capture-lede{
-    color: var(--aw-muted);
-    max-width: 420px;
-    margin: 0 auto var(--space-6);
-    text-align: center;
-    font-size: var(--text-base);
-  }
+/* ──────────────────────────────────────────────────────────────────
+   FOUNDING MEMBER — glassmorphic premium card
+   ────────────────────────────────────────────────────────────────── */
+.rp-founding-wrap {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 0 var(--space-6) var(--space-16);
+}
+.rp-founding-card {
+  position: relative;
+  padding: var(--space-12) var(--space-8);
+  background: rgba(250, 250, 247, 0.72);
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  border: 0.5px solid var(--accent-gold-soft);
+  border-radius: var(--r-lg);
+  box-shadow: var(--soft-bevel-lift);
+  text-align: center;
+}
+/* Gold corner brackets */
+.rp-founding-card::before,
+.rp-founding-card::after,
+.rp-founding-card > .corner-tl,
+.rp-founding-card > .corner-br {
+  content: '';
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: 22px 22px;
+}
+.rp-founding-card::before {
+  top: 8px; left: 8px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22' fill='none' stroke='%23C5A059' stroke-linecap='round'><path d='M 2 12 L 2 4 Q 2 2 4 2 L 12 2' stroke-width='1'/><path d='M 6 6 L 14 6 M 6 6 L 6 14' stroke-width='0.5' opacity='0.6'/><circle cx='2' cy='2' r='1.4' fill='%23C5A059'/></svg>");
+}
+.rp-founding-card::after {
+  top: 8px; right: 8px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22' fill='none' stroke='%23C5A059' stroke-linecap='round'><path d='M 20 12 L 20 4 Q 20 2 18 2 L 10 2' stroke-width='1'/><path d='M 16 6 L 8 6 M 16 6 L 16 14' stroke-width='0.5' opacity='0.6'/><circle cx='20' cy='2' r='1.4' fill='%23C5A059'/></svg>");
+}
+.rp-founding-card > .corner-tl { position: absolute; }
+.rp-founding-card > .corner-br { position: absolute; }
+.rp-founding-card > .corner-tl {
+  bottom: 8px; left: 8px; top: auto;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22' fill='none' stroke='%23C5A059' stroke-linecap='round'><path d='M 2 10 L 2 18 Q 2 20 4 20 L 12 20' stroke-width='1'/><path d='M 6 16 L 14 16 M 6 16 L 6 8' stroke-width='0.5' opacity='0.6'/><circle cx='2' cy='20' r='1.4' fill='%23C5A059'/></svg>");
+}
+.rp-founding-card > .corner-br {
+  bottom: 8px; right: 8px; top: auto;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22' fill='none' stroke='%23C5A059' stroke-linecap='round'><path d='M 20 10 L 20 18 Q 20 20 18 20 L 10 20' stroke-width='1'/><path d='M 16 16 L 8 16 M 16 16 L 16 8' stroke-width='0.5' opacity='0.6'/><circle cx='20' cy='20' r='1.4' fill='%23C5A059'/></svg>");
+}
+.rp-founding-eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  margin-bottom: var(--space-3);
+}
+.rp-founding-card h2 {
+  font-size: var(--text-2xl);
+  margin-bottom: var(--space-4);
+}
+.rp-founding-lede {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: var(--text-lg);
+  color: var(--text-muted);
+  max-width: 380px;
+  margin: 0 auto var(--space-8);
+  line-height: 1.55;
+}
+.rp-benefits {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto var(--space-8);
+  text-align: left;
+  max-width: 420px;
+  display: grid;
+  gap: var(--space-3);
+}
+.rp-benefit {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 0.5px solid var(--accent-gold-faint);
+  font-family: 'Inter', sans-serif;
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  line-height: 1.55;
+}
+.rp-benefit:last-child { border-bottom: none; }
+.rp-benefit-mark {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--accent-gold);
+  margin-top: 3px;
+}
+.rp-price-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-8);
+}
+.rp-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.6rem;
+  line-height: 1;
+  color: var(--text-primary);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.rp-price-period {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: var(--text-lg);
+  color: var(--text-muted);
+}
+.rp-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: var(--tap-min);
+  padding: var(--space-3) var(--space-6);
+  background: var(--gold-metallic);
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--r-pill);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: var(--text-base);
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: var(--btn-shadow);
+  transition: var(--transition-smooth);
+}
+.rp-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--btn-shadow-hi);
+}
+.rp-cta:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(197, 160, 89, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+}
+.rp-faq {
+  margin: var(--space-8) auto 0;
+  max-width: 460px;
+  text-align: left;
+}
+.rp-faq details {
+  border-top: 0.5px solid var(--accent-gold-faint);
+  padding: var(--space-4) 0;
+}
+.rp-faq details:last-child {
+  border-bottom: 0.5px solid var(--accent-gold-faint);
+}
+.rp-faq summary {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  list-style: none;
+  position: relative;
+  padding-right: var(--space-6);
+  transition: var(--transition-smooth);
+}
+.rp-faq summary:hover { color: var(--accent-gold); }
+.rp-faq summary::after {
+  content: '+';
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: var(--accent-gold);
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: var(--text-lg);
+  line-height: 1;
+  transition: transform 0.3s var(--transition-smooth);
+}
+.rp-faq details[open] summary::after { content: '−'; }
+.rp-faq p {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  margin: var(--space-3) 0 0;
+  line-height: 1.7;
+}
+.rp-fineprint {
+  margin-top: var(--space-8);
+  padding: var(--space-4) var(--space-5);
+  background: var(--bg-alabaster);
+  border-left: 2px solid var(--accent-gold-dim);
+  border-radius: var(--r);
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: var(--text-xs);
+  color: var(--text-subtle);
+  line-height: 1.7;
+  text-align: left;
+}
 
-  .footer-note{
-    color: var(--aw-muted);
-    font-size: var(--text-xs);
-    text-align: center;
-    margin-top: var(--space-6);
-    max-width: 380px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.5;
-  }
+/* ──────────────────────────────────────────────────────────────────
+   WAITLIST FALLBACK — softer, secondary
+   ────────────────────────────────────────────────────────────────── */
+.rp-waitlist-wrap {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 0 var(--space-6) var(--space-16);
+  text-align: center;
+}
+.rp-waitlist {
+  padding: var(--space-8) var(--space-6);
+  background: var(--bg-alabaster);
+  border: 0.5px solid var(--accent-gold-faint);
+  border-radius: var(--r-lg);
+  box-shadow: var(--soft-inset);
+  position: relative;
+}
+.rp-waitlist > .corner-tl,
+.rp-waitlist > .corner-br {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: 18px 18px;
+}
+.rp-waitlist > .corner-tl {
+  top: 6px; left: 6px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18' fill='none' stroke='%23C5A059' stroke-linecap='round'><path d='M 2 10 L 2 4 Q 2 2 4 2 L 10 2' stroke-width='0.8' opacity='0.7'/><circle cx='2' cy='2' r='1.1' fill='%23C5A059'/></svg>");
+}
+.rp-waitlist > .corner-br {
+  bottom: 6px; right: 6px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18' fill='none' stroke='%23C5A059' stroke-linecap='round'><path d='M 16 8 L 16 14 Q 16 16 14 16 L 8 16' stroke-width='0.8' opacity='0.7'/><circle cx='16' cy='16' r='1.1' fill='%23C5A059'/></svg>");
+}
+.rp-waitlist h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: var(--text-xl);
+  color: var(--text-primary);
+  margin-bottom: var(--space-3);
+  font-weight: 500;
+}
+.rp-waitlist-lede {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  margin-bottom: var(--space-6);
+  max-width: 380px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.aw-email-capture {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-width: 380px;
+  margin: 0 auto;
+}
+.rp-reserve-label {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  margin-bottom: var(--space-1);
+  padding-left: var(--space-2);
+  text-align: left;
+}
+.aw-email-capture input[type="email"] {
+  width: 100%;
+  min-height: var(--tap-min);
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-canvas);
+  color: var(--text-primary);
+  border: none;
+  border-radius: var(--r);
+  box-shadow: var(--soft-inset);
+  font-family: 'Inter', sans-serif;
+  font-size: var(--text-base);
+  outline: none;
+  transition: var(--transition-smooth);
+}
+.aw-email-capture input[type="email"]::placeholder { color: var(--text-subtle); }
+.aw-email-capture input[type="email"]:focus {
+  box-shadow: var(--soft-inset), 0 0 0 2px rgba(197, 160, 89, 0.20);
+}
+.aw-email-capture__submit {
+  width: 100%;
+  min-height: var(--tap-min);
+  padding: var(--space-3) var(--space-6);
+  background: var(--accent-gold);
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--r-pill);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: var(--text-sm);
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  box-shadow: var(--btn-shadow);
+  transition: var(--transition-smooth);
+}
+.aw-email-capture__submit:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--btn-shadow-hi);
+}
+.aw-email-capture__submit:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(197, 160, 89, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+}
+.aw-email-capture__msg {
+  min-height: 1.4em;
+  font-family: 'Inter', sans-serif;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  text-align: center;
+  margin: 0;
+}
+.aw-email-capture__msg[data-state="success"] { color: var(--text-primary); }
+.aw-email-capture__msg[data-state="error"]   { color: #8B2626; }
+.aw-honeypot {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
 
-  footer{
-    position: relative;
-    z-index: 1;
-    padding: var(--space-8) var(--space-6);
-    text-align: center;
-    border-top: 1px solid var(--aw-border);
-    color: var(--aw-muted);
-    font-size: var(--text-sm);
-  }
-  footer a{ color: var(--aw-gold); text-decoration: none; transition: color var(--dur-2) var(--ease); }
-  footer a:hover{ color: var(--aw-gold-lt); }
+/* ──────────────────────────────────────────────────────────────────
+   FOOTER
+   ────────────────────────────────────────────────────────────────── */
+.bw-footer {
+  margin-top: auto;
+  padding: var(--space-12) var(--space-6) var(--space-8);
+  border-top: 0.5px solid var(--accent-gold-faint);
+  text-align: center;
+}
+.bw-footer-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: var(--text-lg);
+  color: var(--text-primary);
+  margin-bottom: var(--space-4);
+}
+.bw-footer-logo svg { color: var(--accent-gold); width: 20px; height: 20px; }
+.bw-footer-links {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-6);
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+}
+.bw-footer-links a {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  transition: var(--transition-smooth);
+}
+.bw-footer-links a:hover { color: var(--accent-gold); }
+.bw-footer-copy {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--text-xs);
+  color: var(--text-subtle);
+  margin-bottom: var(--space-2);
+}
+.bw-footer-motto {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: var(--text-sm);
+  color: var(--accent-gold);
+}
 
-  /* ── FOUNDING MEMBER OFFER ── */
-  .capture-block--founding{
-    margin-top: var(--space-12);
-    padding: var(--space-12) var(--space-8);
-    border: 1px solid var(--aw-gold);
-    border-radius: var(--r-lg);
-    background:
-      radial-gradient(ellipse at top, var(--aw-gold-glow), transparent 70%),
-      var(--aw-card);
-    box-shadow: var(--shadow-lift), var(--aw-glow-gold);
-    text-align: center;
-  }
-  .eyebrow--founding{
-    color: var(--aw-gold-lt);
-    font-weight: 600;
-  }
-  .capture-block--founding h2{
-    font-size: var(--text-3xl);
-    margin: var(--space-3) 0 var(--space-4);
-    text-align: center;
-  }
-  .capture-block--founding .lede-sm{
-    color: var(--aw-text);
-    max-width: 480px;
-    margin: 0 auto var(--space-8);
-    font-size: var(--text-lg);
-    text-align: center;
-  }
-  .founding-benefits{
-    list-style: none;
-    padding: 0;
-    margin: 0 auto var(--space-8);
-    max-width: 460px;
-    text-align: left;
-    display: grid;
-    gap: var(--space-3);
-  }
-  .founding-benefits li{
-    position: relative;
-    padding-left: var(--space-8);
-    color: var(--aw-cream);
-    font: 400 var(--text-base)/1.5 var(--aw-sans);
-  }
-  .founding-benefits li::before{
-    content: '◆';
-    position: absolute;
-    left: 0;
-    top: 0;
-    color: var(--aw-gold);
-    font-size: var(--text-sm);
-    line-height: 1.7;
-  }
-  .founding-price-row{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-4);
-    margin: var(--space-8) 0 var(--space-6);
-  }
-  @media (min-width: 520px){
-    .founding-price-row{
-      flex-direction: row;
-      justify-content: center;
-      gap: var(--space-8);
-    }
-  }
-  .founding-price{
-    display: flex;
-    align-items: baseline;
-    gap: var(--space-2);
-  }
-  .founding-price__amount{
-    font: 400 var(--text-display)/1 var(--aw-serif);
-    color: var(--aw-cream);
-    letter-spacing: -0.02em;
-  }
-  .founding-price__period{
-    font: 400 var(--text-lg)/1 var(--aw-sans);
-    color: var(--aw-muted);
-  }
-  .founding-cta{
-    display: inline-block;
-    min-height: var(--tap-min);
-    padding: var(--space-4) var(--space-12);
-    background: linear-gradient(180deg, var(--aw-gold-lt), var(--aw-gold));
-    color: var(--aw-bg);
-    border: none;
-    border-radius: var(--r);
-    font: 600 var(--text-lg)/1 var(--aw-sans);
-    letter-spacing: 0.02em;
-    text-decoration: none;
-    cursor: pointer;
-    box-shadow: var(--aw-glow-gold);
-    transition: transform var(--dur-2) var(--ease), box-shadow var(--dur-2) var(--ease);
-    white-space: nowrap;
-  }
-  .founding-cta:hover{
-    transform: translateY(-2px);
-    box-shadow: var(--aw-glow-gold-hi);
-  }
-  .founding-cta:active{ transform: translateY(0); }
-  .founding-fineprint{
-    color: var(--aw-muted);
-    font-size: var(--text-xs);
-    line-height: 1.55;
-    max-width: 460px;
-    margin: var(--space-8) auto 0;
-    text-align: center;
-  }
-  .founding-faq{
-    margin: var(--space-8) auto 0;
-    max-width: 480px;
-    text-align: left;
-  }
-  .founding-faq details{
-    border-top: 1px solid var(--aw-border);
-    padding: var(--space-3) 0;
-  }
-  .founding-faq details:last-child{
-    border-bottom: 1px solid var(--aw-border);
-  }
-  .founding-faq summary{
-    color: var(--aw-cream);
-    font: 500 var(--text-base)/1.4 var(--aw-sans);
-    cursor: pointer;
-    list-style: none;
-    padding-right: var(--space-4);
-    position: relative;
-  }
-  .founding-faq summary::after{
-    content: '+';
-    position: absolute;
-    right: 0;
-    top: 0;
-    color: var(--aw-gold);
-    font: 400 var(--text-lg)/1 var(--aw-sans);
-    transition: transform var(--dur-2) var(--ease);
-  }
-  .founding-faq details[open] summary::after{ content: '−'; }
-  .founding-faq p{
-    color: var(--aw-muted);
-    font-size: var(--text-sm);
-    margin: var(--space-3) 0 0;
-    line-height: 1.6;
-  }
-
-  /* ── WAITLIST (DE-EMPHASIZED ALTERNATIVE) ── */
-  .capture-block--waitlist{
-    margin-top: var(--space-8);
-    padding: var(--space-6) var(--space-6);
-    border: 1px solid var(--aw-border);
-    border-radius: var(--r);
-    background: transparent;
-    box-shadow: none;
-  }
-  .capture-block--waitlist h3{
-    font: 400 var(--text-xl)/1.2 var(--aw-serif);
-    color: var(--aw-cream);
-    margin: 0 0 var(--space-3);
-    text-align: center;
-  }
-  .capture-block--waitlist .capture-lede{
-    color: var(--aw-muted);
-    text-align: center;
-    font-size: var(--text-sm);
-    max-width: 380px;
-    margin: 0 auto var(--space-4);
-  }
+@media (max-width: 480px) {
+  .rp-hero { padding-top: var(--space-12); padding-bottom: var(--space-8); }
+  .rp-freq { grid-template-columns: 1fr; gap: var(--space-1); padding: var(--space-4) var(--space-5); }
+  .rp-freq-hz { min-width: 0; font-size: var(--text-xl); }
+  .rp-founding-card { padding: var(--space-8) var(--space-5); }
+  .rp-price { font-size: 2.8rem; }
+}
 </style>
 </head>
 <body>
-<main>
-  <p class="eyebrow">Identity Asset · Reserved</p>
-  <h1>The Resonance Pack</h1>
-  <p class="lede">A private rotation of frequency audio for your nervous system. Five tracks. Each one tuned for a specific state.</p>
 
-  <h2>What's inside</h2>
-  <ul class="resonance-list">
-    <li>
-      <span class="freq">432 Hz</span>
-      <span class="label">Ground<span class="dim-inline">The floor frequency. For when the day arrives too fast.</span></span>
+<!-- ────────── AMBIENT BOTANICAL ILLUSTRATIONS ────────── -->
+<svg class="bw-flora bw-flora--left" viewBox="0 0 200 500" preserveAspectRatio="xMinYMax meet" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="floraGreenLeft" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#2A4435"/>
+      <stop offset="100%" stop-color="#1B3022"/>
+    </linearGradient>
+  </defs>
+  <g stroke="url(#floraGreenLeft)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 65 500 C 60 442, 92 408, 76 348 C 60 290, 100 252, 84 192 C 68 132, 108 92, 92 40" stroke-width="1.6"/>
+    <path d="M 76 458 Q 116 432, 138 448 Q 118 472, 76 458 Z" fill="rgba(27,48,34,0.12)" stroke-width="0.9"/>
+    <path d="M 76 458 L 130 446" stroke-width="0.5"/>
+    <path d="M 78 420 Q 42 400, 18 414 Q 44 436, 78 420 Z" fill="rgba(27,48,34,0.12)" stroke-width="0.9"/>
+    <path d="M 78 420 L 24 418" stroke-width="0.5"/>
+    <path d="M 80 376 Q 124 354, 148 368 Q 124 390, 80 376 Z" fill="rgba(27,48,34,0.12)" stroke-width="0.9"/>
+    <path d="M 80 376 L 140 366" stroke-width="0.5"/>
+    <path d="M 86 340 C 104 332, 138 326, 158 308 C 168 298, 178 308, 172 330" stroke-width="1.2"/>
+    <g transform="translate(170 308)">
+      <circle r="3" fill="rgba(197,160,89,0.18)" stroke="rgba(197,160,89,0.6)" stroke-width="0.6"/>
+      <circle r="0.9" fill="#C5A059" stroke="none"/>
+    </g>
+    <path d="M 80 308 Q 50 290, 24 304 Q 52 324, 80 308 Z" fill="rgba(27,48,34,0.12)" stroke-width="0.9"/>
+    <path d="M 86 260 Q 124 240, 146 252 Q 124 274, 86 260 Z" fill="rgba(27,48,34,0.12)" stroke-width="0.9"/>
+    <path d="M 90 220 Q 56 202, 32 214 Q 58 236, 90 220 Z" fill="rgba(27,48,34,0.12)" stroke-width="0.9"/>
+    <path d="M 92 178 Q 118 162, 134 174 Q 118 192, 92 178 Z" fill="rgba(27,48,34,0.12)" stroke-width="0.85"/>
+    <path d="M 92 138 Q 64 122, 42 132 Q 66 152, 92 138 Z" fill="rgba(27,48,34,0.12)" stroke-width="0.85"/>
+    <path d="M 94 84 C 110 76, 130 72, 138 84 C 144 92, 130 100, 122 90 C 116 82, 128 80, 130 88" stroke-width="0.8"/>
+    <g transform="translate(92 40)">
+      <circle cx="0" cy="0" r="6" fill="rgba(197,160,89,0.18)" stroke="rgba(197,160,89,0.7)" stroke-width="0.8"/>
+      <circle cx="0" cy="0" r="2.5" fill="rgba(197,160,89,0.4)" stroke="rgba(197,160,89,0.8)" stroke-width="0.5"/>
+      <circle cx="0" cy="0" r="0.9" fill="#C5A059" stroke="none"/>
+    </g>
+  </g>
+</svg>
+
+<svg class="bw-flora bw-flora--right" viewBox="0 0 200 500" preserveAspectRatio="xMaxYMax meet" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="floraGreenRight" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#2A4435"/>
+      <stop offset="100%" stop-color="#1B3022"/>
+    </linearGradient>
+  </defs>
+  <g stroke="url(#floraGreenRight)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 135 500 C 140 442, 108 410, 122 350 C 138 290, 100 254, 114 196 C 130 138, 92 96, 106 44" stroke-width="1.6"/>
+    <ellipse cx="146" cy="456" rx="22" ry="9" transform="rotate(20 146 456)" fill="rgba(27,48,34,0.12)" stroke-width="0.9"/>
+    <ellipse cx="80" cy="424" rx="22" ry="9" transform="rotate(-20 80 424)" fill="rgba(27,48,34,0.12)" stroke-width="0.9"/>
+    <g transform="translate(122 392)">
+      <circle cx="-4" cy="0" r="2.4" fill="rgba(197,160,89,0.22)" stroke="rgba(197,160,89,0.6)" stroke-width="0.5"/>
+      <circle cx="4" cy="-2" r="2.4" fill="rgba(197,160,89,0.22)" stroke="rgba(197,160,89,0.6)" stroke-width="0.5"/>
+      <circle cx="2" cy="4" r="2.4" fill="rgba(197,160,89,0.22)" stroke="rgba(197,160,89,0.6)" stroke-width="0.5"/>
+    </g>
+    <path d="M 114 360 C 96 354, 64 348, 44 332 C 32 322, 22 332, 28 354" stroke-width="1.2"/>
+    <ellipse cx="62" cy="346" rx="14" ry="6" transform="rotate(-15 62 346)" fill="rgba(27,48,34,0.10)" stroke-width="0.7"/>
+    <ellipse cx="38" cy="338" rx="11" ry="5" transform="rotate(-25 38 338)" fill="rgba(27,48,34,0.10)" stroke-width="0.7"/>
+    <ellipse cx="156" cy="310" rx="22" ry="9" transform="rotate(15 156 310)" fill="rgba(27,48,34,0.12)" stroke-width="0.9"/>
+    <ellipse cx="80" cy="282" rx="22" ry="9" transform="rotate(-15 80 282)" fill="rgba(27,48,34,0.12)" stroke-width="0.9"/>
+    <g transform="translate(118 250)">
+      <circle cx="-3" cy="-1" r="2.1" fill="rgba(197,160,89,0.22)" stroke="rgba(197,160,89,0.6)" stroke-width="0.5"/>
+      <circle cx="4" cy="-2" r="2.1" fill="rgba(197,160,89,0.22)" stroke="rgba(197,160,89,0.6)" stroke-width="0.5"/>
+      <circle cx="1" cy="4" r="2.1" fill="rgba(197,160,89,0.22)" stroke="rgba(197,160,89,0.6)" stroke-width="0.5"/>
+    </g>
+    <ellipse cx="148" cy="216" rx="18" ry="7" transform="rotate(15 148 216)" fill="rgba(27,48,34,0.12)" stroke-width="0.85"/>
+    <ellipse cx="80" cy="184" rx="18" ry="7" transform="rotate(-15 80 184)" fill="rgba(27,48,34,0.12)" stroke-width="0.85"/>
+    <path d="M 108 130 C 84 120, 64 124, 58 138 C 54 148, 72 154, 78 144 C 82 138, 70 134, 66 142" stroke-width="0.8"/>
+    <g transform="translate(108 56)">
+      <circle cx="0" cy="0" r="7" fill="rgba(197,160,89,0.18)" stroke="rgba(197,160,89,0.7)" stroke-width="0.8"/>
+      <circle cx="0" cy="0" r="3" fill="rgba(197,160,89,0.4)" stroke="rgba(197,160,89,0.8)" stroke-width="0.5"/>
+      <circle cx="0" cy="0" r="1" fill="#C5A059" stroke="none"/>
+    </g>
+  </g>
+</svg>
+
+<!-- ────────── FLOATING PILL NAV ────────── -->
+<nav class="bw-nav" aria-label="Main">
+  <div class="bw-nav-inner">
+    <a href="/anchorwithin-home/" class="bw-nav-logo">
+      <svg class="bw-nav-anchor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <circle cx="12" cy="5" r="2.5"/>
+        <path d="M12 7.5 V19" stroke-linecap="round"/>
+        <path d="M8 11 H16" stroke-linecap="round"/>
+        <path d="M5 14 C5 17, 8 20, 12 20 C16 20, 19 17, 19 14" stroke-linecap="round"/>
+        <path d="M3 14 L5 14 M19 14 L21 14" stroke-linecap="round"/>
+      </svg>
+      <span>AnchorWithin</span>
+    </a>
+    <a href="/anchorwithin-home/" class="bw-nav-back">← Home</a>
+  </div>
+</nav>
+
+<!-- ────────── HERO ────────── -->
+<header class="rp-hero">
+  <div class="bw-eyebrow">
+    <svg class="bw-eyebrow-flourish" viewBox="0 0 110 14" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true" focusable="false">
+      <path d="M 2 7 L 26 7" stroke-width="0.5" opacity="0.5"/>
+      <path d="M 26 7 C 30 7, 32 4, 36 4 C 40 4, 40 10, 36 10 C 32 10, 32 6, 38 6" stroke-width="0.9"/>
+      <path d="M 42 4 L 45 7 L 42 10 L 39 7 Z" stroke-width="0.6" opacity="0.85"/>
+      <circle cx="42" cy="7" r="0.9" fill="currentColor" stroke="none"/>
+      <g transform="translate(54 7)" stroke-width="0.85">
+        <circle r="2.6"/>
+        <circle r="0.8" fill="currentColor" stroke="none"/>
+        <line x1="-4.4" y1="0" x2="-3.1" y2="0"/>
+        <line x1="3.1" y1="0" x2="4.4" y2="0"/>
+        <line x1="0" y1="-4.4" x2="0" y2="-3.1"/>
+        <line x1="0" y1="3.1" x2="0" y2="4.4"/>
+      </g>
+      <path d="M 66 4 L 69 7 L 66 10 L 63 7 Z" stroke-width="0.6" opacity="0.85"/>
+      <circle cx="66" cy="7" r="0.9" fill="currentColor" stroke="none"/>
+      <path d="M 82 7 C 78 7, 76 4, 72 4 C 68 4, 68 10, 72 10 C 76 10, 76 6, 70 6" stroke-width="0.9"/>
+      <path d="M 82 7 L 108 7" stroke-width="0.5" opacity="0.5"/>
+    </svg>
+    <span>Founding Rotation · Reserved</span>
+    <svg class="bw-eyebrow-flourish bw-eyebrow-flourish--right" viewBox="0 0 110 14" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true" focusable="false">
+      <path d="M 2 7 L 26 7" stroke-width="0.5" opacity="0.5"/>
+      <path d="M 26 7 C 30 7, 32 4, 36 4 C 40 4, 40 10, 36 10 C 32 10, 32 6, 38 6" stroke-width="0.9"/>
+      <path d="M 42 4 L 45 7 L 42 10 L 39 7 Z" stroke-width="0.6" opacity="0.85"/>
+      <circle cx="42" cy="7" r="0.9" fill="currentColor" stroke="none"/>
+      <g transform="translate(54 7)" stroke-width="0.85">
+        <circle r="2.6"/>
+        <circle r="0.8" fill="currentColor" stroke="none"/>
+        <line x1="-4.4" y1="0" x2="-3.1" y2="0"/>
+        <line x1="3.1" y1="0" x2="4.4" y2="0"/>
+        <line x1="0" y1="-4.4" x2="0" y2="-3.1"/>
+        <line x1="0" y1="3.1" x2="0" y2="4.4"/>
+      </g>
+      <path d="M 66 4 L 69 7 L 66 10 L 63 7 Z" stroke-width="0.6" opacity="0.85"/>
+      <circle cx="66" cy="7" r="0.9" fill="currentColor" stroke="none"/>
+      <path d="M 82 7 C 78 7, 76 4, 72 4 C 68 4, 68 10, 72 10 C 76 10, 76 6, 70 6" stroke-width="0.9"/>
+      <path d="M 82 7 L 108 7" stroke-width="0.5" opacity="0.5"/>
+    </svg>
+  </div>
+  <svg class="bw-hero-mark" viewBox="0 0 56 24" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true" focusable="false">
+    <g transform="translate(28 12)">
+      <circle r="6" stroke-width="0.7" stroke-opacity="0.5"/>
+      <circle r="2.8" stroke-width="0.9"/>
+      <circle r="1" fill="currentColor" stroke="none"/>
+      <line x1="-11" y1="0" x2="-7.2" y2="0" stroke-width="0.6"/>
+      <line x1="7.2" y1="0" x2="11" y2="0" stroke-width="0.6"/>
+      <line x1="0" y1="-11" x2="0" y2="-7.2" stroke-width="0.6"/>
+      <line x1="0" y1="7.2" x2="0" y2="11" stroke-width="0.6"/>
+      <line x1="-18" y1="0" x2="-13" y2="0" stroke-width="0.5" stroke-opacity="0.5"/>
+      <line x1="13" y1="0" x2="18" y2="0" stroke-width="0.5" stroke-opacity="0.5"/>
+    </g>
+  </svg>
+  <h1>The <span class="accent">Resonance Pack.</span></h1>
+  <p class="lede">A private rotation of frequency audio for your nervous system. Five tracks. Each one tuned for a specific state.</p>
+</header>
+
+<!-- ────────── ORNAMENT DIVIDER (hero → inside) ────────── -->
+<svg class="bw-section-divider" viewBox="0 0 280 28" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true" focusable="false">
+  <path d="M 6 14 L 92 14" stroke-width="0.5" opacity="0.5"/>
+  <path d="M 92 14 C 96 14, 98 11, 102 11 C 106 11, 106 17, 102 17 C 98 17, 98 13, 104 13" stroke-width="0.9"/>
+  <path d="M 110 11 L 114 14 L 110 17 L 106 14 Z" stroke-width="0.6" opacity="0.8"/>
+  <circle cx="110" cy="14" r="1" fill="currentColor" stroke="none"/>
+  <g transform="translate(126 14)" stroke-width="0.85">
+    <path d="M 0 -8 L 4 -3 L 7 0 L 4 3 L 0 8 L -4 3 L -7 0 L -4 -3 Z" stroke-opacity="0.7"/>
+    <circle r="3.5"/>
+    <circle r="1.1" fill="currentColor" stroke="none"/>
+    <line x1="-5" y1="0" x2="-3.8" y2="0"/>
+    <line x1="3.8" y1="0" x2="5" y2="0"/>
+    <line x1="0" y1="-5" x2="0" y2="-3.8"/>
+    <line x1="0" y1="3.8" x2="0" y2="5"/>
+  </g>
+  <path d="M 142 11 L 146 14 L 142 17 L 138 14 Z" stroke-width="0.6" opacity="0.8"/>
+  <circle cx="142" cy="14" r="1" fill="currentColor" stroke="none"/>
+  <path d="M 160 14 C 156 14, 154 11, 150 11 C 146 11, 146 17, 150 17 C 154 17, 154 13, 148 13" stroke-width="0.9"/>
+  <path d="M 160 14 L 274 14" stroke-width="0.5" opacity="0.5"/>
+</svg>
+
+<!-- ────────── WHAT'S INSIDE ────────── -->
+<section class="rp-inside" aria-label="What's inside the rotation">
+  <h2>What's inside the rotation</h2>
+  <p class="lede-sub">Five frequencies. Five states of your nervous system. Each track tuned to settle into the one your body needs.</p>
+  <ul class="rp-freq-list">
+    <li class="rp-freq">
+      <span class="rp-freq-hz">432 Hz</span>
+      <span class="rp-freq-body">
+        <span class="rp-freq-name">Ground</span>
+        <span class="rp-freq-desc">The floor frequency. For when the day arrives too fast.</span>
+      </span>
     </li>
-    <li>
-      <span class="freq">528 Hz</span>
-      <span class="label">Restore<span class="dim-inline">Cellular repair tone. Quiet recovery from a long stretch.</span></span>
+    <li class="rp-freq">
+      <span class="rp-freq-hz">528 Hz</span>
+      <span class="rp-freq-body">
+        <span class="rp-freq-name">Restore</span>
+        <span class="rp-freq-desc">Cellular repair tone. Quiet recovery from a long stretch.</span>
+      </span>
     </li>
-    <li>
-      <span class="freq">639 Hz</span>
-      <span class="label">Release<span class="dim-inline">Emotional weight, slowly lifting. Grief, anger, the residue.</span></span>
+    <li class="rp-freq">
+      <span class="rp-freq-hz">639 Hz</span>
+      <span class="rp-freq-body">
+        <span class="rp-freq-name">Release</span>
+        <span class="rp-freq-desc">Emotional weight, slowly lifting. Grief, anger, the residue.</span>
+      </span>
     </li>
-    <li>
-      <span class="freq">741 Hz</span>
-      <span class="label">Focus<span class="dim-inline">The working frequency. Clean attention, no urgency.</span></span>
+    <li class="rp-freq">
+      <span class="rp-freq-hz">741 Hz</span>
+      <span class="rp-freq-body">
+        <span class="rp-freq-name">Focus</span>
+        <span class="rp-freq-desc">The working frequency. Clean attention, no urgency.</span>
+      </span>
     </li>
-    <li>
-      <span class="freq">963 Hz</span>
-      <span class="label">Dream<span class="dim-inline">The threshold tone. For the hour before sleep.</span></span>
+    <li class="rp-freq">
+      <span class="rp-freq-hz">963 Hz</span>
+      <span class="rp-freq-body">
+        <span class="rp-freq-name">Dream</span>
+        <span class="rp-freq-desc">The threshold tone. For the hour before sleep.</span>
+      </span>
     </li>
   </ul>
+  <p class="rp-inside-tagline">Built for daily rotation. Designed to live in your routine — not your downloads folder.</p>
+</section>
 
-  <p>Built for daily rotation. Designed to live in your routine — not your downloads folder.</p>
+<!-- ────────── ORNAMENT DIVIDER (inside → founding) ────────── -->
+<svg class="bw-section-divider" viewBox="0 0 280 28" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true" focusable="false">
+  <path d="M 6 14 L 100 14" stroke-width="0.5" opacity="0.5"/>
+  <g transform="translate(120 14)" stroke-width="0.8">
+    <path d="M 0 -2 Q -8 -8, -16 -2 Q -10 4, 0 -2" fill="rgba(197,160,89,0.10)"/>
+    <path d="M -10 0 Q -7 -3, -3 -2" stroke-width="0.5"/>
+    <circle cx="-14" cy="-1" r="0.8" fill="currentColor" stroke="none"/>
+  </g>
+  <g transform="translate(140 14)" stroke-width="0.85">
+    <circle r="4" stroke-opacity="0.7"/>
+    <circle r="1.4" fill="currentColor" stroke="none"/>
+    <path d="M -8 0 L -5 0 M 5 0 L 8 0 M 0 -8 L 0 -5 M 0 5 L 0 8" stroke-opacity="0.6"/>
+  </g>
+  <g transform="translate(160 14)" stroke-width="0.8">
+    <path d="M 0 -2 Q 8 -8, 16 -2 Q 10 4, 0 -2" fill="rgba(197,160,89,0.10)"/>
+    <path d="M 10 0 Q 7 -3, 3 -2" stroke-width="0.5"/>
+    <circle cx="14" cy="-1" r="0.8" fill="currentColor" stroke="none"/>
+  </g>
+  <path d="M 180 14 L 274 14" stroke-width="0.5" opacity="0.5"/>
+</svg>
 
-  <p class="dim">The founding rotation begins now. Become one of the first to receive the Resonance Pack as it's mastered.</p>
-
-  <!-- ── FOUNDING MEMBER OFFER (primary CTA) ── -->
-  <div class="capture-block capture-block--founding">
-    <p class="eyebrow eyebrow--founding">Founding Member · Limited</p>
+<!-- ────────── FOUNDING MEMBER OFFER ────────── -->
+<section class="rp-founding-wrap" aria-label="Founding Member offer">
+  <div class="rp-founding-card">
+    <span class="corner-tl" aria-hidden="true"></span><span class="corner-br" aria-hidden="true"></span>
+    <p class="rp-founding-eyebrow">Founding Member · Limited</p>
     <h2>Become one of the first.</h2>
-    <p class="lede-sm">Join the first generation of the Resonance Pack and receive every track as it enters the rotation.</p>
+    <p class="rp-founding-lede">Join the first generation of the Resonance Pack and receive every track as it enters the rotation.</p>
 
-    <ul class="founding-benefits">
-      <li>The first two tracks within 2–3 weeks (432 Hz Ground, 528 Hz Restore)</li>
-      <li>One new resonance every month after</li>
-      <li>Your rate locks at $19/month — even when the public rate rises</li>
-      <li>Direct reply line to shape the rotation as it grows</li>
-      <li>Cancel anytime from your Stripe portal</li>
+    <ul class="rp-benefits">
+      <li class="rp-benefit"><svg class="rp-benefit-mark" viewBox="0 0 16 16" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="0.8"><path d="M 8 2 L 11 8 L 8 14 L 5 8 Z"/><circle cx="8" cy="8" r="1.6" fill="currentColor" stroke="none"/></g></svg><span>The first two tracks within 2–3 weeks (432 Hz Ground, 528 Hz Restore)</span></li>
+      <li class="rp-benefit"><svg class="rp-benefit-mark" viewBox="0 0 16 16" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="0.8"><path d="M 8 2 L 11 8 L 8 14 L 5 8 Z"/><circle cx="8" cy="8" r="1.6" fill="currentColor" stroke="none"/></g></svg><span>One new resonance every month after</span></li>
+      <li class="rp-benefit"><svg class="rp-benefit-mark" viewBox="0 0 16 16" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="0.8"><path d="M 8 2 L 11 8 L 8 14 L 5 8 Z"/><circle cx="8" cy="8" r="1.6" fill="currentColor" stroke="none"/></g></svg><span>Your rate locks at $19/month — even when the public rate rises</span></li>
+      <li class="rp-benefit"><svg class="rp-benefit-mark" viewBox="0 0 16 16" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="0.8"><path d="M 8 2 L 11 8 L 8 14 L 5 8 Z"/><circle cx="8" cy="8" r="1.6" fill="currentColor" stroke="none"/></g></svg><span>Direct reply line to shape the rotation as it grows</span></li>
+      <li class="rp-benefit"><svg class="rp-benefit-mark" viewBox="0 0 16 16" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="0.8"><path d="M 8 2 L 11 8 L 8 14 L 5 8 Z"/><circle cx="8" cy="8" r="1.6" fill="currentColor" stroke="none"/></g></svg><span>Cancel anytime from your Stripe portal</span></li>
     </ul>
 
-    <div class="founding-price-row">
-      <div class="founding-price">
-        <span class="founding-price__amount">$19</span>
-        <span class="founding-price__period">/ month</span>
-      </div>
-      <!-- TODO: Andy — replace STRIPE_LINK_TODO with the live Stripe Payment Link URL.
-           Create the link in Stripe Dashboard with after-payment redirect to:
-           https://ackccreate.github.io/resonance-pack/welcome/
-           Stripe collects customer email at checkout. -->
-      <a href="STRIPE_LINK_TODO"
-         class="founding-cta"
-         data-aw-placement="resonance-pack-founding"
-         data-aw-offer="founding-member-19">
-        Become a Founding Member
-      </a>
+    <div class="rp-price-row">
+      <span class="rp-price">$19</span>
+      <span class="rp-price-period">/ month</span>
     </div>
 
-    <div class="founding-faq">
+    <!-- TODO: Andy — replace STRIPE_LINK_TODO with the live Stripe Payment Link URL.
+         Create the link in Stripe Dashboard with after-payment redirect to:
+         https://ackccreate.github.io/resonance-pack/welcome/
+         Stripe collects customer email at checkout. -->
+    <a href="STRIPE_LINK_TODO"
+       class="rp-cta"
+       data-aw-placement="resonance-pack-founding"
+       data-aw-offer="founding-member-19">
+      Become a Founding Member
+    </a>
+
+    <div class="rp-faq">
       <details>
         <summary>When do the first tracks arrive?</summary>
         <p>The first two tracks (432 Hz Ground, 528 Hz Restore) are being mastered now. Founding Members receive them by private link within 2–3 weeks of joining. After that, one new resonance enters the rotation each month.</p>
@@ -432,27 +1045,71 @@
       </details>
     </div>
 
-    <p class="founding-fineprint">
+    <p class="rp-fineprint">
       The Resonance Pack is a curated audio rotation for personal listening. It is not a medical, therapeutic, or clinical product, and is not intended to diagnose, treat, cure, or prevent any condition. Always consult a qualified professional for medical concerns.
     </p>
   </div>
+</section>
 
-  <!-- ── WAITLIST (secondary — for those not ready to commit) ── -->
-  <div class="capture-block capture-block--waitlist">
+<!-- ────────── ORNAMENT DIVIDER (founding → waitlist) ────────── -->
+<svg class="bw-section-divider" viewBox="0 0 280 28" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true" focusable="false">
+  <path d="M 6 14 L 92 14" stroke-width="0.5" opacity="0.5"/>
+  <path d="M 92 14 C 96 14, 98 11, 102 11 C 106 11, 106 17, 102 17 C 98 17, 98 13, 104 13" stroke-width="0.9"/>
+  <path d="M 110 11 L 114 14 L 110 17 L 106 14 Z" stroke-width="0.6" opacity="0.8"/>
+  <circle cx="110" cy="14" r="1" fill="currentColor" stroke="none"/>
+  <g transform="translate(126 14)" stroke-width="0.85">
+    <path d="M 0 -8 L 4 -3 L 7 0 L 4 3 L 0 8 L -4 3 L -7 0 L -4 -3 Z" stroke-opacity="0.7"/>
+    <circle r="3.5"/>
+    <circle r="1.1" fill="currentColor" stroke="none"/>
+    <line x1="-5" y1="0" x2="-3.8" y2="0"/>
+    <line x1="3.8" y1="0" x2="5" y2="0"/>
+    <line x1="0" y1="-5" x2="0" y2="-3.8"/>
+    <line x1="0" y1="3.8" x2="0" y2="5"/>
+  </g>
+  <path d="M 142 11 L 146 14 L 142 17 L 138 14 Z" stroke-width="0.6" opacity="0.8"/>
+  <circle cx="142" cy="14" r="1" fill="currentColor" stroke="none"/>
+  <path d="M 160 14 C 156 14, 154 11, 150 11 C 146 11, 146 17, 150 17 C 154 17, 154 13, 148 13" stroke-width="0.9"/>
+  <path d="M 160 14 L 274 14" stroke-width="0.5" opacity="0.5"/>
+</svg>
+
+<!-- ────────── WAITLIST FALLBACK ────────── -->
+<section class="rp-waitlist-wrap" aria-label="Waitlist for later">
+  <div class="rp-waitlist">
+    <span class="corner-tl" aria-hidden="true"></span><span class="corner-br" aria-hidden="true"></span>
     <h3>Not ready yet?</h3>
-    <p class="capture-lede">Stay on the waitlist. We'll send a quiet note when the rotation opens to the public.</p>
-
+    <p class="rp-waitlist-lede">Stay on the waitlist. We'll send a quiet note when the rotation opens to the public.</p>
     <form class="aw-email-capture" data-aw-magnet="resonance-pack" data-aw-placement="resonance-pack-waitlist">
-      <input type="email" name="email" required placeholder="you@domain.com" autocomplete="email" aria-label="Email address">
+      <label for="rp-waitlist-email" class="rp-reserve-label">Where to send the note</label>
+      <input id="rp-waitlist-email" type="email" name="email" required placeholder="you@domain.com" autocomplete="email">
       <input type="text" name="aw_hp" tabindex="-1" autocomplete="off" class="aw-honeypot" aria-hidden="true">
       <button type="submit" class="aw-email-capture__submit">Join the waitlist</button>
       <p class="aw-email-capture__msg" role="status" aria-live="polite"></p>
     </form>
   </div>
-</main>
+</section>
 
-<footer>
-  <a href="/anchorwithin-home/">Return to AnchorWithin</a>
+<!-- ────────── FOOTER ────────── -->
+<footer class="bw-footer">
+  <div class="bw-footer-logo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+      <circle cx="12" cy="5" r="2.5"/>
+      <path d="M12 7.5 V19" stroke-linecap="round"/>
+      <path d="M8 11 H16" stroke-linecap="round"/>
+      <path d="M5 14 C5 17, 8 20, 12 20 C16 20, 19 17, 19 14" stroke-linecap="round"/>
+      <path d="M3 14 L5 14 M19 14 L21 14" stroke-linecap="round"/>
+    </svg>
+    <span>AnchorWithin</span>
+  </div>
+  <div class="bw-footer-links">
+    <a href="/anchorwithin-home/">Home</a>
+    <a href="/breatheworld/">BreatheWorld</a>
+    <a href="/anchorwithin-privacy/">Privacy</a>
+    <a href="/anchorwithin-tos/">Terms</a>
+    <a href="mailto:anchorwithin.daily1@gmail.com">Contact</a>
+  </div>
+  <p class="bw-footer-copy">© 2026 AnchorWithin LLC · The Resonance Pack</p>
+  <p class="bw-footer-motto">the anchor holds</p>
 </footer>
+
 </body>
 </html>
