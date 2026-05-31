@@ -46,11 +46,11 @@
   --gold-metallic:    linear-gradient(145deg, #E6B85C 0%, #A3813D 100%);
   --panic-gradient:   linear-gradient(135deg, #8B2626 0%, #5C1919 100%);
 
-  /* Skeuomorphic & depth tokens */
-  --soft-inset:       inset 3px 3px 8px #E0DDD7, inset -3px -3px 8px #FFFFFF;
-  --soft-inset-deep:  inset 4px 4px 12px #D8D5CE, inset -4px -4px 12px #FFFFFF;
-  --soft-bevel:       2px 2px 5px #D1D1D1, -2px -2px 5px #FFFFFF;
-  --soft-bevel-lift:  6px 6px 16px #CECBC3, -6px -6px 16px #FFFFFF;
+  /* Skeuomorphic & depth tokens — Casey's spec: pressed-into-canvas neumorphism */
+  --soft-inset:       inset 2px 2px 6px #D6CEB2, inset -2px -2px 6px #FFFFFF;
+  --soft-inset-deep:  inset 4px 4px 10px #C8C0A4, inset -4px -4px 10px #FFFFFF;
+  --soft-bevel:       3px 3px 7px #CFC8B0, -3px -3px 7px #FFFFFF;
+  --soft-bevel-lift:  8px 8px 22px #C2BAA0, -8px -8px 22px #FFFFFF;
   --btn-shadow:       0 4px 15px rgba(197, 160, 89, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.45);
   --btn-shadow-hi:    0 6px 22px rgba(197, 160, 89, 0.40), inset 0 1px 1px rgba(255, 255, 255, 0.55);
   --transition-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
@@ -204,7 +204,35 @@ h1, h2, h3 {
   -webkit-backdrop-filter: blur(14px) saturate(140%);
   border: 0.5px solid var(--accent-gold-soft);
   border-radius: var(--r-pill);
-  box-shadow: 0 6px 28px rgba(27, 48, 34, 0.07);
+  box-shadow:
+    0 6px 28px rgba(27, 48, 34, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -1px 0 rgba(197, 160, 89, 0.18);
+  position: relative;
+}
+/* Inner gold double-trim line (micro filigree feel) */
+.bw-nav-inner::before {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border-radius: var(--r-pill);
+  border: 0.5px solid rgba(197, 160, 89, 0.22);
+  pointer-events: none;
+}
+/* Tiny metallic gold rivet ornaments — one on each end of the pill, inside the inner trim */
+.bw-nav-inner::after {
+  content: '';
+  position: absolute;
+  left: var(--space-4);
+  right: var(--space-4);
+  top: 50%;
+  height: 1px;
+  background:
+    radial-gradient(circle 3px at 0% 50%, #C5A059 0%, #C5A059 30%, transparent 60%),
+    radial-gradient(circle 3px at 100% 50%, #C5A059 0%, #C5A059 30%, transparent 60%);
+  transform: translateY(-50%);
+  pointer-events: none;
+  opacity: 0.6;
 }
 .bw-nav-logo {
   display: inline-flex;
@@ -323,15 +351,15 @@ h1, h2, h3 {
   line-height: 1.55;
 }
 
-/* Wellness note — paper-card with gold "i" */
+/* Wellness note — paper-card with gold "i", pressed into the canvas */
 .bw-note {
   max-width: 580px;
   margin: 0 auto;
   padding: var(--space-4) var(--space-6) var(--space-4) calc(var(--space-6) + var(--space-8));
-  background: var(--bg-canvas);
+  background: var(--bg-alabaster);
   border: 1px solid var(--accent-gold-faint);
   border-radius: var(--r);
-  box-shadow: var(--soft-bevel);
+  box-shadow: var(--soft-inset);
   font-family: 'Inter', sans-serif;
   font-size: var(--text-sm);
   color: var(--text-muted);
@@ -514,6 +542,7 @@ h1, h2, h3 {
   width: 220px;
   height: 220px;
   border-radius: 50%;
+  overflow: hidden;
   z-index: 4;
   background:
     /* Sharp specular highlight (polished surface) */
@@ -604,6 +633,21 @@ h1, h2, h3 {
   #breathCircle.hold-after-exhale { animation: none; transition: none; }
 }
 
+/* Antique-chart texture overlay inside the orb (sits behind the text) */
+.orb-texture {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+.phase-label,
+.countdown {
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.7);
+}
 .phase-label {
   font-family: 'Inter', sans-serif;
   font-size: var(--text-xs);
@@ -759,6 +803,7 @@ h1, h2, h3 {
   border: 0.5px solid var(--accent-gold-faint);
   border-left: 2px solid var(--accent-gold-dim);
   border-radius: var(--r);
+  box-shadow: var(--soft-inset);
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
   font-size: var(--text-sm);
@@ -857,7 +902,7 @@ h1, h2, h3 {
   background: var(--bg-alabaster);
   border: 0.5px solid var(--accent-gold-faint);
   border-radius: var(--r-lg);
-  box-shadow: var(--soft-bevel);
+  box-shadow: var(--soft-inset);
 }
 
 /* Email capture form — Serene Canvas treatment */
@@ -1581,6 +1626,39 @@ h1, h2, h3 {
       </text>
     </svg>
     <div id="breathCircle" role="status">
+      <svg class="orb-texture" viewBox="0 0 220 220" aria-hidden="true" focusable="false">
+        <!-- Meridian lines (vertical ellipses simulating globe rotation) -->
+        <ellipse cx="110" cy="110" rx="100" ry="100" fill="none" stroke="rgba(27,48,34,0.10)" stroke-width="0.5"/>
+        <ellipse cx="110" cy="110" rx="78"  ry="100" fill="none" stroke="rgba(27,48,34,0.07)" stroke-width="0.4"/>
+        <ellipse cx="110" cy="110" rx="54"  ry="100" fill="none" stroke="rgba(27,48,34,0.06)" stroke-width="0.4"/>
+        <ellipse cx="110" cy="110" rx="28"  ry="100" fill="none" stroke="rgba(27,48,34,0.05)" stroke-width="0.4"/>
+        <!-- Equator + latitude lines (horizontal ellipses) -->
+        <line x1="14" y1="110" x2="206" y2="110" stroke="rgba(27,48,34,0.10)" stroke-width="0.5"/>
+        <ellipse cx="110" cy="110" rx="100" ry="78" fill="none" stroke="rgba(27,48,34,0.06)" stroke-width="0.4"/>
+        <ellipse cx="110" cy="110" rx="100" ry="54" fill="none" stroke="rgba(27,48,34,0.05)" stroke-width="0.4"/>
+        <ellipse cx="110" cy="110" rx="100" ry="28" fill="none" stroke="rgba(27,48,34,0.04)" stroke-width="0.4"/>
+        <!-- 8-point compass ticks at inner rim (just inside the gold border) -->
+        <g stroke="rgba(197,160,89,0.40)" stroke-width="0.6" stroke-linecap="round">
+          <line x1="110" y1="12" x2="110" y2="20"/>
+          <line x1="110" y1="200" x2="110" y2="208"/>
+          <line x1="12" y1="110" x2="20" y2="110"/>
+          <line x1="200" y1="110" x2="208" y2="110"/>
+        </g>
+        <g stroke="rgba(197,160,89,0.25)" stroke-width="0.4" stroke-linecap="round">
+          <line x1="180" y1="40" x2="174" y2="46"/>
+          <line x1="40" y1="40" x2="46" y2="46"/>
+          <line x1="180" y1="180" x2="174" y2="174"/>
+          <line x1="40" y1="180" x2="46" y2="174"/>
+        </g>
+        <!-- Tiny compass marker at center (sits behind the countdown number) -->
+        <g transform="translate(110 110)" stroke="rgba(197,160,89,0.22)" fill="none" stroke-width="0.4" stroke-linecap="round">
+          <line x1="-9" y1="0" x2="-4" y2="0"/>
+          <line x1="4" y1="0" x2="9" y2="0"/>
+          <line x1="0" y1="-9" x2="0" y2="-4"/>
+          <line x1="0" y1="4" x2="0" y2="9"/>
+          <circle r="2.2"/>
+        </g>
+      </svg>
       <div class="phase-label" id="phaseLabel">Ready</div>
       <div class="countdown" id="countdown" aria-live="polite">4</div>
     </div>
