@@ -1978,8 +1978,11 @@ function initAudio() {
 }
 
 var CHIMES = {
-  inhale: { freqs: [528, 1056], duration: 1.4, glide: 0     },
-  exhale: { freqs: [528, 264],  duration: 1.7, glide: -0.20 }
+  // Inhale: 528 Hz "Restore" fundamental + octave up — bright bell, stable
+  inhale: { freqs: [528, 1056], duration: 1.4, glide: 0 },
+  // Exhale: 396 Hz "Liberation" fundamental + octave down — lower bell, stable
+  // (no descending glide — sits a perfect fourth below the inhale, settled and grounded)
+  exhale: { freqs: [396, 198],  duration: 1.8, glide: 0 }
 };
 
 function playChime(phase) {
