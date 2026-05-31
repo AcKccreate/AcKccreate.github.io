@@ -1040,6 +1040,87 @@ h1, h2, h3 {
 }
 
 /* ──────────────────────────────────────────────────────────────────
+   AUDIO CONTROL — bottom-left, matched to nav pill aesthetic
+   ────────────────────────────────────────────────────────────────── */
+.bw-audio-control {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  background: rgba(250, 250, 247, 0.85);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border: 0.5px solid var(--accent-gold-soft);
+  border-radius: var(--r-pill);
+  box-shadow:
+    0 4px 20px rgba(27, 48, 34, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.50),
+    inset 0 -1px 0 rgba(197, 160, 89, 0.15);
+}
+.bw-audio-mute {
+  background: transparent;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: var(--accent-gold);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-smooth);
+  border-radius: 50%;
+  min-width: 28px;
+  min-height: 28px;
+}
+.bw-audio-mute:hover { color: var(--text-primary); }
+.bw-audio-mute svg { width: 18px; height: 18px; }
+.bw-audio-mute .bw-mute-line {
+  opacity: 0;
+  transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.bw-audio-mute[data-state="muted"] { color: var(--text-subtle); }
+.bw-audio-mute[data-state="muted"] .bw-wave { opacity: 0.25; }
+.bw-audio-mute[data-state="muted"] .bw-mute-line { opacity: 1; }
+
+.bw-audio-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 80px;
+  height: 4px;
+  background: rgba(197, 160, 89, 0.30);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+.bw-audio-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  background: linear-gradient(145deg, #E6B85C, #A3813D);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(27, 48, 34, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.50);
+}
+.bw-audio-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: linear-gradient(145deg, #E6B85C, #A3813D);
+  border-radius: 50%;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.50);
+  box-shadow: 0 2px 4px rgba(27, 48, 34, 0.25);
+}
+@media (max-width: 480px) {
+  .bw-audio-control { bottom: 18px; left: 18px; padding: var(--space-2) var(--space-3); gap: var(--space-2); }
+  .bw-audio-slider { width: 60px; }
+}
+
+/* ──────────────────────────────────────────────────────────────────
    PANIC ANCHOR — wax seal in lower-right
    ────────────────────────────────────────────────────────────────── */
 #panicBtn {
@@ -1358,6 +1439,19 @@ h1, h2, h3 {
     <path d="M3 14 L5 14 M19 14 L21 14" stroke-linecap="round"/>
   </svg>
 </button>
+
+<!-- ────────── AUDIO CONTROL — bottom-left, mirror of the panic seal ────────── -->
+<div class="bw-audio-control" id="audioControl" role="group" aria-label="Breathing chime audio">
+  <button type="button" class="bw-audio-mute" id="audioMuteBtn" aria-label="Toggle breathing chimes" data-state="on">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polygon points="11 5, 6 9, 2 9, 2 15, 6 15, 11 19" fill="currentColor" stroke="currentColor"/>
+      <path d="M 14 9.5 Q 16.5 12, 14 14.5" class="bw-wave"/>
+      <path d="M 16.5 7 Q 21 12, 16.5 17" class="bw-wave"/>
+      <line class="bw-mute-line" x1="3" y1="3" x2="21" y2="21" stroke-width="1.7"/>
+    </svg>
+  </button>
+  <input type="range" id="audioVolume" min="0" max="100" value="30" step="1" class="bw-audio-slider" aria-label="Chime volume">
+</div>
 
 <!-- ────────── SANCTUARY OVERLAY — preserves #sanctuary contract ────────── -->
 <div id="sanctuary" role="dialog" aria-modal="true" aria-label="Calm sanctuary">
@@ -1846,6 +1940,127 @@ h1, h2, h3 {
 <script>
 function trackEvent(c, a, l){ try { if (window.aw_track) aw_track(c, a, l); } catch(e) {} }
 
+/* ─────────────────────────────────────────────────────────────────
+   AUDIO ENGINE — Web Audio API generated chimes
+   - 528 Hz fundamental ("Restore" frequency from Resonance Pack)
+   - Inhale: ascending dual-oscillator chord (528 + 1056 octave)
+   - Exhale: descending glissando (528 → ~422 Hz) with octave-down harmonic
+   - Default volume: 30 % · persists across sessions in localStorage
+   - Respects prefers-reduced-motion as a soft mute default
+   - Lazy-init on first user gesture (Begin Breathing) — no autoplay
+   ───────────────────────────────────────────────────────────────── */
+var _audioCtx = null;
+var _masterGain = null;
+var _audioVolume = 0.3;
+var _audioMuted = false;
+
+try {
+  var savedVol = localStorage.getItem('bw_audio_volume');
+  if (savedVol !== null) _audioVolume = Math.max(0, Math.min(1, parseFloat(savedVol)));
+  var savedMute = localStorage.getItem('bw_audio_muted');
+  if (savedMute === '1') _audioMuted = true;
+  // Soft default: if reduced-motion preferred AND user hasn't expressed an audio preference, start muted
+  if (savedMute === null && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    _audioMuted = true;
+  }
+} catch(e) {}
+
+function initAudio() {
+  if (_audioCtx) return;
+  try {
+    var Ctor = window.AudioContext || window.webkitAudioContext;
+    if (!Ctor) return;
+    _audioCtx = new Ctor();
+    _masterGain = _audioCtx.createGain();
+    _masterGain.gain.value = _audioMuted ? 0 : _audioVolume;
+    _masterGain.connect(_audioCtx.destination);
+  } catch(e) { /* silent — audio is optional */ }
+}
+
+var CHIMES = {
+  inhale: { freqs: [528, 1056], duration: 1.4, glide: 0     },
+  exhale: { freqs: [528, 264],  duration: 1.7, glide: -0.20 }
+};
+
+function playChime(phase) {
+  if (_audioMuted || _audioVolume <= 0) return;
+  initAudio();
+  if (!_audioCtx) return;
+  if (_audioCtx.state === 'suspended') {
+    try { _audioCtx.resume(); } catch(e) {}
+  }
+  var tuning = CHIMES[phase];
+  if (!tuning) return;
+  var now = _audioCtx.currentTime;
+  try {
+    tuning.freqs.forEach(function(freq, i) {
+      var osc = _audioCtx.createOscillator();
+      var env = _audioCtx.createGain();
+      var filter = _audioCtx.createBiquadFilter();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now);
+      if (tuning.glide) {
+        osc.frequency.exponentialRampToValueAtTime(freq * (1 + tuning.glide), now + 0.6);
+      }
+      filter.type = 'lowpass';
+      filter.frequency.value = 3500;
+      filter.Q.value = 0.5;
+      var peak = 0.40 / (i + 1);
+      env.gain.setValueAtTime(0.0001, now);
+      env.gain.linearRampToValueAtTime(peak, now + 0.09);
+      env.gain.exponentialRampToValueAtTime(0.0001, now + tuning.duration);
+      osc.connect(filter);
+      filter.connect(env);
+      env.connect(_masterGain);
+      osc.start(now);
+      osc.stop(now + tuning.duration + 0.1);
+    });
+  } catch(e) { /* silent fail */ }
+}
+
+function setAudioVolume(percent) {
+  _audioVolume = Math.max(0, Math.min(1, parseFloat(percent) / 100));
+  if (_audioVolume > 0) _audioMuted = false;
+  try {
+    localStorage.setItem('bw_audio_volume', String(_audioVolume));
+    localStorage.setItem('bw_audio_muted', _audioMuted ? '1' : '0');
+  } catch(e) {}
+  if (_masterGain) _masterGain.gain.value = _audioMuted ? 0 : _audioVolume;
+  updateAudioUI();
+}
+
+function toggleAudioMute() {
+  _audioMuted = !_audioMuted;
+  try { localStorage.setItem('bw_audio_muted', _audioMuted ? '1' : '0'); } catch(e) {}
+  if (_masterGain) _masterGain.gain.value = _audioMuted ? 0 : _audioVolume;
+  updateAudioUI();
+}
+
+function updateAudioUI() {
+  var slider = document.getElementById('audioVolume');
+  var btn = document.getElementById('audioMuteBtn');
+  if (slider) {
+    var target = String(Math.round(_audioVolume * 100));
+    if (slider.value !== target) slider.value = target;
+  }
+  if (btn) btn.setAttribute('data-state', _audioMuted ? 'muted' : 'on');
+}
+
+(function() {
+  function wire() {
+    updateAudioUI();
+    var slider = document.getElementById('audioVolume');
+    var btn = document.getElementById('audioMuteBtn');
+    if (slider) slider.addEventListener('input', function(e) { setAudioVolume(e.target.value); });
+    if (btn) btn.addEventListener('click', toggleAudioMute);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', wire);
+  } else {
+    wire();
+  }
+})();
+
 /* Breath engine — 4-4-4-4 box breathing (timing logic preserved verbatim) */
 var PHASES = [
   { l: 'Inhale', d: 4, cls: 'inhale' },
@@ -1904,6 +2119,8 @@ function applyPhase(){
     var el = document.getElementById('ivl' + i);
     if (el) (i === _ph) ? el.classList.add('active') : el.classList.remove('active');
   }
+  // Audio chime — inhale and exhale only (holds are silent by design)
+  if (p.cls === 'inhale' || p.cls === 'exhale') playChime(p.cls);
 }
 
 function stopBreath(){
