@@ -512,6 +512,274 @@ body > * { position: relative; z-index: 1; }
   color: var(--aw-cream);
   margin-bottom: var(--space-6);
 }
+/* ═══════════════════════════════════════════════════════════════════
+   PREMIUM POLISH — Casey brand spec (gold #f0d060) + premium feel
+   Surgical additions only. Page layout unchanged.
+   ═══════════════════════════════════════════════════════════════════ */
+:root {
+  --bw-gold:           #f0d060;
+  --bw-gold-soft:      rgba(240, 208, 96, 0.70);
+  --bw-gold-mid:       rgba(240, 208, 96, 0.30);
+  --bw-gold-faint:     rgba(240, 208, 96, 0.15);
+  --bw-gold-glow:      rgba(240, 208, 96, 0.30);
+  --bw-gold-glow-hi:   rgba(240, 208, 96, 0.45);
+  --bw-gold-tint:      rgba(240, 208, 96, 0.03);
+  --bw-gold-faintest:  rgba(240, 208, 96, 0.10);
+  --bw-deep-shadow:    rgba(0, 0, 0, 0.40);
+  --bw-highlight:      rgba(255, 255, 255, 0.20);
+  --bw-surface-faint:  rgba(255, 255, 255, 0.02);
+  --bw-ease:           cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* CHANGE 4 — Anchor logo color (override generic nav color to brand gold) */
+.aw-nav .aw-nav-anchor { color: var(--bw-gold); }
+
+/* CHANGE 7 — Ornamental flourishes around the hero eyebrow */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  width: 100%;
+}
+.eyebrow-text { display: inline-block; }
+.eyebrow-flourish {
+  width: 70px;
+  height: 12px;
+  flex-shrink: 0;
+  stroke: var(--bw-gold);
+  stroke-width: 1;
+  fill: none;
+  opacity: 0.3;
+}
+.eyebrow-flourish--right { transform: scaleX(-1); }
+
+/* CHANGE 8 — Interval boxes pressed-in feel */
+.pg {
+  background: var(--bw-surface-faint);
+  border: 1px solid var(--bw-gold-faint);
+  box-shadow:
+    inset 1px 1px 3px var(--bw-deep-shadow),
+    inset -1px -1px 1px var(--bw-gold-faintest);
+  transition:
+    border-color var(--dur-2) var(--bw-ease),
+    box-shadow   var(--dur-2) var(--bw-ease);
+}
+.pg:hover {
+  border-color: var(--bw-gold-mid);
+  box-shadow:
+    inset 1px 1px 3px var(--bw-deep-shadow),
+    inset -1px -1px 2px var(--bw-gold-glow),
+    inset 0 0 12px var(--bw-gold-faintest);
+}
+
+/* CHANGE 1 — Botanical SVGs replace the tree emojis (staggered reveal driven by JS) */
+.world-trees {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  font-size: 0;       /* prior 2.5rem belonged to emoji glyphs — no longer needed */
+  letter-spacing: 0;
+}
+.world-tree {
+  width: 44px;
+  height: 44px;
+  stroke: var(--bw-gold);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  opacity: 0.2;
+  transition: opacity 1.2s var(--bw-ease);
+}
+
+/* CHANGE 2 — Breathing aura around the circle (and DM Serif countdown was already in place) */
+#breathCircle {
+  /* extend existing transition to ease box-shadow with the same organic curve */
+  transition:
+    transform 4s var(--bw-ease),
+    background 2s var(--bw-ease),
+    box-shadow 4s var(--bw-ease);
+}
+#breathCircle.inhale {
+  box-shadow:
+    var(--aw-glow-gold-hi),
+    inset 0 0 48px var(--aw-gold-glow),
+    0 0 80px var(--bw-gold-glow);
+}
+#breathCircle.hold-after-inhale {
+  transform: scale(1.18);
+  box-shadow:
+    var(--aw-glow-gold-hi),
+    inset 0 0 48px var(--aw-gold-glow),
+    0 0 80px var(--bw-gold-glow);
+  animation: bw-aura-pulse-hold 4s ease-in-out;
+}
+#breathCircle.exhale {
+  box-shadow:
+    var(--aw-glow-purple),
+    inset 0 0 24px var(--aw-purple-glow),
+    0 0 0 transparent;
+}
+#breathCircle.hold-after-exhale {
+  transform: scale(1);
+  box-shadow:
+    var(--aw-glow-purple),
+    inset 0 0 24px var(--aw-purple-glow),
+    0 0 0 transparent;
+  animation: bw-aura-pulse-empty 4s ease-in-out;
+}
+@keyframes bw-aura-pulse-hold {
+  0%, 100% { box-shadow: var(--aw-glow-gold-hi), inset 0 0 48px var(--aw-gold-glow), 0 0 80px var(--bw-gold-glow); }
+  50%      { box-shadow: var(--aw-glow-gold-hi), inset 0 0 48px var(--aw-gold-glow), 0 0 80px rgba(240, 208, 96, 0.35); }
+}
+@keyframes bw-aura-pulse-empty {
+  0%, 100% { box-shadow: var(--aw-glow-purple), inset 0 0 24px var(--aw-purple-glow), 0 0 0 transparent; }
+  50%      { box-shadow: var(--aw-glow-purple), inset 0 0 24px var(--aw-purple-glow), 0 0 14px rgba(240, 208, 96, 0.04); }
+}
+@media (prefers-reduced-motion: reduce) {
+  #breathCircle.hold-after-inhale,
+  #breathCircle.hold-after-exhale { animation: none; }
+}
+
+/* CHANGE 5 — AR/VR button refined ghost button */
+.xr-btn {
+  background: transparent;
+  border: 1px solid var(--bw-gold-mid);
+  color: var(--bw-gold-soft);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  transition: box-shadow var(--dur-2) var(--bw-ease), border-color var(--dur-2) var(--bw-ease);
+}
+.xr-btn:hover { box-shadow: 0 0 12px var(--bw-gold-glow); }
+.xr-btn:disabled { cursor: not-allowed; }
+
+/* CHANGE 6 — Premium depth for both "Start Pro" buttons */
+.aw-nav .aw-btn-primary,
+.stripe-btn {
+  background: linear-gradient(145deg, #f0d060 0%, #d4b04a 100%);
+  box-shadow:
+    0 2px 8px var(--bw-gold-glow),
+    inset 0 1px 0 var(--bw-highlight);
+  transition:
+    transform   var(--dur-1) var(--bw-ease),
+    box-shadow  var(--dur-2) var(--bw-ease),
+    background  var(--dur-2) var(--bw-ease);
+}
+.aw-nav .aw-btn-primary:hover,
+.stripe-btn:hover {
+  background: linear-gradient(145deg, #f0d060 0%, #d4b04a 100%);
+  transform: scale(1.02) translateY(-1px);
+  box-shadow:
+    0 4px 12px var(--bw-gold-glow-hi),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+.aw-nav .aw-btn-primary:active,
+.stripe-btn:active {
+  transform: scale(0.98);
+  box-shadow:
+    0 1px 4px rgba(240, 208, 96, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* CHANGE 9 — Wellness disclaimer as elegant thoughtful note (not a warning box) */
+.med-disc,
+.disc-box {
+  background: var(--bw-gold-tint);
+  border: 1px solid var(--bw-gold-faint);
+  border-left: 1px solid var(--bw-gold-faint);   /* override original 3px gold stripe */
+  position: relative;
+  padding: var(--space-4) var(--space-6) var(--space-4) calc(var(--space-6) + var(--space-8));
+  line-height: 1.7;
+  font-weight: 300;
+}
+.med-disc::before,
+.disc-box::before {
+  content: 'i';
+  position: absolute;
+  left: var(--space-4);
+  top: var(--space-4);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid var(--bw-gold-faint);
+  background: rgba(240, 208, 96, 0.05);
+  font-family: var(--aw-serif);
+  font-style: italic;
+  font-size: 13px;
+  line-height: 20px;
+  text-align: center;
+  color: var(--bw-gold);
+}
+.med-disc strong,
+.disc-box strong {
+  font-size: 0.95em;
+  font-weight: 600;
+  color: var(--aw-cream);
+  transition: color var(--dur-2) var(--bw-ease),
+              text-decoration-color var(--dur-2) var(--bw-ease);
+}
+.med-disc strong:hover,
+.disc-box strong:hover {
+  color: var(--bw-gold);
+  text-decoration: underline;
+  text-decoration-color: var(--bw-gold);
+  text-underline-offset: 3px;
+}
+
+/* CHANGE 3 — Bridge to Resonance Pack (replaces auto-injected footer band) */
+.bw-bridge {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--space-12) var(--space-6);
+  text-align: center;
+}
+.bw-bridge::before {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 1px;
+  margin: 0 auto var(--space-8);
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--bw-gold) 50%,
+    transparent 100%);
+  opacity: 0.4;
+}
+.bw-bridge-kicker {
+  font-family: var(--aw-sans);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--bw-gold);
+  opacity: 0.7;
+  margin: 0 0 var(--space-3);
+}
+.bw-bridge-heading {
+  font-family: var(--aw-serif);
+  font-size: var(--text-2xl);
+  color: var(--aw-cream);
+  margin: 0 0 var(--space-4);
+  line-height: 1.2;
+}
+.bw-bridge-copy {
+  font-family: var(--aw-sans);
+  font-size: var(--text-base);
+  color: var(--aw-text);
+  max-width: 540px;
+  margin: 0 auto var(--space-8);
+  line-height: 1.65;
+}
+.bw-bridge-form {
+  max-width: 460px;
+  margin: 0 auto;
+}
+/* End premium polish ──────────────────────────────────────────────── */
+
 .san-close {
   min-height: var(--tap-min);
   padding: 0 var(--space-8);
@@ -601,7 +869,7 @@ footer.aw-footer {
 <script src="/assets/js/aw-email-capture.js" defer></script>
 <script src="/assets/js/aw-distribution.js" defer></script>
 </head>
-<body data-aw-distribution="footer,exit" data-aw-magnet="resonance-pack">
+<body data-aw-distribution="exit" data-aw-magnet="resonance-pack">
 
 <!-- ────────── NAV ────────── -->
 <nav class="aw-nav">
@@ -636,7 +904,11 @@ footer.aw-footer {
 
 <!-- ────────── HERO ────────── -->
 <header id="hero">
-  <div class="eyebrow">BreatheWorld · by AnchorWithin</div>
+  <div class="eyebrow">
+    <svg class="eyebrow-flourish eyebrow-flourish--left" viewBox="0 0 70 12" aria-hidden="true" focusable="false"><path d="M 2 6 L 44 6"/><path d="M 48 6 Q 52 2, 56 6 Q 60 10, 64 6 L 68 6"/></svg>
+    <span class="eyebrow-text">BreatheWorld · by AnchorWithin</span>
+    <svg class="eyebrow-flourish eyebrow-flourish--right" viewBox="0 0 70 12" aria-hidden="true" focusable="false"><path d="M 2 6 L 44 6"/><path d="M 48 6 Q 52 2, 56 6 Q 60 10, 64 6 L 68 6"/></svg>
+  </div>
   <h1>Find your<br><span>calm anywhere.</span></h1>
   <p class="sub">Guided box breathing with a world that clears as you breathe. Simple, powerful, always with you.</p>
   <div class="med-disc" role="note">
@@ -674,7 +946,13 @@ footer.aw-footer {
   <p class="wp-sub">As you breathe, the fog lifts. Your world becomes clearer with every cycle.</p>
   <div class="world-canvas" role="img" aria-label="World preview — clears as you breathe">
     <div class="world-fog" id="worldFog"></div>
-    <div class="world-trees" id="worldTrees">🌲🌿🌳🌱🌲</div>
+    <div class="world-trees" id="worldTrees" aria-hidden="true">
+      <svg class="world-tree" viewBox="0 0 44 44" focusable="false"><line x1="22" y1="6" x2="22" y2="40"/><line x1="22" y1="14" x2="14" y2="10"/><line x1="22" y1="14" x2="30" y2="10"/><line x1="22" y1="20" x2="13" y2="17"/><line x1="22" y1="20" x2="31" y2="17"/><line x1="22" y1="27" x2="12" y2="24"/><line x1="22" y1="27" x2="32" y2="24"/><line x1="22" y1="34" x2="13" y2="32"/><line x1="22" y1="34" x2="31" y2="32"/></svg>
+      <svg class="world-tree" viewBox="0 0 44 44" focusable="false"><path d="M 8 38 Q 14 28, 18 18 T 28 6"/><line x1="14" y1="32" x2="10" y2="30"/><line x1="18" y1="26" x2="13" y2="25"/><line x1="21" y1="20" x2="16" y2="20"/><line x1="23" y1="14" x2="19" y2="15"/><line x1="14" y1="32" x2="20" y2="30"/><line x1="18" y1="26" x2="24" y2="25"/><line x1="21" y1="20" x2="26" y2="21"/><line x1="23" y1="14" x2="28" y2="16"/></svg>
+      <svg class="world-tree" viewBox="0 0 44 44" focusable="false"><path d="M 22 6 C 14 12, 10 16, 12 22 C 8 24, 8 28, 14 30 C 12 34, 16 38, 22 38 C 28 38, 32 34, 30 30 C 36 28, 36 24, 32 22 C 34 16, 30 12, 22 6 Z"/><line x1="22" y1="6" x2="22" y2="38"/></svg>
+      <svg class="world-tree" viewBox="0 0 44 44" focusable="false"><line x1="22" y1="40" x2="22" y2="22"/><path d="M 22 22 Q 12 18, 10 8 Q 18 12, 22 22"/><path d="M 22 22 Q 32 18, 34 8 Q 26 12, 22 22"/></svg>
+      <svg class="world-tree" viewBox="0 0 44 44" focusable="false"><line x1="22" y1="38" x2="22" y2="42"/><path d="M 22 8 L 12 22 L 17 22 L 10 30 L 16 30 L 8 38 L 36 38 L 28 30 L 34 30 L 27 22 L 32 22 Z"/></svg>
+    </div>
     <div class="world-label">Breathe to reveal your world</div>
   </div>
   <p class="cam-note">
@@ -706,6 +984,19 @@ footer.aw-footer {
   </div>
 
   <button class="xr-btn" disabled aria-label="Enter AR/VR breathing experience — coming soon">🥽 Enter AR / VR World</button>
+</section>
+
+<!-- ────────── BRIDGE TO RESONANCE PACK ────────── -->
+<section class="bw-bridge" aria-label="The Resonance Pack — next step">
+  <p class="bw-bridge-kicker">Going Deeper</p>
+  <h2 class="bw-bridge-heading">The next step in your practice</h2>
+  <p class="bw-bridge-copy">BreatheWorld is your foundation — the breath itself. The Resonance Pack is the daily practice that builds on it: curated frequency audio sent monthly, designed to layer with your breath work. Reserve your spot for the next drop.</p>
+  <form class="aw-email-capture bw-bridge-form" data-aw-magnet="resonance-pack" data-aw-placement="breatheworld-bridge">
+    <input type="email" name="email" required placeholder="you@domain.com" autocomplete="email" aria-label="Email address">
+    <input type="text" name="aw_hp" tabindex="-1" autocomplete="off" class="aw-honeypot" aria-hidden="true">
+    <button type="submit" class="aw-email-capture__submit">Reserve my spot</button>
+    <p class="aw-email-capture__msg" role="status" aria-live="polite"></p>
+  </form>
 </section>
 
 <!-- ────────── FOOTER ────────── -->
@@ -741,8 +1032,20 @@ var PHASES = [
 ];
 var _ph = 0, _ct = 0, _ival = null, _cycles = 0;
 
+function resetWorldVisuals(){
+  // Reset the staggered botanicals back to the resting 20% opacity.
+  // Visual only — does not alter breathing logic.
+  var trees = document.querySelectorAll('.world-tree');
+  for (var i = 0; i < trees.length; i++) {
+    trees[i].style.opacity = 0.2;
+  }
+  var fog = document.getElementById('worldFog');
+  if (fog) fog.style.opacity = 0.85;
+}
+
 function startBreath(){
   _ph = 0; _ct = PHASES[0].d; _cycles = 0;
+  resetWorldVisuals();
   document.getElementById('startBtn').style.display = 'none';
   document.getElementById('stopBtn').style.display = 'flex';
   trackEvent('Breathe', 'session_start', 'breatheworld');
@@ -767,7 +1070,12 @@ function applyPhase(){
   var c = document.getElementById('breathCircle');
   c.className = '';
   void c.offsetWidth;
+  // Preserve existing .inhale / .hold / .exhale class contract;
+  // additionally tag the two hold variants so the aura can settle correctly.
   c.className = p.cls;
+  if (p.cls === 'hold') {
+    c.classList.add(_ph === 1 ? 'hold-after-inhale' : 'hold-after-exhale');
+  }
   document.getElementById('phaseLabel').textContent = p.l;
   document.getElementById('countdown').textContent = _ct;
 }
@@ -779,6 +1087,7 @@ function stopBreath(){
   var c = document.getElementById('breathCircle'); c.className = '';
   document.getElementById('phaseLabel').textContent = 'Ready';
   document.getElementById('countdown').textContent = '4';
+  resetWorldVisuals();
   trackEvent('Breathe', 'session_stop', 'breatheworld');
 }
 
@@ -786,6 +1095,13 @@ function clearFog(){
   var fog = document.getElementById('worldFog');
   var opacity = Math.max(0, 0.85 - (_cycles * 0.08));
   fog.style.opacity = opacity;
+  // Staggered botanical reveal — leftmost icon brightens first,
+  // each subsequent icon trails by one cycle. Each step adds ~15%.
+  var trees = document.querySelectorAll('.world-tree');
+  for (var i = 0; i < trees.length; i++) {
+    var cyclesForThis = Math.max(0, _cycles - i);
+    trees[i].style.opacity = Math.min(1, 0.20 + cyclesForThis * 0.15);
+  }
 }
 
 /* Sanctuary */
