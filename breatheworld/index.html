@@ -748,82 +748,39 @@ h1, h2, h3 {
   color: var(--text-subtle);
   z-index: 2;
 }
-.bw-cam-note {
-  margin-top: var(--space-6);
+/* ──────────────────────────────────────────────────────────────────
+   QUIET NOTE — standalone wellness disclaimer below the garden
+   ────────────────────────────────────────────────────────────────── */
+.bw-quiet-note {
+  max-width: 600px;
+  margin: var(--space-8) auto var(--space-16);
+  padding: var(--space-5) var(--space-6) var(--space-5) var(--space-6);
+  background: var(--bg-alabaster);
+  border: 0.5px solid var(--accent-gold-faint);
+  border-left: 2px solid var(--accent-gold-dim);
+  border-radius: var(--r);
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
   font-size: var(--text-sm);
   color: var(--text-muted);
-  line-height: 1.7;
+  line-height: 1.75;
+  text-align: left;
 }
-.bw-cam-note span {
-  color: var(--accent-gold);
+.bw-quiet-note strong {
   font-family: 'Inter', sans-serif;
-  font-weight: 500;
   font-style: normal;
-  letter-spacing: 0.04em;
+  font-weight: 600;
+  font-size: 0.92em;
+  color: var(--text-primary);
+  transition: var(--transition-smooth);
+}
+.bw-quiet-note strong:hover {
+  color: var(--accent-gold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
-/* ──────────────────────────────────────────────────────────────────
-   PREMIUM CARD (glassmorphic, gold-edged)
-   ────────────────────────────────────────────────────────────────── */
-.bw-pricing {
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 0 var(--space-6) var(--space-16);
-}
-.bw-premium-card {
-  position: relative;
-  padding: var(--space-12) var(--space-8);
-  background: rgba(250, 250, 247, 0.72);
-  backdrop-filter: blur(10px) saturate(140%);
-  -webkit-backdrop-filter: blur(10px) saturate(140%);
-  border: 0.5px solid var(--accent-gold-soft);
-  border-radius: var(--r-lg);
-  box-shadow: var(--soft-bevel-lift);
-  text-align: center;
-}
-/* Gold corner ornaments — 4 SVG brackets at each corner */
-.bw-premium-card::before,
-.bw-premium-card::after,
-.bw-premium-card > .corner-tl,
-.bw-premium-card > .corner-br {
-  content: '';
-  position: absolute;
-  width: 22px;
-  height: 22px;
-  pointer-events: none;
-  background-repeat: no-repeat;
-  background-size: 22px 22px;
-}
-.bw-premium-card::before {
-  /* Top-left bracket */
-  top: 8px; left: 8px;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22' fill='none' stroke='%23C5A059' stroke-linecap='round'><path d='M 2 12 L 2 4 Q 2 2 4 2 L 12 2' stroke-width='1'/><path d='M 6 6 L 14 6 M 6 6 L 6 14' stroke-width='0.5' opacity='0.6'/><circle cx='2' cy='2' r='1.4' fill='%23C5A059'/></svg>");
-}
-.bw-premium-card::after {
-  /* Top-right bracket */
-  top: 8px; right: 8px;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22' fill='none' stroke='%23C5A059' stroke-linecap='round'><path d='M 20 12 L 20 4 Q 20 2 18 2 L 10 2' stroke-width='1'/><path d='M 16 6 L 8 6 M 16 6 L 16 14' stroke-width='0.5' opacity='0.6'/><circle cx='20' cy='2' r='1.4' fill='%23C5A059'/></svg>");
-}
-.bw-premium-card > .corner-tl,
-.bw-premium-card > .corner-br {
-  position: absolute;
-}
-.bw-premium-card > .corner-tl {
-  /* Bottom-left bracket */
-  bottom: 8px; left: 8px;
-  top: auto;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22' fill='none' stroke='%23C5A059' stroke-linecap='round'><path d='M 2 10 L 2 18 Q 2 20 4 20 L 12 20' stroke-width='1'/><path d='M 6 16 L 14 16 M 6 16 L 6 8' stroke-width='0.5' opacity='0.6'/><circle cx='2' cy='20' r='1.4' fill='%23C5A059'/></svg>");
-}
-.bw-premium-card > .corner-br {
-  /* Bottom-right bracket */
-  bottom: 8px; right: 8px;
-  top: auto;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22' fill='none' stroke='%23C5A059' stroke-linecap='round'><path d='M 20 10 L 20 18 Q 20 20 18 20 L 10 20' stroke-width='1'/><path d='M 16 16 L 8 16 M 16 16 L 16 8' stroke-width='0.5' opacity='0.6'/><circle cx='20' cy='20' r='1.4' fill='%23C5A059'/></svg>");
-}
-
-/* Same corner treatment on the Resonance Pack reserve form */
+/* Resonance Pack reserve form — corner ornaments */
 .bw-reserve-form { position: relative; }
 .bw-reserve-form::before,
 .bw-reserve-form::after,
@@ -855,125 +812,8 @@ h1, h2, h3 {
   bottom: 6px; right: 6px; top: auto;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18' fill='none' stroke='%23C5A059' stroke-linecap='round'><path d='M 16 8 L 16 14 Q 16 16 14 16 L 8 16' stroke-width='0.8' opacity='0.7'/><circle cx='16' cy='16' r='1.1' fill='%23C5A059'/></svg>");
 }
-.bw-premium-eyebrow {
-  font-family: 'Inter', sans-serif;
-  font-size: var(--text-xs);
-  font-weight: 600;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--accent-gold);
-  margin-bottom: var(--space-3);
-}
-.bw-premium-card h2 {
-  font-size: var(--text-2xl);
-  margin-bottom: var(--space-4);
-}
-.bw-premium-price-row {
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-  gap: var(--space-2);
-  margin-bottom: var(--space-4);
-}
-.bw-premium-price {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 3.4rem;
-  line-height: 1;
-  color: var(--text-primary);
-  font-weight: 500;
-  letter-spacing: -0.01em;
-}
-.bw-premium-price-period {
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
-  font-size: var(--text-lg);
-  color: var(--text-muted);
-}
-.bw-premium-desc {
-  font-family: 'Inter', sans-serif;
-  font-size: var(--text-sm);
-  color: var(--text-muted);
-  line-height: 1.65;
-  margin: 0 auto var(--space-8);
-  max-width: 360px;
-}
-.bw-premium-feats {
-  text-align: left;
-  margin-bottom: var(--space-8);
-}
-.bw-feat {
-  padding: var(--space-3) 0;
-  border-bottom: 0.5px solid var(--accent-gold-faint);
-  font-family: 'Inter', sans-serif;
-  font-size: var(--text-sm);
-  color: var(--text-primary);
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-3);
-}
-.bw-feat:last-child { border-bottom: none; }
-.bw-feat-check {
-  flex-shrink: 0;
-  width: 16px;
-  height: 16px;
-  color: var(--accent-gold);
-  margin-top: 3px;
-}
-.bw-stripe-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  min-height: var(--tap-min);
-  padding: var(--space-3) var(--space-6);
-  background: var(--gold-metallic);
-  color: #FFFFFF;
-  border: none;
-  border-radius: var(--r-pill);
-  font-family: 'Inter', sans-serif;
-  font-weight: 600;
-  font-size: var(--text-base);
-  letter-spacing: 0.04em;
-  cursor: pointer;
-  box-shadow: var(--btn-shadow);
-  transition: var(--transition-smooth);
-}
-.bw-stripe-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--btn-shadow-hi);
-}
-.bw-stripe-btn:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(197, 160, 89, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.3);
-}
-.bw-premium-disclaimer {
-  margin-top: var(--space-8);
-  padding: var(--space-4) var(--space-5);
-  background: var(--bg-alabaster);
-  border-left: 2px solid var(--accent-gold-dim);
-  border-radius: var(--r);
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
-  font-size: var(--text-xs);
-  color: var(--text-subtle);
-  line-height: 1.7;
-  text-align: left;
-}
-.bw-premium-disclaimer strong {
-  color: var(--text-primary);
-  font-weight: 600;
-  font-style: normal;
-  font-family: 'Inter', sans-serif;
-  transition: var(--transition-smooth);
-}
-.bw-premium-disclaimer strong:hover {
-  color: var(--accent-gold);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
 /* ──────────────────────────────────────────────────────────────────
-   BRIDGE — Resonance Pack reservation
+   BRIDGE — Resonance Pack reservation (grand finale CTA)
    ────────────────────────────────────────────────────────────────── */
 .bw-bridge {
   max-width: 720px;
@@ -1027,6 +867,18 @@ h1, h2, h3 {
   gap: var(--space-3);
   max-width: 380px;
   margin: 0 auto;
+}
+.bw-reserve-label {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  margin-bottom: var(--space-1);
+  padding-left: var(--space-2);
+  text-align: left;
 }
 .aw-email-capture input[type="email"] {
   width: 100%;
@@ -1296,10 +1148,8 @@ h1, h2, h3 {
     </a>
     <ul class="bw-nav-links" role="list">
       <li><a href="#breatheSection">Breathe</a></li>
-      <li><a href="#pricing">Pro</a></li>
       <li><a href="/anchorwithin-home/#apps">More</a></li>
     </ul>
-    <a href="#pricing" class="cta-button">Start Pro</a>
   </div>
 </nav>
 
@@ -1860,58 +1710,12 @@ h1, h2, h3 {
     </div>
     <span class="bw-garden-label">Breathe to reveal your garden</span>
   </div>
-  <p class="bw-cam-note">
-    <span>Camera mode coming soon</span> — MediaPipe-powered breath detection. Pro subscribers get early access.
-  </p>
 </section>
 
-<!-- ────────── ORNAMENT DIVIDER (garden → pricing) ────────── -->
-<svg class="bw-section-divider" viewBox="0 0 280 28" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true" focusable="false">
-  <path d="M 6 14 L 92 14" stroke-width="0.5" opacity="0.5"/>
-  <path d="M 92 14 C 96 14, 98 11, 102 11 C 106 11, 106 17, 102 17 C 98 17, 98 13, 104 13" stroke-width="0.9"/>
-  <path d="M 110 11 L 114 14 L 110 17 L 106 14 Z" stroke-width="0.6" opacity="0.8"/>
-  <circle cx="110" cy="14" r="1" fill="currentColor" stroke="none"/>
-  <g transform="translate(126 14)" stroke-width="0.85">
-    <path d="M 0 -8 L 4 -3 L 7 0 L 4 3 L 0 8 L -4 3 L -7 0 L -4 -3 Z" stroke-opacity="0.7"/>
-    <circle r="3.5"/>
-    <circle r="1.1" fill="currentColor" stroke="none"/>
-    <line x1="-5" y1="0" x2="-3.8" y2="0"/>
-    <line x1="3.8" y1="0" x2="5" y2="0"/>
-    <line x1="0" y1="-5" x2="0" y2="-3.8"/>
-    <line x1="0" y1="3.8" x2="0" y2="5"/>
-  </g>
-  <path d="M 142 11 L 146 14 L 142 17 L 138 14 Z" stroke-width="0.6" opacity="0.8"/>
-  <circle cx="142" cy="14" r="1" fill="currentColor" stroke="none"/>
-  <path d="M 160 14 C 156 14, 154 11, 150 11 C 146 11, 146 17, 150 17 C 154 17, 154 13, 148 13" stroke-width="0.9"/>
-  <path d="M 160 14 L 274 14" stroke-width="0.5" opacity="0.5"/>
-</svg>
-
-<!-- ────────── PREMIUM CARD ────────── -->
-<section id="pricing" class="bw-pricing" aria-label="BreatheWorld Pro pricing">
-  <div class="bw-premium-card">
-    <span class="corner-tl" aria-hidden="true"></span><span class="corner-br" aria-hidden="true"></span>
-    <p class="bw-premium-eyebrow">BreatheWorld Pro</p>
-    <h2>The full practice</h2>
-    <div class="bw-premium-price-row">
-      <span class="bw-premium-price">$9.99</span>
-      <span class="bw-premium-price-period">/ month</span>
-    </div>
-    <p class="bw-premium-desc">Unlimited sessions, advanced breath patterns, the full garden reveal, camera-mode breath detection.</p>
-    <div class="bw-premium-feats">
-      <div class="bw-feat"><svg class="bw-feat-check" viewBox="0 0 16 16" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="0.8"><path d="M 8 2 L 11 8 L 8 14 L 5 8 Z"/><circle cx="8" cy="8" r="1.6" fill="currentColor" stroke="none"/></g></svg><span>Box breathing + 8 guided patterns</span></div>
-      <div class="bw-feat"><svg class="bw-feat-check" viewBox="0 0 16 16" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="0.8"><path d="M 8 2 L 11 8 L 8 14 L 5 8 Z"/><circle cx="8" cy="8" r="1.6" fill="currentColor" stroke="none"/></g></svg><span>Full botanical garden reveal</span></div>
-      <div class="bw-feat"><svg class="bw-feat-check" viewBox="0 0 16 16" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="0.8"><path d="M 8 2 L 11 8 L 8 14 L 5 8 Z"/><circle cx="8" cy="8" r="1.6" fill="currentColor" stroke="none"/></g></svg><span>Session history &amp; streaks</span></div>
-      <div class="bw-feat"><svg class="bw-feat-check" viewBox="0 0 16 16" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="0.8"><path d="M 8 2 L 11 8 L 8 14 L 5 8 Z"/><circle cx="8" cy="8" r="1.6" fill="currentColor" stroke="none"/></g></svg><span>Camera breath detection (early access)</span></div>
-      <div class="bw-feat"><svg class="bw-feat-check" viewBox="0 0 16 16" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="0.8"><path d="M 8 2 L 11 8 L 8 14 L 5 8 Z"/><circle cx="8" cy="8" r="1.6" fill="currentColor" stroke="none"/></g></svg><span>Calm sanctuary for hard moments</span></div>
-    </div>
-    <button class="bw-stripe-btn" onclick="window.open('https://buy.stripe.com/aFa6oIc1wbCL3g36My67S0I','_blank','noopener');trackEvent('Purchase','checkout','breatheworld')" aria-label="Subscribe to BreatheWorld Pro for $9.99 per month">
-      Start Pro — $9.99 / month
-    </button>
-    <div class="bw-premium-disclaimer" role="note">
-      <strong>A quiet note.</strong> BreatheWorld is for relaxation use only and is not a medical device or a substitute for professional mental-health care. If you are in crisis, contact the <strong>988</strong> Suicide &amp; Crisis Lifeline by calling or texting 988. Statements on this page have not been evaluated by the U.S. Food and Drug Administration; individual results vary.
-    </div>
-  </div>
-</section>
+<!-- ────────── QUIET NOTE (relocated from removed pricing card) ────────── -->
+<aside class="bw-quiet-note" role="note" aria-label="Wellness note">
+  <strong>A quiet note.</strong> BreatheWorld is for relaxation use only and is not a medical device or a substitute for professional mental-health care. If you are in crisis, contact the <strong>988</strong> Suicide &amp; Crisis Lifeline by calling or texting 988.
+</aside>
 
 <!-- ────────── BRIDGE — Resonance Pack reservation ────────── -->
 <section class="bw-bridge" aria-label="The Resonance Pack — going deeper">
@@ -1928,7 +1732,8 @@ h1, h2, h3 {
   <div class="bw-reserve-form">
     <span class="corner-tl" aria-hidden="true"></span><span class="corner-br" aria-hidden="true"></span>
     <form class="aw-email-capture" data-aw-magnet="resonance-pack" data-aw-placement="breatheworld-reserve">
-      <input type="email" name="email" required placeholder="you@domain.com" autocomplete="email" aria-label="Email address">
+      <label for="bw-reserve-email" class="bw-reserve-label">Where to send the rotation</label>
+      <input id="bw-reserve-email" type="email" name="email" required placeholder="you@domain.com" autocomplete="email">
       <input type="text" name="aw_hp" tabindex="-1" autocomplete="off" class="aw-honeypot" aria-hidden="true">
       <button type="submit" class="aw-email-capture__submit">Reserve my spot</button>
       <p class="aw-email-capture__msg" role="status" aria-live="polite"></p>
