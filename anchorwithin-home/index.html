@@ -577,12 +577,12 @@ footer {
       <span class="code-label">60-second quickstart</span>
     </div>
     <div class="hero-code"><span class="c-comment"># 1. Request a free trial key (100 calls, no card)</span>
-<span class="c-kw">curl</span> -X POST https://api.anchorwithin.com/v1/trial/request \
+<span class="c-kw">curl</span> -X POST https://anchor.verityswarm.com/v1/trial/request \
   -H <span class="c-str">"Content-Type: application/json"</span> \
   -d <span class="c-str">'{"email": "you@yourapp.com"}'</span>
 
 <span class="c-comment"># 2. Stream a 528Hz healing track into your app</span>
-<span class="c-kw">curl</span> -X POST https://api.anchorwithin.com/v1/audio/serve \
+<span class="c-kw">curl</span> -X POST https://anchor.verityswarm.com/v1/audio/serve \
   -H <span class="c-str">"Authorization: Bearer AW-your-key"</span> \
   -d <span class="c-str">'{"frequency": "528", "use_case": "healing"}'</span> \
   --output <span class="c-str">528hz.mp3</span></div>
@@ -721,7 +721,7 @@ footer {
       <div class="scout-code"><span class="c-kw">import</span> requests
 
 API_KEY = <span class="c-str">"AW-your-trial-key"</span>
-BASE    = <span class="c-str">"https://api.anchorwithin.com/v1"</span>
+BASE    = <span class="c-str">"https://anchor.verityswarm.com/v1"</span>
 HEADERS = {<span class="c-str">"Authorization"</span>: <span class="c-fn">f"Bearer {API_KEY}"</span>}
 
 <span class="c-comment"># Browse the full catalog</span>
