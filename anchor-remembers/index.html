@@ -566,6 +566,32 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
 .lock-icon{top:11px;right:11px}
 .role-name{font-family:var(--serif);font-size:.98rem;color:var(--navy)}
 .role-btn{gap:7px;padding:16px 10px}
+/* ═══════ PHOTOGRAPHY: hero, story band, showcase, photo CTA ═══════ */
+.hero-photo{width:100%;max-width:470px;height:auto;display:block;margin:0 auto;filter:drop-shadow(0 26px 50px rgba(13,24,42,.4))}
+.story-band{background:var(--cream);padding:46px 0}
+.story-inner{max-width:1100px;margin:0 auto;padding:0 22px;display:flex;flex-direction:column;gap:26px;align-items:center}
+.story-photo{width:100%}
+.story-photo img{width:100%;border-radius:14px;box-shadow:0 16px 40px rgba(13,24,42,.16);display:block}
+.story-copy{text-align:center}
+.story-copy h2{font-family:var(--serif);font-size:1.6rem;font-weight:400;color:var(--navy);line-height:1.25;margin-bottom:12px}
+.story-copy p{font-size:.92rem;color:var(--muted);line-height:1.75;max-width:440px;margin:0 auto}
+@media(min-width:880px){
+  .story-inner{flex-direction:row;gap:48px}
+  .story-photo,.story-copy{flex:1}
+  .story-copy{text-align:left}
+  .story-copy p{margin:0}
+  .story-copy .gilt-rule{margin-left:0}
+}
+.showcase{background:var(--ivory);padding:48px 22px;text-align:center}
+.showcase-title{font-family:var(--serif);font-size:1.55rem;font-weight:400;color:var(--navy);margin-bottom:22px}
+.gallery{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:14px}
+.gallery img{width:100%;border-radius:14px;box-shadow:0 10px 26px rgba(13,24,42,.12);display:block}
+@media(min-width:760px){.gallery{grid-template-columns:repeat(3,1fr)}}
+.photo-feature{position:relative;background-size:cover;background-position:center;padding:78px 24px;text-align:center}
+.photo-feature::before{content:'';position:absolute;inset:0;background:linear-gradient(rgba(13,24,42,.5),rgba(13,24,42,.72))}
+.photo-feature-inner{position:relative;max-width:600px;margin:0 auto}
+.photo-feature-inner h2{font-family:var(--serif);font-size:1.7rem;font-weight:400;color:var(--cream);line-height:1.25;margin-bottom:14px}
+.photo-feature-inner p{font-size:.92rem;color:rgba(251,246,236,.82);line-height:1.7;max-width:460px;margin:0 auto 22px}
 </style>
 <noscript><style>.tab-panel{display:flex!important}.screen{display:flex!important}.answer-overlay{display:none!important}</style></noscript>
 </head>
@@ -608,15 +634,7 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
         </div>
       </div>
       <div class="hero-art">
-        <div class="book-scene">
-          <div class="book-letter l1"></div>
-          <div class="book-letter l2"></div>
-          <div class="book-pages"></div>
-          <div class="book-3d">
-            <svg class="emblem" width="76" height="76" aria-hidden="true"><use href="#arEmblem"/></svg>
-            <div class="book-emblem-label">Memory Book</div>
-          </div>
-        </div>
+        <img class="hero-photo" src="hero-book.png" alt="AnchorRemembers navy leather memory book with gold crest">
       </div>
     </div>
   </section>
@@ -644,6 +662,18 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
       <div class="feature-desc">Stored on your device. Never shared.</div>
     </div>
   </div>
+
+  <!-- Story band: writing lifestyle -->
+  <section class="story-band">
+    <div class="story-inner">
+      <div class="story-photo"><img src="writing.jpg" alt="Elderly hands writing memories in a leather journal" loading="lazy"></div>
+      <div class="story-copy">
+        <span class="gilt-rule"><i></i><b></b><i></i></span>
+        <h2>Their voice, in their own words.</h2>
+        <p>Thoughtful prompts draw out the stories that matter — the lessons, the laughter, the moments a family never wants to forget. Every answer is saved privately, and kept forever.</p>
+      </div>
+    </div>
+  </section>
 
   <!-- Legacy band: How it works · Legacy Tree · Founder Edition -->
   <div class="legacy-band">
@@ -726,6 +756,26 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
 
     </div>
   </div>
+
+  <!-- Keepsake showcase -->
+  <section class="showcase">
+    <span class="gilt-rule"><i></i><b></b><i></i></span>
+    <h2 class="showcase-title">An Heirloom, Beautifully Made</h2>
+    <div class="gallery">
+      <img src="book-scene.jpg" alt="Navy AnchorRemembers journal with gold crest beside a candle and old letters" loading="lazy">
+      <img src="journal-flatlay.jpg" alt="AnchorRemembers journal flat-lay with a fountain pen and keepsakes" loading="lazy">
+      <img src="giftbox.jpg" alt="AnchorRemembers keepsake gift box with gold crest" loading="lazy">
+    </div>
+  </section>
+
+  <!-- Emotional photo CTA -->
+  <section class="photo-feature" style="background-image:url('family.jpg')">
+    <div class="photo-feature-inner">
+      <h2>A legacy your family will gather around.</h2>
+      <p>Start with a single story today. In time, it becomes a keepsake your children and grandchildren will hold onto.</p>
+      <button class="btn btn-primary" onclick="showSetup()">Begin a New Memory Book</button>
+    </div>
+  </section>
 
   <footer class="welcome-footer">
     <p>© 2026 AnchorRemembers LLC · All memories stored locally · Never shared without your consent</p>
