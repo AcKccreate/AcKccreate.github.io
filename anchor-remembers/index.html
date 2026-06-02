@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>AnchorRemembers — Anchor Your Legacy</title>
+<meta name="description" content="Capture the voice, stories, wisdom, and spirit of the people who shaped you. A luxury memory book by AnchorRemembers.">
+<style>
+/* ═══════ RESET & ROOT ═══════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+:root{
+  --navy:#0D1B2A;
+  --navy-2:#111827;
+  --card-navy:#151A2A;
+  --gold:#D4AF37;
+  --gold-soft:#E6C878;
+  --sage:#A7B79A;
+  --ivory:#F5F1E8;
+  --cream:#FBF6EC;
+  --parchment:#EFE5D2;
+  --ink:#172033;
+  --muted:#8E8B86;
+  --line:rgba(212,175,55,.35);
+  --serif:Georgia,"Times New Roman",serif;
+  --sans:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --r:12px;
+}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* ═══════ SCREENS ═══════ */
+.screen{display:none;min-height:100vh;flex-direction:column}
+.screen.active{display:flex}
+
+/* ═══════ SHARED BUTTONS ═══════ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:14px 26px;border:none;border-radius:var(--r);
+  font-family:var(--sans);font-size:.88rem;font-weight:600;
+  cursor:pointer;transition:all .22s;text-decoration:none;white-space:nowrap;
+}
+.btn-primary{background:var(--gold);color:var(--navy)}
+.btn-primary:hover{background:var(--gold-soft);transform:translateY(-1px);box-shadow:0 8px 20px rgba(212,175,55,.3)}
+.btn-secondary{background:transparent;border:1.5px solid var(--gold);color:var(--gold)}
+.btn-secondary:hover{background:rgba(212,175,55,.08)}
+.btn-navy{background:var(--navy);color:var(--cream)}
+.btn-navy:hover{background:var(--navy-2);transform:translateY(-1px)}
+.btn-ghost{background:transparent;border:1.5px solid rgba(0,0,0,.14);color:var(--muted)}
+.btn-ghost:hover{border-color:rgba(0,0,0,.28);color:var(--ink)}
+.btn-sm{padding:8px 16px;font-size:.78rem}
+.btn-wide{width:100%}
+
+/* ═══════ WELCOME SCREEN ═══════ */
+.welcome-screen{background:var(--cream)}
+
+.welcome-header{
+  background:var(--navy);padding:16px 20px;
+  display:flex;align-items:center;gap:12px;flex-shrink:0;
+}
+.wordmark-main{font-family:var(--serif);font-size:.92rem;font-weight:700;color:var(--gold);
+  letter-spacing:.1em;text-transform:uppercase;display:block}
+.wordmark-tag{font-size:.58rem;color:var(--sage);letter-spacing:.07em;display:block;margin-top:2px}
+
+/* Hero */
+.hero{padding:52px 24px 44px;text-align:center;background:var(--cream);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-40%;left:-20%;right:-20%;height:180%;
+  background:radial-gradient(ellipse at 50% 30%,rgba(212,175,55,.05),transparent 60%);pointer-events:none}
+.hero-eyebrow{font-size:.66rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:14px}
+.hero h1{font-family:var(--serif);font-size:clamp(1.9rem,7vw,3rem);font-weight:400;
+  color:var(--navy);line-height:1.15;margin-bottom:14px}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero-sub{font-size:.95rem;color:var(--muted);max-width:440px;margin:0 auto 28px;line-height:1.7}
+.hero-btns{display:flex;flex-direction:column;gap:10px;max-width:276px;margin:0 auto 36px}
+
+/* Journal mockup */
+.journal-wrap{position:relative;width:130px;height:168px;margin:0 auto}
+.journal-cover{
+  width:100%;height:100%;border-radius:4px 10px 10px 4px;
+  background:linear-gradient(150deg,#1a2d42,var(--card-navy));
+  border:1px solid var(--line);
+  box-shadow:5px 8px 24px rgba(13,27,42,.4),-2px 0 6px rgba(0,0,0,.3);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+  position:relative;overflow:hidden;
+}
+.journal-cover::before{content:'';position:absolute;left:0;top:0;bottom:0;width:10px;
+  background:linear-gradient(90deg,rgba(0,0,0,.28),transparent)}
+.journal-cover::after{content:'';position:absolute;inset:9px;border:1px solid var(--line);border-radius:4px;pointer-events:none}
+.journal-label{font-family:var(--serif);font-size:.56rem;color:var(--gold-soft);letter-spacing:.14em;text-transform:uppercase}
+.journal-pages{
+  position:absolute;bottom:-3px;right:-5px;width:88%;height:90%;
+  background:var(--ivory);border-radius:2px 6px 6px 2px;
+  box-shadow:2px 2px 8px rgba(0,0,0,.14);z-index:-1}
+
+/* Feature strip */
+.feature-strip{
+  padding:24px 16px;background:var(--parchment);
+  display:grid;grid-template-columns:repeat(2,1fr);gap:12px;
+  max-width:480px;margin:0 auto;width:100%
+}
+.feature-item{
+  display:flex;flex-direction:column;align-items:center;text-align:center;gap:5px;
+  padding:14px 10px;background:var(--cream);border-radius:var(--r);
+  border:1px solid rgba(212,175,55,.14)
+}
+.feature-icon{font-size:1.3rem}
+.feature-label{font-size:.72rem;font-weight:700;color:var(--ink);letter-spacing:.03em}
+.feature-desc{font-size:.66rem;color:var(--muted);line-height:1.4}
+
+/* Journey section */
+.journey-section{padding:32px 20px;background:var(--ivory)}
+.journey-title{font-family:var(--serif);font-size:1.25rem;font-weight:400;color:var(--navy);
+  text-align:center;margin-bottom:20px}
+.stair-cards{display:flex;flex-direction:column;gap:12px;max-width:440px;margin:0 auto}
+.stair-card{
+  background:var(--cream);border-radius:var(--r);padding:20px 18px;
+  border:1px solid rgba(212,175,55,.16);box-shadow:0 2px 10px rgba(13,27,42,.06);
+  display:flex;align-items:flex-start;gap:14px;
+}
+.stair-num{font-family:var(--serif);font-size:1.7rem;font-weight:400;
+  color:var(--line);flex-shrink:0;line-height:1;margin-top:2px}
+.stair-body h3{font-family:var(--serif);font-size:.96rem;font-weight:600;color:var(--navy);margin-bottom:5px}
+.stair-body p{font-size:.8rem;color:var(--muted);line-height:1.6}
+.coming-soon-chip{
+  display:inline-block;font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  background:rgba(167,183,154,.15);color:var(--sage);border:1px solid rgba(167,183,154,.3);
+  border-radius:50px;padding:2px 8px;vertical-align:middle;margin-left:6px
+}
+
+/* Memory tree on welcome */
+.welcome-tree{
+  padding:24px 20px;background:var(--parchment);max-width:480px;margin:0 auto;width:100%;
+}
+.section-label{
+  font-size:.64rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:10px
+}
+.tree-bar-wrap{background:rgba(13,27,42,.08);border-radius:100px;height:7px;overflow:hidden;margin-bottom:8px}
+.tree-bar{height:100%;background:linear-gradient(90deg,var(--sage),var(--gold));border-radius:100px;transition:width .8s ease}
+.tree-row{display:flex;justify-content:space-between;font-size:.66rem;color:var(--muted)}
+.tree-stage{font-size:.78rem;font-weight:700;color:var(--sage);margin-bottom:6px}
+
+/* Founder section */
+.founder-section{padding:40px 24px;background:var(--navy);text-align:center}
+.founder-eyebrow{font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--sage);margin-bottom:10px}
+.founder-section h2{font-family:var(--serif);font-size:1.55rem;font-weight:400;
+  color:var(--cream);line-height:1.25;margin-bottom:10px}
+.founder-section p{font-size:.83rem;color:rgba(251,246,236,.68);max-width:360px;
+  margin:0 auto 22px;line-height:1.65}
+.book-mockup{
+  width:84px;height:108px;margin:0 auto 22px;
+  background:linear-gradient(150deg,#1a2d42,var(--card-navy));
+  border-radius:3px 9px 9px 3px;border:1px solid var(--line);
+  box-shadow:4px 6px 16px rgba(0,0,0,.42);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px
+}
+.book-mockup-label{font-family:var(--serif);font-size:.48rem;color:var(--gold-soft);
+  letter-spacing:.12em;text-transform:uppercase;line-height:1.5;text-align:center}
+
+.welcome-footer{
+  padding:18px 20px;text-align:center;background:var(--navy-2);
+  border-top:1px solid rgba(212,175,55,.1);
+}
+.welcome-footer p{font-size:.7rem;color:rgba(167,183,154,.65);line-height:1.6;margin-bottom:5px}
+.welcome-footer a{color:var(--sage);text-decoration:none;font-size:.7rem}
+.welcome-footer a:hover{color:var(--gold)}
+
+/* ═══════ SETUP SCREEN ═══════ */
+.setup-screen{background:var(--cream)}
+.setup-header{
+  background:var(--navy);padding:14px 20px;
+  display:flex;align-items:center;gap:12px;flex-shrink:0;
+}
+.setup-step{display:none;flex-direction:column;flex:1}
+.setup-step.active{display:flex}
+.setup-body{flex:1;overflow-y:auto;padding:26px 20px}
+.setup-body h2{font-family:var(--serif);font-size:1.25rem;font-weight:400;color:var(--navy);margin-bottom:6px}
+.setup-body > p{font-size:.83rem;color:var(--muted);margin-bottom:22px;line-height:1.5}
+.setup-footer{padding:14px 20px;border-top:1px solid rgba(0,0,0,.07);background:var(--cream);
+  display:flex;gap:10px;flex-shrink:0}
+
+/* Choice / role buttons */
+.choice-grid{display:flex;flex-direction:column;gap:12px}
+.choice-btn{
+  display:flex;align-items:center;gap:14px;padding:18px 16px;
+  background:var(--ivory);border:1.5px solid rgba(212,175,55,.18);
+  border-radius:var(--r);cursor:pointer;text-align:left;transition:all .2s;width:100%;
+  box-shadow:0 2px 8px rgba(13,27,42,.05);
+}
+.choice-btn:hover{border-color:var(--gold);background:rgba(212,175,55,.05);
+  box-shadow:0 4px 16px rgba(212,175,55,.14)}
+.choice-icon{font-size:1.5rem;flex-shrink:0}
+.choice-label{font-family:var(--serif);font-size:.96rem;color:var(--navy);display:block;margin-bottom:2px}
+.choice-desc{font-size:.74rem;color:var(--muted);display:block}
+.role-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.role-btn{
+  display:flex;flex-direction:column;align-items:center;gap:5px;
+  padding:15px 10px;background:var(--ivory);border:1.5px solid rgba(212,175,55,.18);
+  border-radius:var(--r);cursor:pointer;font-size:.8rem;font-weight:500;
+  color:var(--ink);transition:all .2s;box-shadow:0 2px 6px rgba(13,27,42,.05);
+}
+.role-btn:hover{border-color:var(--gold);background:rgba(212,175,55,.05);color:var(--navy)}
+.role-btn .ri{font-size:1.35rem}
+.father-badge{font-size:.56rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  background:rgba(212,175,55,.1);color:var(--gold);border:1px solid var(--line);
+  border-radius:50px;padding:2px 7px;margin-top:1px}
+
+/* Setup form fields */
+.setup-field{margin-bottom:16px}
+.setup-field label{display:block;font-size:.8rem;font-weight:600;color:var(--ink);margin-bottom:5px}
+.setup-field .hint{font-size:.7rem;color:var(--muted);margin-bottom:5px;font-style:italic}
+.field-input{
+  width:100%;padding:12px 15px;background:var(--ivory);
+  border:1.5px solid rgba(212,175,55,.22);border-radius:var(--r);
+  color:var(--ink);font-family:var(--sans);font-size:.88rem;
+  outline:none;transition:border-color .2s;
+}
+.field-input:focus{border-color:var(--gold);background:#fff}
+.field-input::placeholder{color:var(--muted)}
+textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
+
+/* ═══════ MAIN APP ═══════ */
+.main-screen{background:var(--cream)}
+.main-header{
+  background:var(--navy);padding:13px 18px;
+  display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
+  box-shadow:0 2px 12px rgba(13,27,42,.25);
+}
+.main-logo-area{display:flex;align-items:center;gap:10px}
+.main-wordmark{font-family:var(--serif);font-size:.78rem;font-weight:700;
+  color:var(--gold);letter-spacing:.1em;text-transform:uppercase}
+.main-sub-txt{font-size:.56rem;color:var(--sage);letter-spacing:.06em;display:block;margin-top:1px}
+.hdr-btn{
+  padding:6px 11px;background:rgba(212,175,55,.1);border:1px solid var(--line);
+  border-radius:6px;font-size:.68rem;font-weight:600;color:var(--gold);
+  cursor:pointer;font-family:var(--sans);transition:all .15s;
+}
+.hdr-btn:hover,.hdr-btn.active{background:rgba(212,175,55,.2)}
+
+/* Tabs */
+.app-tabs{
+  display:flex;border-bottom:2px solid var(--parchment);flex-shrink:0;
+  background:var(--cream);position:sticky;top:0;z-index:10;
+}
+.app-tab{
+  flex:1;padding:11px 4px;text-align:center;font-size:.73rem;font-weight:600;
+  color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;
+  transition:all .2s;margin-bottom:-2px;
+}
+.app-tab.active{color:var(--navy);border-color:var(--gold)}
+.tab-panel{display:none;flex:1;flex-direction:column;overflow-y:auto}
+.tab-panel.active{display:flex}
+
+/* ═══════ HOME TAB ═══════ */
+.home-greeting{
+  padding:18px 20px;background:var(--ivory);border-bottom:1px solid var(--parchment);flex-shrink:0;
+}
+.home-greeting-name{font-family:var(--serif);font-size:1.15rem;font-weight:400;color:var(--navy)}
+.home-greeting-sub{font-size:.72rem;color:var(--muted);margin-top:2px}
+
+.home-tree-section{padding:18px 20px;background:var(--cream)}
+.home-tree-card{
+  background:var(--ivory);border:1px solid rgba(212,175,55,.18);border-radius:var(--r);
+  padding:18px;box-shadow:0 2px 10px rgba(13,27,42,.06)
+}
+.home-count-num{font-family:var(--serif);font-size:2.2rem;font-weight:400;color:var(--gold);line-height:1}
+.home-count-lbl{font-size:.76rem;color:var(--muted);margin-bottom:12px}
+.stage-badge{
+  display:inline-flex;align-items:center;gap:5px;padding:4px 12px;
+  background:rgba(167,183,154,.12);border:1px solid rgba(167,183,154,.3);
+  border-radius:100px;font-size:.7rem;font-weight:600;color:var(--sage);margin-bottom:12px
+}
+
+.home-actions{padding:16px 20px;display:flex;flex-direction:column;gap:8px}
+.home-founder-panel{padding:22px 20px;background:var(--navy)}
+.home-founder-panel h3{font-family:var(--serif);font-size:1.05rem;font-weight:400;color:var(--cream);margin-bottom:6px}
+.home-founder-panel p{font-size:.76rem;color:rgba(251,246,236,.62);line-height:1.6;margin-bottom:14px}
+.home-founder-eyebrow{font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--sage);margin-bottom:8px}
+
+/* ═══════ PROMPTS TAB ═══════ */
+.prompts-header{padding:14px 20px;background:var(--ivory);border-bottom:1px solid var(--parchment);flex-shrink:0}
+.prompts-title-txt{font-family:var(--serif);font-size:.98rem;font-weight:600;color:var(--navy)}
+.prompts-progress-txt{font-size:.72rem;color:var(--muted);margin-top:2px}
+
+.stat-bar{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  padding:12px 16px;background:var(--cream);border-bottom:1px solid var(--parchment);flex-shrink:0;
+}
+.stat-card{background:var(--ivory);border:1px solid rgba(212,175,55,.14);border-radius:var(--r);padding:11px 8px;text-align:center}
+.stat-num{font-family:var(--serif);font-size:1.4rem;font-weight:400;color:var(--gold)}
+.stat-lbl{font-size:.62rem;color:var(--muted);letter-spacing:.04em;margin-top:1px}
+
+.cat-pills{
+  display:flex;gap:7px;overflow-x:auto;padding:10px 16px;
+  border-bottom:1px solid var(--parchment);background:var(--cream);flex-shrink:0;
+  scrollbar-width:none;-ms-overflow-style:none;
+}
+.cat-pills::-webkit-scrollbar{display:none}
+.cat-pill{
+  flex-shrink:0;padding:5px 14px;border-radius:100px;font-size:.7rem;font-weight:600;
+  border:1.5px solid rgba(212,175,55,.22);color:var(--muted);background:var(--ivory);
+  cursor:pointer;transition:all .18s;white-space:nowrap;
+}
+.cat-pill.active{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+.cat-pill:hover:not(.active){border-color:var(--gold);color:var(--navy)}
+
+.prompts-list{padding:12px 16px;display:flex;flex-direction:column;gap:10px}
+
+.prompt-card{
+  background:var(--ivory);border:1px solid rgba(212,175,55,.16);border-radius:var(--r);
+  padding:15px;box-shadow:0 2px 8px rgba(13,27,42,.05);
+  cursor:pointer;transition:all .2s;position:relative;
+}
+.prompt-card:hover:not(.locked){
+  box-shadow:0 6px 18px rgba(13,27,42,.1);border-color:rgba(212,175,55,.38);transform:translateY(-1px)
+}
+.prompt-card.answered{border-left:3px solid var(--sage)}
+.prompt-card.locked{opacity:.52;cursor:default}
+.prompt-top{display:flex;align-items:flex-start;gap:12px;margin-bottom:6px}
+.prompt-num{font-family:var(--serif);font-size:1.05rem;font-weight:400;color:var(--gold);flex-shrink:0;min-width:22px}
+.prompt-q-text{font-size:.86rem;color:var(--ink);line-height:1.5;flex:1}
+.prompt-bot{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+.prompt-cat-lbl{font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.prompt-status{display:flex;align-items:center;gap:5px;font-size:.66rem;color:var(--muted)}
+.status-dot{width:11px;height:11px;border-radius:50%;border:1.5px solid var(--muted);flex-shrink:0}
+.status-dot.done{background:var(--sage);border-color:var(--sage)}
+.lock-icon{position:absolute;top:12px;right:12px;font-size:.8rem}
+.lock-reveal{
+  background:var(--navy);border:1px solid var(--line);border-radius:var(--r);
+  padding:13px;margin-top:10px;text-align:center;display:none;
+}
+.lock-reveal p{font-size:.76rem;color:rgba(251,246,236,.8);margin-bottom:9px;line-height:1.5}
+
+/* ═══════ ANSWER OVERLAY ═══════ */
+.answer-overlay{
+  display:none;position:fixed;inset:0;z-index:100;
+  background:var(--cream);flex-direction:column;
+}
+.answer-overlay.open{display:flex}
+.answer-hdr{
+  background:var(--navy);padding:14px 16px;
+  display:flex;align-items:center;gap:12px;flex-shrink:0;
+}
+.answer-back-btn{
+  background:none;border:none;color:var(--sage);font-size:.86rem;cursor:pointer;
+  display:flex;align-items:center;gap:4px;font-family:var(--sans);font-weight:600;
+}
+.answer-cat-txt{font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);flex:1;text-align:center}
+.answer-save{
+  background:var(--gold);color:var(--navy);border:none;padding:7px 16px;
+  border-radius:6px;font-size:.8rem;font-weight:700;cursor:pointer;font-family:var(--sans);
+}
+.answer-body{flex:1;overflow-y:auto;padding:22px 18px}
+.answer-question{
+  font-family:var(--serif);font-size:1.08rem;font-style:italic;color:var(--navy);
+  line-height:1.5;margin-bottom:18px;padding-bottom:16px;
+  border-bottom:1px solid var(--parchment);
+}
+.answer-ta{
+  width:100%;min-height:180px;padding:13px;background:var(--ivory);
+  border:1.5px solid rgba(212,175,55,.22);border-radius:var(--r);
+  color:var(--ink);font-family:var(--sans);font-size:.88rem;line-height:1.6;
+  outline:none;resize:vertical;transition:border-color .2s;
+}
+.answer-ta:focus{border-color:var(--gold);background:#fff}
+.answer-ta::placeholder{color:var(--muted)}
+.answer-photo-lbl{
+  font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin:18px 0 8px;
+}
+.answer-photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.a-thumb{position:relative;aspect-ratio:1;border-radius:var(--r);overflow:hidden;
+  background:var(--parchment);border:1px solid var(--parchment)}
+.a-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.a-thumb-del{
+  position:absolute;top:4px;right:4px;width:19px;height:19px;border-radius:50%;
+  background:rgba(0,0,0,.6);border:none;color:#fff;font-size:.62rem;cursor:pointer;
+  display:grid;place-items:center;
+}
+.photo-add-btn{
+  display:flex;align-items:center;gap:7px;padding:10px 13px;
+  background:var(--ivory);border:1.5px dashed rgba(212,175,55,.32);border-radius:var(--r);
+  cursor:pointer;font-size:.78rem;color:var(--muted);transition:all .2s;
+}
+.photo-add-btn:hover{border-color:var(--gold);color:var(--navy)}
+.photo-lock{
+  font-size:.72rem;color:var(--muted);text-align:center;padding:10px;
+  background:rgba(212,175,55,.04);border:1px solid var(--line);border-radius:var(--r);
+}
+.photo-lock a{color:var(--gold);text-decoration:none}
+
+/* ═══════ ARCHIVE / LEGACY VAULT ═══════ */
+.archive-header{
+  padding:14px 20px;background:var(--ivory);
+  border-bottom:1px solid var(--parchment);flex-shrink:0;
+}
+.archive-title-txt{font-family:var(--serif);font-size:.98rem;font-weight:600;color:var(--navy)}
+.archive-count-txt{font-size:.72rem;color:var(--muted);margin-top:2px}
+
+.vault-empty{
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  padding:48px 24px;flex:1;
+}
+.vault-empty-icon{font-size:2.2rem;margin-bottom:14px;opacity:.45}
+.vault-empty h3{font-family:var(--serif);font-size:1.05rem;font-weight:400;color:var(--navy);margin-bottom:8px}
+.vault-empty p{font-size:.8rem;color:var(--muted);line-height:1.65;max-width:280px;margin-bottom:22px}
+
+.vault-list{padding:12px 16px;display:flex;flex-direction:column;gap:10px;flex:1}
+.vault-card{
+  background:var(--ivory);border:1px solid rgba(212,175,55,.14);border-radius:var(--r);
+  padding:15px;box-shadow:0 2px 8px rgba(13,27,42,.05);border-left:3px solid var(--sage);
+}
+.vault-cat{font-size:.58rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+.vault-q{font-family:var(--serif);font-size:.83rem;font-style:italic;color:var(--muted);margin-bottom:7px;line-height:1.4}
+.vault-a{font-size:.86rem;color:var(--ink);line-height:1.6;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.vault-meta{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.vault-chip{font-size:.62rem;color:var(--muted);background:rgba(0,0,0,.04);border-radius:4px;padding:2px 8px}
+.vault-edit{
+  margin-top:10px;padding-top:10px;border-top:1px solid var(--parchment);
+  display:flex;gap:8px;
+}
+
+.archive-bottom-bar{
+  padding:14px 16px;border-top:1px solid var(--parchment);background:var(--cream);
+  display:flex;gap:8px;flex-shrink:0;
+}
+
+/* ═══════ 432 HZ ═══════ */
+.hz{
+  position:fixed;bottom:70px;right:14px;z-index:50;
+  padding:6px 12px;background:rgba(253,250,244,.95);backdrop-filter:blur(8px);
+  border:1px solid rgba(167,183,154,.32);border-radius:100px;
+  font-size:.66rem;font-weight:600;color:var(--sage);
+  display:none;align-items:center;gap:5px;cursor:pointer;
+  box-shadow:0 2px 12px rgba(13,27,42,.1);
+}
+.hz.on{display:flex}
+.hz-dot{width:6px;height:6px;border-radius:50%;background:var(--sage);animation:hzp 2s infinite}
+@keyframes hzp{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* ═══════ PRINT ═══════ */
+@media print{
+  body{background:#fff!important;color:#111!important}
+  .screen,.hz,.answer-overlay{display:none!important}
+  #printContent{display:block!important}
+  #printContent{font-family:Georgia,"Times New Roman",serif;color:#111;
+    padding:40px 56px;max-width:720px;margin:0 auto}
+  .pc-title{font-size:1.9rem;font-weight:700;margin-bottom:6px}
+  .pc-sub{font-size:.9rem;color:#555;margin-bottom:4px}
+  .pc-word{font-size:.84rem;color:#666;font-style:italic;margin-bottom:4px}
+  .pc-desc{font-size:.86rem;color:#444;font-style:italic;margin:14px 0;
+    padding:14px 18px;border-left:3px solid #D4AF37;background:#faf8f0}
+  .pc-photos{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+    margin:22px 0;page-break-after:always}
+  .pc-photo{aspect-ratio:1;object-fit:cover;border-radius:6px;width:100%}
+  .pc-cat-head{font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+    color:#8a7a5a;margin:30px 0 10px;padding-bottom:4px;border-bottom:1px solid #ddd}
+  .pc-qa{margin-bottom:18px;page-break-inside:avoid}
+  .pc-q{font-style:italic;color:#555;margin-bottom:5px;font-size:.86rem}
+  .pc-a{font-size:.9rem;color:#111;line-height:1.7}
+  .pc-footer{margin-top:44px;padding-top:14px;border-top:1px solid #ddd;
+    font-size:.7rem;color:#999;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- PRINT CONTENT (hidden until window.print()) -->
+<div id="printContent" style="display:none"></div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN 1: WELCOME / LANDING
+     ═══════════════════════════════════════ -->
+<div class="screen welcome-screen active" id="screenWelcome">
+
+  <header class="welcome-header">
+    <div style="display:flex;align-items:center;gap:12px">
+      <!-- Main logo mark -->
+      <svg width="38" height="38" viewBox="0 0 38 38" fill="none" aria-hidden="true">
+        <circle cx="19" cy="19" r="17" stroke="#D4AF37" stroke-width="1.2"/>
+        <text x="19" y="16" text-anchor="middle" font-family="Georgia,serif" font-size="8.5" font-weight="700" fill="#D4AF37">AR</text>
+        <text x="19" y="26.5" text-anchor="middle" font-size="10" fill="#D4AF37">⚓</text>
+        <ellipse cx="8" cy="21" rx="2.8" ry="1.4" fill="#A7B79A" opacity=".7" transform="rotate(-35 8 21)"/>
+        <ellipse cx="6.5" cy="18" rx="2.8" ry="1.4" fill="#A7B79A" opacity=".45" transform="rotate(-50 6.5 18)"/>
+      </svg>
+      <div>
+        <span class="wordmark-main">AnchorRemembers</span>
+        <span class="wordmark-tag">ANCHOR YOUR LEGACY · PRESERVE YOUR MEMORIES</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-eyebrow">A Legacy Memory Book</div>
+    <h1>Every Family Has<br>Stories Worth <em>Saving.</em></h1>
+    <p class="hero-sub">Guided memory books that help you capture the voices, wisdom, traditions, and love of the people who shaped you.</p>
+    <div class="hero-btns">
+      <button class="btn btn-primary btn-wide" id="heroBeginBtn" onclick="showSetup()">Begin a New Memory Book</button>
+      <button class="btn btn-secondary btn-wide" onclick="loadExisting()">Continue Existing Book</button>
+    </div>
+    <!-- Journal mockup -->
+    <div class="journal-wrap">
+      <div class="journal-cover">
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+          <circle cx="13" cy="13" r="11" stroke="#D4AF37" stroke-width=".9"/>
+          <text x="13" y="10.5" text-anchor="middle" font-family="Georgia,serif" font-size="5.5" font-weight="700" fill="#D4AF37">AR</text>
+          <text x="13" y="18.5" text-anchor="middle" font-size="6.5" fill="#D4AF37">⚓</text>
+        </svg>
+        <div class="journal-label">Memory Book</div>
+      </div>
+      <div class="journal-pages"></div>
+    </div>
+  </section>
+
+  <!-- Feature strip -->
+  <div class="feature-strip">
+    <div class="feature-item">
+      <div class="feature-icon">📖</div>
+      <div class="feature-label">Captures What Matters</div>
+      <div class="feature-desc">Guided questions that draw out real stories</div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon">🎙️</div>
+      <div class="feature-label">Preserve Their Voice</div>
+      <div class="feature-desc">Answers saved forever, locally</div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon">🗝️</div>
+      <div class="feature-label">Creates Heirlooms</div>
+      <div class="feature-desc">Printable keepsakes for generations</div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon">🛡️</div>
+      <div class="feature-label">Private &amp; Secure</div>
+      <div class="feature-desc">Stored on your device. Never shared.</div>
+    </div>
+  </div>
+
+  <!-- Journey stair cards -->
+  <section class="journey-section">
+    <h2 class="journey-title">How It Works</h2>
+    <div class="stair-cards">
+      <div class="stair-card">
+        <div class="stair-num">01</div>
+        <div class="stair-body">
+          <h3>Capture Their Stories</h3>
+          <p>Answer meaningful questions designed to draw out memories, experiences, and wisdom.</p>
+        </div>
+      </div>
+      <div class="stair-card">
+        <div class="stair-num">02</div>
+        <div class="stair-body">
+          <h3>Preserve Their Voice <span class="coming-soon-chip">V2 Coming Soon</span></h3>
+          <p>Save the words, lessons, laughter, and stories that make a life unforgettable.</p>
+        </div>
+      </div>
+      <div class="stair-card">
+        <div class="stair-num">03</div>
+        <div class="stair-body">
+          <h3>Create Lasting Keepsakes</h3>
+          <p>Turn answered prompts into a beautiful printable keepsake your family can revisit.</p>
+        </div>
+      </div>
+      <div class="stair-card">
+        <div class="stair-num">04</div>
+        <div class="stair-body">
+          <h3>Share for Generations</h3>
+          <p>Create a legacy your children, grandchildren, and loved ones can hold onto.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Memory tree progress (shown when existing data found) -->
+  <div class="welcome-tree" id="welcomeTreeSection" style="display:none">
+    <div class="section-label">Your Legacy Tree</div>
+    <div class="tree-stage" id="welcomeStage">🌱 Seed</div>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:12px">Every answered prompt becomes another leaf in the story.</p>
+    <div class="tree-bar-wrap"><div class="tree-bar" id="welcomeTreeBar" style="width:0%"></div></div>
+    <div class="tree-row"><span>Seed</span><span>Sapling</span><span>Legacy Tree</span></div>
+  </div>
+
+  <!-- Founder Edition section -->
+  <section class="founder-section">
+    <div class="founder-eyebrow">Founder Edition</div>
+    <h2>Keepsake Printing<br>&amp; Full Story Access</h2>
+    <p>A premium printable memory book designed for the stories your family will want to keep. Unlock all prompts, photo uploads, and Print Keepsake.</p>
+    <div class="book-mockup">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+        <circle cx="11" cy="11" r="9" stroke="#D4AF37" stroke-width=".8"/>
+        <text x="11" y="9" text-anchor="middle" font-family="Georgia,serif" font-size="4.5" font-weight="700" fill="#D4AF37">AR</text>
+        <text x="11" y="15.5" text-anchor="middle" font-size="5.5" fill="#D4AF37">⚓</text>
+      </svg>
+      <div class="book-mockup-label">Founder<br>Edition</div>
+    </div>
+    <button class="btn btn-primary" id="founderBtn" onclick="founderAction()">Unlock Keepsake Printing</button>
+  </section>
+
+  <footer class="welcome-footer">
+    <p>© 2026 AnchorRemembers LLC · All memories stored locally · Never shared without your consent</p>
+    <a href="https://youtube.com/@AnchorWithin" target="_blank" rel="noopener">YouTube</a>
+    &nbsp;·&nbsp;
+    <a href="https://ackccreate.github.io/anchorwithin-store/" target="_blank" rel="noopener">Store</a>
+  </footer>
+
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN 2: SETUP (3 steps)
+     ═══════════════════════════════════════ -->
+<div class="screen setup-screen" id="screenSetup">
+
+  <header class="setup-header">
+    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+      <circle cx="15" cy="15" r="13" stroke="#D4AF37" stroke-width="1"/>
+      <text x="15" y="12.5" text-anchor="middle" font-family="Georgia,serif" font-size="6.5" font-weight="700" fill="#D4AF37">AR</text>
+      <text x="15" y="21" text-anchor="middle" font-size="7.5" fill="#D4AF37">⚓</text>
+    </svg>
+    <div>
+      <span class="wordmark-main" style="font-size:.8rem">AnchorRemembers</span>
+      <span class="wordmark-tag">Begin Your Memory Book</span>
+    </div>
+  </header>
+
+  <!-- Step A: mode -->
+  <div class="setup-step active" id="setupA">
+    <div class="setup-body">
+      <h2>Who is this Memory Book for?</h2>
+      <p>Choose who you are capturing stories for.</p>
+      <div class="choice-grid">
+        <button class="choice-btn" onclick="selectMode('other')">
+          <span class="choice-icon">🤝</span>
+          <span>
+            <span class="choice-label">For a loved one</span>
+            <span class="choice-desc">Preserve someone else's memories and stories</span>
+          </span>
+        </button>
+        <button class="choice-btn" onclick="selectMode('self')">
+          <span class="choice-icon">📖</span>
+          <span>
+            <span class="choice-label">For myself</span>
+            <span class="choice-desc">Record your own voice, wisdom, and story</span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step B: role -->
+  <div class="setup-step" id="setupB">
+    <div class="setup-body">
+      <h2 id="setupBTitle">Who are they to you?</h2>
+      <p id="setupBSub">Choose the role that fits best</p>
+      <div class="role-grid" id="roleGrid"></div>
+    </div>
+    <div class="setup-footer">
+      <button class="btn btn-ghost" onclick="showStepA()" style="flex:1">← Back</button>
+    </div>
+  </div>
+
+  <!-- Step C: details -->
+  <div class="setup-step" id="setupC">
+    <div class="setup-body">
+      <h2 id="setupCTitle">Tell us about them</h2>
+      <p id="setupCSub">Just the basics — we'll ask deeper questions next</p>
+      <div class="setup-field">
+        <label id="nameLabel">Their Name</label>
+        <input class="field-input" type="text" id="personName" placeholder="First name or what you call them">
+      </div>
+      <div class="setup-field">
+        <label>One Word That Describes Them</label>
+        <input class="field-input" type="text" id="personWord" placeholder="e.g. Gentle, Brave, Joyful, Wise">
+      </div>
+      <div class="setup-field">
+        <label>A Short Description <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
+        <div class="hint">Who are they to you? What makes them special?</div>
+        <textarea class="field-input" id="personDesc" placeholder="He was the kind of person who..."></textarea>
+      </div>
+    </div>
+    <div class="setup-footer">
+      <button class="btn btn-ghost" id="backFromC" onclick="showStepB()" style="flex:1">← Back</button>
+      <button class="btn btn-primary" onclick="startApp()" style="flex:2">Continue to Prompts →</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN 3: MAIN APP
+     ═══════════════════════════════════════ -->
+<div class="screen main-screen" id="screenMain">
+
+  <header class="main-header">
+    <div class="main-logo-area">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <circle cx="14" cy="14" r="12" stroke="#D4AF37" stroke-width=".9"/>
+        <text x="14" y="11.5" text-anchor="middle" font-family="Georgia,serif" font-size="6" font-weight="700" fill="#D4AF37">AR</text>
+        <text x="14" y="19.5" text-anchor="middle" font-size="7" fill="#D4AF37">⚓</text>
+      </svg>
+      <div>
+        <div class="main-wordmark">AnchorRemembers</div>
+        <div class="main-sub-txt" id="mainSubTxt">Memory Book</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:6px">
+      <button class="hdr-btn" id="btn432" onclick="toggle432()">♪ 432</button>
+    </div>
+  </header>
+
+  <nav class="app-tabs">
+    <div class="app-tab active" onclick="switchTab('Home',this)">🏠 Home</div>
+    <div class="app-tab" onclick="switchTab('Prompts',this)">📝 Prompts</div>
+    <div class="app-tab" onclick="switchTab('Archive',this)">🗝️ Archive</div>
+  </nav>
+
+  <!-- HOME TAB -->
+  <div class="tab-panel active" id="tabHome">
+    <div class="home-greeting">
+      <div class="home-greeting-name" id="homeName">Memory Book</div>
+      <div class="home-greeting-sub" id="homeSub">AnchorRemembers · Memory Archive</div>
+    </div>
+    <div class="home-tree-section">
+      <div class="section-label">Your Legacy Tree</div>
+      <div class="home-tree-card">
+        <div class="home-count-num" id="homeCount">0</div>
+        <div class="home-count-lbl">memories captured</div>
+        <div class="stage-badge" id="homeStage">🌱 Seed</div>
+        <div class="tree-bar-wrap"><div class="tree-bar" id="homeBar" style="width:0%"></div></div>
+        <div class="tree-row"><span>Seed</span><span>Sapling</span><span>Legacy Tree</span></div>
+      </div>
+    </div>
+    <div class="home-actions">
+      <div class="section-label">Quick Actions</div>
+      <button class="btn btn-primary btn-wide" onclick="switchTab('Prompts',document.querySelectorAll('.app-tab')[1])">📝 Open Prompts →</button>
+      <button class="btn btn-ghost btn-wide" onclick="exportReadable()">↓ Export as Text</button>
+      <button class="btn btn-ghost btn-wide" onclick="exportJSON()">↓ Export JSON</button>
+    </div>
+    <div class="home-founder-panel" id="homeFounderPanel">
+      <div class="home-founder-eyebrow">FOUNDER EDITION</div>
+      <h3>Print Your Memory Book</h3>
+      <p>Unlock all 45 prompts, photo uploads, and a beautifully formatted printable keepsake for just $0.99.</p>
+      <button class="btn btn-primary btn-wide" onclick="doUnlock()">🔑 Unlock everything for $0.99</button>
+    </div>
+  </div>
+
+  <!-- PROMPTS TAB -->
+  <div class="tab-panel" id="tabPrompts">
+    <div class="prompts-header">
+      <div class="prompts-title-txt" id="promptsTitle">Memory Book</div>
+      <div class="prompts-progress-txt" id="promptsProg">0 of 0 answered</div>
+    </div>
+    <div class="stat-bar">
+      <div class="stat-card"><div class="stat-num" id="sAnswered">0</div><div class="stat-lbl">Answered</div></div>
+      <div class="stat-card"><div class="stat-num" id="sWords">0</div><div class="stat-lbl">Words</div></div>
+      <div class="stat-card"><div class="stat-num" id="sPhotos">0</div><div class="stat-lbl">Photos</div></div>
+    </div>
+    <div class="cat-pills" id="catPills"></div>
+    <div class="prompts-list" id="promptsList"></div>
+  </div>
+
+  <!-- ARCHIVE TAB -->
+  <div class="tab-panel" id="tabArchive" style="display:none">
+    <div class="archive-header">
+      <div class="archive-title-txt">Legacy Vault</div>
+      <div class="archive-count-txt" id="archiveCount">0 memories saved</div>
+    </div>
+    <div style="flex:1;overflow-y:auto" id="archiveBody"></div>
+    <div class="archive-bottom-bar">
+      <button class="btn btn-ghost" style="flex:1" onclick="switchTab('Prompts',document.querySelectorAll('.app-tab')[1])">+ Add More</button>
+      <button class="btn btn-ghost" style="flex:1" onclick="exportReadable()">↓ Export</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════
+     ANSWER OVERLAY
+     ═══════════════════════════════════════ -->
+<div class="answer-overlay" id="answerOverlay">
+  <header class="answer-hdr">
+    <button class="answer-back-btn" onclick="closeAnswer()">← Back</button>
+    <span class="answer-cat-txt" id="answerCatTxt">CATEGORY</span>
+    <button class="answer-save" onclick="saveAnswer()">Save</button>
+  </header>
+  <div class="answer-body">
+    <div class="answer-question" id="answerQ"></div>
+    <textarea class="answer-ta" id="answerTA" placeholder="Take your time. There are no wrong answers."></textarea>
+    <div class="answer-photo-lbl">Photos</div>
+    <div class="answer-photo-grid" id="answerPhotoGrid"></div>
+    <div id="photoUploadArea"></div>
+  </div>
+</div>
+
+<!-- 432 Hz badge -->
+<div class="hz" id="hzBadge" onclick="toggle432()"><span class="hz-dot"></span>432 Hz</div>
+
+<script>
+/* ═══════════════════════════════════════
+   QUESTION DATABASES
+   ═══════════════════════════════════════ */
+const GENERIC_QUESTIONS=[
+  {cat:'Their Story',self:"What is your earliest childhood memory?",other:"What is the first memory you have of {name}?"},
+  {cat:'Their Story',self:"Where did you grow up? What was your childhood like?",other:"Where did {name} grow up? What was their childhood like?"},
+  {cat:'Their Story',self:"What did you do for a living, and how did you feel about it?",other:"What did {name} do for a living, and how did they feel about it?"},
+  {cat:'Their Story',self:"What was the happiest time of your life?",other:"What was the happiest time of {name}'s life?"},
+  {cat:'Their Voice',self:"What does your laugh sound like? How do people describe it?",other:"What did {name} sound like when they laughed?"},
+  {cat:'Their Voice',self:"What phrase or saying do you repeat most often?",other:"What phrase or saying did {name} repeat most often?"},
+  {cat:'Their Voice',self:"What do you call the people you love? Do you have nicknames for them?",other:"What did {name} call you? Did they have a special nickname for you?"},
+  {cat:'Their Voice',self:"How do you greet people you love when they walk through your door?",other:"How did {name} greet you when you walked through the door?"},
+  {cat:'Their Heart',self:"What has made you cry? What moves you deeply?",other:"What made {name} cry? What moved them deeply?"},
+  {cat:'Their Heart',self:"Who do you love most in this world?",other:"Who did {name} love the most in this world?"},
+  {cat:'Their Heart',self:"What do you worry about?",other:"What did {name} worry about?"},
+  {cat:'Their Heart',self:"How do you show love? What is your love language?",other:"How did {name} show love? What was their love language?"},
+  {cat:'Their Wisdom',self:"What is the best piece of advice you have ever given someone?",other:"What was the best advice they ever gave you?"},
+  {cat:'Their Wisdom',self:"What life lesson have you taught others without even trying?",other:"What life lesson did {name} teach you without even trying?"},
+  {cat:'Their Wisdom',self:"What do you believe in most strongly?",other:"What did {name} believe in most strongly?"},
+  {cat:'Their Wisdom',self:"If you could give yourself one piece of advice right now, what would it be?",other:"If {name} could give you one more piece of advice right now, what would it be?"},
+  {cat:'Their Joy',self:"What makes you laugh the hardest?",other:"What made {name} laugh the hardest?"},
+  {cat:'Their Joy',self:"What is your favorite food, drink, or comfort meal?",other:"What was {name}'s favorite food, drink, or comfort meal?"},
+  {cat:'Their Joy',self:"What song, movie, or book feels most like who you are?",other:"What song, movie, or book reminds you most of {name}?"},
+  {cat:'Their Joy',self:"What hobby or activity lights you up inside?",other:"What hobby or activity lit {name} up inside?"},
+  {cat:'Their Spirit',self:"What is your superpower — the thing you are best at?",other:"What was {name}'s superpower — the thing they were best at?"},
+  {cat:'Their Spirit',self:"How do you handle hard times? What keeps you going?",other:"How did {name} handle hard times? What kept them going?"},
+  {cat:'Their Spirit',self:"What would you want the people you love to know right now?",other:"What would {name} want you to know right now?"},
+  {cat:'Their Spirit',self:"If you could have one more real conversation with yourself at your best, what would you say?",other:"If you could have one more conversation with {name}, what would you say?"},
+  {cat:'Their Spirit',self:"What about yourself do you hope the people you love carry forward?",other:"What about {name} do you hope to carry forward in your own life?"},
+];
+
+const FATHER_QUESTIONS=[
+  {cat:'Beginnings',self:"Where were you born, and who was in the room the day you arrived?",other:"Where was {name} born, and who was there the day he came into the world?"},
+  {cat:'Beginnings',self:"What are the earliest memories you have from your childhood home?",other:"What do you know about {name}'s earliest years — his first home, his neighborhood?"},
+  {cat:'Beginnings',self:"What was your family like growing up — who was there, what was the feeling of it?",other:"What was {name}'s family like when he was growing up?"},
+  {cat:'Beginnings',self:"How did your parents meet, and what did they tell you about the early years of your family?",other:"How did {name}'s parents meet, and what did he tell you about his early family life?"},
+  {cat:'Beginnings',self:"What was the very first job or responsibility you ever had?",other:"What was the very first job or responsibility {name} ever had?"},
+  {cat:'Childhood',self:"What games or activities do you remember most from being a kid?",other:"What games or activities does {name} talk about from his childhood?"},
+  {cat:'Childhood',self:"Who was your best friend as a child, and what did you get up to together?",other:"Who was {name}'s best friend as a child, and what kind of adventures did they have?"},
+  {cat:'Childhood',self:"What were summers like for you as a kid?",other:"What were summers like for {name} when he was young?"},
+  {cat:'Childhood',self:"Was there a teacher, coach, or neighbor who made a big impression on you growing up?",other:"Was there a teacher, coach, or neighbor who made a big impression on {name}?"},
+  {cat:'Childhood',self:"What did you want to be when you grew up?",other:"What did {name} say he wanted to be when he grew up?"},
+  {cat:'Middle Years',self:"How did you figure out what you wanted to do with your life?",other:"How did {name} figure out what he wanted to do with his life?"},
+  {cat:'Middle Years',self:"What was the hardest period of your life, and how did you get through it?",other:"What was the hardest period of {name}'s life, and how did he get through it?"},
+  {cat:'Middle Years',self:"What is a decision you made when you were younger that shaped everything after?",other:"What is a decision {name} made when he was younger that shaped everything after?"},
+  {cat:'Middle Years',self:"What did your thirties and forties feel like? What were you building toward?",other:"What did {name}'s thirties and forties feel like? What was he building toward?"},
+  {cat:'Middle Years',self:"What is something you were proud of back then that you never talked about much?",other:"What is something {name} was quietly proud of that he never talked about much?"},
+  {cat:'Love & Family',self:"How did you meet the person you loved? What was it like in the beginning?",other:"How did {name} meet the person he loved? What do you know about those early days?"},
+  {cat:'Love & Family',self:"What was it like to become a parent for the first time?",other:"What was it like for {name} to become a parent for the first time?"},
+  {cat:'Love & Family',self:"What did you hope for your children when you held them as babies?",other:"What did {name} hope for his children when he held them as babies?"},
+  {cat:'Love & Family',self:"What is the proudest moment you have had as a father?",other:"What is the proudest moment {name} has had as a father?"},
+  {cat:'Love & Family',self:"What did love teach you — about yourself, about what matters most?",other:"What did love teach {name} — about himself, about what matters most?"},
+  {cat:'Traditions',self:"What traditions did your family keep — holidays, rituals, things that happened every year?",other:"What traditions did {name}'s family keep — things that happened every year, every season?"},
+  {cat:'Traditions',self:"Is there a meal or recipe that carries deep memory for you?",other:"Is there a meal or recipe that carries real memory for {name}?"},
+  {cat:'Traditions',self:"Was there a song, a place, or a time of year that always felt like home?",other:"Is there a song, a place, or a time of year that always felt like home to {name}?"},
+  {cat:'Traditions',self:"What did Sunday mornings look like in your house?",other:"What did Sunday mornings look like in {name}'s house?"},
+  {cat:'Traditions',self:"If you could bring back one tradition from when you were young, what would it be?",other:"If {name} could bring back one tradition from when he was young, what would it be?"},
+  {cat:'The Best Of',self:"What was the best trip or adventure you ever went on?",other:"What was the best trip or adventure {name} ever went on?"},
+  {cat:'The Best Of',self:"What was the best meal you ever ate, and where were you?",other:"What was the best meal {name} ever ate, and where was he when he had it?"},
+  {cat:'The Best Of',self:"What was the best day of your life — or one of them?",other:"What was the best day of {name}'s life, or one of them?"},
+  {cat:'The Best Of',self:"What was the funniest thing that ever happened to you?",other:"What was the funniest thing that ever happened to {name}?"},
+  {cat:'The Best Of',self:"What is something you did that surprised even yourself?",other:"What is something {name} did that surprised even him?"},
+  {cat:'People',self:"Who has had the biggest influence on who you became?",other:"Who has had the biggest influence on who {name} became?"},
+  {cat:'People',self:"Is there someone you have lost who you still think about often?",other:"Is there someone {name} has lost who he still thinks about often?"},
+  {cat:'People',self:"Who have you loved most in this world?",other:"Who has {name} loved most in this world?"},
+  {cat:'People',self:"Who do you wish you had spent more time with?",other:"Who does {name} wish he had spent more time with?"},
+  {cat:'People',self:"Who made you laugh the most in your life?",other:"Who made {name} laugh the most?"},
+  {cat:'Wisdom',self:"What is the most important thing life has taught you?",other:"What is the most important thing life has taught {name}?"},
+  {cat:'Wisdom',self:"What do you know now that you wish you had known at twenty?",other:"What does {name} know now that he wishes he had known at twenty?"},
+  {cat:'Wisdom',self:"What advice would you give to someone just starting out in life?",other:"What advice does {name} give to people who are just starting out?"},
+  {cat:'Wisdom',self:"What do you believe about how to treat people?",other:"What does {name} believe about how to treat people?"},
+  {cat:'Wisdom',self:"What would you tell your younger self if you could?",other:"What would {name} tell his younger self if he could?"},
+  {cat:'Legacy',self:"What do you want to be remembered for?",other:"What does {name} want to be remembered for?"},
+  {cat:'Legacy',self:"What do you hope your children carry forward from you?",other:"What does {name} hope his children carry forward from him?"},
+  {cat:'Legacy',self:"What has your life been about, at the core of it?",other:"What has {name}'s life been about, at its core?"},
+  {cat:'Legacy',self:"Is there anything you want the people you love to know — anything left unsaid?",other:"Is there anything {name} would want the people he loves to know — anything left unsaid?"},
+  {cat:'Legacy',self:"What does a good life look like to you?",other:"What does a good life look like to {name}?"},
+];
+
+/* ═══════════════════════════════════════
+   STATE
+   ═══════════════════════════════════════ */
+var STORE='aw_anchor_remembers';
+var UNLOCK='aw_remembers_pro';
+var PHOTOS='aw_anchor_photos';
+
+var person={name:'',role:'',word:'',desc:'',mode:'other'};
+var answers={};
+var photos=[];
+var unlocked=localStorage.getItem(UNLOCK)==='1';
+var currentQIdx=null;
+var currentCat='All';
+
+/* ═══════════════════════════════════════
+   HELPERS
+   ═══════════════════════════════════════ */
+function activeQ(){return person.role==='Father'?FATHER_QUESTIONS:GENERIC_QUESTIONS;}
+function isLocked(i){return !unlocked&&person.role==='Father'&&i>=5;}
+function voiceQ(q){
+  if(person.mode==='self')return q.self;
+  return q.other.replace(/\{name\}/g,person.name||'they');
+}
+function wordCount(s){return s.trim().split(/\s+/).filter(function(w){return w.length>0;}).length;}
+function totalWords(){
+  return Object.values(answers).reduce(function(s,a){return s+(a?wordCount(a):0);},0);
+}
+function answeredCnt(){return Object.keys(answers).filter(function(k){return!!answers[k];}).length;}
+function treeStage(n,t){
+  if(n===0)return'🌱 Seed';
+  var p=n/t;
+  if(p<0.15)return'🌿 Sapling';
+  if(p<0.5)return'🌳 Growing Tree';
+  return'🌲 Legacy Tree';
+}
+function treePct(n,t){return t?Math.min(100,Math.round(n/t*100)):0;}
+
+/* ═══════════════════════════════════════
+   PERSIST
+   ═══════════════════════════════════════ */
+function save(){
+  try{localStorage.setItem(STORE,JSON.stringify({person:person,answers:answers,version:3}));}catch(e){}
+}
+function loadData(){
+  try{
+    var d=JSON.parse(localStorage.getItem(STORE));
+    if(d&&d.person&&(d.person.name||d.person.mode)){
+      person=Object.assign({name:'',role:'',word:'',desc:'',mode:'other'},d.person);
+      answers=d.answers||{};
+      return true;
+    }
+  }catch(e){}
+  return false;
+}
+function loadPhotos(){
+  try{photos=JSON.parse(localStorage.getItem(PHOTOS))||[];}catch(e){photos=[];}
+}
+function savePhotos(){
+  try{localStorage.setItem(PHOTOS,JSON.stringify(photos));}catch(e){}
+}
+
+/* ═══════════════════════════════════════
+   NAVIGATION
+   ═══════════════════════════════════════ */
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+  document.getElementById(id).classList.add('active');
+}
+function showSetup(){
+  showScreen('screenSetup');
+  showStepA();
+}
+function showStepA(){
+  ['setupA','setupB','setupC'].forEach(function(id){document.getElementById(id).classList.remove('active');});
+  document.getElementById('setupA').classList.add('active');
+}
+function showStepB(){
+  ['setupA','setupB','setupC'].forEach(function(id){document.getElementById(id).classList.remove('active');});
+  document.getElementById('setupB').classList.add('active');
+}
+function showStepC(){
+  ['setupA','setupB','setupC'].forEach(function(id){document.getElementById(id).classList.remove('active');});
+  document.getElementById('setupC').classList.add('active');
+}
+
+function selectMode(mode){
+  person.mode=mode;
+  var isSelf=mode==='self';
+  document.getElementById('setupBTitle').textContent=isSelf?'Who are you in your family?':'Who are they to you?';
+  document.getElementById('setupBSub').textContent=isSelf?'Choose the role that best describes you':'Choose the role that fits best';
+  buildRoleGrid(mode);
+  if(isSelf){
+    person.role='';
+    document.getElementById('nameLabel').textContent='Your Name (optional)';
+    document.getElementById('personName').placeholder='What should we call you?';
+    document.getElementById('setupCTitle').textContent='A little about yourself';
+    document.getElementById('setupCSub').textContent='Optional — we use this to personalize your archive';
+    document.getElementById('personDesc').placeholder='What do you want people to remember about you?';
+    document.getElementById('backFromC').onclick=showStepA;
+  }
+  showStepB();
+}
+
+function buildRoleGrid(mode){
+  var isSelf=mode==='self';
+  var roles=isSelf
+    ?[{i:'👨',l:'Father',x:'45 questions'},{i:'👩',l:'Mother'},{i:'👴',l:'Grandfather'},{i:'👵',l:'Grandmother'},{i:'🧒',l:'Son'},{i:'👧',l:'Daughter'},{i:'✨',l:'Other'}]
+    :[{i:'👨',l:'Father',x:'45 questions'},{i:'👩',l:'Mother'},{i:'👴',l:'Grandfather'},{i:'👵',l:'Grandmother'},{i:'🧒',l:'Son'},{i:'👧',l:'Daughter'},{i:'🤝',l:'Sibling'},{i:'💍',l:'Spouse/Partner'},{i:'🤗',l:'Friend'},{i:'💼',l:'Co-worker'},{i:'🏠',l:'Neighbor'},{i:'✨',l:'Other'}];
+  document.getElementById('roleGrid').innerHTML=roles.map(function(r){
+    return '<button class="role-btn" onclick="selectRole(\''+r.l.replace(/'/g,"\\'")+'\')">'
+      +'<span class="ri">'+r.i+'</span>'+r.l
+      +(r.x?'<span class="father-badge">'+r.x+'</span>':'')
+      +'</button>';
+  }).join('');
+}
+
+function selectRole(role){
+  person.role=role;
+  var isF=role==='Father';var isSelf=person.mode==='self';
+  document.getElementById('nameLabel').textContent=isF?'His Name':(isSelf?'Your Name (optional)':'Their Name');
+  document.getElementById('personName').placeholder=isF?'e.g. Dad, Robert, Pop':(isSelf?'What should we call you?':'First name or what you call them');
+  document.getElementById('setupCTitle').textContent=isSelf?'A little about yourself':'Tell us about your '+role.toLowerCase();
+  document.getElementById('setupCSub').textContent='Just the basics — we\'ll ask deeper questions next';
+  document.getElementById('personDesc').placeholder=isSelf?'What do you want people to remember about you?':'He was the kind of person who...';
+  document.getElementById('backFromC').onclick=showStepB;
+  showStepC();
+}
+
+function loadExisting(){
+  if(loadData()){loadPhotos();goToMain();}
+  else{alert('No existing archive found on this device. Let\'s start fresh.');showSetup();}
+}
+
+function startApp(){
+  var v=document.getElementById('personName').value.trim();
+  if(person.mode==='other'&&!v){document.getElementById('personName').focus();return;}
+  person.name=v||(person.mode==='self'?'You':'Them');
+  person.word=document.getElementById('personWord').value.trim();
+  person.desc=document.getElementById('personDesc').value.trim();
+  answers={};save();loadPhotos();goToMain();
+}
+
+/* ═══════════════════════════════════════
+   MAIN APP
+   ═══════════════════════════════════════ */
+function goToMain(){
+  showScreen('screenMain');
+  document.getElementById('mainSubTxt').textContent=person.name?person.name+"'s Memory Book":'Memory Book';
+  renderHomeTab();
+  renderPromptsTab();
+  renderArchive();
+  updateFounderUI();
+}
+
+function switchTab(name,el){
+  document.querySelectorAll('.app-tab').forEach(function(t){t.classList.remove('active');});
+  document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');p.style.display='none';});
+  el.classList.add('active');
+  var panel=document.getElementById('tab'+name);
+  if(panel){panel.classList.add('active');panel.style.display='flex';}
+  if(name==='Archive')renderArchive();
+  if(name==='Prompts')renderPromptsTab();
+  if(name==='Home')renderHomeTab();
+}
+
+/* HOME TAB */
+function renderHomeTab(){
+  var qs=activeQ();
+  var cnt=answeredCnt();
+  var pct=treePct(cnt,qs.length);
+  var stage=treeStage(cnt,qs.length);
+  document.getElementById('homeName').textContent=person.name?person.name+"'s Memory Book":'Memory Book';
+  document.getElementById('homeSub').textContent=(person.role?person.role+' · ':'')+'AnchorRemembers · Memory Archive';
+  document.getElementById('homeCount').textContent=cnt;
+  document.getElementById('homeStage').textContent=stage;
+  document.getElementById('homeBar').style.width=pct+'%';
+}
+
+function updateFounderUI(){
+  var panel=document.getElementById('homeFounderPanel');
+  if(panel){panel.style.display=unlocked?'none':'';}
+  var fb=document.getElementById('founderBtn');
+  if(fb){
+    if(unlocked){fb.textContent='✓ Unlocked — Print Keepsake';fb.onclick=printKeepsake;}
+    else{fb.textContent='Unlock Keepsake Printing';fb.onclick=founderAction;}
+  }
+}
+
+/* PROMPTS TAB */
+function getCats(){
+  var qs=activeQ();var cats=['All'];
+  qs.forEach(function(q){if(cats.indexOf(q.cat)<0)cats.push(q.cat);});
+  return cats;
+}
+
+function renderPromptsTab(){
+  var qs=activeQ();
+  var cnt=answeredCnt();
+  document.getElementById('promptsTitle').textContent=person.name?person.name+"'s Memory Book":'Memory Book';
+  document.getElementById('promptsProg').textContent=cnt+' of '+qs.length+' answered';
+  document.getElementById('sAnswered').textContent=cnt;
+  document.getElementById('sWords').textContent=totalWords();
+  document.getElementById('sPhotos').textContent=photos.length;
+  /* pills */
+  var cats=getCats();
+  document.getElementById('catPills').innerHTML=cats.map(function(c){
+    return '<div class="cat-pill'+(c===currentCat?' active':'')+'" onclick="filterCat(\''+c.replace(/'/g,"\\'")+'\')">'+(c==='Love & Family'?'Love':c)+'</div>';
+  }).join('');
+  renderPromptCards();
+}
+
+function filterCat(cat){
+  currentCat=cat;
+  document.querySelectorAll('.cat-pill').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.cat-pill').forEach(function(p){if(p.textContent.trim()===(cat==='Love & Family'?'Love':cat))p.classList.add('active');});
+  renderPromptCards();
+}
+
+function renderPromptCards(){
+  var qs=activeQ();
+  var indices=[];
+  for(var i=0;i<qs.length;i++){
+    if(currentCat==='All'||qs[i].cat===currentCat)indices.push(i);
+  }
+  document.getElementById('promptsList').innerHTML=indices.map(function(i){
+    var q=qs[i];var answered=!!answers[i];var locked=isLocked(i);
+    var qText=voiceQ(q);var pc=photos.filter(function(p){return p.qi===i;}).length;
+    return '<div class="prompt-card'+(answered?' answered':'')+(locked?' locked':'')+'" onclick="'+(locked?'showLockCard(this)':'openAnswer('+i+')')+'">'
+      +(locked?'<span class="lock-icon">🔒</span>':'')
+      +'<div class="prompt-top">'
+        +'<span class="prompt-num">'+(i+1)+'</span>'
+        +'<span class="prompt-q-text">'+qText+'</span>'
+      +'</div>'
+      +'<div class="prompt-bot">'
+        +'<span class="prompt-cat-lbl">'+q.cat+'</span>'
+        +'<span class="prompt-status"><span class="status-dot'+(answered?' done':'')+'"></span>'+(answered?'Answered':(locked?'Locked':'Open'))+(pc?' · 📷 '+pc:'')+'</span>'
+      +'</div>'
+      +(locked?'<div class="lock-reveal" id="lr'+i+'"><p>🔒 Unlock all 45 Father prompts, photo uploads, and Print Keepsake for $0.99</p><button class="btn btn-primary btn-sm" onclick="doUnlock();event.stopPropagation()">Unlock for $0.99 →</button></div>':'')
+    +'</div>';
+  }).join('');
+}
+
+function showLockCard(card){
+  var r=card.querySelector('.lock-reveal');
+  if(r)r.style.display=r.style.display==='block'?'none':'block';
+}
+
+/* ANSWER OVERLAY */
+function openAnswer(idx){
+  var qs=activeQ();var q=qs[idx];
+  if(!q||isLocked(idx))return;
+  currentQIdx=idx;
+  document.getElementById('answerCatTxt').textContent=q.cat.toUpperCase();
+  document.getElementById('answerQ').textContent=voiceQ(q);
+  document.getElementById('answerTA').value=answers[idx]||'';
+  renderAnswerPhotos();
+  document.getElementById('answerOverlay').classList.add('open');
+  setTimeout(function(){document.getElementById('answerTA').focus();},60);
+}
+
+function closeAnswer(){
+  document.getElementById('answerOverlay').classList.remove('open');
+  currentQIdx=null;
+  renderPromptsTab();renderArchive();renderHomeTab();
+}
+
+function saveAnswer(){
+  if(currentQIdx===null)return;
+  var v=document.getElementById('answerTA').value.trim();
+  if(v)answers[currentQIdx]=v;else delete answers[currentQIdx];
+  save();closeAnswer();
+}
+
+function renderAnswerPhotos(){
+  var idx=currentQIdx;
+  var qph=photos.filter(function(p){return p.qi===idx;});
+  document.getElementById('answerPhotoGrid').innerHTML=qph.map(function(p,i){
+    return '<div class="a-thumb"><img src="'+p.dataUrl+'" alt="photo">'
+      +'<button class="a-thumb-del" onclick="deletePhoto('+i+')" aria-label="Remove">✕</button>'
+      +'</div>';
+  }).join('');
+  var area=document.getElementById('photoUploadArea');
+  if(unlocked){
+    area.innerHTML='<input type="file" id="photoFile" accept="image/*" style="display:none" onchange="handlePhotoUpload(this)">'
+      +'<div class="photo-add-btn" onclick="document.getElementById(\'photoFile\').click()">📷 Add Photo</div>';
+  } else {
+    area.innerHTML='<div class="photo-lock">🔒 Photo uploads unlock for $0.99 — <a href="#" onclick="doUnlock();return false">Unlock →</a></div>';
+  }
+}
+
+function handlePhotoUpload(input){
+  var file=input.files[0];if(!file)return;
+  if(photos.length>=12){alert('Maximum 12 photos reached.');return;}
+  var r=new FileReader();
+  r.onload=function(e){
+    photos.push({qi:currentQIdx,dataUrl:e.target.result});
+    savePhotos();renderAnswerPhotos();renderPromptsTab();
+  };
+  r.readAsDataURL(file);input.value='';
+}
+
+function deletePhoto(localIdx){
+  var qph=photos.filter(function(p){return p.qi===currentQIdx;});
+  var tgt=qph[localIdx];if(!tgt)return;
+  var gi=photos.indexOf(tgt);
+  if(gi>=0){photos.splice(gi,1);savePhotos();renderAnswerPhotos();}
+}
+
+/* ARCHIVE */
+function renderArchive(){
+  var qs=activeQ();
+  var idxs=Object.keys(answers).map(Number).filter(function(i){return!!answers[i];}).sort(function(a,b){return a-b;});
+  var cnt=idxs.length;
+  document.getElementById('archiveCount').textContent=cnt+' memor'+(cnt===1?'y':'ies')+' saved';
+  var body=document.getElementById('archiveBody');
+  if(cnt===0){
+    body.innerHTML='<div class="vault-empty"><div class="vault-empty-icon">🗝️</div>'
+      +'<h3>Your Legacy Vault is waiting.</h3>'
+      +'<p>Start with one prompt. Every answer becomes part of a keepsake your family can return to.</p>'
+      +'<button class="btn btn-primary" onclick="switchTab(\'Prompts\',document.querySelectorAll(\'.app-tab\')[1])">Start with a Prompt →</button>'
+      +'</div>';
+    return;
+  }
+  body.innerHTML='<div class="vault-list">'+idxs.map(function(i){
+    if(!qs[i])return'';
+    var wc=wordCount(answers[i]);
+    var pc=photos.filter(function(p){return p.qi===i;}).length;
+    return '<div class="vault-card">'
+      +'<div class="vault-cat">'+qs[i].cat+'</div>'
+      +'<div class="vault-q">&#8220;'+voiceQ(qs[i])+'&#8221;</div>'
+      +'<div class="vault-a">'+answers[i]+'</div>'
+      +'<div class="vault-meta">'
+        +'<span class="vault-chip">'+wc+' word'+(wc!==1?'s':'')+'</span>'
+        +(pc?'<span class="vault-chip">📷 '+pc+'</span>':'')
+      +'</div>'
+      +'<div class="vault-edit"><button class="btn btn-ghost btn-sm" onclick="openAnswer('+i+')" style="flex:1">Edit →</button></div>'
+    +'</div>';
+  }).join('')+'</div>';
+}
+
+/* ═══════════════════════════════════════
+   EXPORTS
+   ═══════════════════════════════════════ */
+function exportReadable(){
+  var qs=activeQ();
+  var idxs=Object.keys(answers).map(Number).filter(function(i){return!!answers[i];}).sort(function(a,b){return a-b;});
+  var text='AnchorRemembers — '+person.name+"'s Memory Book\n";
+  if(person.role)text+='Role: '+person.role+'\n';
+  if(person.word)text+='In one word: '+person.word+'\n';
+  if(person.desc)text+='\n'+person.desc+'\n';
+  text+='\n'+'='.repeat(50)+'\n\n';
+  var lastCat='';
+  idxs.forEach(function(i){
+    if(!qs[i])return;
+    if(qs[i].cat!==lastCat){text+='\n--- '+qs[i].cat.toUpperCase()+' ---\n\n';lastCat=qs[i].cat;}
+    text+='Q: '+voiceQ(qs[i])+'\nA: '+answers[i]+'\n\n';
+  });
+  text+='\n'+'='.repeat(50)+'\nCaptured with love using AnchorRemembers\n';
+  var blob=new Blob([text],{type:'text/plain'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.href=url;a.download='memories-'+(person.name||'archive').toLowerCase().replace(/\s/g,'-')+'.txt';
+  a.click();URL.revokeObjectURL(url);
+}
+
+function exportJSON(){
+  var qs=activeQ();
+  var data=JSON.stringify({person:person,answers:answers,questions:qs,exported:new Date().toISOString()},null,2);
+  var blob=new Blob([data],{type:'application/json'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.href=url;a.download='anchor-remembers-'+(person.name||'archive').toLowerCase().replace(/\s/g,'-')+'.json';
+  a.click();URL.revokeObjectURL(url);
+}
+
+/* ═══════════════════════════════════════
+   PRINT KEEPSAKE
+   ═══════════════════════════════════════ */
+function printKeepsake(){
+  if(!unlocked){doUnlock();return;}
+  var qs=activeQ();
+  var idxs=Object.keys(answers).map(Number).filter(function(i){return!!answers[i];}).sort(function(a,b){return a-b;});
+  var bycat={};
+  idxs.forEach(function(i){
+    if(!qs[i])return;
+    var c=qs[i].cat;if(!bycat[c])bycat[c]=[];bycat[c].push(i);
+  });
+  var html='<div class="pc-title">AnchorRemembers</div>';
+  html+='<div class="pc-sub">'+person.name+(person.role?' · '+person.role:'')+'</div>';
+  if(person.word)html+='<div class="pc-word">In one word: "'+person.word+'"</div>';
+  if(person.desc)html+='<div class="pc-desc">'+person.desc+'</div>';
+  var allph=photos.slice(0,6);
+  if(allph.length)html+='<div class="pc-photos">'+allph.map(function(p){return'<img class="pc-photo" src="'+p.dataUrl+'" alt="">';}).join('')+'</div>';
+  Object.entries(bycat).forEach(function(entry){
+    var cat=entry[0];var indices=entry[1];
+    html+='<div class="pc-cat-head">'+cat+'</div>';
+    indices.forEach(function(i){
+      var qph=photos.filter(function(p){return p.qi===i;});
+      html+='<div class="pc-qa"><div class="pc-q">'+voiceQ(qs[i])+'</div><div class="pc-a">'+answers[i]+'</div>';
+      if(qph.length)html+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:6px">'+qph.map(function(p){return'<img class="pc-photo" src="'+p.dataUrl+'" alt="">';}).join('')+'</div>';
+      html+='</div>';
+    });
+  });
+  html+='<div class="pc-footer">Captured with love using AnchorRemembers · anchorwith.in</div>';
+  document.getElementById('printContent').innerHTML=html;
+  window.print();
+}
+
+/* ═══════════════════════════════════════
+   UNLOCK
+   ═══════════════════════════════════════ */
+var STRIPE='https://buy.stripe.com/eVq8wQ1mSayH4k79YK67S0j';
+function doUnlock(){window.location.href=STRIPE;}
+function founderAction(){if(unlocked)printKeepsake();else doUnlock();}
+
+/* ═══════════════════════════════════════
+   432 HZ
+   ═══════════════════════════════════════ */
+var actx=null,osc=null,gn=null,toneon=false;
+function toggle432(){
+  if(!toneon){
+    if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();
+    if(actx.state==='suspended')actx.resume();
+    osc=actx.createOscillator();osc.type='sine';osc.frequency.value=432;
+    gn=actx.createGain();gn.gain.value=0;
+    osc.connect(gn);gn.connect(actx.destination);osc.start();
+    gn.gain.setTargetAtTime(.08,actx.currentTime,.8);
+    toneon=true;
+  } else {
+    gn.gain.setTargetAtTime(0,actx.currentTime,.5);
+    setTimeout(function(){try{osc.stop();}catch(e){}},800);
+    toneon=false;
+  }
+  document.getElementById('btn432').classList.toggle('active',toneon);
+  document.getElementById('hzBadge').classList.toggle('on',toneon);
+}
+
+/* ═══════════════════════════════════════
+   WELCOME TREE UPDATE
+   ═══════════════════════════════════════ */
+function updateWelcomeTree(){
+  var qs=activeQ();
+  var cnt=answeredCnt();
+  if(cnt>0){
+    var section=document.getElementById('welcomeTreeSection');
+    if(section){
+      section.style.display='';
+      document.getElementById('welcomeStage').textContent=treeStage(cnt,qs.length);
+      document.getElementById('welcomeTreeBar').style.width=treePct(cnt,qs.length)+'%';
+    }
+  }
+}
+
+/* ═══════════════════════════════════════
+   INIT
+   ═══════════════════════════════════════ */
+(function(){
+  var params=new URLSearchParams(location.search);
+  var paid=params.get('paid');
+  if(paid==='1'||paid==='true'){
+    try{localStorage.setItem(UNLOCK,'1');}catch(e){}
+    unlocked=true;
+  }
+  var hasData=loadData();
+  loadPhotos();
+  if(hasData){
+    var heroBtn=document.getElementById('heroBeginBtn');
+    if(heroBtn){
+      heroBtn.textContent='Return to '+person.name+"'s Memory Book";
+      heroBtn.onclick=function(){loadPhotos();goToMain();};
+    }
+    updateWelcomeTree();
+  }
+  updateFounderUI();
+  /* fix archive tab display */
+  document.getElementById('tabArchive').style.display='none';
+})();
+</script>
+</body>
+</html>
