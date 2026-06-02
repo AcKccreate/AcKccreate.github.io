@@ -251,6 +251,7 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
 .app-tab.active{color:var(--navy);border-color:var(--gold)}
 .tab-panel{display:none;flex:1;flex-direction:column;overflow-y:auto}
 .tab-panel.active{display:flex}
+/* noscript fallback: show all panels if JS disabled */
 
 /* ═══════ HOME TAB ═══════ */
 .home-greeting{
@@ -467,6 +468,7 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
     font-size:.7rem;color:#999;text-align:center}
 }
 </style>
+<noscript><style>.tab-panel{display:flex!important}.screen{display:flex!important}.answer-overlay{display:none!important}</style></noscript>
 </head>
 <body>
 
@@ -744,8 +746,8 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
     <div class="home-founder-panel" id="homeFounderPanel">
       <div class="home-founder-eyebrow">FOUNDER EDITION</div>
       <h3>Print Your Memory Book</h3>
-      <p>Unlock all 45 prompts, photo uploads, and a beautifully formatted printable keepsake for just $0.99.</p>
-      <button class="btn btn-primary btn-wide" onclick="doUnlock()">🔑 Unlock everything for $0.99</button>
+      <p>Unlock all 45 prompts, photo uploads, and a beautifully formatted printable keepsake for just $5.99.</p>
+      <button class="btn btn-primary btn-wide" onclick="doUnlock()">🔑 Unlock everything for $5.99</button>
     </div>
   </div>
 
@@ -765,7 +767,7 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
   </div>
 
   <!-- ARCHIVE TAB -->
-  <div class="tab-panel" id="tabArchive" style="display:none">
+  <div class="tab-panel" id="tabArchive">
     <div class="archive-header">
       <div class="archive-title-txt">Legacy Vault</div>
       <div class="archive-count-txt" id="archiveCount">0 memories saved</div>
@@ -1036,10 +1038,10 @@ function goToMain(){
 
 function switchTab(name,el){
   document.querySelectorAll('.app-tab').forEach(function(t){t.classList.remove('active');});
-  document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');p.style.display='none';});
+  document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});
   el.classList.add('active');
   var panel=document.getElementById('tab'+name);
-  if(panel){panel.classList.add('active');panel.style.display='flex';}
+  if(panel){panel.classList.add('active');}
   if(name==='Archive')renderArchive();
   if(name==='Prompts')renderPromptsTab();
   if(name==='Home')renderHomeTab();
@@ -1060,7 +1062,7 @@ function renderHomeTab(){
 
 function updateFounderUI(){
   var panel=document.getElementById('homeFounderPanel');
-  if(panel){panel.style.display=unlocked?'none':'';}
+  if(panel){panel.style.display=unlocked?'none':'';}  /* homeFounderPanel uses inline — OK */
   var fb=document.getElementById('founderBtn');
   if(fb){
     if(unlocked){fb.textContent='✓ Unlocked — Print Keepsake';fb.onclick=printKeepsake;}
@@ -1117,7 +1119,7 @@ function renderPromptCards(){
         +'<span class="prompt-cat-lbl">'+q.cat+'</span>'
         +'<span class="prompt-status"><span class="status-dot'+(answered?' done':'')+'"></span>'+(answered?'Answered':(locked?'Locked':'Open'))+(pc?' · 📷 '+pc:'')+'</span>'
       +'</div>'
-      +(locked?'<div class="lock-reveal" id="lr'+i+'"><p>🔒 Unlock all 45 Father prompts, photo uploads, and Print Keepsake for $0.99</p><button class="btn btn-primary btn-sm" onclick="doUnlock();event.stopPropagation()">Unlock for $0.99 →</button></div>':'')
+      +(locked?'<div class="lock-reveal" id="lr'+i+'"><p>🔒 Unlock all 45 Father prompts, photo uploads, and Print Keepsake for $5.99</p><button class="btn btn-primary btn-sm" onclick="doUnlock();event.stopPropagation()">Unlock for $5.99 →</button></div>':'')
     +'</div>';
   }).join('');
 }
@@ -1166,7 +1168,7 @@ function renderAnswerPhotos(){
     area.innerHTML='<input type="file" id="photoFile" accept="image/*" style="display:none" onchange="handlePhotoUpload(this)">'
       +'<div class="photo-add-btn" onclick="document.getElementById(\'photoFile\').click()">📷 Add Photo</div>';
   } else {
-    area.innerHTML='<div class="photo-lock">🔒 Photo uploads unlock for $0.99 — <a href="#" onclick="doUnlock();return false">Unlock →</a></div>';
+    area.innerHTML='<div class="photo-lock">🔒 Photo uploads unlock for $5.99 — <a href="#" onclick="doUnlock();return false">Unlock →</a></div>';
   }
 }
 
@@ -1354,8 +1356,7 @@ function updateWelcomeTree(){
     updateWelcomeTree();
   }
   updateFounderUI();
-  /* fix archive tab display */
-  document.getElementById('tabArchive').style.display='none';
+  /* archive and prompts tabs hidden by CSS .tab-panel (display:none) — no inline style needed */
 })();
 </script>
 </body>
