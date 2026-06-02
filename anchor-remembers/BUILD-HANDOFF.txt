@@ -1,0 +1,189 @@
+============================================================
+AnchorRemembers — BUILD HANDOFF & IMAGE SPEC  (plain text)
+Give this whole file to ChatGPT / Gemini for full context.
+============================================================
+
+------------------------------------------------------------
+1. WHAT THIS IS
+------------------------------------------------------------
+A single self-contained index.html — a responsive luxury landing page PLUS a
+working "memory book" web app (guided prompts, answers, photos, printable
+keepsake), all in one file.
+- No build step, no frameworks, no dependencies. Inline CSS (<style>), inline
+  JS (<script>), inline SVG logo + icons, data saved via localStorage.
+- Deploy = drop index.html (+ optional images) into the repo root.
+- Hosted on GitHub Pages at anchorremembers.com.
+- Repo: AcKccreate/anchor-remembers (working branch: claude/session-L32eh).
+
+------------------------------------------------------------
+2. DESIGN SYSTEM  (match all generated assets to this)
+------------------------------------------------------------
+Navy          #0D182A   dark backgrounds, book cover
+Antique Gold  #D4AF37   logo, accents, primary buttons
+Gold Soft     #E6C878   gold highlights
+Sage Green    #A7B79A   botanical / secondary
+Warm Ivory    #F5F1E8   light surfaces
+Cream         #FBF6EC   page background
+Parchment     #EFE5D2   section bands
+Ink           #172033   body text
+
+Type: Headlines = serif (Georgia/Times, often italic for emphasis).
+      Body = system sans-serif.
+Logo: gold A·R monogram with an integrated anchor, wrapped in a green-and-gold
+      laurel wreath. Clean transparent master = logo.png in this folder.
+Aesthetic: editorial, heirloom luxury, warm, botanical, gilded —
+      "National Geographic meets luxury keepsake."
+
+------------------------------------------------------------
+3. PAGE STRUCTURE (top -> bottom)
+------------------------------------------------------------
+LANDING (marketing page):
+1. Header (cream): logo + "AnchorRemembers" wordmark + tagline + "Begin Your Book".
+2. Hero: eyebrow "A Legacy Memory Book" | headline "Every Family Has Stories
+   Worth Saving." | subcopy | two buttons | BOOK VISUAL on the right
+   (currently CSS-drawn — top candidate for a real photo: Slot A).
+3. Feature strip (4 gold line-icons): Captures What Matters | Preserve Their
+   Voice | Creates Heirlooms | Private & Secure.
+4. Legacy band (3 columns on desktop): How It Works (4 steps) | Your Legacy
+   Tree (SVG tree + progress) | Founder Edition (unlock card, $5.99).
+5. Footer.
+APP (after "Begin a New Memory Book"): role/setup -> Prompts -> Archive ->
+   answer editor -> print keepsake. (Functional; low priority for imagery.)
+
+------------------------------------------------------------
+4. IMAGE SLOTS — WHAT TO GENERATE (with ready prompts)
+------------------------------------------------------------
+Generate at sizes below (PNG; transparent where noted). Keep palette in §2.
+
+SLOT A — HERO BOOK (highest impact)
+  Where: hero, right column (replaces the CSS .book-scene).
+  Size: ~1000 x 1250 (4:5 portrait), transparent background preferred.
+  Prompt: "A luxurious deep navy-blue leather journal standing upright, with a
+  gold embossed monogram crest (anchor wrapped in a laurel wreath) centered on
+  the cover, resting on a few aged handwritten letters and a soft cream linen
+  surface, warm side window light, shallow depth of field, editorial product
+  photography, muted gold/ivory/sage palette, premium, photorealistic,
+  transparent or clean cream background."
+
+SLOT B — HERO/SECTION LIFESTYLE
+  Where: optional hero background or a "Designed With Intention" section.
+  Size: ~1600 x 1200 (4:3).
+  Prompt: "Close-up of an older person's hands writing in a leather journal
+  with a fountain pen, warm natural window light, cream and gold tones, tender
+  and nostalgic, shallow depth of field, editorial lifestyle photography, soft
+  film grain."
+
+SLOT C — BOTANICAL ACCENTS
+  Where: small decorative sprigs in section corners.
+  Size: ~600 x 600, TRANSPARENT PNG.
+  Prompt: "A single eucalyptus and olive-laurel sprig, soft sage-green leaves
+  with delicate gold-tipped edges, isolated on a transparent background,
+  pressed-botanical illustration style, elegant, minimal, no shadow."
+
+SLOT D — "HOW IT WORKS" / JOURNEY IMAGE
+  Size: ~1400 x 1000.
+  Prompt: "Three generations of a family looking through an old photo album
+  together at a wooden table, warm golden-hour light, candid and emotional,
+  cream and amber tones, editorial documentary photography."
+
+SLOT E — JOURNAL GALLERY (3-4 small shots)
+  Size: ~800 x 800 each.
+  Prompt: "A navy leather memory journal with gold laurel-anchor crest,
+  flat-lay on cream linen with dried botanicals and a fountain pen, soft
+  daylight, luxury stationery product photography." (vary angle/props per shot)
+
+TIP: ask the image tool for TRANSPARENT background on Slots A & C, and paste
+the exact hexes from §2 so gold/navy match the logo.
+
+------------------------------------------------------------
+5. HOW IMAGES PLUG INTO THE CODE   (full code — do not strip)
+------------------------------------------------------------
+All edits are in index.html. Put image files in the SAME folder, reference them
+relatively (e.g. src="hero-book.png"), or inline as base64 data URIs.
+
+--- A. Replace the hero CSS book with a photo ---
+FIND this block:
+
+    <div class="hero-art">
+      <div class="book-scene"> ... </div>
+    </div>
+
+REPLACE the inner .book-scene so it becomes:
+
+    <div class="hero-art">
+      <img class="hero-photo" src="hero-book.png" alt="AnchorRemembers leather memory book">
+    </div>
+
+ADD to the <style>:
+
+    .hero-photo{width:100%;max-width:430px;height:auto;display:block;margin:0 auto;
+      filter:drop-shadow(0 24px 48px rgba(13,24,42,.35))}
+
+--- B. Section lifestyle background ---
+WRAP any section:
+
+    <section class="photo-band" style="background-image:url('lifestyle.jpg')"> ... </section>
+
+CSS:
+
+    .photo-band{background-size:cover;background-position:center;position:relative}
+    .photo-band::before{content:'';position:absolute;inset:0;background:rgba(13,24,42,.45)}
+
+--- C. Botanical sprig accent (parent section must be position:relative) ---
+HTML:
+
+    <img class="sprig tl" src="sprig.png" alt="">
+    <img class="sprig br" src="sprig.png" alt="">
+
+CSS:
+
+    .sprig{position:absolute;width:120px;opacity:.85;pointer-events:none}
+    .sprig.tl{top:10px;left:10px}
+    .sprig.br{bottom:10px;right:10px;transform:scaleX(-1)}
+
+--- D. Gallery grid ---
+HTML:
+
+    <div class="gallery">
+      <img src="j1.png" alt=""><img src="j2.png" alt=""><img src="j3.png" alt="">
+    </div>
+
+CSS:
+
+    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .gallery img{width:100%;border-radius:12px;box-shadow:0 6px 18px rgba(13,24,42,.1)}
+
+------------------------------------------------------------
+6. ARCHITECTURE NOTES (for any AI editing this file)
+------------------------------------------------------------
+- USE the :root CSS variables (tokens in §2) — never hardcode colors.
+- SVG SPRITE sits right after <body>: holds #arEmblem (logo, embedded PNG) and
+  #ic-* line icons. Reference an icon with:
+      <svg class="ic"><use href="#ic-book"/></svg>
+  Icon size classes: .ic (box-filled), .ti (tab), .bi (inline button),
+  .ci (tiny inline), .li (lock).
+- RESPONSIVE: mobile-first; desktop overrides inside @media(min-width:880px).
+  Landing is one column on phones, multi-column on desktop (match desktop to
+  the wide mockup).
+- JAVASCRIPT: vanilla, no libraries. Saves to localStorage keys
+  aw_anchor_remembers, aw_remembers_pro, aw_anchor_photos.
+  DO NOT rename element IDs or onclick handler names — wiring depends on them.
+- KEEP IT ONE FILE. Deploy = commit index.html (+ images) to repo root.
+
+------------------------------------------------------------
+7. FILES IN THIS FOLDER (current build)
+------------------------------------------------------------
+index.html            complete site + app (real logo embedded, icons, no emojis)
+logo.png              transparent master of the real AR logo
+og-image.png          1200x630 social share card
+apple-touch-icon.png  180x180 iOS / home-screen icon
+CNAME                 anchorremembers.com (binds the custom domain)
+
+------------------------------------------------------------
+8. WORKFLOW TO FINISH THE LOOK
+------------------------------------------------------------
+1. Generate Slot A-E images with ChatGPT/Gemini using §4.
+2. Either SEND THEM BACK to the Claude session to wire into §5, OR paste §5 +
+   the images into ChatGPT/Gemini and have it edit index.html.
+3. Commit updated index.html + images to AcKccreate/anchor-remembers. Done.
+============================================================
