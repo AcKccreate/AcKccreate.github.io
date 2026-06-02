@@ -10,7 +10,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 :root{
-  --navy:#0D1B2A;
+  --navy:#0D182A;
   --navy-2:#111827;
   --card-navy:#151A2A;
   --gold:#D4AF37;
@@ -467,10 +467,116 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
   .pc-footer{margin-top:44px;padding-top:14px;border-top:1px solid #ddd;
     font-size:.7rem;color:#999;text-align:center}
 }
+
+/* ═══════════════════════════════════════
+   FULL VISUAL MATCH — brand emblem, laurel,
+   premium hero, legacy band, desktop layout
+   ═══════════════════════════════════════ */
+.svg-sprite{position:absolute;width:0;height:0;overflow:hidden}
+.emblem{color:var(--gold);display:block;flex-shrink:0}
+
+/* gilt divider */
+.gilt-rule{display:flex;align-items:center;justify-content:center;gap:9px;margin:0 auto 14px;width:fit-content}
+.gilt-rule i{display:block;height:1px;width:42px;background:linear-gradient(90deg,transparent,var(--gold))}
+.gilt-rule i+i{background:linear-gradient(90deg,var(--gold),transparent)}
+.gilt-rule b{width:6px;height:6px;background:var(--gold);transform:rotate(45deg);display:block;flex-shrink:0}
+
+/* landing header → cream/editorial */
+.welcome-header{background:var(--cream);border-bottom:1px solid var(--line);padding:13px 0;display:block}
+.wh-inner{max-width:1120px;margin:0 auto;padding:0 22px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.wh-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.welcome-header .wordmark-main{color:var(--navy)}
+.welcome-header .wordmark-tag{color:var(--muted)}
+.wh-cta{display:none}
+
+/* hero */
+.hero-inner{max-width:1120px;margin:0 auto;padding:0 22px;display:flex;flex-direction:column;align-items:center;gap:32px;width:100%;position:relative;z-index:1}
+.hero-copy{text-align:center}
+.hero-art{display:flex;justify-content:center;width:100%}
+.book-scene{position:relative;width:240px;height:290px;display:flex;align-items:center;justify-content:center;margin:0 auto}
+.book-3d{position:relative;width:188px;height:250px;border-radius:6px 14px 14px 6px;
+  background:linear-gradient(145deg,#16293f 0%,var(--card-navy) 55%,#0b1525 100%);
+  border:1px solid var(--line);
+  box-shadow:10px 16px 40px rgba(13,24,42,.45),-3px 0 8px rgba(0,0,0,.35),inset 0 0 34px rgba(0,0,0,.32);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;z-index:3}
+.book-3d::before{content:'';position:absolute;left:0;top:0;bottom:0;width:13px;border-radius:6px 0 0 6px;background:linear-gradient(90deg,rgba(0,0,0,.42),transparent)}
+.book-3d::after{content:'';position:absolute;inset:11px;border:1px solid var(--line);border-radius:5px;pointer-events:none;opacity:.65}
+.book-emblem-label{font-family:var(--serif);font-size:.6rem;color:var(--gold-soft);letter-spacing:.22em;text-transform:uppercase}
+.book-pages{position:absolute;right:-7px;top:9px;bottom:9px;width:172px;background:repeating-linear-gradient(180deg,var(--ivory),var(--ivory) 3px,#e7dfce 3px,#e7dfce 4px);border-radius:2px 8px 8px 2px;box-shadow:3px 4px 14px rgba(0,0,0,.16);z-index:2}
+.book-letter{position:absolute;background:var(--cream);border:1px solid var(--parchment);border-radius:3px;box-shadow:0 8px 20px rgba(13,24,42,.12);z-index:1}
+.book-letter.l1{width:118px;height:148px;left:-18px;bottom:-14px;transform:rotate(-12deg)}
+.book-letter.l2{width:104px;height:134px;right:-14px;bottom:-6px;transform:rotate(10deg)}
+
+/* legacy band */
+.legacy-band{background:var(--ivory);padding:42px 0}
+.lb-inner{max-width:1120px;margin:0 auto;padding:0 22px;display:flex;flex-direction:column;gap:28px;width:100%}
+.lb-col-title{font-family:var(--serif);font-size:1.22rem;font-weight:400;color:var(--navy);text-align:center;margin-bottom:16px}
+.journey-col .stair-cards{max-width:440px;margin:0 auto}
+.tree-col{display:flex;flex-direction:column;align-items:center}
+.tree-card{background:var(--cream);border:1px solid var(--line);border-radius:16px;padding:24px 22px;width:100%;max-width:440px;text-align:center;box-shadow:0 6px 22px rgba(13,24,42,.07)}
+.legacy-tree-svg{width:150px;height:150px;margin:0 auto 4px;display:block}
+.founder-col{display:flex}
+.founder-card{background:linear-gradient(160deg,#17243b,var(--navy));border:1px solid var(--line);border-radius:16px;padding:30px 26px;text-align:center;width:100%;box-shadow:0 10px 30px rgba(13,24,42,.2);position:relative;overflow:hidden}
+.founder-card::before{content:'';position:absolute;inset:7px;border:1px solid rgba(212,175,55,.22);border-radius:11px;pointer-events:none}
+.founder-card .founder-eyebrow{color:var(--gold-soft);margin-bottom:8px}
+.founder-card h2{font-family:var(--serif);font-size:1.4rem;font-weight:400;color:var(--cream);line-height:1.25;margin-bottom:14px}
+.founder-card p{font-size:.82rem;color:rgba(251,246,236,.7);line-height:1.65;margin:0 auto 20px;max-width:300px}
+.founder-card .book-mockup{margin:0 auto 18px}
+
+/* desktop */
+@media(min-width:880px){
+  .wh-cta{display:inline-flex}
+  .hero{padding:62px 24px 54px}
+  .hero-inner{flex-direction:row;align-items:center;gap:48px}
+  .hero-copy{flex:1.05;text-align:left}
+  .hero-copy .hero-sub{margin:0 0 28px}
+  .hero-btns{flex-direction:row;max-width:none;margin:0}
+  .hero-btns .btn{width:auto;flex:0 0 auto}
+  .hero-art{flex:.95}
+  .book-scene{width:300px;height:340px}
+  .book-3d{width:212px;height:282px}
+  .hero h1{font-size:clamp(2.3rem,3.4vw,3.3rem)}
+  .feature-strip{grid-template-columns:repeat(4,1fr);max-width:1120px;padding:30px 22px}
+  .lb-inner{display:grid;grid-template-columns:1.05fr 1fr 1.05fr;align-items:start;gap:26px}
+}
 </style>
 <noscript><style>.tab-panel{display:flex!important}.screen{display:flex!important}.answer-overlay{display:none!important}</style></noscript>
 </head>
 <body>
+
+<!-- ═══════ BRAND EMBLEM SPRITE (laurel-wreathed AR anchor) ═══════ -->
+<svg class="svg-sprite" aria-hidden="true" focusable="false"><symbol id="arEmblem" viewBox="0 0 120 120">
+  <circle cx="60" cy="54" r="30" fill="none" stroke="currentColor" stroke-width="2"/>
+  <circle cx="60" cy="54" r="34.5" fill="none" stroke="currentColor" stroke-width=".75" opacity=".55"/>
+  <text x="44" y="50" text-anchor="middle" font-family="Georgia,serif" font-size="20" font-weight="700" fill="currentColor">A</text>
+  <text x="76" y="50" text-anchor="middle" font-family="Georgia,serif" font-size="20" font-weight="700" fill="currentColor">R</text>
+  <g stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="60" cy="38" r="3.1"/>
+    <line x1="60" y1="41" x2="60" y2="73"/>
+    <line x1="51" y1="49" x2="69" y2="49"/>
+    <path d="M49 64 C49 73 54 79 60 80 C66 79 71 73 71 64"/>
+    <path d="M49 64 L45 60 M71 64 L75 60"/>
+  </g>
+  <g fill="currentColor">
+    <path d="M48 94 Q17 85 18 52 Q20 27 40 17" fill="none" stroke="currentColor" stroke-width="1.3"/>
+    <ellipse cx="46" cy="92" rx="6.5" ry="2.7" transform="rotate(200 46 92)"/>
+    <ellipse cx="32" cy="82" rx="6.5" ry="2.7" transform="rotate(225 32 82)"/>
+    <ellipse cx="22" cy="68" rx="6.5" ry="2.7" transform="rotate(250 22 68)"/>
+    <ellipse cx="20" cy="50" rx="6.5" ry="2.7" transform="rotate(275 20 50)"/>
+    <ellipse cx="25" cy="34" rx="6" ry="2.5" transform="rotate(300 25 34)"/>
+    <ellipse cx="37" cy="21" rx="5.5" ry="2.3" transform="rotate(325 37 21)"/>
+  </g>
+  <g fill="currentColor" transform="translate(120,0) scale(-1,1)">
+    <path d="M48 94 Q17 85 18 52 Q20 27 40 17" fill="none" stroke="currentColor" stroke-width="1.3"/>
+    <ellipse cx="46" cy="92" rx="6.5" ry="2.7" transform="rotate(200 46 92)"/>
+    <ellipse cx="32" cy="82" rx="6.5" ry="2.7" transform="rotate(225 32 82)"/>
+    <ellipse cx="22" cy="68" rx="6.5" ry="2.7" transform="rotate(250 22 68)"/>
+    <ellipse cx="20" cy="50" rx="6.5" ry="2.7" transform="rotate(275 20 50)"/>
+    <ellipse cx="25" cy="34" rx="6" ry="2.5" transform="rotate(300 25 34)"/>
+    <ellipse cx="37" cy="21" rx="5.5" ry="2.3" transform="rotate(325 37 21)"/>
+  </g>
+  <circle cx="60" cy="15" r="2.4" fill="currentColor"/>
+</symbol></svg>
 
 <!-- PRINT CONTENT (hidden until window.print()) -->
 <div id="printContent" style="display:none"></div>
@@ -481,42 +587,41 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
 <div class="screen welcome-screen active" id="screenWelcome">
 
   <header class="welcome-header">
-    <div style="display:flex;align-items:center;gap:12px">
-      <!-- Main logo mark -->
-      <svg width="38" height="38" viewBox="0 0 38 38" fill="none" aria-hidden="true">
-        <circle cx="19" cy="19" r="17" stroke="#D4AF37" stroke-width="1.2"/>
-        <text x="19" y="16" text-anchor="middle" font-family="Georgia,serif" font-size="8.5" font-weight="700" fill="#D4AF37">AR</text>
-        <text x="19" y="26.5" text-anchor="middle" font-size="10" fill="#D4AF37">⚓</text>
-        <ellipse cx="8" cy="21" rx="2.8" ry="1.4" fill="#A7B79A" opacity=".7" transform="rotate(-35 8 21)"/>
-        <ellipse cx="6.5" cy="18" rx="2.8" ry="1.4" fill="#A7B79A" opacity=".45" transform="rotate(-50 6.5 18)"/>
-      </svg>
-      <div>
-        <span class="wordmark-main">AnchorRemembers</span>
-        <span class="wordmark-tag">ANCHOR YOUR LEGACY · PRESERVE YOUR MEMORIES</span>
-      </div>
+    <div class="wh-inner">
+      <a class="wh-brand" href="#screenWelcome">
+        <svg class="emblem" width="46" height="46" aria-hidden="true"><use href="#arEmblem"/></svg>
+        <span>
+          <span class="wordmark-main">AnchorRemembers</span>
+          <span class="wordmark-tag">ANCHOR YOUR LEGACY · PRESERVE YOUR MEMORIES</span>
+        </span>
+      </a>
+      <button class="btn btn-primary btn-sm wh-cta" onclick="showSetup()">Begin Your Book</button>
     </div>
   </header>
 
   <!-- Hero -->
   <section class="hero">
-    <div class="hero-eyebrow">A Legacy Memory Book</div>
-    <h1>Every Family Has<br>Stories Worth <em>Saving.</em></h1>
-    <p class="hero-sub">Guided memory books that help you capture the voices, wisdom, traditions, and love of the people who shaped you.</p>
-    <div class="hero-btns">
-      <button class="btn btn-primary btn-wide" id="heroBeginBtn" onclick="showSetup()">Begin a New Memory Book</button>
-      <button class="btn btn-secondary btn-wide" onclick="loadExisting()">Continue Existing Book</button>
-    </div>
-    <!-- Journal mockup -->
-    <div class="journal-wrap">
-      <div class="journal-cover">
-        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
-          <circle cx="13" cy="13" r="11" stroke="#D4AF37" stroke-width=".9"/>
-          <text x="13" y="10.5" text-anchor="middle" font-family="Georgia,serif" font-size="5.5" font-weight="700" fill="#D4AF37">AR</text>
-          <text x="13" y="18.5" text-anchor="middle" font-size="6.5" fill="#D4AF37">⚓</text>
-        </svg>
-        <div class="journal-label">Memory Book</div>
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <div class="hero-eyebrow">A Legacy Memory Book</div>
+        <h1>Every Family Has<br>Stories Worth <em>Saving.</em></h1>
+        <p class="hero-sub">Guided memory books that help you capture the voices, wisdom, traditions, and love of the people who shaped you.</p>
+        <div class="hero-btns">
+          <button class="btn btn-primary btn-wide" id="heroBeginBtn" onclick="showSetup()">Begin a New Memory Book</button>
+          <button class="btn btn-secondary btn-wide" onclick="loadExisting()">Continue Existing Book</button>
+        </div>
       </div>
-      <div class="journal-pages"></div>
+      <div class="hero-art">
+        <div class="book-scene">
+          <div class="book-letter l1"></div>
+          <div class="book-letter l2"></div>
+          <div class="book-pages"></div>
+          <div class="book-3d">
+            <svg class="emblem" width="76" height="76" aria-hidden="true"><use href="#arEmblem"/></svg>
+            <div class="book-emblem-label">Memory Book</div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -544,65 +649,87 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
     </div>
   </div>
 
-  <!-- Journey stair cards -->
-  <section class="journey-section">
-    <h2 class="journey-title">How It Works</h2>
-    <div class="stair-cards">
-      <div class="stair-card">
-        <div class="stair-num">01</div>
-        <div class="stair-body">
-          <h3>Capture Their Stories</h3>
-          <p>Answer meaningful questions designed to draw out memories, experiences, and wisdom.</p>
-        </div>
-      </div>
-      <div class="stair-card">
-        <div class="stair-num">02</div>
-        <div class="stair-body">
-          <h3>Preserve Their Voice <span class="coming-soon-chip">V2 Coming Soon</span></h3>
-          <p>Save the words, lessons, laughter, and stories that make a life unforgettable.</p>
-        </div>
-      </div>
-      <div class="stair-card">
-        <div class="stair-num">03</div>
-        <div class="stair-body">
-          <h3>Create Lasting Keepsakes</h3>
-          <p>Turn answered prompts into a beautiful printable keepsake your family can revisit.</p>
-        </div>
-      </div>
-      <div class="stair-card">
-        <div class="stair-num">04</div>
-        <div class="stair-body">
-          <h3>Share for Generations</h3>
-          <p>Create a legacy your children, grandchildren, and loved ones can hold onto.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- Legacy band: How it works · Legacy Tree · Founder Edition -->
+  <div class="legacy-band">
+    <div class="lb-inner">
 
-  <!-- Memory tree progress (shown when existing data found) -->
-  <div class="welcome-tree" id="welcomeTreeSection" style="display:none">
-    <div class="section-label">Your Legacy Tree</div>
-    <div class="tree-stage" id="welcomeStage">🌱 Seed</div>
-    <p style="font-size:.78rem;color:var(--muted);margin-bottom:12px">Every answered prompt becomes another leaf in the story.</p>
-    <div class="tree-bar-wrap"><div class="tree-bar" id="welcomeTreeBar" style="width:0%"></div></div>
-    <div class="tree-row"><span>Seed</span><span>Sapling</span><span>Legacy Tree</span></div>
+      <section class="journey-col">
+        <span class="gilt-rule"><i></i><b></b><i></i></span>
+        <h2 class="lb-col-title">How It Works</h2>
+        <div class="stair-cards">
+          <div class="stair-card">
+            <div class="stair-num">01</div>
+            <div class="stair-body">
+              <h3>Capture Their Stories</h3>
+              <p>Answer meaningful questions designed to draw out memories, experiences, and wisdom.</p>
+            </div>
+          </div>
+          <div class="stair-card">
+            <div class="stair-num">02</div>
+            <div class="stair-body">
+              <h3>Preserve Their Voice <span class="coming-soon-chip">V2 Coming Soon</span></h3>
+              <p>Save the words, lessons, laughter, and stories that make a life unforgettable.</p>
+            </div>
+          </div>
+          <div class="stair-card">
+            <div class="stair-num">03</div>
+            <div class="stair-body">
+              <h3>Create Lasting Keepsakes</h3>
+              <p>Turn answered prompts into a beautiful printable keepsake your family can revisit.</p>
+            </div>
+          </div>
+          <div class="stair-card">
+            <div class="stair-num">04</div>
+            <div class="stair-body">
+              <h3>Share for Generations</h3>
+              <p>Create a legacy your children, grandchildren, and loved ones can hold onto.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tree-col" id="welcomeTreeSection">
+        <span class="gilt-rule"><i></i><b></b><i></i></span>
+        <h2 class="lb-col-title">Your Legacy Tree</h2>
+        <div class="tree-card">
+          <svg class="legacy-tree-svg" viewBox="0 0 200 200" fill="none" aria-hidden="true">
+            <ellipse cx="100" cy="184" rx="56" ry="7" fill="#A7B79A" opacity=".22"/>
+            <path d="M93 184 C92 158 90 142 95 124 L105 124 C110 142 108 158 107 184 Z" fill="#6f5a42"/>
+            <path d="M100 134 C86 122 79 118 71 114 M100 142 C114 130 121 126 131 122 M100 152 C91 145 85 143 79 139" stroke="#6f5a42" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="68" cy="96" r="26" fill="#A7B79A" opacity=".30"/>
+            <circle cx="132" cy="96" r="26" fill="#A7B79A" opacity=".30"/>
+            <circle cx="100" cy="80" r="40" fill="#A7B79A" opacity=".34"/>
+            <circle cx="100" cy="70" r="30" fill="#A7B79A" opacity=".46"/>
+            <g fill="#D4AF37">
+              <circle cx="86" cy="74" r="3"/><circle cx="112" cy="67" r="3"/>
+              <circle cx="100" cy="92" r="3"/><circle cx="74" cy="92" r="2.5"/>
+              <circle cx="126" cy="89" r="2.5"/><circle cx="100" cy="55" r="2.5"/>
+              <circle cx="120" cy="104" r="2.5"/><circle cx="80" cy="106" r="2.5"/>
+            </g>
+          </svg>
+          <div class="tree-stage" id="welcomeStage">🌱 Seed</div>
+          <p style="font-size:.8rem;color:var(--muted);margin-bottom:14px;line-height:1.6">Every answered prompt becomes another leaf in the story.</p>
+          <div class="tree-bar-wrap"><div class="tree-bar" id="welcomeTreeBar" style="width:0%"></div></div>
+          <div class="tree-row"><span>Seed</span><span>Sapling</span><span>Legacy Tree</span></div>
+        </div>
+      </section>
+
+      <aside class="founder-col">
+        <div class="founder-card">
+          <span class="gilt-rule"><i></i><b></b><i></i></span>
+          <div class="founder-eyebrow">Founder Edition</div>
+          <h2>Keepsake Printing<br>&amp; Full Story Access</h2>
+          <div class="book-mockup">
+            <svg class="emblem" width="40" height="40" aria-hidden="true"><use href="#arEmblem"/></svg>
+            <div class="book-mockup-label">Founder<br>Edition</div>
+          </div>
+          <p>A premium printable memory book designed for the stories your family will want to keep. Unlock all prompts, photo uploads, and Print Keepsake.</p>
+          <button class="btn btn-primary btn-wide" id="founderBtn" onclick="founderAction()">Unlock Keepsake Printing</button>
+        </div>
+      </aside>
+
+    </div>
   </div>
-
-  <!-- Founder Edition section -->
-  <section class="founder-section">
-    <div class="founder-eyebrow">Founder Edition</div>
-    <h2>Keepsake Printing<br>&amp; Full Story Access</h2>
-    <p>A premium printable memory book designed for the stories your family will want to keep. Unlock all prompts, photo uploads, and Print Keepsake.</p>
-    <div class="book-mockup">
-      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-        <circle cx="11" cy="11" r="9" stroke="#D4AF37" stroke-width=".8"/>
-        <text x="11" y="9" text-anchor="middle" font-family="Georgia,serif" font-size="4.5" font-weight="700" fill="#D4AF37">AR</text>
-        <text x="11" y="15.5" text-anchor="middle" font-size="5.5" fill="#D4AF37">⚓</text>
-      </svg>
-      <div class="book-mockup-label">Founder<br>Edition</div>
-    </div>
-    <button class="btn btn-primary" id="founderBtn" onclick="founderAction()">Unlock Keepsake Printing</button>
-  </section>
 
   <footer class="welcome-footer">
     <p>© 2026 AnchorRemembers LLC · All memories stored locally · Never shared without your consent</p>
@@ -619,11 +746,7 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
 <div class="screen setup-screen" id="screenSetup">
 
   <header class="setup-header">
-    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
-      <circle cx="15" cy="15" r="13" stroke="#D4AF37" stroke-width="1"/>
-      <text x="15" y="12.5" text-anchor="middle" font-family="Georgia,serif" font-size="6.5" font-weight="700" fill="#D4AF37">AR</text>
-      <text x="15" y="21" text-anchor="middle" font-size="7.5" fill="#D4AF37">⚓</text>
-    </svg>
+    <svg class="emblem" width="40" height="40" aria-hidden="true"><use href="#arEmblem"/></svg>
     <div>
       <span class="wordmark-main" style="font-size:.8rem">AnchorRemembers</span>
       <span class="wordmark-tag">Begin Your Memory Book</span>
@@ -700,11 +823,7 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
 
   <header class="main-header">
     <div class="main-logo-area">
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-        <circle cx="14" cy="14" r="12" stroke="#D4AF37" stroke-width=".9"/>
-        <text x="14" y="11.5" text-anchor="middle" font-family="Georgia,serif" font-size="6" font-weight="700" fill="#D4AF37">AR</text>
-        <text x="14" y="19.5" text-anchor="middle" font-size="7" fill="#D4AF37">⚓</text>
-      </svg>
+      <svg class="emblem" width="34" height="34" aria-hidden="true"><use href="#arEmblem"/></svg>
       <div>
         <div class="main-wordmark">AnchorRemembers</div>
         <div class="main-sub-txt" id="mainSubTxt">Memory Book</div>
