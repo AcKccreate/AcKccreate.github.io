@@ -721,6 +721,18 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
 }
 </style>
 <noscript><style>.tab-panel{display:flex!important}.screen{display:flex!important}.answer-overlay{display:none!important}</style></noscript>
+<style>
+/* showcase samples + captions */
+.gallery .g-item{margin:0}
+.gallery .g-item img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:12px;box-shadow:var(--sh-md);display:block;background:#fff;border:1px solid var(--hair)}
+.gallery figcaption{font-size:.74rem;color:var(--muted);font-style:italic;letter-spacing:.02em;margin-top:9px;text-align:center}
+/* hero centered ornament (placeholder for a centerpiece image) */
+.hero-crown{position:relative;z-index:1;text-align:center;padding-top:2px;margin-bottom:6px}
+.hero-crown .gilt-rule{margin:0 auto}
+/* smaller, more tasteful sprigs */
+.story-band .sprig{width:94px;opacity:.7}
+.showcase .sprig{width:90px;opacity:.65}
+</style>
 <style id="printPageSize"></style>
 </head>
 <body>
@@ -751,7 +763,7 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
 
   <!-- Hero -->
   <section class="hero">
-    <img class="sprig" src="sprig1.png" alt="" aria-hidden="true">
+    <div class="hero-crown"><span class="gilt-rule"><i></i><b></b><i></i></span></div>
     <div class="hero-inner">
       <div class="hero-copy">
         <div class="hero-eyebrow">A Legacy Memory Book</div>
@@ -899,11 +911,11 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
     <img class="sprig" src="sprig2.png" alt="" aria-hidden="true">
     <span class="gilt-rule"><i></i><b></b><i></i></span>
     <h2 class="showcase-title">Print It Into a Keepsake</h2>
-    <p class="showcase-sub">Export your finished memory book as a print-ready PDF — print it at home, or take it to any bindery. The pieces below show what your book can become.</p>
+    <p class="showcase-sub">Export your finished memory book as a print-ready PDF — print it at home, or take it to any bindery. Here's a sample cover, what your finished book can look like, and an inside page.</p>
     <div class="gallery">
-      <img src="book-scene.jpg" alt="Navy AnchorRemembers journal with gold crest beside a candle and old letters" loading="lazy">
-      <img src="journal-flatlay.jpg" alt="AnchorRemembers journal flat-lay with a fountain pen and keepsakes" loading="lazy">
-      <img src="giftbox.jpg" alt="AnchorRemembers keepsake gift box with gold crest" loading="lazy">
+      <figure class="g-item"><img src="sample-cover.jpg" alt="Sample printed memory book cover" loading="lazy"><figcaption>The cover</figcaption></figure>
+      <figure class="g-item"><img src="journal-flatlay.jpg" alt="A finished bound memory book" loading="lazy"><figcaption>Your finished book</figcaption></figure>
+      <figure class="g-item"><img src="sample-page.jpg" alt="Sample inside page with a question, answer and photo" loading="lazy"><figcaption>An inside page</figcaption></figure>
     </div>
   </section>
 
