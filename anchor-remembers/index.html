@@ -734,6 +734,13 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
 .story-band .sprig{width:94px;opacity:.7}
 .showcase .sprig{width:90px;opacity:.65}
 </style>
+<style>
+.answer-voice-lbl{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:18px 0 8px}
+#voiceArea .v-has,#voiceArea .v-rec{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.v-dot{width:9px;height:9px;border-radius:50%;background:#b3261e;animation:hzp 1.2s infinite}
+.v-time{font-variant-numeric:tabular-nums;font-weight:700;color:var(--navy)}
+.v-lbl{font-size:.78rem;color:var(--muted)}
+</style>
 <style id="printPageSize"></style>
 </head>
 <body>
@@ -798,7 +805,7 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
     <div class="feature-item">
       <div class="feature-icon"><svg class="ic"><use href="#ic-voice"/></svg></div>
       <div class="feature-label">Preserve Their Voice</div>
-      <div class="feature-desc">Answers saved forever, locally</div>
+      <div class="feature-desc">Record their real voice telling each story</div>
     </div>
     <div class="feature-item">
       <div class="feature-icon"><svg class="ic"><use href="#ic-key"/></svg></div>
@@ -843,7 +850,7 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
           <div class="stair-card">
             <div class="stair-num">02</div>
             <div class="stair-body">
-              <h3>Preserve Their Voice <span class="coming-soon-chip">V2 Coming Soon</span></h3>
+              <h3>Preserve Their Voice</h3>
               <p>Save the words, lessons, laughter, and stories that make a life unforgettable.</p>
             </div>
           </div>
@@ -1139,6 +1146,8 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
     <div class="answer-photo-lbl">Photos</div>
     <div class="answer-photo-grid" id="answerPhotoGrid"></div>
     <div id="photoUploadArea"></div>
+    <div class="answer-voice-lbl">Their Voice</div>
+    <div id="voiceArea"></div>
   </div>
 </div>
 
@@ -1486,7 +1495,7 @@ function renderPromptCards(){
       +'</div>'
       +'<div class="prompt-bot">'
         +'<span class="prompt-cat-lbl">'+q.cat+'</span>'
-        +'<span class="prompt-status"><span class="status-dot'+(answered?' done':'')+'"></span>'+(answered?'Answered':(locked?'Locked':'Open'))+(pc?' · <svg class="ci"><use href="#ic-camera"/></svg>'+pc:'')+'</span>'
+        +'<span class="prompt-status"><span class="status-dot'+(answered?' done':'')+'"></span>'+(answered?'Answered':(locked?'Locked':'Open'))+(pc?' · <svg class="ci"><use href="#ic-camera"/></svg>'+pc:'')+(hasVoice(i)?' · <svg class="ci"><use href="#ic-voice"/></svg>':'')+'</span>'
       +'</div>'
       +(locked?'<div class="lock-reveal" id="lr'+i+'"><p><svg class="bi"><use href="#ic-lock"/></svg>Unlock all 45 Father prompts, photo uploads, and Print Keepsake for $5.99</p><button class="btn btn-primary btn-sm" onclick="doUnlock();event.stopPropagation()">Unlock for $5.99 →</button></div>':'')
     +'</div>';
@@ -1507,11 +1516,13 @@ function openAnswer(idx){
   document.getElementById('answerQ').textContent=voiceQ(q);
   document.getElementById('answerTA').value=answers[idx]||'';
   renderAnswerPhotos();
+  stopRecIfAny();renderVoiceArea();
   document.getElementById('answerOverlay').classList.add('open');
   setTimeout(function(){document.getElementById('answerTA').focus();},60);
 }
 
 function closeAnswer(){
+  stopRecIfAny();
   document.getElementById('answerOverlay').classList.remove('open');
   currentQIdx=null;
   renderPromptsTab();renderArchive();renderHomeTab();
@@ -1560,6 +1571,38 @@ function deletePhoto(localIdx){
 }
 
 /* ARCHIVE */
+/* VOICE RECORDING (local-first, IndexedDB) */
+var VOICE_KEY='aw_anchor_voice';
+function voiceSet(){try{return JSON.parse(localStorage.getItem(VOICE_KEY))||[];}catch(e){return[];}}
+function hasVoice(i){return voiceSet().indexOf(i)>=0;}
+function markVoice(i,on){var s=voiceSet(),k=s.indexOf(i);if(on&&k<0)s.push(i);if(!on&&k>=0)s.splice(k,1);try{localStorage.setItem(VOICE_KEY,JSON.stringify(s));}catch(e){}}
+var _adb=null;
+function audioDB(cb){if(_adb)return cb(_adb);try{var r=indexedDB.open('ar_audio',1);r.onupgradeneeded=function(e){e.target.result.createObjectStore('voice');};r.onsuccess=function(e){_adb=e.target.result;cb(_adb);};r.onerror=function(){cb(null);};}catch(e){cb(null);}}
+function saveVoice(k,blob,cb){audioDB(function(db){if(!db)return cb&&cb(false);try{var tx=db.transaction('voice','readwrite');tx.objectStore('voice').put(blob,k);tx.oncomplete=function(){cb&&cb(true);};tx.onerror=function(){cb&&cb(false);};}catch(e){cb&&cb(false);}});}
+function loadVoice(k,cb){audioDB(function(db){if(!db)return cb(null);try{var rq=db.transaction('voice','readonly').objectStore('voice').get(k);rq.onsuccess=function(){cb(rq.result||null);};rq.onerror=function(){cb(null);};}catch(e){cb(null);}});}
+function dropVoice(k,cb){audioDB(function(db){if(!db)return cb&&cb();try{var tx=db.transaction('voice','readwrite');tx.objectStore('voice').delete(k);tx.oncomplete=function(){cb&&cb();};}catch(e){cb&&cb();}});}
+var recState='idle',mediaRec=null,recChunks=[],recStream=null,recTimer=null,recStart=0,recMax=null;
+function stopRecIfAny(){if(recState==='recording'){try{mediaRec.stop();}catch(e){}}clearInterval(recTimer);clearTimeout(recMax);if(recStream){recStream.getTracks().forEach(function(t){t.stop();});recStream=null;}recState='idle';}
+function startRec(){
+  if(!navigator.mediaDevices||!window.MediaRecorder){alert('Voice recording is not supported on this browser.');return;}
+  navigator.mediaDevices.getUserMedia({audio:true}).then(function(stream){
+    recStream=stream;recChunks=[];mediaRec=new MediaRecorder(stream);
+    mediaRec.ondataavailable=function(e){if(e.data&&e.data.size)recChunks.push(e.data);};
+    mediaRec.onstop=function(){var blob=new Blob(recChunks,{type:(mediaRec&&mediaRec.mimeType)||'audio/webm'});if(recStream){recStream.getTracks().forEach(function(t){t.stop();});recStream=null;}recState='idle';
+      if(blob.size>0&&currentQIdx!=null){var k='q'+currentQIdx,ci=currentQIdx;saveVoice(k,blob,function(ok){if(ok)markVoice(ci,true);renderVoiceArea();renderPromptsTab();});}else{renderVoiceArea();}};
+    recState='recording';recStart=Date.now();mediaRec.start();recTimer=setInterval(tickRec,250);recMax=setTimeout(stopRec,300000);renderVoiceArea();
+  }).catch(function(){alert('Microphone access is needed to record. Please allow it and try again.');});
+}
+function stopRec(){if(mediaRec&&recState==='recording'){try{mediaRec.stop();}catch(e){}}clearInterval(recTimer);clearTimeout(recMax);}
+function tickRec(){var el=document.getElementById('vtime');if(!el)return;var t=Math.floor((Date.now()-recStart)/1000);el.textContent=Math.floor(t/60)+':'+('0'+(t%60)).slice(-2);}
+function playVoice(i){loadVoice('q'+i,function(blob){if(!blob){alert('No voice recording found.');return;}var url=URL.createObjectURL(blob);var a=new Audio(url);a.onended=function(){URL.revokeObjectURL(url);};a.play();});}
+function deleteVoice(i){if(!confirm('Delete this voice recording?'))return;dropVoice('q'+i,function(){markVoice(i,false);renderVoiceArea();renderPromptsTab();renderArchive();});}
+function renderVoiceArea(){
+  var area=document.getElementById('voiceArea');if(!area)return;var idx=currentQIdx;
+  if(recState==='recording'){area.innerHTML='<div class="v-rec"><button class="btn btn-navy btn-sm" onclick="stopRec()">&#9632; Stop</button><span class="v-dot"></span><span class="v-time" id="vtime">0:00</span><span class="v-lbl">Recording&hellip;</span></div>';return;}
+  if(idx!=null&&hasVoice(idx)){area.innerHTML='<div class="v-has"><button class="btn btn-secondary btn-sm" onclick="playVoice('+idx+')">&#9654; Play</button><button class="btn btn-ghost btn-sm" onclick="startRec()">&#8635; Re-record</button><button class="btn btn-ghost btn-sm" onclick="deleteVoice('+idx+')">Delete</button></div>';}
+  else{area.innerHTML='<button class="btn btn-secondary btn-wide" onclick="startRec()"><svg class="bi"><use href="#ic-voice"/></svg>Record their voice</button>';}
+}
 function renderArchive(){
   var qs=activeQ();
   var idxs=Object.keys(answers).map(Number).filter(function(i){return!!answers[i];}).sort(function(a,b){return a-b;});
@@ -1584,9 +1627,9 @@ function renderArchive(){
       +'<div class="vault-a">'+answers[i]+'</div>'
       +'<div class="vault-meta">'
         +'<span class="vault-chip">'+wc+' word'+(wc!==1?'s':'')+'</span>'
-        +(pc?'<span class="vault-chip"><svg class="ci"><use href="#ic-camera"/></svg>'+pc+'</span>':'')
+        +(pc?'<span class="vault-chip"><svg class="ci"><use href="#ic-camera"/></svg>'+pc+'</span>':'')+(hasVoice(i)?'<span class="vault-chip"><svg class="ci"><use href="#ic-voice"/></svg> voice</span>':'')
       +'</div>'
-      +'<div class="vault-edit"><button class="btn btn-ghost btn-sm" onclick="openAnswer('+i+')" style="flex:1">Edit →</button></div>'
+      +'<div class="vault-edit">'+(hasVoice(i)?'<button class="btn btn-secondary btn-sm" onclick="playVoice('+i+')" style="flex:1">▶ Voice</button>':'')+'<button class="btn btn-ghost btn-sm" onclick="openAnswer('+i+')" style="flex:1">Edit →</button></div>'
     +'</div>';
   }).join('')+'</div>';
 }
