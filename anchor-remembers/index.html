@@ -885,7 +885,8 @@ h2,.lb-col-title,.showcase-title,.testi-title,.story-copy h2,.founder-card h2,.p
 .banner-login{position:absolute;top:12px;right:16px;background:rgba(212,175,55,.16);border:1px solid var(--line);color:var(--gold);border-radius:8px;padding:6px 13px;font-size:.78rem;font-weight:600;cursor:pointer;font-family:var(--sans);z-index:2}
 @media(min-width:880px){.banner-img{max-height:150px}}
 </style>
-<style>.legacy-tree-img{width:175px;height:auto;display:block;margin:0 auto 8px;border-radius:12px;border:1px solid var(--line);box-shadow:var(--sh-sm)}</style>
+<style>.legacy-tree-img{width:175px;height:auto;display:block;margin:0 auto 8px;border-radius:12px;border:1px solid var(--line);box-shadow:var(--sh-sm);transition:width .8s ease,opacity .8s ease}
+.home-tree-img{width:120px;margin:0 auto 12px}</style>
 <style id="printPageSize"></style>
 </head>
 <body>
@@ -908,7 +909,7 @@ h2,.lb-col-title,.showcase-title,.testi-title,.story-copy h2,.founder-card h2,.p
 
   <!-- Hero -->
   <section class="hero">
-    <div class="hero-crown"><img class="hero-crest-sm" src="crest-mark.png" alt="AnchorRemembers"></div>
+    
     <div class="hero-inner">
       <div class="hero-copy">
         <span class="gilt-rule hero-gilt"><i></i><b></b><i></i></span>
@@ -1006,7 +1007,7 @@ h2,.lb-col-title,.showcase-title,.testi-title,.story-copy h2,.founder-card h2,.p
         <span class="gilt-rule"><i></i><b></b><i></i></span>
         <h2 class="lb-col-title">Your Legacy Tree</h2>
         <div class="tree-card">
-          <img class="legacy-tree-img" src="legacy-tree.jpg" alt="A gold tree growing from an open book">
+          <img id="welcomeTreeImg" class="legacy-tree-img" src="legacy-tree.jpg" alt="A gold tree growing from an open book">
           <div class="tree-stage"><svg class="ci"><use href="#ic-leaf"/></svg><span id="welcomeStage">Seed</span></div>
           <p style="font-size:.8rem;color:var(--muted);margin-bottom:14px;line-height:1.6">From seed to legacy — every answered prompt adds a new leaf to your family’s story.</p>
           <div class="tree-bar-wrap"><div class="tree-bar" id="welcomeTreeBar" style="width:0%"></div></div>
@@ -1193,6 +1194,7 @@ h2,.lb-col-title,.showcase-title,.testi-title,.story-copy h2,.founder-card h2,.p
     <div class="home-tree-section">
       <div class="section-label">Your Legacy Tree</div>
       <div class="home-tree-card">
+        <img id="homeTreeImg" class="legacy-tree-img home-tree-img" src="legacy-tree.jpg" alt="">
         <div class="home-count-num" id="homeCount">0</div>
         <div class="home-count-lbl">memories captured</div>
         <div class="stage-badge"><svg class="ci"><use href="#ic-leaf"/></svg><span id="homeStage">Seed</span></div>
@@ -1633,6 +1635,7 @@ function renderHomeTab(){
   document.getElementById('homeCount').textContent=cnt;
   document.getElementById('homeStage').textContent=stage;
   document.getElementById('homeBar').style.width=pct+'%';
+  var ht=document.getElementById('homeTreeImg'); if(ht)ht.style.width=(78+(168-78)*pct/100)+'px';
 }
 
 function updateFounderUI(){
@@ -2159,16 +2162,10 @@ function toggle432(){
    WELCOME TREE UPDATE
    ═══════════════════════════════════════ */
 function updateWelcomeTree(){
-  var qs=activeQ();
-  var cnt=answeredCnt();
-  if(cnt>0){
-    var section=document.getElementById('welcomeTreeSection');
-    if(section){
-      section.style.display='';
-      document.getElementById('welcomeStage').textContent=treeStage(cnt,qs.length);
-      document.getElementById('welcomeTreeBar').style.width=treePct(cnt,qs.length)+'%';
-    }
-  }
+  var qs=activeQ(),cnt=answeredCnt(),pct=treePct(cnt,qs.length);
+  var st=document.getElementById('welcomeStage'); if(st)st.textContent=treeStage(cnt,qs.length);
+  var bar=document.getElementById('welcomeTreeBar'); if(bar)bar.style.width=pct+'%';
+  var img=document.getElementById('welcomeTreeImg'); if(img){img.style.width=(80+(180-80)*pct/100)+'px';img.style.opacity=(0.72+0.28*pct/100).toFixed(2);}
 }
 
 /* ═══════════════════════════════════════
@@ -2191,6 +2188,7 @@ function updateWelcomeTree(){
     }
     updateWelcomeTree();
   }
+  updateWelcomeTree();
   updateFounderUI();
   /* archive and prompts tabs hidden by CSS .tab-panel (display:none) — no inline style needed */
 })();
