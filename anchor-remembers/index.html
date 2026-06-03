@@ -601,6 +601,105 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
 .story-band .sprig{width:120px;bottom:0;right:-14px;transform:rotate(6deg);opacity:.8}
 .showcase .sprig{width:120px;top:2px;right:-10px;transform:scaleX(-1)}
 @media(max-width:600px){.hero .sprig{width:86px}.story-band .sprig,.showcase .sprig{width:82px}}
+
+/* ════════════ PHASE 1: LUXURY VISUAL SYSTEM ════════════ */
+:root{
+  --linen:#F2EBDA; --leather:#0D182A; --gold-deep:#B6932F;
+  --gold-metal:linear-gradient(180deg,#EAD08A 0%,#D4AF37 46%,#B6932F 100%);
+  --r-sm:9px; --r-lg:22px;
+  --sh-sm:0 2px 10px rgba(13,24,42,.05);
+  --sh-md:0 14px 34px rgba(13,24,42,.10);
+  --sh-lg:0 28px 64px rgba(13,24,42,.18);
+  --sh-gold:0 14px 36px rgba(201,162,39,.22);
+  --hair:rgba(201,162,39,.30);
+  --tex-paper:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22200%22%20height%3D%22200%22%3E%3Cfilter%20id%3D%22p%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.9%22%20numOctaves%3D%222%22%20stitchTiles%3D%22stitch%22/%3E%3CfeColorMatrix%20type%3D%22matrix%22%20values%3D%220%200%200%200%200.42%200%200%200%200%200.34%200%200%200%200%200.22%200%200%200%200.16%200%22/%3E%3C/filter%3E%3Crect%20width%3D%22200%22%20height%3D%22200%22%20filter%3D%22url%28%23p%29%22/%3E%3C/svg%3E");
+  --tex-leather:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22220%22%20height%3D%22220%22%3E%3Cfilter%20id%3D%22l%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.55%200.7%22%20numOctaves%3D%223%22%20stitchTiles%3D%22stitch%22/%3E%3CfeColorMatrix%20type%3D%22matrix%22%20values%3D%220%200%200%200%200.62%200%200%200%200%200.67%200%200%200%200%200.82%200%200%200%200.10%200%22/%3E%3C/filter%3E%3Crect%20width%3D%22220%22%20height%3D%22220%22%20filter%3D%22url%28%23l%29%22/%3E%3C/svg%3E");
+}
+/* paper texture on light surfaces */
+.welcome-header,.hero,.feature-strip,.legacy-band,.story-band,.showcase,.welcome-screen,.setup-screen,.main-screen,.setup-body,.answer-body{background-image:var(--tex-paper)}
+.stair-card,.tree-card,.feature-item,.home-tree-card,.vault-card,.prompt-card,.choice-btn,.role-btn,.stat-card,.testi-card{background-image:var(--tex-paper)}
+/* leather texture on premium surfaces */
+.founder-card{background-color:#0d1830;background-image:var(--tex-leather),linear-gradient(160deg,#16243c 0%,#0a1320 100%);box-shadow:var(--sh-lg)}
+.founder-card::after{content:'';position:absolute;inset:0;border-radius:16px;background:radial-gradient(ellipse at 50% -10%,rgba(212,175,55,.16),transparent 60%);pointer-events:none}
+.home-founder-panel{background-color:var(--navy);background-image:var(--tex-leather)}
+/* ── typography ── */
+.hero h1{letter-spacing:-.01em;line-height:1.12}
+.hero h1 em,.gold-accent{background:var(--gold-metal);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;font-style:italic}
+.lb-col-title,.showcase-title,.story-copy h2,.testi-title,.journey-title{letter-spacing:.005em}
+.hero-eyebrow,.founder-eyebrow,.section-label,.home-founder-eyebrow{letter-spacing:.24em}
+/* ── buttons ── */
+.btn{border-radius:var(--r);letter-spacing:.02em}
+.btn-primary{background:var(--gold-metal);color:#2c2510;box-shadow:var(--sh-gold);border:1px solid rgba(255,255,255,.22)}
+.btn-primary:hover{filter:brightness(1.05);transform:translateY(-1px);box-shadow:0 18px 44px rgba(201,162,39,.30)}
+.btn-secondary{border:1.5px solid var(--gold);color:var(--gold-deep)}
+/* ── cards unified ── */
+.stair-card,.tree-card,.feature-item,.home-tree-card,.vault-card,.stat-card{border:1px solid var(--hair);box-shadow:var(--sh-sm)}
+.tree-card{box-shadow:var(--sh-md)}
+.story-photo img,.gallery img{box-shadow:var(--sh-md)}
+/* ── inputs ── */
+.field-input,.answer-ta{border-radius:var(--r);border:1px solid var(--hair)}
+.field-input:focus,.answer-ta:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,175,55,.12)}
+/* ── pills ── */
+.cat-pill{border-radius:100px;border:1px solid var(--hair)}
+.cat-pill.active{background:var(--gold-metal);color:#2c2510;border-color:transparent}
+/* ── progress ── */
+.tree-bar-wrap{height:8px;background:rgba(13,24,42,.07)}
+.tree-bar{background:linear-gradient(90deg,var(--sage),var(--gold))}
+/* ── hero staging (book no longer floats) ── */
+.hero-art{position:relative}
+.hero-art::before{content:'';position:absolute;left:50%;top:45%;transform:translate(-50%,-50%);width:82%;height:74%;background:radial-gradient(ellipse at center,rgba(212,175,55,.18),transparent 70%);z-index:0;pointer-events:none}
+.hero-art::after{content:'';position:absolute;left:50%;bottom:4%;transform:translateX(-50%);width:60%;height:24px;background:radial-gradient(ellipse at center,rgba(13,24,42,.30),transparent 72%);filter:blur(4px);z-index:0}
+.hero-photo{position:relative;z-index:1;filter:drop-shadow(0 30px 42px rgba(13,24,42,.42))}
+/* ── trust bar ── */
+.trust-bar{background:var(--ivory);background-image:var(--tex-paper);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:15px 20px;display:flex;justify-content:center;gap:14px 30px;flex-wrap:wrap;text-align:center}
+.trust-item{display:flex;align-items:center;gap:8px;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.trust-item svg{width:16px;height:16px;color:var(--gold)}
+/* ── testimonials ── */
+.testi{background:var(--cream);background-image:var(--tex-paper);padding:50px 22px;text-align:center;position:relative}
+.testi-title{font-family:var(--serif);font-size:1.6rem;font-weight:400;color:var(--navy);margin-bottom:6px}
+.testi-sub{font-size:.84rem;color:var(--muted);margin-bottom:26px}
+.testi-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:760px){.testi-grid{grid-template-columns:repeat(3,1fr)}}
+.testi-card{background-color:var(--paper,#FBF6EC);border:1px solid var(--hair);border-radius:var(--r-lg);padding:26px 22px;box-shadow:var(--sh-md);text-align:left;display:flex;flex-direction:column;gap:13px}
+.testi-stars{color:var(--gold);letter-spacing:3px;font-size:.92rem}
+.testi-quote{font-family:var(--serif);font-size:1rem;font-style:italic;color:var(--ink);line-height:1.62;flex:1}
+.testi-who{font-size:.74rem;color:var(--muted);border-top:1px solid var(--hair);padding-top:12px}
+.testi-who b{color:var(--navy);font-weight:700;display:block;font-family:var(--serif);margin-bottom:1px}
+
+/* ════════════ RHYTHM, WHITESPACE & EDITORIAL SCALE (impact #1 & #2) ════════════ */
+.hero{padding:54px 24px 46px}
+.feature-strip{padding:34px 18px;gap:16px}
+.feature-item{padding:22px 16px;border-radius:var(--r-lg)}
+.legacy-band{padding:56px 0}
+.story-band{padding:56px 0}
+.showcase{padding:58px 22px}
+.testi{padding:58px 22px}
+.photo-feature{padding:88px 24px}
+.stair-card{padding:22px 20px;border-radius:var(--r-lg)}
+.tree-card,.testi-card{border-radius:var(--r-lg)}
+.choice-btn,.founder-card{border-radius:var(--r-lg)}
+.founder-card{padding:34px 28px}
+.hero h1{font-size:clamp(2.1rem,7.6vw,3rem)}
+.hero-eyebrow{font-size:.7rem;margin-bottom:18px}
+.hero-sub{font-size:1rem;line-height:1.78}
+.lb-col-title,.showcase-title,.testi-title{font-size:1.55rem}
+.story-copy h2{font-size:1.7rem}
+@media(min-width:880px){
+  .hero{padding:90px 24px 82px}
+  .hero h1{font-size:clamp(2.6rem,3.6vw,3.6rem)}
+  .feature-strip{padding:50px 22px;gap:22px}
+  .legacy-band{padding:84px 0}
+  .lb-inner{gap:36px}
+  .story-band{padding:84px 0}
+  .story-inner{gap:60px}
+  .showcase{padding:88px 22px}
+  .gallery{gap:20px}
+  .testi{padding:88px 22px}
+  .testi-grid{gap:22px}
+  .photo-feature{padding:124px 24px}
+  .lb-col-title,.showcase-title,.testi-title{font-size:1.75rem}
+  .story-copy h2{font-size:2rem}
+}
 </style>
 <noscript><style>.tab-panel{display:flex!important}.screen{display:flex!important}.answer-overlay{display:none!important}</style></noscript>
 </head>
@@ -648,6 +747,13 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
       </div>
     </div>
   </section>
+
+  <!-- Trust bar -->
+  <div class="trust-bar">
+    <span class="trust-item"><svg><use href="#ic-shield"/></svg>Private</span>
+    <span class="trust-item"><svg><use href="#ic-home"/></svg>Local-First</span>
+    <span class="trust-item"><svg><use href="#ic-lock"/></svg>No Account Needed</span>
+  </div>
 
   <!-- Feature strip -->
   <div class="feature-strip">
@@ -777,6 +883,30 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
       <img src="book-scene.jpg" alt="Navy AnchorRemembers journal with gold crest beside a candle and old letters" loading="lazy">
       <img src="journal-flatlay.jpg" alt="AnchorRemembers journal flat-lay with a fountain pen and keepsakes" loading="lazy">
       <img src="giftbox.jpg" alt="AnchorRemembers keepsake gift box with gold crest" loading="lazy">
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testi">
+    <span class="gilt-rule"><i></i><b></b><i></i></span>
+    <h2 class="testi-title">What Families Say</h2>
+    <p class="testi-sub">Stories preserved · voices kept · heirlooms made</p>
+    <div class="testi-grid">
+      <article class="testi-card">
+        <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="testi-quote">"I finally asked my dad the questions I'd been afraid to ask. Now I have his stories, his wisdom, his voice — kept forever."</p>
+        <div class="testi-who"><b>Sarah M.</b>Preserved her father's story</div>
+      </article>
+      <article class="testi-card">
+        <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="testi-quote">"We captured Grandma's recipes, her childhood, the way she laughed. Our grandchildren will know exactly who she was."</p>
+        <div class="testi-who"><b>James T.</b>Captured his grandmother</div>
+      </article>
+      <article class="testi-card">
+        <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="testi-quote">"It has become the most precious thing our family owns — a true heirloom we will pass down for generations."</p>
+        <div class="testi-who"><b>The Okafor Family</b>Created a lasting heirloom</div>
+      </article>
     </div>
   </section>
 
