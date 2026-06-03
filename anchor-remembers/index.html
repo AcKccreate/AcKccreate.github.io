@@ -462,27 +462,45 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
 
 /* ═══════ PRINT ═══════ */
 @media print{
-  body{background:#fff!important;color:#111!important}
-  .screen,.hz,.answer-overlay{display:none!important}
+  @page{margin:0}
+  html,body{background:#fff!important}
+  body>*{display:none!important}
   #printContent{display:block!important}
-  #printContent{font-family:Georgia,"Times New Roman",serif;color:#111;
-    padding:40px 56px;max-width:720px;margin:0 auto}
-  .pc-title{font-size:1.9rem;font-weight:700;margin-bottom:6px}
-  .pc-sub{font-size:.9rem;color:#555;margin-bottom:4px}
-  .pc-word{font-size:.84rem;color:#666;font-style:italic;margin-bottom:4px}
-  .pc-desc{font-size:.86rem;color:#444;font-style:italic;margin:14px 0;
-    padding:14px 18px;border-left:3px solid #D4AF37;background:#faf8f0}
-  .pc-photos{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
-    margin:22px 0;page-break-after:always}
-  .pc-photo{aspect-ratio:1;object-fit:cover;border-radius:6px;width:100%}
-  .pc-cat-head{font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
-    color:#8a7a5a;margin:30px 0 10px;padding-bottom:4px;border-bottom:1px solid #ddd}
-  .pc-qa{margin-bottom:18px;page-break-inside:avoid}
-  .pc-q{font-style:italic;color:#555;margin-bottom:5px;font-size:.86rem}
-  .pc-a{font-size:.9rem;color:#111;line-height:1.7}
-  .pc-footer{margin-top:44px;padding-top:14px;border-top:1px solid #ddd;
-    font-size:.7rem;color:#999;text-align:center}
 }
+/* ── designed printable book (rendered only inside #printContent, hidden on screen) ── */
+#printContent{font-family:Georgia,"Times New Roman",serif;color:#1E2633}
+.pc-page{page-break-after:always;break-after:page;position:relative}
+.pc-cover-img{display:block;width:100%;height:auto}
+.pc-dedication{text-align:center;padding:30% 14% 0}
+.pc-dedication .pcw{font-size:14pt;color:#C9A227;font-style:italic;margin-bottom:16pt}
+.pc-dedication .pcd{font-size:13pt;line-height:1.95;color:#2a3240;font-style:italic}
+.pc-divider{page-break-before:always;text-align:center;padding:32% 12% 0}
+.pc-divider .num{font-size:13pt;color:#C9A227;letter-spacing:.3em}
+.pc-divider h2{font-size:25pt;font-weight:400;color:#0D182A;margin:10pt 0}
+.pc-divider .rule{width:90px;height:1px;background:#C9A227;margin:13pt auto}
+.pc-divider img{width:150px;margin-top:16pt;opacity:.92}
+.pc-section{padding:46pt 64pt}
+.pc-qa{margin-bottom:22pt;page-break-inside:avoid}
+.pc-q{font-size:14pt;font-style:italic;color:#0D182A;line-height:1.42;margin-bottom:9pt}
+.pc-a{font-size:11pt;line-height:1.82;color:#2a3240;white-space:pre-wrap}
+.pc-ph{display:grid;grid-template-columns:repeat(2,1fr);gap:8pt;margin-top:11pt}
+.pc-ph img{width:100%;height:1.9in;object-fit:cover;border-radius:5px}
+.pc-close{page-break-before:always;page-break-after:auto;text-align:center;padding:40% 14% 0}
+.pc-close img{width:88px;margin-bottom:14pt}
+.pc-close p{font-size:10.5pt;color:#6b7563;letter-spacing:.04em;line-height:1.9}
+/* ── print options modal (screen) ── */
+.print-modal{display:none;position:fixed;inset:0;z-index:120;background:rgba(13,24,42,.55);align-items:center;justify-content:center;padding:20px}
+.print-modal.open{display:flex}
+.print-box{background-color:var(--cream);background-image:var(--tex-paper);border:1px solid var(--hair);border-radius:var(--r-lg);padding:24px 22px;max-width:380px;width:100%;box-shadow:var(--sh-lg)}
+.print-box h3{font-family:var(--serif);font-size:1.25rem;font-weight:400;color:var(--navy);margin-bottom:4px}
+.print-note{font-size:.78rem;color:var(--muted);margin-bottom:18px;line-height:1.5}
+.po-group{margin-bottom:14px}
+.po-group>label{display:block;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+.po-pills{display:flex;gap:8px}
+.po-pill{flex:1;padding:9px 6px;border:1px solid var(--hair);border-radius:100px;background:var(--ivory);color:var(--ink);font-family:var(--sans);font-size:.8rem;font-weight:600;cursor:pointer;transition:all .15s}
+.po-pill.active{background:var(--gold-metal);color:#2c2510;border-color:transparent}
+.print-actions{display:flex;gap:10px;margin-top:20px}
+.print-actions .btn{flex:1}
 
 /* ═══════════════════════════════════════
    FULL VISUAL MATCH — brand emblem, laurel,
@@ -703,6 +721,7 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
 }
 </style>
 <noscript><style>.tab-panel{display:flex!important}.screen{display:flex!important}.answer-overlay{display:none!important}</style></noscript>
+<style id="printPageSize"></style>
 </head>
 <body>
 
@@ -1105,6 +1124,21 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
     <div class="answer-photo-lbl">Photos</div>
     <div class="answer-photo-grid" id="answerPhotoGrid"></div>
     <div id="photoUploadArea"></div>
+  </div>
+</div>
+
+<!-- Print options -->
+<div class="print-modal" id="printModal">
+  <div class="print-box">
+    <h3>Print Your Memory Book</h3>
+    <p class="print-note">Choose your options, then Print &mdash; or pick &ldquo;Save as PDF&rdquo; in the print dialog.</p>
+    <div class="po-group"><label>Cover</label>
+      <div class="po-pills" id="poCover"><button class="po-pill active" data-v="navy">Navy</button><button class="po-pill" data-v="cream">Cream</button></div></div>
+    <div class="po-group"><label>Photos</label>
+      <div class="po-pills" id="poPhotos"><button class="po-pill active" data-v="1">Include</button><button class="po-pill" data-v="0">Text only</button></div></div>
+    <div class="po-group"><label>Page size</label>
+      <div class="po-pills" id="poSize"><button class="po-pill active" data-v="7in 9in">7&times;9&Prime;</button><button class="po-pill" data-v="8.5in 11in">Letter</button><button class="po-pill" data-v="148mm 210mm">A5</button></div></div>
+    <div class="print-actions"><button class="btn btn-ghost" onclick="closePrintModal()">Cancel</button><button class="btn btn-primary" onclick="doPrint()">Print / Save PDF</button></div>
   </div>
 </div>
 
@@ -1569,34 +1603,68 @@ function exportJSON(){
 /* ═══════════════════════════════════════
    PRINT KEEPSAKE
    ═══════════════════════════════════════ */
-function printKeepsake(){
-  if(!unlocked){doUnlock();return;}
+function printKeepsake(){ if(!unlocked){doUnlock();return;} openPrintModal(); }
+function openPrintModal(){document.getElementById('printModal').classList.add('open');}
+function closePrintModal(){document.getElementById('printModal').classList.remove('open');}
+function poSel(id){var a=document.querySelector('#'+id+' .po-pill.active');return a?a.getAttribute('data-v'):'';}
+function pcRoman(n){return ['','I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'][n]||(''+n);}
+function pcEsc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+var coverLogo=null;
+(function(){try{var im=new Image();im.onload=function(){coverLogo=im;};im.src=document.querySelector('#arEmblem image').getAttribute('href');}catch(e){}})();
+function buildCover(opts,cb){
+  var ratios={'7in 9in':9/7,'8.5in 11in':11/8.5,'148mm 210mm':210/148};
+  var r=ratios[opts.size]||9/7, W=1100, H=Math.round(W*r), cv=document.createElement('canvas');
+  cv.width=W;cv.height=H;var x=cv.getContext('2d');var navy=opts.cover!=='cream';
+  x.fillStyle=navy?'#0D182A':'#FBF6EC';x.fillRect(0,0,W,H);
+  var m=Math.round(W*0.05);x.strokeStyle=navy?'rgba(212,175,55,.55)':'rgba(201,162,39,.6)';x.lineWidth=2;x.strokeRect(m,m,W-2*m,H-2*m);
+  x.textAlign='center';
+  try{x.letterSpacing=Math.round(W*0.012)+'px';}catch(e){}
+  x.fillStyle='#D4AF37';x.font='600 '+Math.round(W*0.024)+'px Georgia';x.fillText('A LEGACY MEMORY BOOK',W/2,H*0.155);
+  try{x.letterSpacing='0px';}catch(e){}
+  var topY=H*0.20, crestBottom=H*0.40;
+  if(coverLogo){var cw=W*0.34,ch=cw*(coverLogo.height/coverLogo.width);x.drawImage(coverLogo,(W-cw)/2,topY,cw,ch);crestBottom=topY+ch;}
+  x.fillStyle=navy?'#F5F1E8':'#0D182A';var fs=Math.round(W*0.075);x.font='400 '+fs+'px Georgia';
+  var title=(person.name||'Their')+"'s Memory Book",words=title.split(' '),lines=[],cur='';
+  words.forEach(function(w){var t=cur?cur+' '+w:w;if(x.measureText(t).width>W*0.78){if(cur)lines.push(cur);cur=w;}else cur=t;});
+  if(cur)lines.push(cur);
+  var ty=crestBottom+fs*1.35;lines.forEach(function(ln){x.fillText(ln,W/2,ty);ty+=fs*1.16;});
+  x.fillStyle=navy?'#A7B79A':'#6b7563';x.font='italic '+Math.round(W*0.031)+'px Georgia';
+  var rel=person.word?('"'+person.word+'"'):(person.mode==='self'?'In my own words':'A life, remembered');
+  x.fillText(rel,W/2,ty+fs*0.25);
+  try{x.letterSpacing=Math.round(W*0.012)+'px';}catch(e){}
+  x.fillStyle='#D4AF37';x.font='600 '+Math.round(W*0.022)+'px Georgia';
+  x.fillText('ANCHORREMEMBERS · '+new Date().getFullYear(),W/2,H-m-W*0.03);
+  try{x.letterSpacing='0px';}catch(e){}
+  cb(cv.toDataURL('image/jpeg',0.92));
+}
+function buildPrintBook(opts,coverUrl){
   var qs=activeQ();
   var idxs=Object.keys(answers).map(Number).filter(function(i){return!!answers[i];}).sort(function(a,b){return a-b;});
-  var bycat={};
-  idxs.forEach(function(i){
-    if(!qs[i])return;
-    var c=qs[i].cat;if(!bycat[c])bycat[c]=[];bycat[c].push(i);
-  });
-  var html='<div class="pc-title">AnchorRemembers</div>';
-  html+='<div class="pc-sub">'+person.name+(person.role?' · '+person.role:'')+'</div>';
-  if(person.word)html+='<div class="pc-word">In one word: "'+person.word+'"</div>';
-  if(person.desc)html+='<div class="pc-desc">'+person.desc+'</div>';
-  var allph=photos.slice(0,6);
-  if(allph.length)html+='<div class="pc-photos">'+allph.map(function(p){return'<img class="pc-photo" src="'+p.dataUrl+'" alt="">';}).join('')+'</div>';
-  Object.entries(bycat).forEach(function(entry){
-    var cat=entry[0];var indices=entry[1];
-    html+='<div class="pc-cat-head">'+cat+'</div>';
-    indices.forEach(function(i){
-      var qph=photos.filter(function(p){return p.qi===i;});
-      html+='<div class="pc-qa"><div class="pc-q">'+voiceQ(qs[i])+'</div><div class="pc-a">'+answers[i]+'</div>';
-      if(qph.length)html+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:6px">'+qph.map(function(p){return'<img class="pc-photo" src="'+p.dataUrl+'" alt="">';}).join('')+'</div>';
-      html+='</div>';
+  var cats=[];idxs.forEach(function(i){if(qs[i]&&cats.indexOf(qs[i].cat)<0)cats.push(qs[i].cat);});
+  var h='<div class="pc-page"><img class="pc-cover-img" src="'+coverUrl+'" alt=""></div>';
+  if(person.desc){h+='<div class="pc-page pc-dedication">';if(person.word)h+='<div class="pcw">&ldquo;'+pcEsc(person.word)+'&rdquo;</div>';h+='<div class="pcd">'+pcEsc(person.desc)+'</div></div>';}
+  cats.forEach(function(cat,ci){
+    h+='<div class="pc-page pc-divider"><div class="num">'+pcRoman(ci+1)+'</div><h2>'+pcEsc(cat)+'</h2><div class="rule"></div><img src="sprig1.png" alt=""></div>';
+    h+='<div class="pc-section">';
+    idxs.filter(function(i){return qs[i].cat===cat;}).forEach(function(i){
+      var qph=opts.photos?photos.filter(function(p){return p.qi===i;}):[];
+      h+='<div class="pc-qa"><div class="pc-q">'+pcEsc(voiceQ(qs[i]))+'</div><div class="pc-a">'+pcEsc(answers[i])+'</div>';
+      if(qph.length)h+='<div class="pc-ph">'+qph.map(function(p){return'<img src="'+p.dataUrl+'" alt="">';}).join('')+'</div>';
+      h+='</div>';
     });
+    h+='</div>';
   });
-  html+='<div class="pc-footer">Captured with love using AnchorRemembers · anchorremembers.com</div>';
-  document.getElementById('printContent').innerHTML=html;
-  window.print();
+  h+='<div class="pc-page pc-close"><img src="logo.png" alt=""><p>Captured with love<br>using AnchorRemembers<br>anchorremembers.com</p></div>';
+  return h;
+}
+function doPrint(){
+  var opts={cover:poSel('poCover')||'navy',photos:poSel('poPhotos')==='1',size:poSel('poSize')||'7in 9in'};
+  buildCover(opts,function(coverUrl){
+    document.getElementById('printContent').innerHTML=buildPrintBook(opts,coverUrl);
+    document.getElementById('printPageSize').textContent='@page{size:'+opts.size+';margin:0}';
+    closePrintModal();
+    setTimeout(function(){window.print();},200);
+  });
 }
 
 /* ═══════════════════════════════════════
@@ -1667,6 +1735,7 @@ function updateWelcomeTree(){
   updateFounderUI();
   /* archive and prompts tabs hidden by CSS .tab-panel (display:none) — no inline style needed */
 })();
+(function(){document.querySelectorAll('.po-pills').forEach(function(g){g.addEventListener('click',function(e){var b=e.target.closest('.po-pill');if(!b)return;g.querySelectorAll('.po-pill').forEach(function(p){p.classList.remove('active');});b.classList.add('active');});});})();
 </script>
 </body>
 </html>
