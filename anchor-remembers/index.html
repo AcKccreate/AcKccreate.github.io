@@ -722,6 +722,7 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
 </style>
 <noscript><style>.tab-panel{display:flex!important}.screen{display:flex!important}.answer-overlay{display:none!important}</style></noscript>
 <style>
+.linklike{background:none;border:none;color:var(--gold-deep);font-size:.78rem;text-decoration:underline;cursor:pointer;font-family:var(--sans);margin-top:10px;padding:4px;display:inline-block}
 /* showcase samples + captions */
 .gallery .g-item{margin:0}
 .gallery .g-item img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:12px;box-shadow:var(--sh-md);display:block;background:#fff;border:1px solid var(--hair)}
@@ -900,6 +901,7 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
           </div>
           <p>A premium printable memory book designed for the stories your family will want to keep. Unlock photo uploads, the printable keepsake book, and the full Father Edition question set.</p>
           <button class="btn btn-primary btn-wide" id="founderBtn" onclick="founderAction()">Unlock Keepsake Printing</button>
+          <button class="linklike" onclick="openCodeModal()">Have an access code?</button>
         </div>
       </aside>
 
@@ -1088,6 +1090,7 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
       <h3>Print Your Memory Book</h3>
       <p>Unlock photo uploads and a beautifully formatted printable keepsake book — plus the complete 45-prompt Father Edition. A one-time $5.99.</p>
       <button class="btn btn-primary btn-wide" onclick="doUnlock()"><svg class="bi"><use href="#ic-key"/></svg>Unlock everything — $5.99</button>
+      <button class="linklike" onclick="openCodeModal()">Have an access code?</button>
     </div>
   </div>
 
@@ -1151,6 +1154,17 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
     <div class="po-group"><label>Page size</label>
       <div class="po-pills" id="poSize"><button class="po-pill active" data-v="7in 9in">7&times;9&Prime;</button><button class="po-pill" data-v="8.5in 11in">Letter</button><button class="po-pill" data-v="148mm 210mm">A5</button></div></div>
     <div class="print-actions"><button class="btn btn-ghost" onclick="closePrintModal()">Cancel</button><button class="btn btn-primary" onclick="doPrint()">Print / Save PDF</button></div>
+  </div>
+</div>
+
+<!-- Access code -->
+<div class="print-modal" id="codeModal">
+  <div class="print-box">
+    <h3>Enter Access Code</h3>
+    <p class="print-note">Tester or promo code? Enter it to unlock everything.</p>
+    <input id="codeInput" class="field-input" type="text" autocomplete="off" placeholder="e.g. ALPHA-2026" style="text-transform:uppercase;width:100%">
+    <div id="codeMsg" style="font-size:.8rem;margin-top:9px;min-height:1.1em;font-weight:600"></div>
+    <div class="print-actions"><button class="btn btn-ghost" onclick="closeCodeModal()">Cancel</button><button class="btn btn-primary" onclick="applyCode()">Unlock</button></div>
   </div>
 </div>
 
@@ -1685,6 +1699,22 @@ function doPrint(){
 var STRIPE='https://buy.stripe.com/eVq8wQ1mSayH4k79YK67S0j';
 function doUnlock(){window.location.href=STRIPE;}
 function founderAction(){if(unlocked)printKeepsake();else doUnlock();}
+/* ── access / tester codes (client-side; edit this list) ── */
+var ACCESS_CODES={"ALPHA-2026":1,"BETA-FOUNDER":1,"FOUNDERTEST":1};
+function openCodeModal(){var m=document.getElementById("codeModal");document.getElementById("codeMsg").textContent="";document.getElementById("codeInput").value="";m.classList.add("open");setTimeout(function(){document.getElementById("codeInput").focus();},60);}
+function closeCodeModal(){document.getElementById("codeModal").classList.remove("open");}
+function applyCode(){
+  var v=(document.getElementById("codeInput").value||"").trim().toUpperCase();
+  var msg=document.getElementById("codeMsg");
+  if(ACCESS_CODES[v]){
+    try{localStorage.setItem(UNLOCK,"1");}catch(e){}
+    unlocked=true; updateFounderUI(); renderHomeTab(); renderPromptsTab();
+    msg.style.color="#2e7d4f"; msg.textContent="Unlocked \u2713  Everything is now available.";
+    setTimeout(closeCodeModal,1100);
+  } else if(v){
+    msg.style.color="#b3261e"; msg.textContent="That code isn\u2019t valid \u2014 check it and try again.";
+  }
+}
 
 /* ═══════════════════════════════════════
    432 HZ
