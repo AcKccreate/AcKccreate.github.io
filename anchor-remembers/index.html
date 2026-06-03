@@ -801,6 +801,37 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
 .pc-design{position:relative;width:100%;padding-bottom:128.57%;overflow:hidden}
 .pc-design>*{position:absolute}.pc-design img{display:block}
 </style>
+<style>
+.arrange-foot{display:flex;gap:10px;padding:12px 16px;background:var(--cream);border-top:1px solid var(--hair);flex-shrink:0}
+.arrange-foot .btn{flex:1}
+.preview-overlay{display:none;position:fixed;inset:0;z-index:135;background:#161208;flex-direction:column}
+.preview-overlay.open{display:flex}
+.preview-hdr{background:var(--navy);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.pv-stage{flex:1;display:flex;align-items:center;justify-content:center;overflow:auto;padding:18px;touch-action:pan-y}
+.pv-nav{display:flex;align-items:center;justify-content:center;gap:18px;padding:12px;background:var(--navy);flex-shrink:0}
+.pv-btn{background:rgba(212,175,55,.12);border:1px solid var(--line);color:var(--gold);border-radius:8px;padding:9px 18px;font-size:.82rem;cursor:pointer;font-family:var(--sans)}
+.pv-count{color:var(--cream);font-size:.8rem;font-variant-numeric:tabular-nums}
+.pv-sheet{aspect-ratio:7/9;width:min(86vw,430px);margin:0 auto;background-color:#FBF6EC;background-image:var(--tex-paper);box-shadow:0 22px 54px rgba(0,0,0,.45);border-radius:4px;overflow:hidden;position:relative;font-family:var(--serif);color:#1E2633}
+.pv-cover{background:#0D182A;color:#F5F1E8;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:9%}
+.pv-cover .pv-ce{font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.pv-crest{width:42%;height:auto;margin-bottom:14px}.pv-crest.sm{width:78px}
+.pv-title{font-size:clamp(1.1rem,5.4vw,1.8rem);line-height:1.2;margin-bottom:9px}
+.pv-rel{font-style:italic;color:var(--sage);font-size:.82rem}
+.pv-year{position:absolute;bottom:7%;left:0;right:0;font-size:.58rem;letter-spacing:.2em;color:var(--gold)}
+.pv-page{padding:9%}
+.pv-cat{font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:11px}
+.pv-qa{margin-bottom:13px}
+.pv-q{font-style:italic;font-size:.93rem;color:var(--navy);line-height:1.35;margin-bottom:5px}
+.pv-a{font-size:.78rem;line-height:1.62;color:#2a3240;white-space:pre-wrap}
+.pv-ph{display:flex;gap:6px;margin-top:8px}.pv-ph img{width:48%;height:74px;object-fit:cover;border-radius:5px}
+.pv-div{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12%}
+.pv-num{color:var(--gold-deep);letter-spacing:.3em;font-size:.9rem}.pv-dh{font-size:1.35rem;margin:9px 0}.pv-rule{width:60px;height:1px;background:var(--gold)}
+.pv-ded{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:14%}
+.pv-ded .pv-dw{font-style:italic;color:var(--gold-deep);font-size:1rem;margin-bottom:14px}.pv-ded .pv-dd{font-style:italic;font-size:.86rem;line-height:1.8;color:#2a3240}
+.pv-design>*{position:absolute}.pv-design img{display:block}
+.pv-close{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.pv-cl{font-size:.8rem;color:var(--muted);line-height:1.8;margin-top:12px}
+</style>
 <style id="printPageSize"></style>
 </head>
 <body>
@@ -1235,9 +1266,9 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
 <!-- Arrange the Book -->
 <div class="arrange-overlay" id="arrangeOverlay">
   <header class="arrange-hdr">
-    <button class="answer-back-btn" onclick="closeArrange()">&larr; Done</button>
+    <button class="answer-back-btn" onclick="closeArrange()">&larr; Save &amp; Exit</button>
     <span class="answer-cat-txt">Arrange the Book</span>
-    <button class="answer-save" onclick="arrangePrint()">Print</button>
+    <button class="answer-save" onclick="openPreview()">Preview</button>
   </header>
   <div class="arrange-modes">
     <span class="am-q">How should we build it?</span>
@@ -1259,6 +1290,25 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
   <div class="arrange-body">
     <div class="ar-pane ar-mem active" id="arMem"></div>
     <div class="ar-pane ar-book" id="arBook"></div>
+  </div>
+  <div class="arrange-foot">
+    <button class="btn btn-ghost" onclick="openPreview()">Preview book</button>
+    <button class="btn btn-primary" onclick="arrangePrint()">Finish &amp; Print</button>
+  </div>
+</div>
+
+<!-- Preview overlay -->
+<div class="preview-overlay" id="previewOverlay">
+  <header class="preview-hdr">
+    <button class="answer-back-btn" onclick="closePreview()">&larr; Back</button>
+    <span class="answer-cat-txt">Your Book &mdash; Preview</span>
+    <button class="answer-save" onclick="previewPrint()">Print</button>
+  </header>
+  <div class="pv-stage" id="pvStage"></div>
+  <div class="pv-nav">
+    <button class="pv-btn" onclick="pvGo(-1)">&lsaquo; Prev</button>
+    <span class="pv-count" id="pvCount">1 / 1</span>
+    <button class="pv-btn" onclick="pvGo(1)">Next &rsaquo;</button>
   </div>
 </div>
 
@@ -1791,6 +1841,31 @@ function pcRoman(n){return ['','I','II','III','IV','V','VI','VII','VIII','IX','X
 function pcEsc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 var coverLogo=null;
 (function(){try{var im=new Image();im.onload=function(){coverLogo=im;};im.src=document.querySelector('#arEmblem image').getAttribute('href');}catch(e){}})();
+/* ═══════ VIRTUAL BOOK PREVIEW ═══════ */
+var pvSheets=[],pvIdx=0,pvTouchX=null;
+function pvBuild(){
+  var qs=activeQ(),order=currentOrder(),sheets=[];
+  sheets.push('<div class="pv-sheet pv-cover"><div class="pv-ce">A Legacy Memory Book</div><img class="pv-crest" src="logo.png" alt=""><div class="pv-title">'+pcEsc((person.name||'Their')+'’s Memory Book')+'</div><div class="pv-rel">'+(person.word?('“'+pcEsc(person.word)+'”'):(person.mode==='self'?'In my own words':'A life, remembered'))+'</div><div class="pv-year">ANCHORREMEMBERS · '+(new Date().getFullYear())+'</div></div>');
+  if(person.desc)sheets.push('<div class="pv-sheet pv-ded"><div class="pv-dw">'+(person.word?'“'+pcEsc(person.word)+'”':'')+'</div><div class="pv-dd">'+pcEsc(person.desc)+'</div></div>');
+  var pages=paginate(order),last=null,ci=0;
+  pages.forEach(function(pg){
+    if(pg.cat!==last){last=pg.cat;ci++;sheets.push('<div class="pv-sheet pv-div"><div class="pv-num">'+pcRoman(ci)+'</div><div class="pv-dh">'+pcEsc(pg.cat)+'</div><div class="pv-rule"></div></div>');}
+    var s='<div class="pv-sheet pv-page"><div class="pv-cat">'+pcEsc(pg.cat)+'</div>';
+    pg.items.forEach(function(i){var qph=photos.filter(function(p){return p.qi===i;});
+      s+='<div class="pv-qa"><div class="pv-q">“'+pcEsc(voiceQ(qs[i]))+'”</div><div class="pv-a">'+pcEsc(answers[i])+'</div>'+(qph.length?'<div class="pv-ph">'+qph.slice(0,2).map(function(p){return'<img src="'+p.dataUrl+'">';}).join('')+'</div>':'')+'</div>';});
+    s+='</div>';sheets.push(s);
+  });
+  loadDesign();
+  dpages.forEach(function(dp){if(!dp.items.length)return;var s='<div class="pv-sheet pv-design">';dp.items.forEach(function(it){s+=dePrintItem(it);});s+='</div>';sheets.push(s);});
+  sheets.push('<div class="pv-sheet pv-close"><img class="pv-crest sm" src="logo.png" alt=""><div class="pv-cl">Captured with love<br>using AnchorRemembers<br>anchorremembers.com</div></div>');
+  return sheets;
+}
+function openPreview(){pvSheets=pvBuild();pvIdx=0;document.getElementById('previewOverlay').classList.add('open');pvRender();}
+function closePreview(){document.getElementById('previewOverlay').classList.remove('open');}
+function pvRender(){var st=document.getElementById('pvStage');if(!pvSheets.length){st.innerHTML='<div style="color:#cdbfa6;font-style:italic">Answer a few prompts first — your book will appear here.</div>';document.getElementById('pvCount').textContent='0 / 0';return;}st.innerHTML=pvSheets[pvIdx];document.getElementById('pvCount').textContent=(pvIdx+1)+' / '+pvSheets.length;}
+function pvGo(d){if(!pvSheets.length)return;pvIdx=Math.max(0,Math.min(pvSheets.length-1,pvIdx+d));pvRender();}
+function previewPrint(){closePreview();printKeepsake();}
+(function(){var st=document.getElementById('pvStage');if(!st)return;st.addEventListener('touchstart',function(e){pvTouchX=e.touches[0].clientX;},{passive:true});st.addEventListener('touchend',function(e){if(pvTouchX==null)return;var dx=e.changedTouches[0].clientX-pvTouchX;if(Math.abs(dx)>45)pvGo(dx<0?1:-1);pvTouchX=null;});})();
 /* ═══════ FREEFORM DESIGNER ═══════ */
 var DESIGN_KEY='aw_anchor_design';
 var dpages=[],curDp=null,selEl=null,deDrag=null,deStartPt=null,deStartItem=null,deRect=null,deCenter=null,deStartAng=0;
