@@ -881,12 +881,17 @@ h2,.lb-col-title,.showcase-title,.testi-title,.story-copy h2,.founder-card h2,.p
 <style>
 .banner-header{background-color:var(--navy);padding:0;border-bottom:1px solid var(--line);position:relative}
 .banner-link{display:block;font-size:0}
-.banner-img{display:block;margin:0 auto;max-width:100%;max-height:128px;width:auto}
+.banner-img{display:block;margin:0;max-width:100%;max-height:128px;width:auto}
 .banner-login{position:absolute;top:12px;right:16px;background:rgba(212,175,55,.16);border:1px solid var(--line);color:var(--gold);border-radius:8px;padding:6px 13px;font-size:.78rem;font-weight:600;cursor:pointer;font-family:var(--sans);z-index:2}
 @media(min-width:880px){.banner-img{max-height:150px}}
 </style>
 <style>.legacy-tree-img{width:175px;height:auto;display:block;margin:0 auto 8px;border-radius:12px;border:1px solid var(--line);box-shadow:var(--sh-sm);transition:width .8s ease,opacity .8s ease}
 .home-tree-img{width:120px;margin:0 auto 12px}</style>
+<style>
+.reveal-on .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
+.reveal-on .reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal-on .reveal{opacity:1!important;transform:none!important}}
+</style>
 <style id="printPageSize"></style>
 </head>
 <body>
@@ -2192,6 +2197,11 @@ function updateWelcomeTree(){
   updateFounderUI();
   /* archive and prompts tabs hidden by CSS .tab-panel (display:none) — no inline style needed */
 })();
+(function(){if(!('IntersectionObserver' in window))return;document.body.classList.add('reveal-on');
+var els=document.querySelectorAll('.feature-strip,.legacy-band,.story-band,.showcase,.testi,.photo-feature');
+els.forEach(function(el){el.classList.add('reveal');});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.12,rootMargin:'0px 0px -8% 0px'});
+els.forEach(function(el){io.observe(el);});})();
 (function(){document.querySelectorAll('.po-pills').forEach(function(g){g.addEventListener('click',function(e){var b=e.target.closest('.po-pill');if(!b)return;g.querySelectorAll('.po-pill').forEach(function(p){p.classList.remove('active');});b.classList.add('active');});});})();
 </script>
 </body>
