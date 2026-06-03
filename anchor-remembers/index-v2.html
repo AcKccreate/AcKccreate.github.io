@@ -734,6 +734,7 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
 .hero-crown{position:relative;z-index:1;text-align:center;padding-top:2px;margin-bottom:6px}
 .hero-crown .gilt-rule{margin:0 auto}
 .hero-masthead{width:min(82vw,340px);height:auto;display:block;margin:0 auto 4px}
+.hero-crest-sm{width:84px;height:auto;display:block;margin:0 auto 10px}
 .hero-gilt{margin-bottom:18px}
 .founder-masthead{width:172px;height:auto;display:block;margin:0 auto 14px}
 @media(min-width:880px){.hero-masthead{width:420px}.hero-copy .gilt-rule{margin-left:0;margin-right:auto}}
@@ -871,6 +872,11 @@ h2,.lb-col-title,.showcase-title,.testi-title,.story-copy h2,.founder-card h2,.p
 @media(min-width:768px){.trust3{flex-direction:row;justify-content:center;gap:0}.trust3 .t3{padding:0 26px;border-right:1px solid var(--line)}.trust3 .t3:last-child{border-right:none}}
 .cta-fine{font-family:var(--serif);font-style:italic;font-size:.88rem;color:rgba(251,246,236,.82);margin-top:14px}
 </style>
+<style>
+.wh-actions{display:flex;align-items:center;gap:14px}
+.wh-login{background:none;border:none;color:var(--gold);font-size:.82rem;font-weight:600;cursor:pointer;font-family:var(--sans)}
+.wh-login:hover{color:var(--gold-soft)}
+</style>
 <style id="printPageSize"></style>
 </head>
 <body>
@@ -894,13 +900,13 @@ h2,.lb-col-title,.showcase-title,.testi-title,.story-copy h2,.founder-card h2,.p
           <span class="wordmark-main">AnchorRemembers</span>
         </span>
       </a>
-      <button class="btn btn-primary btn-sm wh-cta" onclick="showSetup()">Begin Your Book</button>
+      <div class="wh-actions"><button class="wh-login" onclick="openAccount('login')">Log in</button><button class="btn btn-primary btn-sm wh-cta" onclick="showSetup()">Begin Your Book</button></div>
     </div>
   </header>
 
   <!-- Hero -->
   <section class="hero">
-    <div class="hero-crown"><img class="hero-masthead" src="masthead-light.png" alt="AnchorRemembers — Anchor Your Legacy, Preserve Your Memories"></div>
+    <div class="hero-crown"><img class="hero-crest-sm" src="logo.png" alt="AnchorRemembers"></div>
     <div class="hero-inner">
       <div class="hero-copy">
         <span class="gilt-rule hero-gilt"><i></i><b></b><i></i></span>
@@ -1341,6 +1347,19 @@ h2,.lb-col-title,.showcase-title,.testi-title,.story-copy h2,.founder-card h2,.p
   </div>
 </div>
 
+<!-- Account -->
+<div class="print-modal" id="acctModal">
+  <div class="print-box">
+    <h3 id="acctTitle">Create your free account</h3>
+    <p class="print-note" id="acctNote">Save your memory book and come back to it anytime. Free, private, no spam.</p>
+    <div class="po-group" id="acctNameRow"><label>Your name</label><input id="acctName" class="field-input" type="text" autocomplete="name" placeholder="First name" style="width:100%"></div>
+    <div class="po-group"><label>Email</label><input id="acctEmail" class="field-input" type="email" autocomplete="email" placeholder="you@email.com" style="width:100%"></div>
+    <div id="acctMsg" style="font-size:.8rem;margin-top:6px;min-height:1.1em;font-weight:600"></div>
+    <div class="print-actions"><button class="btn btn-ghost" onclick="closeAccount()">Not now</button><button class="btn btn-primary" id="acctBtn" onclick="saveAccount()">Create account</button></div>
+    <div style="text-align:center;margin-top:10px"><button class="linklike" id="acctSwitch" onclick="toggleAcctMode()">Already have an account? Log in</button></div>
+  </div>
+</div>
+
 <!-- Print options -->
 <div class="print-modal" id="printModal">
   <div class="print-box">
@@ -1722,7 +1741,7 @@ function saveAnswer(){
   if(currentQIdx===null)return;
   var v=document.getElementById('answerTA').value.trim();
   if(v)answers[currentQIdx]=v;else delete answers[currentQIdx];
-  save();closeAnswer();
+  save();closeAnswer();maybePromptAccount();
 }
 
 function renderAnswerPhotos(){
@@ -2086,6 +2105,29 @@ function doPrint(){
 var STRIPE='https://buy.stripe.com/eVq8wQ1mSayH4k79YK67S0j';
 function doUnlock(){window.location.href=STRIPE;}
 function founderAction(){if(unlocked)printKeepsake();else doUnlock();}
+/* ═══════ FREE ACCOUNT (local placeholder; backend wires in later) ═══════ */
+var ACCOUNT_KEY='aw_anchor_account',acctMode='create',acctPrompted=false;
+function getAccount(){try{return JSON.parse(localStorage.getItem(ACCOUNT_KEY));}catch(e){return null;}}
+function hasAccount(){var a=getAccount();return !!(a&&a.email);}
+function openAccount(mode){acctMode=mode||'create';document.getElementById('acctMsg').textContent='';renderAcctMode();document.getElementById('acctModal').classList.add('open');}
+function closeAccount(){document.getElementById('acctModal').classList.remove('open');}
+function renderAcctMode(){var create=acctMode==='create',a=getAccount();
+  document.getElementById('acctTitle').textContent=create?'Create your free account':'Welcome back';
+  document.getElementById('acctNote').textContent=create?'Save your memory book and return anytime. Free, private, no spam.':'Log in to pick up where you left off.';
+  document.getElementById('acctNameRow').style.display=create?'':'none';
+  document.getElementById('acctBtn').textContent=create?'Create account':'Log in';
+  document.getElementById('acctSwitch').textContent=create?'Already have an account? Log in':'Need an account? Create one';
+  if(a){document.getElementById('acctEmail').value=a.email||'';document.getElementById('acctName').value=a.name||'';}}
+function toggleAcctMode(){acctMode=(acctMode==='create')?'login':'create';renderAcctMode();}
+function saveAccount(){var name=document.getElementById('acctName').value.trim(),email=document.getElementById('acctEmail').value.trim(),msg=document.getElementById('acctMsg');
+  if(!/.+@.+\..+/.test(email)){msg.style.color='#b3261e';msg.textContent='Please enter a valid email.';return;}
+  if(acctMode==='create'&&!name){msg.style.color='#b3261e';msg.textContent='Please enter your name.';return;}
+  var prev=getAccount()||{};try{localStorage.setItem(ACCOUNT_KEY,JSON.stringify({name:name||prev.name||'',email:email,created:true}));}catch(e){}
+  msg.style.color='#2e7d4f';msg.textContent=acctMode==='create'?'Account created — your book is saved.':'Logged in.';
+  updateLoginLabel();setTimeout(closeAccount,1000);}
+function maybePromptAccount(){if(!hasAccount()&&!acctPrompted){acctPrompted=true;setTimeout(function(){openAccount('create');},700);}}
+function updateLoginLabel(){var b=document.querySelector('.wh-login'),a=getAccount();if(b&&a&&a.name)b.textContent='Hi, '+a.name.split(' ')[0];}
+(function(){updateLoginLabel();})();
 /* ── access / tester codes (client-side; edit this list) ── */
 var ACCESS_CODES={"ALPHA-2026":1,"BETA-FOUNDER":1,"FOUNDERTEST":1};
 function openCodeModal(){var m=document.getElementById("codeModal");document.getElementById("codeMsg").textContent="";document.getElementById("codeInput").value="";m.classList.add("open");setTimeout(function(){document.getElementById("codeInput").focus();},60);}
