@@ -731,7 +731,9 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
 .hero-crown{position:relative;z-index:1;text-align:center;padding-top:2px;margin-bottom:6px}
 .hero-crown .gilt-rule{margin:0 auto}
 .hero-masthead{width:min(82vw,340px);height:auto;display:block;margin:0 auto 4px}
-@media(min-width:880px){.hero-masthead{width:420px}}
+.hero-gilt{margin-bottom:18px}
+.founder-masthead{width:172px;height:auto;display:block;margin:0 auto 14px}
+@media(min-width:880px){.hero-masthead{width:420px}.hero-copy .gilt-rule{margin-left:0;margin-right:auto}}
 .footer-masthead{width:min(68vw,210px);height:auto;display:block;margin:0 auto 18px;opacity:.92}
 .welcome-header .wordmark-main{font-size:1rem;letter-spacing:.01em}
 /* smaller, more tasteful sprigs */
@@ -812,6 +814,8 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
 .preview-overlay.open{display:flex}
 .preview-hdr{background:var(--navy);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .pv-stage{flex:1;display:flex;align-items:center;justify-content:center;overflow:auto;padding:18px;touch-action:pan-y}
+.pv-spread{display:flex;gap:16px;align-items:center}
+.pv-spread .pv-sheet{width:min(42vw,400px)}
 .pv-nav{display:flex;align-items:center;justify-content:center;gap:18px;padding:12px;background:var(--navy);flex-shrink:0}
 .pv-btn{background:rgba(212,175,55,.12);border:1px solid var(--line);color:var(--gold);border-radius:8px;padding:9px 18px;font-size:.82rem;cursor:pointer;font-family:var(--sans)}
 .pv-count{color:var(--cream);font-size:.8rem;font-variant-numeric:tabular-nums}
@@ -868,7 +872,7 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
     <div class="hero-crown"><img class="hero-masthead" src="masthead-light.png" alt="AnchorRemembers — Anchor Your Legacy, Preserve Your Memories"></div>
     <div class="hero-inner">
       <div class="hero-copy">
-        <div class="hero-eyebrow">A Legacy Memory Book</div>
+        <span class="gilt-rule hero-gilt"><i></i><b></b><i></i></span>
         <h1>Every Family Has<br>Stories Worth <em>Saving.</em></h1>
         <p class="hero-sub">Guided memory books that help you capture the voices, wisdom, traditions, and love of the people who shaped you.</p>
         <div class="hero-btns">
@@ -993,7 +997,7 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
 
       <aside class="founder-col">
         <div class="founder-card">
-          <span class="gilt-rule"><i></i><b></b><i></i></span>
+          <img class="founder-masthead" src="masthead-dark.png" alt="">
           <div class="founder-eyebrow">Founder Edition</div>
           <h2>Keepsake Printing<br>&amp; Full Story Access</h2>
           <div class="book-mockup">
@@ -1866,8 +1870,9 @@ function pvBuild(){
 }
 function openPreview(){pvSheets=pvBuild();pvIdx=0;document.getElementById('previewOverlay').classList.add('open');pvRender();}
 function closePreview(){document.getElementById('previewOverlay').classList.remove('open');}
-function pvRender(){var st=document.getElementById('pvStage');if(!pvSheets.length){st.innerHTML='<div style="color:#cdbfa6;font-style:italic">Answer a few prompts first — your book will appear here.</div>';document.getElementById('pvCount').textContent='0 / 0';return;}st.innerHTML=pvSheets[pvIdx];document.getElementById('pvCount').textContent=(pvIdx+1)+' / '+pvSheets.length;}
-function pvGo(d){if(!pvSheets.length)return;pvIdx=Math.max(0,Math.min(pvSheets.length-1,pvIdx+d));pvRender();}
+function pvIsSpread(){return !!(window.matchMedia&&window.matchMedia('(min-width:880px)').matches);}
+function pvRender(){var st=document.getElementById('pvStage');if(!pvSheets.length){st.innerHTML='<div style="color:#cdbfa6;font-style:italic">Answer a few prompts first — your book will appear here.</div>';document.getElementById('pvCount').textContent='0 / 0';return;}if(pvIsSpread()){var a=pvSheets[pvIdx]||'',b=(pvIdx+1<pvSheets.length)?pvSheets[pvIdx+1]:'';st.innerHTML='<div class="pv-spread">'+a+b+'</div>';document.getElementById('pvCount').textContent=(pvIdx+1)+(b?'–'+(pvIdx+2):'')+' / '+pvSheets.length;}else{st.innerHTML=pvSheets[pvIdx];document.getElementById('pvCount').textContent=(pvIdx+1)+' / '+pvSheets.length;}}
+function pvGo(d){if(!pvSheets.length)return;var step=pvIsSpread()?2:1;pvIdx=Math.max(0,Math.min(pvSheets.length-1,pvIdx+d*step));pvRender();}
 function previewPrint(){closePreview();printKeepsake();}
 (function(){var st=document.getElementById('pvStage');if(!st)return;st.addEventListener('touchstart',function(e){pvTouchX=e.touches[0].clientX;},{passive:true});st.addEventListener('touchend',function(e){if(pvTouchX==null)return;var dx=e.changedTouches[0].clientX-pvTouchX;if(Math.abs(dx)>45)pvGo(dx<0?1:-1);pvTouchX=null;});})();
 /* ═══════ FREEFORM DESIGNER ═══════ */
