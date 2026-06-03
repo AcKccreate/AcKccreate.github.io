@@ -749,6 +749,9 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
 .am-q{font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .am-chip{padding:7px 13px;border-radius:100px;border:1px solid var(--hair);background:var(--cream);color:var(--ink);font-size:.76rem;font-weight:600;cursor:pointer;font-family:var(--sans)}
 .am-chip.active{background:var(--gold-metal);color:#2c2510;border-color:transparent}
+.arrange-density{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px 16px;background:var(--ivory);border-bottom:1px solid var(--hair);flex-shrink:0}
+.dn-chip{padding:6px 12px;border-radius:100px;border:1px solid var(--hair);background:var(--cream);color:var(--ink);font-size:.74rem;font-weight:600;cursor:pointer;font-family:var(--sans)}
+.dn-chip.active{background:var(--navy);color:var(--gold);border-color:transparent}
 .arrange-tabs{display:flex;border-bottom:1px solid var(--hair);flex-shrink:0;background:var(--cream)}
 .ar-tab{flex:1;text-align:center;padding:11px;font-size:.8rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent}
 .ar-tab.active{color:var(--navy);border-color:var(--gold)}
@@ -1200,6 +1203,13 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
     <button class="am-chip active" data-m="auto" onclick="setArrangeMode('auto')">&#9670; Arrange for me</button>
     <button class="am-chip" data-m="manual" onclick="setArrangeMode('manual')">Set it up myself</button>
     <button class="am-chip" data-m="default" onclick="setArrangeMode('default')">Default order</button>
+  </div>
+  <div class="arrange-density">
+    <span class="am-q">Text size</span>
+    <button class="dn-chip" data-d="easy" onclick="setDensity('easy')">Easy-read</button>
+    <button class="dn-chip active" data-d="standard" onclick="setDensity('standard')">Standard</button>
+    <button class="dn-chip" data-d="compact" onclick="setDensity('compact')">Compact</button>
+    <button class="dn-chip" data-d="dense" onclick="setDensity('dense')">Dense</button>
   </div>
   <div class="arrange-tabs">
     <div class="ar-tab active" onclick="arrangeTab('mem',this)">Memories</div>
@@ -1765,8 +1775,14 @@ function setArrangeMode(m){
 function moveItem(i,dir){var p=ensurePlan();p.mode='manual';var o=p.order,a=o.indexOf(i),b=a+dir;if(a<0||b<0||b>=o.length)return;var t=o[a];o[a]=o[b];o[b]=t;planSave(p);setActiveChip('manual');renderArrange();}
 function excludeItem(i){var p=ensurePlan();p.mode='manual';p.order=p.order.filter(function(x){return x!==i;});if(p.excluded.indexOf(i)<0)p.excluded.push(i);planSave(p);setActiveChip('manual');renderArrange();}
 function includeItem(i){var p=ensurePlan();p.mode='manual';p.excluded=p.excluded.filter(function(x){return x!==i;});if(p.order.indexOf(i)<0)p.order.push(i);planSave(p);setActiveChip('manual');renderArrange();}
+var DENSITY={easy:{wpp:130,pt:13.5},standard:{wpp:200,pt:11.5},compact:{wpp:280,pt:10.5},dense:{wpp:360,pt:9.5}};
+var DENS_KEY='aw_anchor_density';
+function getDensity(){var d=localStorage.getItem(DENS_KEY);return DENSITY[d]?d:'standard';}
+function setDensity(k){if(!DENSITY[k])return;try{localStorage.setItem(DENS_KEY,k);}catch(e){}setDensityChip(k);renderArrange();}
+function setDensityChip(k){var c=document.querySelectorAll('.dn-chip');for(var i=0;i<c.length;i++)c[i].classList.toggle('active',c[i].getAttribute('data-d')===k);}
+function wordsPerPage(){return DENSITY[getDensity()].wpp;}
 function paginate(order){
-  var qs=activeQ(),pages=[],last=null,page=null,used=0,budget=200;
+  var qs=activeQ(),pages=[],last=null,page=null,used=0,budget=wordsPerPage();
   function np(c){page={cat:c,items:[]};pages.push(page);used=0;}
   order.forEach(function(i){if(!qs[i])return;var cat=qs[i].cat;var pc=photos.filter(function(p){return p.qi===i;}).length;var cost=wordCount(answers[i])+(pc?60:0)+(hasVoice(i)?12:0);
     if(cat!==last){last=cat;np(cat);}else if(used+cost>budget&&page.items.length){np(cat);}
@@ -1800,7 +1816,7 @@ function renderArrange(){
   bh+='<div class="bk-cover">Closing</div>';
   document.getElementById('arBook').innerHTML=bh;
 }
-function openArrange(){setActiveChip(planMode());renderArrange();document.getElementById('arrangeOverlay').classList.add('open');}
+function openArrange(){setActiveChip(planMode());setDensityChip(getDensity());renderArrange();document.getElementById('arrangeOverlay').classList.add('open');}
 function closeArrange(){document.getElementById('arrangeOverlay').classList.remove('open');}
 function arrangeTab(which,el){var t=document.querySelectorAll('.ar-tab');for(var k=0;k<t.length;k++)t[k].classList.remove('active');el.classList.add('active');document.getElementById('arMem').classList.toggle('active',which==='mem');document.getElementById('arBook').classList.toggle('active',which==='book');}
 function arrangePrint(){closeArrange();printKeepsake();}
@@ -1853,7 +1869,7 @@ function doPrint(){
   var opts={cover:poSel('poCover')||'navy',photos:poSel('poPhotos')==='1',size:poSel('poSize')||'7in 9in'};
   buildCover(opts,function(coverUrl){
     document.getElementById('printContent').innerHTML=buildPrintBook(opts,coverUrl);
-    document.getElementById('printPageSize').textContent='@page{size:'+opts.size+';margin:0}';
+    var _pt=DENSITY[getDensity()].pt;document.getElementById('printPageSize').textContent='@page{size:'+opts.size+';margin:0}.pc-a{font-size:'+_pt+'pt;line-height:1.8}.pc-q{font-size:'+(_pt+3)+'pt}';
     closePrintModal();
     setTimeout(function(){window.print();},200);
   });
