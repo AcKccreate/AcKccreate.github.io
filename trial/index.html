@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="robots" content="noindex,nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Free Trial Key — AnchorWithin API</title>
 <meta name="description" content="Get 100 free API calls. No credit card required. Audio API, Verity Trace, and Memory Vault.">
@@ -113,7 +114,7 @@ footer a:hover{color:var(--muted)}
       <label for="projectInput">Project name (optional)</label>
       <input type="text" id="projectInput" name="project" placeholder="My AI agent">
       <div id="errBox"></div>
-      <button type="submit" id="submitBtn" class="submit-btn">Get Free Trial Key →</button>
+      <button type="submit" id="submitBtn" class="submit-btn">Currently Unavailable</button>
     </form>
     <div id="successBox">
       <div class="success-label">Your API Key</div>
@@ -150,27 +151,10 @@ footer a:hover{color:var(--muted)}
 <script>
 var currentKey = '';
 
+// Trial signups currently paused — redirect to /paused/ instead of sending email.
 document.getElementById('trialForm').addEventListener('submit', function(e) {
   e.preventDefault();
-  var btn = document.getElementById('submitBtn');
-  var email = document.getElementById('emailInput').value.trim();
-  var project = document.getElementById('projectInput').value.trim();
-
-  var subject = encodeURIComponent('AnchorWithin API — Trial Key Request');
-  var body = encodeURIComponent(
-    'Hi,\n\nI\'d like a free trial key for the AnchorWithin Audio API.\n\n' +
-    'Email: ' + (email || 'not provided') + '\n' +
-    'Project: ' + (project || 'not provided') + '\n\n' +
-    'Requesting 100-call free trial access.\n\nThanks'
-  );
-
-  btn.disabled = true;
-  btn.textContent = 'Opening email…';
-  window.location.href = 'mailto:anchorwithin.daily1@gmail.com?subject=' + subject + '&body=' + body;
-
-  setTimeout(function() {
-    btn.textContent = 'Request sent — key delivered within 24h';
-  }, 1200);
+  window.location.href = '/paused/';
 });
 
 function copyKey() {
