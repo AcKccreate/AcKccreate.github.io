@@ -1,7 +1,26 @@
 User-agent: *
-Allow: /
+Allow: /anchorwithin-home/
+Allow: /paused/
 
-# Disallow legal pages from indexing (handled via meta robots noindex)
+# All product pages are currently paused. They remain in the repo but
+# are not for indexing or commercial discovery. See /docs/revenue-pause-log.md.
+Disallow: /anchor-remembers/
+Disallow: /breatheworld/
+Disallow: /depthclick/
+Disallow: /dreamwalk/
+Disallow: /echowalk/
+Disallow: /forever-paws/
+Disallow: /kidspark/
+Disallow: /nervous-system-reset/
+Disallow: /resonance-pack/
+Disallow: /sanctuary-bell/
+Disallow: /thennow/
+Disallow: /trial/
+Disallow: /veritswarm/
+Disallow: /verity/
+Disallow: /api-docs/
+
+# Legal pages — kept noindex via meta tag, also blocked here.
 Disallow: /anchorwithin-privacy/
 Disallow: /anchorwithin-tos/
 

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="robots" content="noindex,nofollow">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <title>AnchorRemembers — Anchor Your Legacy</title>
 <meta name="description" content="Capture the voice, stories, wisdom, and spirit of the people who shaped you. A luxury memory book by AnchorRemembers.">
@@ -601,7 +602,7 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
       </svg>
       <div class="book-mockup-label">Founder<br>Edition</div>
     </div>
-    <button class="btn btn-primary" id="founderBtn" onclick="founderAction()">Unlock Keepsake Printing</button>
+    <button class="btn btn-primary" id="founderBtn" onclick="founderAction()">Currently Unavailable</button>
   </section>
 
   <footer class="welcome-footer">
@@ -747,7 +748,7 @@ textarea.field-input{resize:vertical;min-height:76px;line-height:1.5}
       <div class="home-founder-eyebrow">FOUNDER EDITION</div>
       <h3>Print Your Memory Book</h3>
       <p>Unlock all 45 prompts, photo uploads, and a beautifully formatted printable keepsake for just $5.99.</p>
-      <button class="btn btn-primary btn-wide" onclick="doUnlock()">🔑 Unlock everything for $5.99</button>
+      <button class="btn btn-primary btn-wide" onclick="doUnlock()">Currently Unavailable</button>
     </div>
   </div>
 
@@ -1066,7 +1067,7 @@ function updateFounderUI(){
   var fb=document.getElementById('founderBtn');
   if(fb){
     if(unlocked){fb.textContent='✓ Unlocked — Print Keepsake';fb.onclick=printKeepsake;}
-    else{fb.textContent='Unlock Keepsake Printing';fb.onclick=founderAction;}
+    else{fb.textContent='Currently Unavailable';fb.onclick=founderAction;}
   }
 }
 
@@ -1293,8 +1294,9 @@ function printKeepsake(){
 /* ═══════════════════════════════════════
    UNLOCK
    ═══════════════════════════════════════ */
-var STRIPE='https://buy.stripe.com/eVq8wQ1mSayH4k79YK67S0j';
-function doUnlock(){window.location.href=STRIPE;}
+// Stripe unlock paused — see /docs/revenue-pause-log.md
+var STRIPE='/paused/';
+function doUnlock(){window.location.href='/paused/';}
 function founderAction(){if(unlocked)printKeepsake();else doUnlock();}
 
 /* ═══════════════════════════════════════

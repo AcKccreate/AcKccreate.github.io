@@ -128,3 +128,23 @@ The commit hash for this revenue-pause action is recorded in `git log` and can b
 ---
 
 *This document is itself published at* `/docs/revenue-pause-log.md` *and is publicly accessible if needed as evidence that the pause was implemented in good faith on the date listed above.*
+
+---
+
+## Amendment — 2026-06-15 (later same day)
+
+After the initial pause commit was prepared, a new product page was discovered on the remote `main` branch that did not exist when the audit scan was run: **`/anchor-remembers/`** — a luxury memory-book product unlocking at **$5.99** via Stripe URL `https://buy.stripe.com/eVq8wQ1mSayH4k79YK67S0j` (price was raised from $0.99 to $5.99 in commit `b7e28fe`).
+
+In the same amendment, an EchoWalk redesign (commit `343e16d`) had re-introduced three Stripe URLs through an editorial-theme overhaul; those were carried forward into the rebase and the new structure was preserved while every Stripe URL was again replaced with `/paused/`.
+
+Changes applied to `anchor-remembers/index.html`:
+- `var STRIPE` constant set to `/paused/` (was a live `buy.stripe.com` URL).
+- `doUnlock()` function rewired to redirect to `/paused/` instead of calling Stripe.
+- Every visible "Unlock everything for $5.99" / "Unlock Keepsake Printing" CTA changed to **"Currently Unavailable"**.
+- `<meta name="robots" content="noindex,nofollow">` added.
+
+Changes applied to `echowalk/index.html` (post-redesign):
+- All 6 instances of the EchoWalk Stripe URLs (across the redesigned hero CTA, nav CTA, three pricing tiers, and an exit-popup CTA) replaced with `/paused/`.
+- Casey's editorial-theme redesign content was preserved verbatim — only the URLs changed.
+
+`robots.txt` updated to also `Disallow: /anchor-remembers/`.
