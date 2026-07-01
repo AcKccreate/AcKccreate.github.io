@@ -11,7 +11,10 @@
 #   Set-ExecutionPolicy -Scope Process Bypass -Force
 # =============================================================================
 
-$outPath = Join-Path $env:USERPROFILE 'Desktop\LAPTOP_AUDIT.md'
+# Find the real Desktop path (handles OneDrive redirection); fall back to home folder.
+$desktopPath = [Environment]::GetFolderPath('Desktop')
+if (-not $desktopPath -or -not (Test-Path $desktopPath)) { $desktopPath = $env:USERPROFILE }
+$outPath = Join-Path $desktopPath 'LAPTOP_AUDIT.md'
 $lines = New-Object System.Collections.ArrayList
 function A { param($t) [void]$lines.Add($t) }
 function S { param($t) A ''; A "## $t"; A '' }
